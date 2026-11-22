@@ -63,6 +63,7 @@ export interface LandingCopy {
 		draft: string;
 		status: string;
 		madeOf: string;
+		madeOfNote: string;
 		less: string;
 		chip: { 'draft-press': string; 'draft-derived': string; 'draft-plf': string; 'adopted-lf': string };
 		sources: string;
@@ -70,14 +71,30 @@ export interface LandingCopy {
 		total: string;
 		/** Past years: the adopted laws, column header and sources. */
 		adopted: (year: string) => string;
+		pastHeading: string;
 		historySources: string;
 		historyNote: string;
 	};
+	/** The revenue side: the two ratios in words, and the year table that carries them. */
+	revenue: {
+		heading: string;
+		intro: string;
+		per100: { label: string; text: string };
+		covered: { label: string; text: string };
+		caption: string;
+		th: { year: string; spending: string; tax: string; own: string; per100: string; covered: string; page: string };
+		note: string;
+		leftOut: string;
+		sources: string;
+	};
+	/** The JORT audit note under the figures table. */
+	verification: { note: string };
 	sections: LandingSection[];
 	cannotSay: string[];
 	recordFacts: { label: string; value: string }[];
 	draftNotice: string;
 	interimNotice: string | null;
+	withdrawal: { heading: string; body: string };
 	closing: [string, string];
 	share: { button: string; heading: string; text: string };
 	/** How each kind of answer is given, for the questions section. */
@@ -117,14 +134,14 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			heading: 'Why it is harder than it looks',
 			items: [
 				{ key: 'locked', title: 'Owed before any choice', body: 'Interest on past debt and a reserve for the unforeseen are paid first. Nobody can move them this year, so they sit apart on the board.' },
-				{ key: 'subsidies', title: 'Subsidies sit inside ministries', body: 'Fuel, electricity and basic food subsidies are paid through the Industry and Trade budgets. The board cuts them out as their own line, so they can be seen and moved.' },
+				{ key: 'subsidies', title: 'Subsidies sit inside ministries', body: 'Fuel and electricity subsidies, and basic food subsidies, are paid through the Industry and Trade budgets. The board cuts them into two lines, so a citizen can protect food and cut fuel, or the other way round. The 2027 split between the two is derived and labelled.' },
 				{ key: 'largest', title: 'A few systems hold most of the money', body: 'The four largest systems hold this share of everything that can be moved. On one scale, the smallest are slivers.' },
 				{ key: 'zero', title: 'Every dinar comes from somewhere', body: 'The total does not move. Give 100 MD to one system and you have taken 100 MD from another, or from the purse.' }
 			]
 		},
 		demo: {
 			title: 'Try it with three systems',
-			body: 'Drag one system onto another, or use the buttons. These are the draft figures for three of the twenty-two systems.',
+			body: 'Drag one system onto another, or use the buttons. These are the draft figures for three of the twenty-seven systems.',
 			purse: 'Purse',
 			reset: 'Put it back',
 			take: (name) => `Take 100 MD from ${name}`,
@@ -143,14 +160,36 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			draft: 'Draft, MD',
 			status: 'Status',
 			madeOf: 'Made of',
+			madeOfNote: 'The composition notes are in English until the translation pass.',
 			less: 'less',
 			chip: { 'draft-press': 'Press, not verified', 'draft-derived': 'Derived, not verified', 'draft-plf': 'Draft law', 'adopted-lf': 'Adopted law' },
 			sources: 'Every row of the figures file, with its source',
 			locked: 'Owed, does not move',
 			total: 'Total',
-			adopted: (y) => `${y}, adopted`,
-			historySources: 'The adopted laws of 2024, 2025 and 2026, with their Journal Officiel pages',
-			historyNote: 'The 2024 to 2026 columns are the budgets as voted in each finance law (tableau C of the Journal Officiel), in dinars of each year. Subsidies and the energy and trade line are read from programme lines in those years, so they sit close to, not exactly on, the 2027 definition.'
+			adopted: (y) => y,
+			pastHeading: 'Past years, adopted',
+			historySources: 'The adopted laws, with their Journal Officiel pages and kept page images',
+			historyNote: 'The past-year columns are the budgets as voted in each finance law (tableau C of the Journal Officiel), in dinars of each year, not adjusted for inflation. The two subsidy lines are read from the energy and domestic trade programmes in those years. The 2027 split between fuel and food is derived from the two ministry lines that contain the memo, because the 2027 split by type has not been reported.'
+		},
+		revenue: {
+			heading: 'Where the money came from',
+			intro: 'Two ratios, read from each law, answer two different questions. One says how much of what the state raises itself is tax. The other says how much of its spending that tax pays for.',
+			per100: {
+				label: 'Tax in every 100 dinars the state raises itself',
+				text: 'Tax receipts divided by tax plus non-tax receipts. Grants and borrowing are not money the state raises itself, so they sit outside this denominator. This is the denominator of the 91 in the opening line.'
+			},
+			covered: {
+				label: 'Spending covered by tax',
+				text: 'Tax receipts divided by the payment credits of the same law. The rest is covered by non-tax receipts, grants and borrowing.'
+			},
+			caption: 'The adopted laws, revenue side',
+			th: { year: 'Law', spending: 'Spending, MD', tax: 'Tax, MD', own: 'Raised itself, MD', per100: 'Tax per 100 raised', covered: 'Spending covered, %', page: 'p.' },
+			note: 'Tax, non-tax receipts and grants are read from Article premier and Article 2 of each finance law, printed in the Journal Officiel. The spending column is tableau C of the same law, the total the spending side of this study already uses. Each figure has a printed page and a kept full-page crop in the study files.',
+			leftOut: 'No adopted year between 2020 and 2026 is missing. 2021 is not in the study: its spending table was not sourced, so it has no revenue row either. 2018 and 2019 are left out on purpose: those laws print one revenue total split into Titre I, Titre II and the special treasury funds, with loans inside Titre II and no tax or non-tax split, so they cannot sit on these two ratios without inventing a mapping.',
+			sources: 'Sources, revenue side, with pages and kept crops'
+		},
+		verification: {
+			note: 'Adopted years: 215 figures, every one read from its law and audited twice. 214 are verified: 188 by two readers agreeing, 26 settled by a third reader or by the programme arithmetic. One is read once, the 2024 Constitutional Court at 0 MD, page 3502, marked 1. A d marks a figure computed from verified printed lines, so it is never presented as a printed cell. Each cell carries its Journal Officiel page.',
 		},
 		sections: [
 			{
@@ -169,8 +208,8 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				label: 'The board',
 				heading: 'One board, one coin, no score',
 				body: [
-					'Each system shows two bars on one scale: the state’s 2027 plan, and yours. Drag one system onto another and a coin of 100 MD moves between them. Hold still to keep the money flowing. Money you take and have not placed waits in the purse, and you finish when the purse is empty.',
-					'Nothing is scored or ranked. Keeping the plan as it is counts as an answer.'
+					'Each system shows two bars on one scale: the state’s 2027 plan, and yours. Thin bars above them show the adopted budgets of past years, oldest first. Drag one system onto another and a coin of 100 MD moves between them. Money you take and have not placed waits in the purse, and you finish when the purse is empty.',
+					'Nothing is scored or ranked. A line can be opened for its 2026 programmes, and set to zero or back to the draft; a prototype aid also sets it to its 2024 level, outside the study task. Keeping the plan as it is counts as an answer: tick that you would keep it, and Finish opens.'
 				]
 			},
 			{
@@ -180,7 +219,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				heading: 'Draft figures, each with its status',
 				body: [
 					'Every amount here is a draft reported by the press during the budget hearings. None has been checked against the official document yet. The study will not open on a figure until it has a page reference in the adopted law.',
-					'Some lines on the board join several ministries, and the subsidies line is cut out of two of them. The table says what each board line is made of.'
+					'Some lines on the board join several ministries, and the two subsidy lines are cut out of two of them. The table says what each board line is made of, and each line can be opened for its 2026 programme detail.'
 				]
 			},
 			{
@@ -190,7 +229,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				heading: 'How the answers will be read',
 				body: [
 					'For each line: the share of respondents who would give it more, the same, or less than its plan, and the median change with its interquartile range. The average budget submitted, with a bootstrap interval. A consensus measure. A result without the largest link channel.',
-					'Results are shown only above 100 valid answers, and no cell under 20 is shown. Population: among respondents to an open, self-selected online survey of adults. Results describe the people who took part, not the country as a whole.'
+					'Results are shown only above 300 valid answers, and no cell under 20 is shown. The 300 floor is a proposed amendment, dated 16 November 2026, pending the owner\'s confirmation; it was raised from 100 before any data exist. The number of valid answers and the fielding dates lead the results page, not a footnote. Population: among respondents to an open, self-selected online survey of adults. Results describe the people who took part, not the country as a whole.'
 				]
 			},
 			{
@@ -250,8 +289,12 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			{ label: 'Figures', value: 'Draft, press-reported, not verified.' },
 			{ label: 'Translation', value: 'English only for now. French and Arabic are drafts pending review.' }
 		],
-		draftNotice: 'Every 2027 figure on this page is a press-reported draft, not a verified official figure. The 2024 to 2026 figures come from the adopted laws.',
+		draftNotice: 'Every 2027 figure on this page is a press-reported draft, not a verified official figure. The past-year figures come from the adopted laws, with their Journal Officiel pages.',
 		interimNotice: null,
+		withdrawal: {
+			heading: 'Withdrawal and the receipt',
+			body: 'In the real study, submitting a budget would produce a random receipt code. That code is the only handle on your answers: you could enter it on the withdrawal page to delete your response while the study window is open. Once the window closes and the data are frozen, deletion is no longer possible. In this prototype nothing is submitted, no receipt is issued, and there is nothing to withdraw.'
+		},
 		closing: ['The total does not move.', 'Only where it goes does.'],
 		answerKinds: { consent: 'Required tick', allocation: 'On the board', single_choice: 'One choice', scale_0_10: 'From 0 to 10' },
 		optional: 'optional',
@@ -292,14 +335,14 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			heading: 'Pourquoi c’est plus difficile qu’il n’y paraît',
 			items: [
 				{ key: 'locked', title: 'Dû avant tout choix', body: 'Les intérêts de la dette passée et une réserve pour imprévus sont payés d’abord. Personne ne peut les déplacer cette année, ils restent à part sur le plateau.' },
-				{ key: 'subsidies', title: 'Les subventions sont dans les ministères', body: 'Les subventions aux carburants, à l’électricité et aux produits de base passent par les budgets de l’Industrie et du Commerce. Le plateau les isole en une ligne, pour qu’on les voie et qu’on puisse les déplacer.' },
+				{ key: 'subsidies', title: 'Les subventions sont dans les ministères', body: 'Les subventions aux carburants et à l’électricité, et celles aux produits de base, passent par les budgets de l’Industrie et du Commerce. Le plateau les sépare en deux lignes, pour qu’on puisse protéger l’alimentation et réduire le carburant, ou l’inverse. La répartition 2027 entre les deux est dérivée et signalée.' },
 				{ key: 'largest', title: 'Quelques postes tiennent l’essentiel', body: 'Les quatre plus grands postes tiennent cette part de tout ce qui peut bouger. Sur une même échelle, les plus petits sont des filets.' },
 				{ key: 'zero', title: 'Chaque dinar vient de quelque part', body: 'Le total ne bouge pas. Donnez 100 MD à un poste et vous les avez pris à un autre, ou à la bourse.' }
 			]
 		},
 		demo: {
 			title: 'Essayez avec trois postes',
-			body: 'Glissez un poste sur un autre, ou utilisez les boutons. Ce sont les chiffres du projet pour trois des vingt-deux postes.',
+			body: 'Glissez un poste sur un autre, ou utilisez les boutons. Ce sont les chiffres du projet pour trois des vingt-sept postes.',
 			purse: 'Bourse',
 			reset: 'Remettre',
 			take: (name) => `Retirer 100 MD de ${name}`,
@@ -318,14 +361,36 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			draft: 'Projet, MD',
 			status: 'Statut',
 			madeOf: 'Composée de',
+			madeOfNote: "Les notes de composition sont en anglais jusqu'à la passe de traduction.",
 			less: 'moins',
 			chip: { 'draft-press': 'Presse, non vérifié', 'draft-derived': 'Calculé, non vérifié', 'draft-plf': 'Projet de loi', 'adopted-lf': 'Loi adoptée' },
 			sources: 'Chaque ligne du fichier des chiffres, avec sa source',
 			locked: 'Dû, ne bouge pas',
 			total: 'Total',
-			adopted: (y) => `${y}, adoptée`,
-			historySources: 'Les lois adoptées de 2024, 2025 et 2026, avec leurs pages au Journal officiel',
-			historyNote: "Les colonnes 2024 à 2026 sont les budgets votés dans chaque loi de finances (tableau C du Journal officiel), en dinars de chaque année. Pour ces années, les subventions et la ligne énergie et commerce sont lues sur des programmes : elles sont proches de la définition 2027, pas identiques."
+			adopted: (y) => y,
+			pastHeading: 'Années passées, adoptées',
+			historySources: 'Les lois adoptées, avec leurs pages au Journal officiel et les images de page conservées',
+			historyNote: "Les colonnes des années passées sont les budgets votés dans chaque loi de finances (tableau C du Journal officiel), en dinars de chaque année, sans correction de l'inflation. Les deux lignes de subventions sont lues sur les programmes énergie et commerce intérieur. La répartition 2027 entre carburant et alimentation est dérivée des deux lignes ministérielles qui contiennent la note, car la répartition par type n'est pas publiée."
+		},
+		revenue: {
+			heading: "D'où venait l'argent",
+			intro: "Deux ratios, lus dans chaque loi, répondent à deux questions différentes. L'un dit quelle part de ce que l'État prélève lui-même est de l'impôt. L'autre dit quelle part de ses dépenses cet impôt paie.",
+			per100: {
+				label: "L'impôt dans chaque tranche de 100 dinars que l'État prélève lui-même",
+				text: "L'impôt divisé par l'impôt plus les recettes non fiscales. Les dons et l'emprunt ne sont pas de l'argent que l'État prélève lui-même : ils sont hors de ce dénominateur. C'est le dénominateur du 91 de la phrase d'ouverture."
+			},
+			covered: {
+				label: "Dépenses couvertes par l'impôt",
+				text: "L'impôt divisé par les crédits de paiement de la même loi. Le reste est couvert par les recettes non fiscales, les dons et l'emprunt."
+			},
+			caption: "Les lois adoptées, côté recettes",
+			th: { year: 'Loi', spending: 'Dépenses, MD', tax: 'Impôt, MD', own: 'Prélevé lui-même, MD', per100: 'Impôt pour 100 prélevés', covered: 'Dépenses couvertes, %', page: 'p.' },
+			note: "L'impôt, les recettes non fiscales et les dons sont lus dans l'article premier et l'article 2 de chaque loi de finances, publiés au Journal officiel. La colonne des dépenses est le tableau C de la même loi, le total que le volet dépenses de cette étude utilise déjà. Chaque chiffre a sa page imprimée et une image de page conservée dans les fichiers de l'étude.",
+			leftOut: "Aucune année adoptée entre 2020 et 2026 ne manque. 2021 n'est pas dans l'étude : son tableau de dépenses n'a pas été sourcé, donc elle n'a pas non plus de ligne de recettes. 2018 et 2019 sont écartées volontairement : ces lois impriment un seul total de recettes réparti en Titre I, Titre II et fonds spéciaux du Trésor, avec les emprunts dans le Titre II et sans ventilation impôt / non-impôt ; elles ne peuvent pas figurer sur ces deux ratios sans inventer une correspondance.",
+			sources: 'Sources, côté recettes, avec pages et images conservées'
+		},
+		verification: {
+			note: "Années adoptées : 215 chiffres, tous lus dans leur loi et audités deux fois. 214 sont vérifiés : 188 par deux lecteurs d'accord, 26 tranchés par un troisième lecteur ou par l'arithmétique des programmes. Un est lu une seule fois, la Cour constitutionnelle 2024 à 0 MD, page 3502, marqué 1. Un d marque un chiffre calculé à partir de lignes imprimées vérifiées, jamais présenté comme une cellule imprimée. Chaque cellule porte sa page au Journal officiel.",
 		},
 		sections: [
 			{
@@ -344,7 +409,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				label: 'Le plateau',
 				heading: 'Un plateau, une pièce, aucun score',
 				body: [
-					'Chaque poste montre deux barres sur une même échelle : le projet de l’État pour 2027, et le vôtre. Glissez un poste sur un autre et une pièce de 100 MD passe de l’un à l’autre. Restez immobile pour que l’argent continue de couler. L’argent retiré et pas encore placé attend dans la bourse, et vous terminez quand la bourse est vide.',
+					'Chaque poste montre deux barres sur une même échelle : le projet de l’État pour 2027, et le vôtre. Des barres fines au-dessus montrent les budgets adoptés des années passées, de la plus ancienne à la plus récente. Glissez un poste sur un autre et une pièce de 100 MD passe de l’un à l’autre. L’argent retiré et pas encore placé attend dans la bourse, et vous terminez quand la bourse est vide.',
 					'Rien n’est noté ni classé. Garder le projet tel quel est une réponse.'
 				]
 			},
@@ -365,7 +430,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				heading: 'Comment les réponses seront lues',
 				body: [
 					'Pour chaque ligne : la part des répondants qui lui donneraient plus, autant ou moins que son projet, et l’écart médian avec son intervalle interquartile. Le budget moyen soumis, avec un intervalle bootstrap. Une mesure de consensus. Un résultat sans le plus grand canal de lien.',
-					'Les résultats ne sont affichés qu’au-dessus de 100 réponses valides, et aucune cellule de moins de 20 n’est montrée. Population : parmi les répondants à une enquête en ligne ouverte et auto-sélectionnée auprès d’adultes. Les résultats décrivent les personnes qui ont participé, pas le pays dans son ensemble.'
+					'Les résultats ne sont affichés qu’au-dessus de 300 réponses valides, et aucune cellule de moins de 20 n’est montrée. Le seuil de 300 est un amendement proposé, daté du 16 novembre 2026, en attente de la confirmation du commanditaire ; il a été relevé de 100 avant que des données existent. Le nombre de réponses valides et les dates de terrain ouvrent la page de résultats, pas une note de bas de page. Population : parmi les répondants à une enquête en ligne ouverte et auto-sélectionnée auprès d’adultes. Les résultats décrivent les personnes qui ont participé, pas le pays dans son ensemble.'
 				]
 			},
 			{
@@ -425,8 +490,12 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			{ label: 'Chiffres', value: 'Provisoires, rapportés par la presse, non vérifiés.' },
 			{ label: 'Traduction', value: 'Anglais seulement pour l’instant. Le français et l’arabe sont des brouillons en attente de relecture.' }
 		],
-		draftNotice: 'Chaque chiffre 2027 de cette page est un projet rapporté par la presse, non un chiffre officiel vérifié. Les chiffres 2024 à 2026 viennent des lois adoptées.',
+		draftNotice: 'Chaque chiffre 2027 de cette page est un projet rapporté par la presse, non un chiffre officiel vérifié. Les chiffres des années passées viennent des lois adoptées, avec leurs pages au Journal officiel.',
 		interimNotice: 'Traduction provisoire, non relue par une personne de langue maternelle.',
+		withdrawal: {
+			heading: 'Retrait et reçu',
+			body: "Dans l'étude réelle, l'envoi d'un budget produirait un code de reçu aléatoire. Ce code est le seul lien avec vos réponses : vous pourriez le saisir sur la page de retrait pour supprimer votre réponse tant que la période de l'étude est ouverte. Une fois la période close et les données figées, la suppression n'est plus possible. Dans ce prototype, rien n'est envoyé, aucun reçu n'est délivré et il n'y a rien à retirer."
+		},
 		closing: ['Le total ne bouge pas.', 'Seule sa répartition change.'],
 		answerKinds: { consent: 'Case obligatoire', allocation: 'Sur le plateau', single_choice: 'Un seul choix', scale_0_10: 'De 0 à 10' },
 		optional: 'facultatif',
@@ -474,7 +543,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		},
 		demo: {
 			title: 'جرّب بثلاثة قطاعات',
-			body: 'اسحب قطاعًا على آخر، أو استعمل الأزرار. هذه أرقام المشروع لثلاثة من القطاعات الاثنين والعشرين.',
+			body: 'اسحب قطاعًا على آخر، أو استعمل الأزرار. هذه أرقام المشروع لثلاثة من القطاعات السبعة والعشرين.',
 			purse: 'المحفظة',
 			reset: 'أعدها كما كانت',
 			take: (name) => `خذ 100 م.د من ${name}`,
@@ -493,14 +562,36 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			draft: 'المشروع، م.د',
 			status: 'الوضع',
 			madeOf: 'يتكوّن من',
+			madeOfNote: 'ملاحظات التكوين بالإنجليزية إلى حين مراجعة الترجمة.',
 			less: 'ناقص',
 			chip: { 'draft-press': 'الصحافة، غير متحقّق', 'draft-derived': 'محسوب، غير متحقّق', 'draft-plf': 'مشروع القانون', 'adopted-lf': 'القانون المصادق عليه' },
 			sources: 'كلّ صفّ في ملفّ الأرقام، مع مصدره',
 			locked: 'واجب، لا يتحرّك',
 			total: 'المجموع',
-			adopted: (y) => `${y}، مصادق عليه`,
-			historySources: 'قوانين المالية المصادق عليها لسنوات 2024 و2025 و2026، مع صفحاتها في الرائد الرسمي',
-			historyNote: 'أعمدة 2024 إلى 2026 هي الميزانيات كما صودق عليها في كل قانون مالية (جدول نفقات ميزانية الدولة في الرائد الرسمي)، بدنانير كل سنة. في تلك السنوات يُقرأ الدعم وبند الطاقة والتجارة من البرامج، فهما قريبان من تعريف 2027 وليسا مطابقين له.'
+			adopted: (y) => y,
+			pastHeading: 'السنوات الماضية، مصادق عليها',
+			historySources: 'قوانين المالية المصادق عليها، مع صفحاتها في الرائد الرسمي وصور الصفحات المحفوظة',
+			historyNote: 'أعمدة السنوات الماضية هي الميزانيات كما صودق عليها في كل قانون مالية (جدول نفقات ميزانية الدولة في الرائد الرسمي)، بدنانير كل سنة، دون احتساب التضخّم. ويُقرأ بندا الدعم من برنامجي الطاقة والتجارة الداخلية. أمّا تقسيم 2027 بين المحروقات والغذاء فمشتقّ من بندي الوزارتين اللذين يحتويان المذكرة، لأن التقسيم حسب النوع لم يُنشر.'
+		},
+		revenue: {
+			heading: 'من أين جاء المال',
+			intro: 'نسبتان، تُقرآن من كل قانون، تجيبان عن سؤالين مختلفين. الأولى تقول كم من أموال تجمعها الدولة بنفسها هي ضريبة. والثانية تقول كم من نفقاتها تغطيه هذه الضريبة.',
+			per100: {
+				label: 'الضريبة في كل 100 دينار تجمعها الدولة بنفسها',
+				text: 'الضريبة مقسومة على الضريبة زائد الإيرادات غير الجبائية. الهبات والاقتراض ليست أموالًا تجمعها الدولة بنفسها، فهي خارج هذا المقام. وهذا هو مقام الرقم 91 في الجملة الافتتاحية.'
+			},
+			covered: {
+				label: 'النفقات التي تغطيها الضريبة',
+				text: 'الضريبة مقسومة على اعتمادات الدفع في القانون نفسه. ويُغطّى الباقي بالإيرادات غير الجبائية والهبات والاقتراض.'
+			},
+			caption: 'القوانين المصادق عليها، من جهة الإيرادات',
+			th: { year: 'القانون', spending: 'النفقات، م.د', tax: 'الضريبة، م.د', own: 'ما تجمعه بنفسها، م.د', per100: 'الضريبة من كل 100', covered: 'النفقات المغطاة، %', page: 'ص.' },
+			note: 'تُقرأ الضريبة والإيرادات غير الجبائية والهبات من الفصل الأول والفصل 2 من كل قانون مالية، كما نُشرت في الرائد الرسمي. وعمود النفقات هو الجدول «ج» من القانون نفسه، وهو المجموع الذي يستعمله جانب النفقات في هذه الدراسة. ولكل رقم صفحته المطبوعة وصورة الصفحة المحفوظة في ملفات الدراسة.',
+			leftOut: 'لا تنقص أي سنة مصادق عليها بين 2020 و2026. وسنة 2021 ليست في الدراسة: لم يُوثَّق جدول نفقاتها، فلا سطر إيرادات لها أيضًا. أمّا 2018 و2019 فمستبعدتان بقرار: تلك القوانين تطبع مجموع إيرادات واحدًا موزعًا على العنوان الأول والعنوان الثاني وصناديق الخزينة الخاصة، والاقتراض داخل العنوان الثاني، ودون تفصيل بين ضريبة وغير ضريبة، فلا يمكن إدراجهما في هاتين النسبتين دون اختراع مطابقة.',
+			sources: 'المصادر، من جهة الإيرادات، مع الصفحات والصور المحفوظة'
+		},
+		verification: {
+			note: 'السنوات المصادق عليها: 215 رقمًا، كلّها مقروءة من قانونها ومُدقَّقة مرتين. 214 مُتحقَّق منها: 188 بتوافق قارئين، و26 حُسمت بقارئ ثالث أو بحساب البرامج. ورقم واحد قُرئ مرة واحدة، المحكمة الدستورية 2024 عند 0 م.د، صفحة 3502، معلَّم بـ 1. والحرف d يعلّم رقمًا محسوبًا من بنود مطبوعة مُتحقَّق منها، فلا يُقدَّم بندًا مطبوعًا. ولكل خلية صفحتها في الرائد الرسمي.',
 		},
 		sections: [
 			{
@@ -519,7 +610,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				label: 'اللوحة',
 				heading: 'لوحة واحدة، قطعة واحدة، بلا نقاط',
 				body: [
-					'يُظهر كلّ قطاع شريطين على سلّم واحد: مشروع الدولة لسنة 2027، وتوزيعك. اسحب قطاعًا على آخر فتنتقل بينهما قطعة من 100 م.د. ابقَ ثابتًا ليستمرّ تدفّق المال. المال الذي تأخذه ولم تضعه بعد ينتظر في المحفظة، وتنهي حين تفرغ المحفظة.',
+					'يُظهر كلّ قطاع شريطين على سلّم واحد: مشروع الدولة لسنة 2027، وتوزيعك. وفوقهما أشرطة رفيعة تبيّن الميزانيات المصادق عليها للسنوات الماضية، من الأقدم إلى الأحدث. اسحب قطاعًا على آخر فتنتقل بينهما قطعة من 100 م.د. المال الذي تأخذه ولم تضعه بعد ينتظر في المحفظة، وتنهي حين تفرغ المحفظة.',
 					'لا شيء يُنقَّط أو يُرتَّب. الإبقاء على المشروع كما هو إجابة مقبولة.'
 				]
 			},
@@ -540,7 +631,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				heading: 'كيف ستُقرأ الإجابات',
 				body: [
 					'لكلّ بند: نسبة المستجيبين الذين سيعطونه أكثر أو مثله أو أقلّ من مشروعه، والتغيّر الوسيط مع مداه الربيعي. والميزانية المتوسّطة المقدَّمة، مع مجال ثقة بطريقة bootstrap. ومقياس توافق. ونتيجة دون أكبر قناة ربط.',
-					'لا تُعرض النتائج إلّا فوق 100 إجابة صالحة، ولا تُعرض أيّ خليّة أقلّ من 20. المجتمع: بين المستجيبين لاستبيان إلكتروني مفتوح وقائم على الانتقاء الذاتي للبالغين. تصف النتائج الأشخاص الذين شاركوا، لا البلد في مجموعه.'
+					'لا تُعرض النتائج إلّا فوق 300 إجابة صالحة، ولا تُعرض أيّ خليّة أقلّ من 20. والحدّ الأدنى البالغ 300 إجابة هو تعديل مقترح، بتاريخ 16 نوفمبر 2026، بانتظار تأكيد صاحب الدراسة؛ وقد رُفع من 100 قبل وجود أي بيانات. وعدد الإجابات الصالحة وتواريخ العمل الميداني تتصدّر صفحة النتائج، لا هامشها. المجتمع: بين المستجيبين لاستبيان إلكتروني مفتوح وقائم على الانتقاء الذاتي للبالغين. تصف النتائج الأشخاص الذين شاركوا، لا البلد في مجموعه.'
 				]
 			},
 			{
@@ -600,8 +691,12 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			{ label: 'الأرقام', value: 'مؤقّتة، نقلتها الصحافة، غير متحقّق منها.' },
 			{ label: 'الترجمة', value: 'الإنجليزية فقط في الوقت الحالي. الفرنسية والعربية مسودّتان في انتظار المراجعة.' }
 		],
-		draftNotice: 'كلّ رقم لسنة 2027 في هذه الصفحة مشروع نقلته الصحافة، وليس رقمًا رسميًّا متحقّقًا منه. أرقام 2024 إلى 2026 مأخوذة من القوانين المصادق عليها.',
+		draftNotice: 'كلّ رقم لسنة 2027 في هذه الصفحة مشروع نقلته الصحافة، وليس رقمًا رسميًّا متحقّقًا منه. أرقام السنوات الماضية مأخوذة من القوانين المصادق عليها، مع صفحاتها في الرائد الرسمي.',
 		interimNotice: 'ترجمة مؤقّتة، لم يراجعها متحدّث بالعربية كلغة أم.',
+		withdrawal: {
+			heading: 'السحب والإيصال',
+			body: 'في الدراسة الحقيقية، سيؤدي إرسال الميزانية إلى رمز إيصال عشوائي. هذا الرمز هو الرابط الوحيد بإجاباتك: يمكنك إدخاله في صفحة السحب لحذف إجابتك ما دامت فترة الدراسة مفتوحة. وبعد إغلاق الفترة وتثبيت البيانات، لا يعود الحذف ممكنًا. في هذا النموذج الأوّلي لا يُرسَل شيء، ولا يُسلَّم إيصال، ولا يوجد ما يُسحب.'
+		},
 		closing: ['المجموع لا يتغيّر.', 'وحده توزيعه يتغيّر.'],
 		answerKinds: { consent: 'خانة إلزامية', allocation: 'على اللوحة', single_choice: 'اختيار واحد', scale_0_10: 'من 0 إلى 10' },
 		optional: 'اختياري',

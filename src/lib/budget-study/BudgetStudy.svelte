@@ -2,6 +2,8 @@
 	import { app } from '$lib/state.svelte';
 	import Ruler from '$lib/index-study/Ruler.svelte';
 	import { FIGURES, HISTORY, type FigureRow } from './figures';
+	import { REVENUE } from './revenue';
+	import { cellCheck, checkPhrase } from './verification';
 	import { linesFrom, LINE_ROWS, type LineId } from '$lib/budget-game/lines';
 	import { copyFor } from '$lib/budget-game/copy';
 	import { boardCopyFor } from '$lib/budget-game/board-copy';
@@ -98,7 +100,10 @@
 	const top4Share = (top4.reduce((s, l) => s + l.draft, 0) / lines.envelope) * 100;
 	const FACT_VALUE: Record<FactKey, { value: string; unit: string }> = {
 		locked: { value: fmt(lockedTotal), unit: 'MD' },
-		subsidies: { value: fmt(lineOf('subsidies').draft), unit: 'MD' },
+		subsidies: {
+			value: fmt(lines.movable.filter((l) => l.id === 'subsidies_energy' || l.id === 'subsidies_food').reduce((s, l) => s + l.draft, 0)),
+			unit: 'MD'
+		},
 		largest: { value: top4Share.toFixed(0), unit: '%' },
 		zero: { value: '+100 −100', unit: '' }
 	};
@@ -133,6 +138,13 @@
 			return { id: l.id, name: names.lines[l.id].name, md: l.draft, locked: l.locked, status, madeOf };
 		})
 	);
+
+	/** The hover text of one adopted cell: its amount, then its page and audit status. */
+	function cellTitle(year: number, id: LineId, amount: number): string {
+		const check = cellCheck(year, id);
+		if (!check) return `${fmtMd(amount)} ${copy.unit}`;
+		return `${fmtMd(amount)} ${copy.unit} · ${checkPhrase(check, bc)}`;
+	}
 
 	/** The preview card built by scripts/build-og-images.ts, like the police index's. */
 	const OG_IMAGE = 'https://deeptunisia.org/og/citizen-budget.png';
@@ -284,12 +296,19 @@
 					{#each sec.figures.body as p, i (i)}<p>{p}</p>{/each}
 					<div class="table-scroll wide">
 						<table class="figures">
+							<caption>{copy.figures.pastHeading}</caption>
+							<colgroup>
+								<col class="c-name" />
+								{#each HISTORY as h (h.year)}<col class="c-year" />{/each}
+								<col class="c-draft" />
+								<col class="c-status" />
+							</colgroup>
 							<thead>
 								<tr>
 									<th scope="col">{copy.figures.system}</th>
 									{#each HISTORY as h (h.year)}<th scope="col" class="past">{copy.figures.adopted(String(h.year))}</th>{/each}
 									<th scope="col">{copy.figures.draft}</th>
-									<th scope="col">{copy.figures.status}</th>
+									<th scope="col" class="status-col">{copy.figures.status}</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -297,12 +316,18 @@
 									<tr class:locked={f.locked}>
 										<th scope="row">
 											{f.name}
-											{#if f.madeOf}<span class="made" lang="en" dir="ltr">{copy.figures.madeOf}: {f.madeOf}</span>{/if}
+											{#if f.madeOf && lang === 'en'}<span class="made" lang="en" dir="ltr">{copy.figures.madeOf}: {f.madeOf}</span>{/if}
 											{#if f.locked}<span class="made">{copy.figures.locked}</span>{/if}
+											<span class="chip status-mobile" data-status={f.status}>{copy.figures.chip[f.status]}</span>
 										</th>
-										{#each HISTORY as h (h.year)}<td class="past">{fmtMd(h.lines[f.id])}</td>{/each}
+										{#each HISTORY as h (h.year)}
+											{@const check = cellCheck(h.year, f.id)}
+											<td class="past" data-check={check?.status ?? 'none'} title={cellTitle(h.year, f.id, h.lines[f.id])}>
+												{fmtMd(h.lines[f.id])}{#if check?.status === 'derived'}<sup class="ck" aria-hidden="true">d</sup>{:else if check?.status === 'single'}<sup class="ck ck-single" aria-hidden="true">1</sup>{/if}
+											</td>
+										{/each}
 										<td>{fmtMd(f.md)}</td>
-										<td><span class="chip" data-status={f.status}>{copy.figures.chip[f.status]}</span></td>
+										<td class="status-col"><span class="chip" data-status={f.status}>{copy.figures.chip[f.status]}</span></td>
 									</tr>
 								{/each}
 							</tbody>
@@ -311,15 +336,17 @@
 							</tfoot>
 						</table>
 					</div>
+					{#if lang !== 'en'}<p class="note">{copy.figures.madeOfNote}</p>{/if}
 					<p class="note">{copy.draftNotice}</p>
 					<p class="note">{copy.figures.historyNote}</p>
+					<p class="note">{copy.verification.note}</p>
 					<details class="sources">
 						<summary>{copy.figures.sources}</summary>
 						<ul>
 							{#each FIGURES.rows as r (r.id)}
 								<li lang="en" dir="ltr">
 									<span class="src-name">{r.label_en}</span>
-									<span class="mono">{fmtMd(r.amount_md)} MD</span>
+									<span class="mono">{fmtMd(r.amount_md)} {copy.unit}</span>
 									<span class="src">{#if r.url}<a href={r.url} rel="noopener noreferrer">{r.source}</a>{:else}{r.source}{/if}</span>
 								</li>
 							{/each}
@@ -331,13 +358,69 @@
 							{#each HISTORY as h (h.year)}
 								<li lang="fr" dir="ltr">
 									<span class="src-name">{h.year}</span>
-									<span class="mono">{fmtMd(h.total_md)} MD</span>
+									<span class="mono">{fmtMd(h.total_md)} {copy.unit}</span>
 									<span class="src"><a href={h.url} rel="noopener noreferrer">{h.document}</a>. {h.source}, pages {Math.min(...Object.values(h.missions).map((m) => m.page))} to {Math.max(...Object.values(h.missions).map((m) => m.page))}.</span>
 								</li>
 							{/each}
 						</ul>
 					</details>
 					{#if study.population_statement}<p class="note">{study.population_statement}</p>{/if}
+
+					<div class="revenue">
+						<h3>{copy.revenue.heading}</h3>
+						<p>{copy.revenue.intro}</p>
+						<dl class="ratios">
+							<div>
+								<dt>{copy.revenue.per100.label}</dt>
+								<dd>{copy.revenue.per100.text}</dd>
+							</div>
+							<div>
+								<dt>{copy.revenue.covered.label}</dt>
+								<dd>{copy.revenue.covered.text}</dd>
+							</div>
+						</dl>
+						<div class="table-scroll wide">
+							<table class="revenue-table">
+								<caption>{copy.revenue.caption}</caption>
+								<thead>
+									<tr>
+										<th scope="col">{copy.revenue.th.year}</th>
+										<th scope="col">{copy.revenue.th.per100}</th>
+										<th scope="col">{copy.revenue.th.covered}</th>
+										<th scope="col">{copy.revenue.th.spending}</th>
+										<th scope="col">{copy.revenue.th.tax}</th>
+										<th scope="col">{copy.revenue.th.own}</th>
+									</tr>
+								</thead>
+								<tbody>
+									{#each REVENUE as r (r.year)}
+										<tr>
+											<th scope="row">{r.year}<span class="rev-page">{copy.revenue.th.page} {r.page}</span></th>
+											<td>{r.tax_per_100.toFixed(1)}</td>
+											<td>{r.covered_pct.toFixed(1)}</td>
+											<td>{fmtMd(r.spending_md)}</td>
+											<td>{fmtMd(r.tax_md)}</td>
+											<td>{fmtMd(r.own_md)}</td>
+										</tr>
+									{/each}
+								</tbody>
+							</table>
+						</div>
+						<p class="note">{copy.revenue.note}</p>
+						<p class="note">{copy.revenue.leftOut}</p>
+						<details class="sources">
+							<summary>{copy.revenue.sources}</summary>
+							<ul>
+								{#each REVENUE as r (r.year)}
+									<li lang="fr" dir="ltr">
+										<span class="src-name">{r.year}</span>
+										<span class="mono">{fmtMd(r.tax_md)} / {fmtMd(r.own_md)} {copy.unit}</span>
+										<span class="src"><a href={r.url} rel="noopener noreferrer">{r.document}</a>. {r.source}. Tableau A, page {r.tableau_a_page}. Crop: {r.crop}; tableau A crop: {r.tableau_a_crop}.</span>
+									</li>
+								{/each}
+							</ul>
+						</details>
+					</div>
 				</section>
 
 				<!-- 04 -->
@@ -370,6 +453,8 @@
 					<p class="sec-kicker mono">{sec.stored.num} / {sec.stored.label}</p>
 					<h2>{sec.stored.heading}</h2>
 					{#each sec.stored.body as p, i (i)}<p>{p}</p>{/each}
+					<h3 id="withdrawal">{copy.withdrawal.heading}</h3>
+					<p>{copy.withdrawal.body}</p>
 				</section>
 
 				<!-- 07 -->
@@ -696,6 +781,80 @@
 		font-size: var(--t-base);
 		color: var(--text-muted);
 	}
+	/* The revenue block sits inside the figures section: same subject, second table. */
+	.revenue {
+		display: grid;
+		gap: var(--s-4);
+		margin-block-start: var(--s-10);
+		padding-block-start: var(--s-6);
+		border-block-start: var(--rule);
+	}
+	.revenue h3 {
+		margin: 0;
+		font-size: var(--step-1);
+		line-height: 1.2;
+	}
+	.revenue p {
+		margin: 0;
+	}
+	.ratios {
+		display: grid;
+		gap: var(--s-4);
+		margin: 0;
+	}
+	.ratios > div {
+		display: grid;
+		gap: var(--s-1);
+		padding-inline-start: var(--s-4);
+		border-inline-start: 2px solid var(--accent-muted);
+	}
+	.ratios dt {
+		font-weight: 600;
+		color: var(--text-primary);
+	}
+	.ratios dd {
+		margin: 0;
+		font-size: var(--t-md);
+		line-height: 1.45;
+		color: var(--text-secondary);
+	}
+	.revenue-table {
+		min-inline-size: 30rem;
+		font-size: var(--t-sm);
+	}
+	.revenue-table th,
+	.revenue-table td {
+		padding-inline: var(--s-2);
+	}
+	.rev-page {
+		display: block;
+		white-space: nowrap;
+		font-family: var(--font-mono);
+		font-size: var(--t-2xs);
+		font-weight: 400;
+		color: var(--text-muted);
+	}
+	.ck {
+		margin-inline-start: 1px;
+		font-family: var(--font-mono);
+		font-size: var(--t-2xs);
+		color: var(--text-muted);
+		text-decoration: none;
+	}
+	.ck-single {
+		color: var(--text-secondary);
+		font-weight: 600;
+	}
+	.revenue-table caption {
+		caption-side: top;
+		padding-block-end: var(--s-2);
+		text-align: start;
+		font-family: var(--font-mono);
+		font-size: var(--t-2xs);
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--text-muted);
+	}
 	.wide {
 		inline-size: min(var(--wide), calc(100cqi - 2 * var(--s-10)));
 		margin-inline: calc((var(--col) - min(var(--wide), calc(100cqi - 2 * var(--s-10)))) / 2);
@@ -786,10 +945,70 @@
 		color: var(--text-muted);
 		white-space: nowrap;
 	}
+	.figures {
+		table-layout: fixed;
+		inline-size: 100%;
+		font-size: var(--t-sm);
+	}
+	.figures caption {
+		caption-side: top;
+		padding-block-end: var(--s-2);
+		text-align: start;
+		font-family: var(--font-mono);
+		font-size: var(--t-2xs);
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--text-muted);
+	}
+	.figures th,
+	.figures td {
+		padding: var(--s-2);
+	}
+	.figures .c-name {
+		inline-size: 28%;
+	}
+	.figures .c-year {
+		inline-size: 8%;
+	}
+	.figures .c-draft {
+		inline-size: 10%;
+	}
+	.figures .c-status {
+		inline-size: 14%;
+	}
+	.figures td.past,
+	.figures th.past {
+		font-size: var(--t-xs);
+	}
+	.figures th[scope='row'] {
+		overflow-wrap: anywhere;
+	}
+	.status-mobile {
+		display: none;
+	}
 	@media (max-width: 640px) {
 		td.past,
-		th.past {
+		th.past,
+		.status-col {
 			display: none;
+		}
+		.status-mobile {
+			display: inline-block;
+			margin-block-start: var(--s-1);
+		}
+		.figures {
+			table-layout: auto;
+			inline-size: 100%;
+		}
+		.figures colgroup {
+			display: none;
+		}
+		.figures .c-name {
+			inline-size: auto;
+		}
+		.figures th,
+		.figures td {
+			padding: var(--s-2);
 		}
 	}
 	tr.locked td {

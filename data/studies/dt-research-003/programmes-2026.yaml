@@ -1,0 +1,285 @@
+# Programmes inside the adopted 2026 finance law, for the citizen budget study.
+#
+# STATUS: adopted-lf. Every amount is read from tableau C ("Dépenses du budget
+# de l'État, crédits de paiement") of Loi n° 2025-17 du 12 décembre 2025, JORT
+# n° 148 of 12 December 2025 (French translation), printed pages 3374 to 3376.
+# The page images are kept under sources/. Each mission's programmes must add
+# up to the mission total already in history-lf-2020-2026.yaml; the build check
+# enforces it.
+#
+# These are the last adopted law's chapters. They are shown in the board's
+# detail panel for context. They are not 2027 figures: the 2027 draft has one
+# press-reported total per mission, not a programme split. Nothing here is used
+# to split a 2027 board line.
+
+study: dt-research-003
+year: 2026
+document: "Loi n° 2025-17 du 12 décembre 2025, portant loi de finances pour l'année 2026"
+source: "JORT n° 148, 12 décembre 2025 (French translation), tableau C"
+url: "https://lake.jort.tn/journal-officiel/fr/2025/148.pdf"
+pdf_sha256: "17a95b487e066f5c5c4bd6e160d331bdccaada5ecb0b72e1ae054c14f3096110"
+pages:
+  3374: "sources/lf2026-p3374.png"
+  3375: "sources/lf2026-p3375.png"
+  3376: "sources/lf2026-p3376.png"
+missions:
+  arp:
+    label: "Assemblée des Représentants du Peuple"
+    total_md: 48.876
+    page: 3374
+    programmes:
+      - { label: "Assemblée des représentants du peuple", amount_md: 48.876 }
+  anrd:
+    label: "Assemblée Nationale des Régions et des Districts"
+    total_md: 24.088
+    page: 3374
+    programmes:
+      - { label: "Assemblée Nationale des Régions et des Districts", amount_md: 24.088 }
+  presidency:
+    label: "Présidence de la République"
+    total_md: 229.705
+    page: 3374
+    programmes:
+      - { label: "Sécurité nationale et relations extérieures", amount_md: 10.722 }
+      - { label: "Sécurité présidentielle", amount_md: 178.316 }
+      - { label: "Pilotage et appui", amount_md: 40.667 }
+  head_of_government:
+    label: "Présidence du Gouvernement"
+    total_md: 284.5
+    page: 3374
+    programmes:
+      - { label: "Tutelle", amount_md: 17.259 }
+      - { label: "Contrôle", amount_md: 64.014 }
+      - { label: "Information, communication et formation", amount_md: 119.588 }
+      - { label: "Gestion dans le secteur public", amount_md: 13.612 }
+      - { label: "Modernisation des services administratifs", amount_md: 2.13 }
+      - { label: "Pilotage et appui", amount_md: 67.897 }
+  interior:
+    label: "Mission de l'Intérieur"
+    total_md: 6239.8
+    page: 3374
+    programmes:
+      - { label: "Sécurité nationale", amount_md: 2459.316 }
+      - { label: "Garde nationale", amount_md: 1664.455 }
+      - { label: "Protection civile", amount_md: 373.65 }
+      - { label: "Affaires locales", amount_md: 1132.065 }
+      - { label: "Pilotage et appui", amount_md: 610.314 }
+  justice:
+    label: "Mission de la Justice"
+    total_md: 1025.5
+    page: 3374
+    programmes:
+      - { label: "Justice", amount_md: 418.635 }
+      - { label: "Prisons et rééducation", amount_md: 537.35 }
+      - { label: "Pilotage et appui", amount_md: 69.515 }
+  foreign_affairs:
+    label: "Mission des Affaires Étrangères, de la Migration et des Tunisiens à l'Étranger"
+    total_md: 370.137
+    page: 3374
+    programmes:
+      - { label: "Action diplomatique", amount_md: 230.566 }
+      - { label: "Action consulaire et tunisiens à l'étranger", amount_md: 108.742 }
+      - { label: "Pilotage et appui", amount_md: 30.829 }
+  national_defence:
+    label: "Mission de la Défense Nationale"
+    total_md: 5014.008
+    page: 3374
+    programmes:
+      - { label: "Intervention militaire", amount_md: 2932.482 }
+      - { label: "Soutien logistique et technique", amount_md: 1013.006 }
+      - { label: "Assistance aux militaires", amount_md: 534.831 }
+      - { label: "Pilotage et appui", amount_md: 533.689 }
+  religious_affairs:
+    label: "Mission des Affaires Religieuses"
+    total_md: 202.4
+    page: 3374
+    programmes:
+      - { label: "Développement religieux", amount_md: 181.72 }
+      - { label: "Pilotage et appui", amount_md: 20.68 }
+  finance:
+    label: "Mission des Finances"
+    total_md: 1477
+    page: 3374
+    programmes:
+      - { label: "Douane", amount_md: 588.339 }
+      - { label: "Fiscalité", amount_md: 313.86 }
+      - { label: "Comptabilité publique", amount_md: 441.582 }
+      - { label: "Services budgétaires", amount_md: 16.059 }
+      - { label: "Dette publique", amount_md: 3.258 }
+      - { label: "Pilotage et appui", amount_md: 113.862 }
+  economy_planning:
+    label: "Mission de l'Économie et de la Planification"
+    total_md: 895.331
+    page: 3374
+    programmes:
+      - { label: "Équilibres globaux et statistiques", amount_md: 40.368 }
+      - { label: "Appui au développement sectoriel et régional", amount_md: 689.254 }
+      - { label: "Coopération internationale", amount_md: 76.909 }
+      - { label: "Encadrement de l'investissement", amount_md: 76.757 }
+      - { label: "Pilotage et appui", amount_md: 12.043 }
+  state_domains:
+    label: "Mission des Domaines de l'État et des Affaires Foncières"
+    total_md: 94.165
+    page: 3375
+    programmes:
+      - { label: "Gestion des domaines de l'État", amount_md: 20.985 }
+      - { label: "Protection des domaines de l'État", amount_md: 41.785 }
+      - { label: "Pilotage et appui", amount_md: 31.395 }
+  agriculture_water_fisheries:
+    label: "Mission de l'Agriculture, des Ressources Hydrauliques et de la Pêche"
+    total_md: 2400
+    page: 3375
+    programmes:
+      - { label: "Production agricole, qualité et sécurité sanitaire des produits agricoles et alimentaires", amount_md: 480.002 }
+      - { label: "Pêche et aquaculture", amount_md: 140.509 }
+      - { label: "Eaux", amount_md: 943.452 }
+      - { label: "Forêts et aménagement des terres agricoles", amount_md: 379.888 }
+      - { label: "Enseignement supérieur agricole, recherche, vulgarisation et formation agricole", amount_md: 232.064 }
+      - { label: "Pilotage et appui", amount_md: 224.085 }
+  industry_mines_energy:
+    label: "Mission de l'Industrie, des Mines et de l'Énergie"
+    total_md: 5325.619
+    page: 3375
+    programmes:
+      - { label: "Énergie", amount_md: 5115.351 }
+      - { label: "Industrie", amount_md: 187.092 }
+      - { label: "Mines", amount_md: 7.873 }
+      - { label: "Pilotage et appui", amount_md: 15.303 }
+  trade_export:
+    label: "Mission du Commerce et du Développement des Exportations"
+    total_md: 4260
+    page: 3375
+    programmes:
+      - { label: "Commerce intérieur", amount_md: 4134.719 }
+      - { label: "Commerce extérieur", amount_md: 109.511 }
+      - { label: "Pilotage et appui", amount_md: 15.77 }
+  communication_technologies:
+    label: "Mission des Technologies de la Communication"
+    total_md: 197.335
+    page: 3375
+    programmes:
+      - { label: "Développement numérique", amount_md: 161.335 }
+      - { label: "Pilotage et appui", amount_md: 36 }
+  tourism:
+    label: "Mission du Tourisme"
+    total_md: 166.578
+    page: 3375
+    programmes:
+      - { label: "Tourisme et artisanat", amount_md: 161.714 }
+      - { label: "Pilotage et appui", amount_md: 4.864 }
+  equipment_housing:
+    label: "Mission de l'Équipement et de l'Habitat"
+    total_md: 2150.34
+    page: 3375
+    programmes:
+      - { label: "Infrastructure routière", amount_md: 1526.335 }
+      - { label: "Protection des villes, du littoral et maîtrise des ouvrages", amount_md: 236.09 }
+      - { label: "Aménagement du territoire, urbanisme et habitat", amount_md: 336.295 }
+      - { label: "Pilotage et appui", amount_md: 51.62 }
+  environment:
+    label: "Mission de l'Environnement"
+    total_md: 500
+    page: 3375
+    programmes:
+      - { label: "Environnement et développement durable", amount_md: 486.805 }
+      - { label: "Pilotage et appui", amount_md: 13.195 }
+  transport:
+    label: "Mission des Transports"
+    total_md: 1267.3
+    page: 3375
+    programmes:
+      - { label: "Transport terrestre", amount_md: 1179.074 }
+      - { label: "Aviation civile", amount_md: 14.236 }
+      - { label: "Transport maritime et ports", amount_md: 37.941 }
+      - { label: "Pilotage et appui", amount_md: 36.049 }
+  culture_arts:
+    label: "Mission des Affaires Culturelles"
+    total_md: 460.969
+    page: 3375
+    programmes:
+      - { label: "Arts", amount_md: 64.091 }
+      - { label: "Livre et lecture", amount_md: 35.403 }
+      - { label: "Action culturelle", amount_md: 247.472 }
+      - { label: "Patrimoine", amount_md: 79.473 }
+      - { label: "Pilotage et appui", amount_md: 34.53 }
+  youth_sports:
+    label: "Mission de la Jeunesse et des Sports"
+    total_md: 1005
+    page: 3375
+    programmes:
+      - { label: "Jeunesse", amount_md: 216.301 }
+      - { label: "Sport", amount_md: 219.008 }
+      - { label: "Éducation physique", amount_md: 501.026 }
+      - { label: "Pilotage et appui", amount_md: 68.665 }
+  family_women_children_seniors:
+    label: "Mission de la Famille, de la Femme, de l'Enfance et des Personnes Âgées"
+    total_md: 287
+    page: 3376
+    programmes:
+      - { label: "Femme, famille et égalité des chances", amount_md: 25.584 }
+      - { label: "Enfance", amount_md: 207.268 }
+      - { label: "Personnes Âgées", amount_md: 24.024 }
+      - { label: "Pilotage et appui", amount_md: 30.124 }
+  health:
+    label: "Mission de la Santé"
+    total_md: 4350
+    page: 3376
+    programmes:
+      - { label: "Soins de santé de base", amount_md: 1373.241 }
+      - { label: "Services de santé hospitalière", amount_md: 899.82 }
+      - { label: "Recherche et services hospitaliers universitaires", amount_md: 1792.795 }
+      - { label: "Pilotage et appui", amount_md: 284.144 }
+  social_affairs:
+    label: "Mission des Affaires Sociales"
+    total_md: 4080.5
+    page: 3376
+    programmes:
+      - { label: "Emploi et relations professionnelles", amount_md: 32.075 }
+      - { label: "Sécurité sociale", amount_md: 1884.782 }
+      - { label: "Promotion sociale", amount_md: 2055.175 }
+      - { label: "Immigration et tunisiens à l'étranger", amount_md: 27.3 }
+      - { label: "Pilotage et appui", amount_md: 81.168 }
+  education:
+    label: "Mission de l'Éducation"
+    total_md: 8700
+    page: 3376
+    programmes:
+      - { label: "Phase primaire", amount_md: 3233.482 }
+      - { label: "Phase préparatoire et secondaire", amount_md: 4601.538 }
+      - { label: "Pilotage et appui", amount_md: 864.98 }
+  higher_education_research:
+    label: "Mission de l'Enseignement Supérieur et de la Recherche Scientifique"
+    total_md: 2379.18
+    page: 3376
+    programmes:
+      - { label: "Enseignement supérieur", amount_md: 1636.762 }
+      - { label: "Recherche scientifique", amount_md: 215.524 }
+      - { label: "Œuvres universitaires", amount_md: 477.476 }
+      - { label: "Pilotage et appui", amount_md: 49.417 }
+  employment_training:
+    label: "Mission de l'Emploi et de la Formation Professionnelle"
+    total_md: 1063.9
+    page: 3376
+    programmes:
+      - { label: "Formation professionnelle", amount_md: 494.54 }
+      - { label: "Emploi", amount_md: 383.159 }
+      - { label: "Développement de l'initiative privée", amount_md: 161.3 }
+      - { label: "Pilotage et appui", amount_md: 24.901 }
+  higher_council_education:
+    label: "Conseil Supérieur de l'Éducation et de l'Enseignement"
+    total_md: 10
+    page: 3376
+    programmes:
+      - { label: "Conseil Supérieur de l'Éducation et de l'Enseignement", amount_md: 10 }
+  court_of_accounts:
+    label: "Cour des Comptes"
+    total_md: 35.563
+    page: 3376
+    programmes:
+      - { label: "Cour des comptes", amount_md: 35.563 }
+  isie_elections:
+    label: "Instance Supérieure Indépendante pour les Élections"
+    total_md: 27.703
+    page: 3376
+    programmes:
+      - { label: "Instance supérieure indépendante pour les élections", amount_md: 27.703 }

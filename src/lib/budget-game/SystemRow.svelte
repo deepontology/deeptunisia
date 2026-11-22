@@ -18,19 +18,13 @@
 <script lang="ts">
 	import type { Direction } from './diff';
 
-	/** One point of a line's history: a past year's law, or the 2027 draft. */
-	export interface TrendPoint {
-		year: number;
-		md: number;
-		draft: boolean;
-	}
-
 	/**
-	 * One system on the board: its name, two bars on the board's common scale
-	 * (the state's 2027 plan as a filled reference, the citizen's allocation in
-	 * the accent), a mark at the plan across both, and the difference in MD
-	 * and per cent. Direction is carried by the sign and the word, never by
-	 * colour alone.
+	 * One system on the board: its name, three bars on the board's common scale
+	 * (the compared past year, the state's 2027 plan, the citizen's allocation in
+	 * the accent), a mark at the plan, and the difference in MD and per cent.
+	 * The past year is the one the year chips compare, not a series: the series
+	 * lives in the trend chart. Direction is carried by the sign and the word,
+	 * never by colour alone.
 	 */
 	let {
 		id,
@@ -47,9 +41,10 @@
 		source = false,
 		refused = false,
 		pan = false,
-		trend = [],
-		firstYear = 2024,
-		lastYear = 2027
+		past = null,
+		pastTitle = '',
+		unit = '',
+		planDerived = false
 	}: {
 		id: string;
 		name: string;
@@ -66,33 +61,17 @@
 		refused?: boolean;
 		/** On a page that scrolls, let a touch pan the page; buttons move the money there. */
 		pan?: boolean;
-		/** Past years shown and the 2027 draft, oldest first. Empty hides the trend line. */
-		trend?: TrendPoint[];
-		firstYear?: number;
-		lastYear?: number;
+		/** The compared past year, drawn above the plan. Null draws no third bar. */
+		past?: { year: number; md: number } | null;
+		/** The past bar's hover label: its amount and the JORT audit of that cell. */
+		pastTitle?: string;
+		/** MD, م.د and so on, for the past bar's title. */
+		unit?: string;
+		/** The 2027 plan is a derived split, not a reported figure. */
+		planDerived?: boolean;
 	} = $props();
 
-	/*
-	 * The trend line: its own scale per system, so a small system's movement shows,
-	 * but never stretched past what the money did: the window is at least 15% of the
-	 * largest value, so a 1% change stays a gentle slope.
-	 */
-	const SW = 52;
-	const SH = 18;
-	const PAD = 3;
-	const spark = $derived.by(() => {
-		if (trend.length < 2) return null;
-		const values = [...trend.map((p) => p.md), yours];
-		const hi = Math.max(...values);
-		const lo = Math.min(...values);
-		const span = Math.max(hi - lo, hi * 0.15, 1e-9);
-		const mid = (hi + lo) / 2;
-		const x = (year: number) => PAD + ((year - firstYear) / Math.max(1, lastYear - firstYear)) * (SW - 2 * PAD);
-		const y = (md: number) => SH / 2 - ((md - mid) / span) * (SH - 2 * PAD);
-		const pts = trend.map((p) => ({ x: x(p.year), y: y(p.md), draft: p.draft }));
-		return { pts, path: pts.map((p, i) => `${i ? 'L' : 'M'}${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' '), mine: { x: x(lastYear), y: y(yours) } };
-	});
-	const sparkTitle = $derived(trend.map((p) => `${p.year}${p.draft ? '*' : ''}: ${fmtMd(p.md)}`).join(' · '));
+	const pastWord = $derived(past ? pastTitle || `${past.year}: ${fmtMd(past.md)} ${unit}` : '');
 
 	const pct = (n: number) => `${Math.min(100, (Math.max(0, n) / scale) * 100)}%`;
 	const over = $derived(yours > scale);
@@ -102,37 +81,31 @@
 <div class="row" class:active class:target class:source class:refused class:pan data-drop={id} data-dir={direction}>
 	<div class="head">
 		<span class="grip" aria-hidden="true"></span>
-		<span class="name">{name}</span>
+		<span class="name" title={name}>{name}</span>
 		<span class="yours num" dir="ltr">{fmtMd(yours)}</span>
 		<span class="delta num" title={word}>
 			<span class="arrow" aria-hidden="true">{direction === 'more' ? '▲' : direction === 'less' ? '▼' : '='}</span>{#if direction !== 'same'}<bdi dir="ltr">{`${signed(deltaMd)} · ${signed(deltaPct, 1)}%`}</bdi>{/if}<span class="sr">{word}</span>
 		</span>
 	</div>
 	<div class="bars-line">
-		<div class="bars" aria-hidden="true">
-			<span class="bar plan" style:inline-size={pct(plan)}></span>
+		<div class="bars" aria-hidden="true" title={pastWord}>
+			{#if past}
+				<span class="bar year" style:inline-size={pct(past.md)} data-year={past.year}></span>
+			{/if}
+			<span class="bar plan" class:derived={planDerived} style:inline-size={pct(plan)}></span>
 			<span class="bar mine" class:over style:inline-size={pct(yours)}></span>
 			<span class="mark" style:inset-inline-start={pct(plan)}></span>
 		</div>
-		{#if spark}
-			<svg class="spark" viewBox="0 0 {SW} {SH}" width={SW} height={SH} aria-hidden="true">
-				<title>{sparkTitle}</title>
-				<path d={spark.path} />
-				{#each spark.pts as p, i (i)}
-					<circle class:draft={p.draft} cx={p.x} cy={p.y} r={p.draft ? 2.2 : 1.6} />
-				{/each}
-				<circle class="mine-dot" cx={spark.mine.x} cy={spark.mine.y} r="2.6" />
-			</svg>
-		{/if}
 	</div>
 	<div class="foot num" aria-hidden="true">
+		{#if past}<span>{past.year} {fmtMd(past.md)}</span>{/if}
 		<span>{words.plan} {fmtMd(plan)}</span>
 	</div>
 </div>
 
 <style>
 	.row {
-		--bar-h: var(--s-4);
+		--bar-h: var(--s-3);
 		position: relative;
 		display: grid;
 		grid-template-rows: auto auto auto;
@@ -208,9 +181,16 @@
 		font-size: var(--t-md);
 		font-weight: 550;
 		color: var(--text-primary);
-		white-space: nowrap;
+		line-height: 1.15;
+		/* Break at spaces, never inside a word. The box is clamped to two lines;
+		   the full name is in the row's aria label and the detail panel. */
+		overflow-wrap: break-word;
+		hyphens: none;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		line-clamp: 2;
+		-webkit-box-orient: vertical;
 		overflow: hidden;
-		text-overflow: ellipsis;
 	}
 	.num {
 		font-family: var(--font-mono);
@@ -269,6 +249,12 @@
 		background: var(--text-faint);
 		opacity: 0.55;
 	}
+	/* The compared past year: a solid mid grey, so the pale draft and the accent
+	   stay the two things that matter, and the past reads as the law as voted. */
+	.year {
+		background: var(--text-muted);
+		opacity: 0.7;
+	}
 	.mine {
 		background: var(--accent);
 	}
@@ -281,7 +267,7 @@
 	}
 	.mark {
 		position: absolute;
-		inset-block: calc(-1 * var(--s-1));
+		inset-block: 0;
 		inline-size: 2px;
 		margin-inline-start: -1px;
 		background: var(--text-primary);
@@ -291,45 +277,25 @@
 
 	.foot {
 		display: none;
+		gap: var(--s-4);
+		justify-content: flex-end;
 		font-size: var(--t-xs);
 		color: var(--text-muted);
 	}
 	.bars-line {
-		display: grid;
-		grid-template-columns: minmax(0, 1fr) auto;
-		align-items: center;
-		gap: var(--s-4);
+		display: block;
 	}
-	/* The trend reads left to right in every language, like the years on a calendar. */
-	.spark {
-		direction: ltr;
-		overflow: visible;
-	}
-	.spark path {
-		fill: none;
-		stroke: var(--text-muted);
-		stroke-width: 1.5;
-		stroke-linejoin: round;
-		stroke-linecap: round;
-	}
-	.spark circle {
-		fill: var(--text-muted);
-	}
-	.spark circle.draft {
-		fill: var(--text-primary);
-	}
-	.spark .mine-dot {
-		fill: var(--accent);
-		stroke: var(--surface-base, var(--bg));
-		stroke-width: 1;
+	.plan.derived {
+		background: repeating-linear-gradient(135deg, var(--text-faint) 0 2px, transparent 2px 5px);
+		opacity: 0.8;
 	}
 
 	/* Short rows, on a phone or a low window: one line of text, thinner bars, no foot. */
-	@media (max-width: 720px), (max-height: 760px) {
+	@media (max-width: 720px), (max-height: 860px) {
 		.row {
-			--bar-h: var(--s-3);
+			--bar-h: var(--s-2);
 			gap: var(--s-1);
-			padding-block: var(--s-2);
+			padding-block: var(--s-1);
 		}
 		.foot {
 			display: none;
