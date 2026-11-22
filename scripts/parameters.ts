@@ -67,8 +67,8 @@ export type Parameters = z.infer<typeof ParametersSchema>;
 /**
  * The shipped default — Tunisia, with the exact values the pre-split code
  * hard-coded. `loadParameters` returns this shape from YAML; the build then
- * calls configureSchema/configureTime so every validator reads these values
- * instead of literals.
+ * calls configureTime, and the deployment (scripts/engine.ts) reads the rest,
+ * so every validator reads these values instead of literals.
  */
 export const DEFAULT_PARAMETERS: Parameters = {
 	jurisdiction: {
@@ -86,7 +86,7 @@ export const DEFAULT_PARAMETERS: Parameters = {
 	},
 	time: {
 		floor: '1956-03-20',
-		cutoff: '2026-11-16',
+		cutoff: '2026-11-19',
 		beforeWindowYears: 8,
 		approxSlackDays: { year: 365, month: 92 }
 	},

@@ -508,7 +508,7 @@ async function checkLanding(
 			if (derivedCells !== 13) fail(`${name} figures audit`, `${derivedCells} derived cells, expected 13`);
 		}
 		const auditNote = (await page.locator('#sec-figures p.note').allInnerTexts()).join(' ');
-		if (!/215/.test(auditNote) || !/214/.test(auditNote)) fail(`${name} figures audit`, 'the figures table does not state the audit counts');
+		if (!/215/.test(auditNote) || !/212/.test(auditNote)) fail(`${name} figures audit`, 'the figures table does not state the audit counts');
 
 		assertNoPageErrors(errors, name);
 		ok(`${name}: no h-scroll, live example moved the purse ${before} -> ${after}, figures table carries the audit`);

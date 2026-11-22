@@ -3,8 +3,10 @@
 	import type { Snippet } from 'svelte';
 	import { app } from '$lib/state.svelte';
 	import { format } from '$lib/i18n';
-	import { t, tf, describeInterval, durationLabel, formatDate, layerLabel, relLabel, confidenceLabel, basisLabel, nameOf, entityName} from '$lib/t.svelte';
+	import { t, tf, describeInterval, durationLabel, formatDate, layerLabel, relLabel, confidenceLabel, basisLabel } from '$lib/t.svelte';
+	import { english, englishList, nameOf, entityName } from '$lib/names.svelte';
 	import Chip from '$lib/ui/Chip.svelte';
+	import BasisLine from '$lib/ui/BasisLine.svelte';
 	import OriginsChip from '$lib/ui/OriginsChip.svelte';
 	import Prose from '$lib/ui/Prose.svelte';
 	import Tooltip from '$lib/ui/Tooltip.svelte';
@@ -210,14 +212,11 @@
 
 			{#if tone === 'reported'}
 				<p class="caveat">
-					Claims below come from credible reporting but are not established by any public
-					document. Each names who is making the claim.
+					{t('panel.reported.caveat')}
 				</p>
 			{:else if tone === 'circulating'}
 				<p class="caveat hard">
-					These claims circulate without reliable evidence. They are recorded, not endorsed —
-					deleting them would leave no way to show why the popular account is wrong. Several
-					are contradicted by this project's own data.
+					{t('panel.circulating.caveat')}
 				</p>
 			{/if}
 
@@ -234,7 +233,7 @@
 								{entityName(other(rel))}
 							</button>
 							{#if tone !== 'circulating'}
-								<Chip size="xs" dot tint="var(--basis-{rel.basis})">{basisLabel(rel.basis)}</Chip>
+								<BasisLine record={rel} grade={false} />
 								<Chip variant="outline" size="xs" title={confidenceLabel(rel.confidence)}>{rel.confidence}</Chip>
 							{/if}
 						</div>
@@ -250,7 +249,7 @@
 							<p class="attrib" dir="auto">{t('panel.circulates')}: {rel.attributed_to}</p>
 						{/if}
 
-						<p class="r-desc" dir="auto">{rel.description}</p>
+						<p class="r-desc" dir="auto">{english(rel, 'description')}</p>
 						<SourceList ids={rel.sources} compact />
 						{@render relActions(rel)}
 					</li>
@@ -289,7 +288,7 @@
 	</div>
 {/snippet}
 
-<aside class="panel" aria-label="Entity detail">
+<aside class="panel" aria-label={t('panel.entityDetail')}>
 	<header>
 		<div class="titles">
 			<span class="eyebrow">
@@ -301,8 +300,8 @@
 			{:else if institution?.name_ar}
 				<span class="ar" dir="rtl" lang="ar">{institution.name_ar}</span>
 			{/if}
-			{#if person?.tagline}
-				<p class="tagline"><Prose record={person} field="tagline" /></p>
+			{#if english(person, 'tagline')}
+				<p class="tagline"><Prose record={person!} field="tagline" /></p>
 			{/if}
 		</div>
 		<div class="h-actions">
@@ -330,7 +329,7 @@
 				<span class="lp" style:--c={LAYER_COLOR[layer]}><i></i>{layerLabel(layer)}</span>
 			{/each}
 			{#if person}
-				<Chip size="xs" dot tint="var(--basis-{person.basis})">{basisLabel(person.basis)}</Chip>
+				<BasisLine record={person} grade={false} />
 				<Chip variant="outline" size="xs" title={confidenceLabel(person.confidence as Confidence)}>{confidenceLabel(person.confidence as Confidence)}</Chip>
 			{/if}
 			{#if person?.verification === 'needs-primary-source'}
@@ -358,7 +357,7 @@
 				<div class="kf">
 					{#if company.founded}<div class="kv"><span>{t('record.founded')}</span><b>{company.founded}</b></div>{/if}
 					{#if company.legal_form}<div class="kv"><span>{t('record.legalform')}</span><b>{company.legal_form}</b></div>{/if}
-					{#if company.capital?.tnd}<div class="kv"><span>{t('record.capital')}</span><b>{(company.capital.tnd / 1_000_000).toLocaleString()} M TND</b></div>{/if}
+					{#if company.capital?.amount}<div class="kv"><span>{t('record.capital')}</span><b>{(company.capital.amount / 1_000_000).toLocaleString()} M {company.capital.currency}</b></div>{/if}
 					{#if company.state_owned !== undefined}<div class="kv"><span>{t('record.stateowned')}</span><b>{company.state_owned ? t('record.yes') : t('record.no')}</b></div>{/if}
 				</div>
 			</div>
@@ -408,7 +407,7 @@
 			</div>
 		{/if}
 
-		{#if person?.summary || institution?.summary}
+		{#if english(person, 'summary') || english(institution, 'summary')}
 			<div class="section">
 				<!-- Whichever record is selected; both carry a translatable summary. -->
 				<p class="summary"><Prose record={(person ?? institution)!} field="summary" block /></p>
@@ -496,13 +495,13 @@
 						<li>
 							<div class="o-head">
 								<strong>{nameOf(role)}</strong>
-								<Chip size="xs" dot tint="var(--basis-{pos.basis})">{basisLabel(pos.basis)}</Chip>
+								<BasisLine record={pos} grade={false} />
 								<Chip variant="outline" size="xs" title={confidenceLabel(pos.confidence)}>{pos.confidence}</Chip>
 								<OriginsChip origins={pos.origins} independence={pos.independence} />
 							</div>
 							<div class="o-meta mono">
 								{describeInterval(pos.interval)} · {durationLabel(pos.years)}
-								{#if pos.acting}· acting{/if}
+								{#if pos.acting}· {t('now.acting')}{/if}
 							</div>
 							{#if pos.predecessorDerived || pos.successorDerived}
 								<div class="chain">
@@ -518,19 +517,19 @@
 									{/if}
 								</div>
 							{/if}
-							{#each pos.notes as note (note)}
+							{#each englishList(pos, 'notes') as note (note)}
 								<p class="o-note">{note}</p>
 							{/each}
 							{#if pos.datesInferred}
 								<p class="warn-flag">{t('entity.datesEstimated')}</p>
 							{/if}
-							{#if pos.reasoning}
+							{#if english(pos, 'reasoning')}
 								<div class="epi">
 									<span class="eyebrow">{t('panel.reasoning')}</span>
-									<p>{pos.reasoning}</p>
+									<p>{english(pos, 'reasoning')}</p>
 								</div>
 							{/if}
-							{#if pos.falsifiable_by}
+							{#if english(pos, 'falsifiable_by')}
 								<div class="epi fals">
 									<span class="eyebrow">{t('panel.falsifier')}</span>
 									<p><Prose record={pos} field="falsifiable_by" block /></p>
@@ -549,7 +548,11 @@
 								<p class="reviewed">
 									{t('panel.review')}: {pos.review.by}, {pos.review.date}{pos.review.method
 										? ` — ${pos.review.method}`
-										: ''}
+										: ''} ({pos.review.actor === 'human'
+										? t('panel.review.actor.human')
+										: pos.review.actor === 'agent'
+											? t('panel.review.actor.agent')
+											: t('panel.review.actor.unstated')})
 								</p>
 							{/if}
 							<SourceList ids={pos.sources} compact />
@@ -602,10 +605,10 @@
 			</div>
 		{/if}
 
-		{#if person?.notes?.length}
+		{#if englishList(person, 'notes').length}
 			<div class="section">
 				<h3>{t('panel.notes')}</h3>
-				{#each person.notes as note (note)}
+				{#each englishList(person, 'notes') as note (note)}
 					<p class="o-note">{note}</p>
 				{/each}
 			</div>

@@ -50,7 +50,7 @@
 </script>
 
 <header class="menubar" data-tour="chrome">
-	<a class="brand" href="/" aria-label="DeepTunisia home">
+	<a class="brand" href="/" aria-label={t('brand.home')}>
 		<span class="mark" aria-hidden="true">
 			<svg viewBox="0 0 64 64" width="20" height="20">
 				<circle cx="32" cy="32" r="28" fill="none" stroke="var(--accent)" stroke-opacity="0.6" stroke-width="4.5" />
@@ -80,7 +80,7 @@
 
 	<nav
 		class="bubbles"
-		aria-label="Sections"
+		aria-label={t('nav.sections')}
 		style:--i={activeBubble}
 		style:--n={BUBBLES.length}
 		data-tour="bubbles"

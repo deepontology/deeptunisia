@@ -27,8 +27,9 @@ export const VALIDATOR_REGISTER: ValidatorEntry[] = [
 	{
 		id: 'V1',
 		rule: 'ownership shares on all ownership edges sum to 100 percent or less per company and interval window',
-		status: 'specified',
-		gate: 'none'
+		status: 'enforced',
+		gate: 'fail',
+		site: { file: 'node_modules/deepepisteme/src/atlas/rules/ownership-sum.ts', anchor: 'shares must total 100% or less' }
 	},
 	{
 		id: 'V2',
@@ -39,22 +40,23 @@ export const VALIDATOR_REGISTER: ValidatorEntry[] = [
 	{
 		id: 'V3',
 		rule: 'company registration numbers are valid and unique',
-		status: 'specified',
-		gate: 'none'
+		status: 'enforced',
+		gate: 'fail',
+		site: { file: 'node_modules/deepepisteme/src/atlas/rules/company-registration.ts', anchor: 'is already carried by company' }
 	},
 	{
 		id: 'V4',
 		rule: 'a contract award value is attributed or backed by a tier-1 or tier-2 source',
 		status: 'enforced',
 		gate: 'fail',
-		site: { file: 'scripts/build-data.ts', anchor: 'award.value must be attributed or backed by a primary source' }
+		site: { file: 'node_modules/deepepisteme/src/atlas/rules/contract-award.ts', anchor: 'award.value must be attributed or backed by a primary source' }
 	},
 	{
 		id: 'V5',
 		rule: 'a contract award value with neither attribution nor a tier-1 or tier-2 source fails the build',
 		status: 'enforced',
 		gate: 'fail',
-		site: { file: 'scripts/build-data.ts', anchor: 'award.value must be attributed or backed by a primary source' }
+		site: { file: 'node_modules/deepepisteme/src/atlas/rules/contract-award.ts', anchor: 'award.value must be attributed or backed by a primary source' }
 	},
 	{
 		id: 'V6',
@@ -65,35 +67,37 @@ export const VALIDATOR_REGISTER: ValidatorEntry[] = [
 	{
 		id: 'V7',
 		rule: 'a person on two overlapping board edges is flagged as a conflict of interest',
-		status: 'specified',
-		gate: 'none'
+		status: 'enforced',
+		gate: 'warn',
+		site: { file: 'node_modules/deepepisteme/src/atlas/rules/board-overlap.ts', anchor: 'a possible conflict of interest' }
 	},
 	{
 		id: 'V8',
 		rule: 'a cause cannot begin after its consequence, and a causal cycle fails',
 		status: 'enforced',
 		gate: 'fail',
-		site: { file: 'scripts/build-data.ts', anchor: 'causal cycle:' }
+		site: { file: 'node_modules/deepepisteme/src/atlas/rules/event-causal.ts', anchor: 'causal cycle:' }
 	},
 	{
 		id: 'V9',
 		rule: 'an influence-family edge needs a position or a documented edge on one endpoint',
 		status: 'enforced',
 		gate: 'fail-or-warn',
-		site: { file: 'scripts/build-data.ts', anchor: 'is unmoored' }
+		site: { file: 'node_modules/deepepisteme/src/atlas/rules/unmoored-influence.ts', anchor: 'is unmoored' }
 	},
 	{
 		id: 'V10',
 		rule: 'a place parent chain terminates at a region and point places carry coordinates',
 		status: 'enforced',
 		gate: 'fail-or-warn',
-		site: { file: 'scripts/build-data.ts', anchor: 'every place needs a parent region/governorate' }
+		site: { file: 'node_modules/deepepisteme/src/atlas/rules/place-geography.ts', anchor: 'every place needs a parent region/governorate' }
 	},
 	{
 		id: 'V11',
-		rule: 'events with no participants, organisations or documents are orphaned',
-		status: 'specified',
-		gate: 'none'
+		rule: 'events with no participants, organisations, documents or recorded disputes are orphaned',
+		status: 'enforced',
+		gate: 'warn',
+		site: { file: 'node_modules/deepepisteme/src/atlas/rules/event-orphan.ts', anchor: 'is orphaned: link it into the map' }
 	},
 	{
 		id: 'V12',
@@ -111,7 +115,7 @@ export const VALIDATOR_REGISTER: ValidatorEntry[] = [
 		status: 'enforced',
 		gate: 'fail',
 		site: {
-			file: 'scripts/schema.ts',
+			file: 'node_modules/deepepisteme/src/atlas/kinds/relationship.ts',
 			anchor: 'finance metadata is allowed only on funding, sponsorship and ownership edges (V13)'
 		}
 	},
@@ -127,49 +131,49 @@ export const VALIDATOR_REGISTER: ValidatorEntry[] = [
 		rule: 'an interval may not end before it begins',
 		status: 'enforced',
 		gate: 'fail',
-		site: { file: 'node_modules/deepepisteme/src/time.ts', anchor: 'Interval ends before it begins' }
+		site: { file: 'node_modules/deepepisteme/src/kernel/time.ts', anchor: 'Interval ends before it begins' }
 	},
 	{
 		id: 'V16',
 		rule: 'duplicate relationships on the same key with overlapping intervals fail',
 		status: 'enforced',
 		gate: 'fail',
-		site: { file: 'scripts/build-data.ts', anchor: 'with an overlapping interval' }
+		site: { file: 'node_modules/deepepisteme/src/atlas/rules/relationship-duplicates.ts', anchor: 'with an overlapping interval' }
 	},
 	{
 		id: 'V17',
 		rule: 'a rupture event not linked into the causal graph is flagged',
 		status: 'enforced',
 		gate: 'warn',
-		site: { file: 'scripts/build-data.ts', anchor: 'not linked into the causal graph (V17)' }
+		site: { file: 'node_modules/deepepisteme/src/atlas/rules/event-rupture.ts', anchor: 'not linked into the causal graph (V17)' }
 	},
 	{
 		id: 'V18',
 		rule: 'an inferred claim states its reasoning and a falsifier',
 		status: 'enforced',
 		gate: 'fail',
-		site: { file: 'scripts/schema.ts', anchor: 'an inferred claim must state its reasoning and what would falsify it' }
+		site: { file: 'node_modules/deepepisteme/src/kernel/envelope.ts', anchor: 'an inferred claim must state its reasoning and what would falsify it' }
 	},
 	{
 		id: 'V19',
 		rule: 'strict schemas reject an undeclared key',
 		status: 'enforced',
 		gate: 'fail',
-		site: { file: 'scripts/schema.ts', anchor: 'export const ReviewSchema = z.strictObject({' }
+		site: { file: 'node_modules/deepepisteme/src/kernel/review.ts', anchor: 'return z.strictObject({' }
 	},
 	{
 		id: 'V20',
 		rule: 'grade C and D claims name who makes the claim',
 		status: 'enforced',
 		gate: 'fail',
-		site: { file: 'scripts/schema.ts', anchor: 'grade C/D claims must name who is making the claim' }
+		site: { file: 'node_modules/deepepisteme/src/kernel/envelope.ts', anchor: 'grade C/D claims must name who is making the claim' }
 	},
 	{
 		id: 'V21',
 		rule: 'date tokens follow the grammar and are calendar-valid',
 		status: 'enforced',
 		gate: 'fail',
-		site: { file: 'scripts/schema.ts', anchor: 'date token must be YYYY, YYYY-MM, YYYY-MM-DD' }
+		site: { file: 'node_modules/deepepisteme/src/kernel/kinds.ts', anchor: 'date token must be YYYY, YYYY-MM, YYYY-MM-DD' }
 	},
 	{
 		id: 'V22',
@@ -183,7 +187,7 @@ export const VALIDATOR_REGISTER: ValidatorEntry[] = [
 		rule: 'review dates are calendar-valid, methods are an enum, and a gazette claim must be supported',
 		status: 'enforced',
 		gate: 'fail',
-		site: { file: 'scripts/schema.ts', anchor: 'review date must be a calendar-valid date' }
+		site: { file: 'node_modules/deepepisteme/src/kernel/review.ts', anchor: 'review date must be a calendar-valid date' }
 	},
 	{
 		id: 'V24',
@@ -205,7 +209,7 @@ export const VALIDATOR_REGISTER: ValidatorEntry[] = [
 		status: 'enforced',
 		gate: 'fail-or-warn',
 		site: {
-			file: 'scripts/schema.ts',
+			file: 'node_modules/deepepisteme/src/kernel/envelope.ts',
 			anchor: 'source_relation requires independence: how many independent origins carry this claim? (V26)'
 		}
 	},
@@ -214,21 +218,21 @@ export const VALIDATOR_REGISTER: ValidatorEntry[] = [
 		rule: 'an authored basis stronger than the grade needs review, reasoning, falsifier, source and reason',
 		status: 'enforced',
 		gate: 'fail',
-		site: { file: 'scripts/schema.ts', anchor: 'a basis override requires basis_override_reason' }
+		site: { file: 'node_modules/deepepisteme/src/kernel/envelope.ts', anchor: 'a basis override requires basis_override_reason' }
 	},
 	{
 		id: 'V28',
 		rule: 'undeclared keys in a claim record and its nested objects fail',
 		status: 'enforced',
 		gate: 'fail',
-		site: { file: 'scripts/schema.ts', anchor: 'const intervalSpec = z.strictObject({' }
+		site: { file: 'node_modules/deepepisteme/src/kernel/kinds.ts', anchor: 'export const intervalSpec = z.strictObject({' }
 	},
 	{
 		id: 'V29',
 		rule: 'evidence needs a passage, locator, retrieval date and a real capture or a dated retry',
 		status: 'enforced',
 		gate: 'fail',
-		site: { file: 'scripts/schema.ts', anchor: 'capture_url must be an actual snapshot' }
+		site: { file: 'node_modules/deepepisteme/src/kernel/evidence.ts', anchor: 'capture_url must be an actual snapshot' }
 	},
 	{
 		id: 'V30',
@@ -238,10 +242,10 @@ export const VALIDATOR_REGISTER: ValidatorEntry[] = [
 	},
 	{
 		id: 'V31',
-		rule: 'no record interval begins or ends past the research cutoff',
+		rule: 'no record interval begins past the research cutoff',
 		status: 'enforced',
 		gate: 'fail',
-		site: { file: 'scripts/build-data.ts', anchor: 'past the research cutoff' }
+		site: { file: 'node_modules/deepepisteme/src/atlas/rules/horizon.ts', anchor: 'past the research cutoff' }
 	},
 	{
 		id: 'V32',
@@ -249,8 +253,18 @@ export const VALIDATOR_REGISTER: ValidatorEntry[] = [
 		status: 'enforced',
 		gate: 'fail',
 		site: {
-			file: 'scripts/build-data.ts',
+			file: 'node_modules/deepepisteme/src/atlas/rules/vacancy-overlap.ts',
 			anchor: 'is a seated term, which has no single holder to be vacant'
+		}
+	},
+	{
+		id: 'V33',
+		rule: 'a record marked verified carries a review made by a human as a source check',
+		status: 'enforced',
+		gate: 'fail',
+		site: {
+			file: 'scripts/build-data.ts',
+			anchor: 'actor human and method source-check'
 		}
 	}
 ];

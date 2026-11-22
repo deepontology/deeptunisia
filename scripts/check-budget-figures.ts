@@ -267,7 +267,7 @@ if (!process.argv[2] || process.argv[2].startsWith('--')) {
 	}
 	const auditPath = join(STUDY, 'verification-lf-2020-2026.yaml');
 	const audit = parse(readFileSync(auditPath, 'utf8')) as {
-		summary?: { audited?: number; verified?: number; two_readers_agree?: number; resolved?: number; single_read?: number };
+		summary?: { audited?: number; verified?: number; two_readers_agree?: number; resolved?: number; derived?: number; single_read?: number };
 		years?: Record<string, AuditYear>;
 	};
 	const auditYears = Object.entries(audit.years ?? {});
@@ -314,9 +314,10 @@ if (!process.argv[2] || process.argv[2].startsWith('--')) {
 		}
 	}
 	const summary = audit.summary ?? {};
-	const verifiedRows = auditedRows - singleRows;
+	const verifiedRows = auditedRows - singleRows - derivedRows;
 	if (summary.audited !== auditedRows) failures.push(`audit: summary says ${String(summary.audited)} audited, the file holds ${auditedRows}`);
-	if (summary.verified !== verifiedRows) failures.push(`audit: summary says ${String(summary.verified)} verified, the file holds ${verifiedRows} (single read excluded)`);
+	if (summary.verified !== verifiedRows) failures.push(`audit: summary says ${String(summary.verified)} verified, the file holds ${verifiedRows} (single read and derived excluded)`);
+	if (summary.derived !== derivedRows) failures.push(`audit: summary says ${String(summary.derived)} derived, the file holds ${derivedRows}`);
 	if (summary.single_read !== singleRows) failures.push(`audit: summary says ${String(summary.single_read)} single read, the file holds ${singleRows}`);
 	if ((summary.two_readers_agree ?? 0) + (summary.resolved ?? 0) !== verifiedRows) failures.push('audit: the two-reader and resolved counts do not add up to the verified rows');
 	if (singleRows !== 1) failures.push(`audit: ${singleRows} single-read rows, the page says one`);

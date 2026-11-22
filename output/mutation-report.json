@@ -1,21 +1,21 @@
 {
-  "generated": "2026-09-27T03:34:08.267Z",
-  "commit": "fbc2bfd",
+  "generated": "2026-11-20T15:47:16.745Z",
+  "commit": "fdf360a",
   "withValidators": true,
   "summary": {
-    "counted": 57,
-    "killed": 55,
+    "counted": 71,
+    "killed": 69,
     "latent": 2,
     "knownLatent": 2,
     "drift": 0,
     "invalid": 0,
-    "rate": 96
+    "rate": 97
   },
   "results": [
     {
       "id": "m01",
       "label": "deriveBasis ignores the explicit override",
-      "file": "schema.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/basis.ts",
       "verdict": "killed",
       "by": "build gate",
       "outputChanged": false,
@@ -24,7 +24,7 @@
     {
       "id": "m02",
       "label": "C + needs-primary-source no longer derives inferred",
-      "file": "schema.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/basis.ts",
       "verdict": "killed",
       "by": "build gate",
       "outputChanged": false,
@@ -33,7 +33,7 @@
     {
       "id": "m03",
       "label": "grade D no longer derives unsubstantiated",
-      "file": "schema.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/basis.ts",
       "verdict": "killed",
       "by": "test-data",
       "outputChanged": true,
@@ -42,7 +42,7 @@
     {
       "id": "m04",
       "label": "envelope stops requiring attributed_to on C/D",
-      "file": "schema.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/envelope.ts",
       "verdict": "killed",
       "by": "test-validators",
       "outputChanged": false,
@@ -51,7 +51,7 @@
     {
       "id": "m05",
       "label": "envelope stops requiring reasoning/falsifier on inferred",
-      "file": "schema.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/envelope.ts",
       "verdict": "killed",
       "by": "test-validators",
       "outputChanged": false,
@@ -60,7 +60,7 @@
     {
       "id": "m06",
       "label": "envelope stops requiring attribution on unsubstantiated",
-      "file": "schema.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/envelope.ts",
       "verdict": "killed",
       "by": "test-validators",
       "outputChanged": false,
@@ -69,7 +69,7 @@
     {
       "id": "m07",
       "label": "claim envelope drops the sources minimum",
-      "file": "schema.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/kinds.ts",
       "verdict": "survived-latent",
       "by": "known limitation (documented)",
       "outputChanged": false,
@@ -78,7 +78,7 @@
     {
       "id": "m08",
       "label": "review method becomes free text",
-      "file": "schema.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/review.ts",
       "verdict": "killed",
       "by": "test-validators",
       "outputChanged": false,
@@ -87,7 +87,7 @@
     {
       "id": "m09",
       "label": "review date loses its ISO format check",
-      "file": "schema.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/review.ts",
       "verdict": "survived-latent",
       "by": "known limitation (documented)",
       "outputChanged": false,
@@ -96,7 +96,7 @@
     {
       "id": "m10",
       "label": "review date loses its calendar round-trip (2026-02-31 accepted)",
-      "file": "schema.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/review.ts",
       "verdict": "killed",
       "by": "test-validators",
       "outputChanged": false,
@@ -105,7 +105,7 @@
     {
       "id": "m11",
       "label": "reviewOverclaims stops honouring the \"not verified\" disclaimer",
-      "file": "schema.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/review.ts",
       "verdict": "killed",
       "by": "build gate",
       "outputChanged": false,
@@ -114,7 +114,7 @@
     {
       "id": "m12",
       "label": "dispute status becomes free text",
-      "file": "schema.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/review.ts",
       "verdict": "killed",
       "by": "test-validators",
       "outputChanged": false,
@@ -123,7 +123,7 @@
     {
       "id": "m27",
       "label": "nonBlank stops trimming, so a space passes for prose",
-      "file": "schema.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/envelope.ts",
       "verdict": "killed",
       "by": "test-validators",
       "outputChanged": false,
@@ -131,17 +131,17 @@
     },
     {
       "id": "m28",
-      "label": "reviewer names stop being trimmed before the minimum",
-      "file": "schema.ts",
+      "label": "a reviewer may sign with any name, not a role label",
+      "file": "../node_modules/deepepisteme/src/kernel/review.ts",
       "verdict": "killed",
       "by": "test-validators",
       "outputChanged": false,
-      "expect": "test-validators V23 (whitespace reviewer name)"
+      "expect": "test-validators V23 (reviewer must be a role label)"
     },
     {
       "id": "m29",
       "label": "legacy basis-override exception register stops being consulted",
-      "file": "schema.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/envelope.ts",
       "verdict": "killed",
       "by": "build gate",
       "outputChanged": false,
@@ -150,7 +150,7 @@
     {
       "id": "m30",
       "label": "override review requirement stops issuing",
-      "file": "schema.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/envelope.ts",
       "verdict": "killed",
       "by": "test-validators",
       "outputChanged": false,
@@ -159,7 +159,7 @@
     {
       "id": "m40",
       "label": "source relations stop being checked against the authored kind",
-      "file": "schema.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/envelope.ts",
       "verdict": "killed",
       "by": "test-validators",
       "outputChanged": false,
@@ -168,25 +168,16 @@
     {
       "id": "m41",
       "label": "a source relation no longer requires an origin count",
-      "file": "schema.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/envelope.ts",
       "verdict": "killed",
       "by": "test-validators",
       "outputChanged": false,
       "expect": "test-validators V26 (relation needs independence)"
     },
     {
-      "id": "m42",
-      "label": "archive lookup format check disabled (a lookup passes as a snapshot)",
-      "file": "schema.ts",
-      "verdict": "killed",
-      "by": "test-validators",
-      "outputChanged": false,
-      "expect": "test-validators V29 (year-only/date-only lookup fixtures)"
-    },
-    {
       "id": "m43",
       "label": "evidence no longer needs a capture or a dated retry",
-      "file": "schema.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/evidence.ts",
       "verdict": "killed",
       "by": "test-validators",
       "outputChanged": false,
@@ -195,7 +186,7 @@
     {
       "id": "m44",
       "label": "the evidence locator minimum is weakened to allow whitespace",
-      "file": "schema.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/evidence.ts",
       "verdict": "killed",
       "by": "test-validators",
       "outputChanged": false,
@@ -204,11 +195,20 @@
     {
       "id": "m45",
       "label": "source URLs stop being restricted to http(s)",
-      "file": "schema.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/kinds.ts",
       "verdict": "killed",
       "by": "test-validators",
       "outputChanged": false,
       "expect": "test-validators V29 source (http(s) url required)"
+    },
+    {
+      "id": "m72",
+      "label": "an archive lookup passes as a snapshot, for a source or for evidence (V29)",
+      "file": "../node_modules/deepepisteme/src/kernel/kinds.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": false,
+      "expect": "test-validators V29 source (year-only/date-only lookup fixtures)"
     },
     {
       "id": "m21",
@@ -222,7 +222,7 @@
     {
       "id": "m22",
       "label": "causal-cycle detection disabled (V8/Tarjan)",
-      "file": "build-data.ts",
+      "file": "../node_modules/deepepisteme/src/atlas/rules/event-causal.ts",
       "verdict": "killed",
       "by": "test-pipeline",
       "outputChanged": false,
@@ -240,7 +240,7 @@
     {
       "id": "m24",
       "label": "cause-after-consequence ordering disabled (V8 temporal)",
-      "file": "build-data.ts",
+      "file": "../node_modules/deepepisteme/src/atlas/rules/event-causal.ts",
       "verdict": "killed",
       "by": "test-pipeline",
       "outputChanged": false,
@@ -249,7 +249,7 @@
     {
       "id": "m25",
       "label": "unmoored-influence rejection disabled (V9 anchoring)",
-      "file": "build-data.ts",
+      "file": "../node_modules/deepepisteme/src/atlas/rules/unmoored-influence.ts",
       "verdict": "killed",
       "by": "test-pipeline",
       "outputChanged": false,
@@ -265,6 +265,132 @@
       "expect": "test-pipeline (injected ghost edge endpoint)"
     },
     {
+      "id": "m58",
+      "label": "award values stop needing an attribution or a primary source (V4/V5)",
+      "file": "../node_modules/deepepisteme/src/atlas/rules/contract-award.ts",
+      "verdict": "killed",
+      "by": "test-pipeline",
+      "outputChanged": false,
+      "expect": "test-pipeline (injected floating award value)"
+    },
+    {
+      "id": "m59",
+      "label": "a point place no longer needs a parent region (V10)",
+      "file": "../node_modules/deepepisteme/src/atlas/rules/place-geography.ts",
+      "verdict": "killed",
+      "by": "test-pipeline",
+      "outputChanged": false,
+      "expect": "test-pipeline (injected parentless place)"
+    },
+    {
+      "id": "m60",
+      "label": "a directed edge may run from a person where an institution is required (V14)",
+      "file": "build-data.ts",
+      "verdict": "killed",
+      "by": "test-pipeline",
+      "outputChanged": false,
+      "expect": "test-pipeline (injected reversed prosecution)"
+    },
+    {
+      "id": "m61",
+      "label": "overlapping duplicate relationships are no longer found (V16)",
+      "file": "../node_modules/deepepisteme/src/atlas/rules/relationship-duplicates.ts",
+      "verdict": "killed",
+      "by": "test-pipeline",
+      "outputChanged": false,
+      "expect": "test-pipeline (injected duplicate relationship)"
+    },
+    {
+      "id": "m62",
+      "label": "a rupture event linked to nothing is no longer flagged (V17)",
+      "file": "../node_modules/deepepisteme/src/atlas/rules/event-rupture.ts",
+      "verdict": "killed",
+      "by": "test-pipeline",
+      "outputChanged": false,
+      "expect": "test-pipeline (injected floating rupture)"
+    },
+    {
+      "id": "m63",
+      "label": "direct stakes summing past 100 percent are no longer found (V1)",
+      "file": "../node_modules/deepepisteme/src/atlas/rules/ownership-sum.ts",
+      "verdict": "killed",
+      "by": "test-pipeline",
+      "outputChanged": false,
+      "expect": "test-pipeline (injected stakes over 100 percent)"
+    },
+    {
+      "id": "m64",
+      "label": "a registration number carried by two companies is no longer found (V3)",
+      "file": "../node_modules/deepepisteme/src/atlas/rules/company-registration.ts",
+      "verdict": "killed",
+      "by": "test-pipeline",
+      "outputChanged": false,
+      "expect": "test-pipeline (injected repeated registration number)"
+    },
+    {
+      "id": "m65",
+      "label": "one person on two boards over the same years is no longer flagged (V7)",
+      "file": "../node_modules/deepepisteme/src/atlas/rules/board-overlap.ts",
+      "verdict": "killed",
+      "by": "test-pipeline",
+      "outputChanged": false,
+      "expect": "test-pipeline (injected two overlapping board seats)"
+    },
+    {
+      "id": "m66",
+      "label": "an event linked to nothing is no longer flagged (V11)",
+      "file": "../node_modules/deepepisteme/src/atlas/rules/event-orphan.ts",
+      "verdict": "killed",
+      "by": "test-pipeline",
+      "outputChanged": false,
+      "expect": "test-pipeline (injected orphan event)"
+    },
+    {
+      "id": "m67",
+      "label": "a record that begins past the research cutoff is no longer flagged (V31)",
+      "file": "../node_modules/deepepisteme/src/atlas/rules/horizon.ts",
+      "verdict": "killed",
+      "by": "test-pipeline",
+      "outputChanged": false,
+      "expect": "test-pipeline (injected event dated past the cutoff)"
+    },
+    {
+      "id": "m68",
+      "label": "a vacancy over a titular holder of the same office is no longer flagged (V32)",
+      "file": "../node_modules/deepepisteme/src/atlas/rules/vacancy-overlap.ts",
+      "verdict": "killed",
+      "by": "test-pipeline",
+      "outputChanged": false,
+      "expect": "test-pipeline (injected vacancy over a titular holder)"
+    },
+    {
+      "id": "m69",
+      "label": "a clamped interval is no longer reported, so the trims file stops listing it (V22)",
+      "file": "../node_modules/deepepisteme/src/atlas/rules/interval-trims.ts",
+      "verdict": "killed",
+      "by": "test-data",
+      "outputChanged": true,
+      "expect": "test-data (clamped intervals missing from the published report)"
+    },
+    {
+      "id": "m70",
+      "label": "an overlap counts a previous holder who is not ended (V24)",
+      "file": "../node_modules/deepepisteme/src/atlas/succession.ts",
+      "verdict": "killed",
+      "by": "test-data",
+      "outputChanged": true,
+      "expect": "test-data (published overlaps no longer match the pairwise comparison)"
+    },
+    {
+      "id": "m71",
+      "label": "a handover is a gap only past twice the published threshold (V24)",
+      "file": "../node_modules/deepepisteme/src/atlas/succession.ts",
+      "verdict": "killed",
+      "by": "test-data",
+      "outputChanged": true,
+      "expect": "test-data (published gaps no longer match the recomputed chain gaps)"
+    },
+    {
       "id": "m31",
       "label": "grade-A records no longer checked for a tier-1/2 source",
       "file": "build-data.ts",
@@ -278,14 +404,14 @@
       "label": "no-source exception register stops being consulted",
       "file": "build-data.ts",
       "verdict": "killed",
-      "by": "build gate",
+      "by": "test-pipeline",
       "outputChanged": false,
       "expect": "the build gate (no-source exception register)"
     },
     {
       "id": "m13",
       "label": "\"~\" widening reduced to zero slack",
-      "file": "../node_modules/deepepisteme/src/time.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/time.ts",
       "verdict": "killed",
       "by": "test-validators",
       "outputChanged": true,
@@ -294,7 +420,7 @@
     {
       "id": "m14",
       "label": "\"<=\" bound no longer clamps to the dataset floor",
-      "file": "../node_modules/deepepisteme/src/time.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/time.ts",
       "verdict": "killed",
       "by": "test-validators",
       "outputChanged": false,
@@ -303,7 +429,7 @@
     {
       "id": "m15",
       "label": "calendar-valid day check removed (2018-02-31 accepted)",
-      "file": "../node_modules/deepepisteme/src/time.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/time.ts",
       "verdict": "killed",
       "by": "test-validators",
       "outputChanged": false,
@@ -312,7 +438,7 @@
     {
       "id": "m16",
       "label": "inverted intervals no longer rejected",
-      "file": "../node_modules/deepepisteme/src/time.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/time.ts",
       "verdict": "killed",
       "by": "test-validators",
       "outputChanged": false,
@@ -321,7 +447,7 @@
     {
       "id": "m17",
       "label": "over-wide fuzzy start no longer clamped down",
-      "file": "../node_modules/deepepisteme/src/time.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/time.ts",
       "verdict": "killed",
       "by": "test-validators",
       "outputChanged": true,
@@ -330,16 +456,16 @@
     {
       "id": "m18",
       "label": "verified-at bound no longer clamped to the dataset cutoff",
-      "file": "../node_modules/deepepisteme/src/time.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/time.ts",
       "verdict": "killed",
       "by": "test-validators",
-      "outputChanged": false,
+      "outputChanged": true,
       "expect": "test-validators V22 (verified-at cutoff clamp, engine target)"
     },
     {
       "id": "m19",
       "label": "certainlyActive exclusive at the lower core edge",
-      "file": "../node_modules/deepepisteme/src/time.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/time.ts",
       "verdict": "killed",
       "by": "test-validators",
       "outputChanged": false,
@@ -348,7 +474,7 @@
     {
       "id": "m20",
       "label": "open-ended durations measured from the epoch instead of the cutoff",
-      "file": "../node_modules/deepepisteme/src/time.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/time.ts",
       "verdict": "killed",
       "by": "test-validators",
       "outputChanged": true,
@@ -357,7 +483,7 @@
     {
       "id": "m33",
       "label": "certainlyActive loses its cutoff clamp",
-      "file": "../node_modules/deepepisteme/src/time.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/time.ts",
       "verdict": "killed",
       "by": "test-validators",
       "outputChanged": false,
@@ -366,7 +492,7 @@
     {
       "id": "m34",
       "label": "possiblyActive loses its cutoff clamp",
-      "file": "../node_modules/deepepisteme/src/time.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/time.ts",
       "verdict": "killed",
       "by": "test-validators",
       "outputChanged": false,
@@ -375,7 +501,7 @@
     {
       "id": "m35",
       "label": "certainty no longer stops at the last observation",
-      "file": "../node_modules/deepepisteme/src/time.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/time.ts",
       "verdict": "killed",
       "by": "test-validators",
       "outputChanged": false,
@@ -384,7 +510,7 @@
     {
       "id": "m36",
       "label": "month-only verification is certain through the whole month",
-      "file": "../node_modules/deepepisteme/src/time.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/time.ts",
       "verdict": "killed",
       "by": "test-validators",
       "outputChanged": true,
@@ -393,16 +519,16 @@
     {
       "id": "m37",
       "label": "ongoing is always treated as recently confirmed",
-      "file": "../node_modules/deepepisteme/src/time.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/time.ts",
       "verdict": "killed",
-      "by": "test-validators",
-      "outputChanged": true,
+      "by": "build gate",
+      "outputChanged": false,
       "expect": "test-validators (ongoing confirmation window, engine target)"
     },
     {
       "id": "m38",
       "label": "unknown ends borrow the cutoff as their observation",
-      "file": "../node_modules/deepepisteme/src/time.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/time.ts",
       "verdict": "killed",
       "by": "test-validators",
       "outputChanged": true,
@@ -438,18 +564,18 @@
     {
       "id": "m39",
       "label": "canonical bytes keep the wall-clock generated timestamp",
-      "file": "canonical.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/canonical.ts",
       "verdict": "killed",
       "by": "test-pipeline",
       "outputChanged": true,
-      "expect": "test-pipeline (canonical byte equality)"
+      "expect": "test-pipeline (canonical byte equality, engine target)"
     },
     {
       "id": "m49",
       "label": "review flags revert to a first-match partition (inferred hidden by attributed)",
       "file": "review-coverage.ts",
       "verdict": "killed",
-      "by": "test-validators",
+      "by": "test-data",
       "outputChanged": true,
       "expect": "test-validators Phase 8 (inferred + attributed flags)"
     },
@@ -458,7 +584,7 @@
       "label": "an unsubstantiated record stops carrying its attributed flag",
       "file": "review-coverage.ts",
       "verdict": "killed",
-      "by": "test-validators",
+      "by": "test-data",
       "outputChanged": true,
       "expect": "test-validators Phase 8 (unsubstantiated + attributed overlap)"
     },

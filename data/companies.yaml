@@ -23,7 +23,7 @@
   legal_form: "SA (société anonyme)"
   status: active
   founded: "1976-03-29"
-  capital: { tnd: 204000000, date: "2024-12-31" }
+  capital: { amount: 204000000, currency: TND, date: "2024-12-31" }
   state_owned: false
   confidence: B
   sources: [wikipedia-fr-biat, ilboursa-biat-capital-2024, ilboursa-biat-capital-2025]
@@ -91,7 +91,7 @@
   legal_form: "SA (société anonyme)"
   status: active
   founded: "1967-07-14"
-  capital: { tnd: 189000000, date: "2026-04-16" }
+  capital: { amount: 189000000, currency: TND, date: "2026-04-16" }
   state_owned: false
   confidence: B
   sources: [wikipedia-poulina-fr, managers-pgh-capital-2026, africanmanager-pgh-capital-2026, billionairesafrica-pgh-2026]
@@ -354,7 +354,7 @@
   legal_form: "SA (société anonyme)"
   status: active
   founded: "1948-10-21"
-  capital: { tnd: 106199280, date: "2017-12-31" }
+  capital: { amount: 106199280, currency: TND, date: "2017-12-31" }
   state_owned: true
   confidence: A
   sources: [wikipedia-fr-tunisair, wikipedia-tunisair-ar, ilboursa-tunisair-profil, wmc-tunisair-age-2018, encyclopedia-com-tunisair]
@@ -419,7 +419,7 @@
   legal_form: "SA (société anonyme) depuis 2004"
   status: active
   founded: "1995-04-17"
-  capital: { tnd: 1400000000, date: "2023-02-19" }
+  capital: { amount: 1400000000, currency: TND, date: "2023-02-19" }
   state_owned: true
   confidence: C
   attributed_to: "The Money (themoney.tn), 19/02/2023"

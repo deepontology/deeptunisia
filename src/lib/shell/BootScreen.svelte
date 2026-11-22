@@ -91,7 +91,7 @@
 
 		<div class="figure">
 			<span class="count mono">{count.toLocaleString('en-US')}</span>
-			<span class="unit mono">records</span>
+			<span class="unit mono">{t('boot.records')}</span>
 
 			<span class="pulse" aria-hidden="true">
 				<svg viewBox="0 0 28 28" width="26" height="26">

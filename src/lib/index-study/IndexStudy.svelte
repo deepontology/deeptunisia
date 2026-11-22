@@ -643,6 +643,11 @@
 					<!-- A fielding study whose gate is still closed, with nothing in yet,
 					     is not collecting: it says so rather than count to 100. -->
 					{tf('index.counter.line', { n: fmt(floor.n), N: fmt(floor.first_figure_n) })}
+				{:else if open && accepting && !floor}
+					<!-- The live read has not answered (no script, a crawler, a link
+					     preview, or the request in flight): the registry says the study
+					     is fielding, so the sentence says it is collecting. -->
+					{tf('index.headline.collecting', { N: fmt(firstN) })}
 				{:else}
 					{t('index.headline.notOpen')}
 				{/if}

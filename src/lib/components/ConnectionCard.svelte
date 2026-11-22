@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { app } from '$lib/state.svelte';
-	import { t, describeInterval, basisLabel, relLabel } from '$lib/t.svelte';
+	import { english } from '$lib/names.svelte';
+	import { t, basisLabel, relLabel, describeInterval } from '$lib/t.svelte';
 	import SourceList from './SourceList.svelte';
 	import Chip from '$lib/ui/Chip.svelte';
+	import BasisLine from '$lib/ui/BasisLine.svelte';
 	import OriginsChip from '$lib/ui/OriginsChip.svelte';
 	import CommunityActions from '$lib/ui/CommunityActions.svelte';
 	import ShareMenu from '$lib/ui/ShareMenu.svelte';
@@ -11,7 +13,6 @@
 		LAYER_COLOR,
 		REL_LABEL,
 		resolveEntity,
-		type Basis,
 		type Confidence,
 		type Layer
 	} from '$lib/model';
@@ -124,19 +125,15 @@
 		<button class="end" onclick={() => onpick(rel.to)}>{to?.name ?? rel.to}</button>
 	</div>
 
-	{#if rel.description}
-		<p class="desc" dir="auto">{rel.description}</p>
+	{#if english(rel, 'description')}
+		<p class="desc" dir="auto">{english(rel, 'description')}</p>
 	{/if}
 
 	<div class="meta">
 		{#if measurement}
 			<Chip variant="outline" size="xs">{t('network.measurement')}</Chip>
 		{/if}
-		{#if rel.basis}
-			<Chip size="xs" dot tint="var(--basis-{rel.basis})">
-				{rel.confidence ? `${rel.confidence} — ` : ''}{basisLabel(rel.basis as Basis)}
-			</Chip>
-		{/if}
+		<BasisLine record={rel} />
 		<OriginsChip origins={rel.origins} independence={rel.independence} />
 		{#if edge.crossLayer}
 			<Chip variant="outline" size="xs" tint="var(--bridge)">{t('network.legend.crosses')}</Chip>

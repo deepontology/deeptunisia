@@ -1,0 +1,67 @@
+name: Smoke
+
+# The browser suite, as a job of its own. `npm run smoke` drives a real
+# Chromium over the atlas and the Agora in both themes, on a desktop and a phone
+# viewport (about 1,270 checks; about 15 minutes on a desktop, about 35 on a
+# runner), so it is not part of
+# `npm test` and the fresh-clone job in ci.yml does not wait for it. A gate that
+# only runs when someone remembers to run it had already gone red without
+# anyone noticing, so it runs here on every pull request into release/1.0 and
+# every night.
+#
+# The nightly run is a `schedule` event, and GitHub runs those from the default
+# branch, so it starts on `main` once this file reaches it.
+
+on:
+  pull_request:
+    branches: [release/1.0]
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: smoke-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  smoke:
+    name: browser smoke (atlas and Agora)
+    # Not ubuntu-latest: it is Ubuntu 26.04 now, which the pinned Playwright
+    # (1.56) cannot install a browser on. Move this with the Playwright pin.
+    runs-on: ubuntu-24.04
+    # A run takes about 35 minutes here; the limit leaves room for a busy runner.
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          # The dataset changelog is read from `git log -- data/` at build time.
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npx playwright install --with-deps chromium
+      - name: start the atlas and the Agora API
+        # `npm start` builds the data and runs both servers; the Agora checks
+        # need the API, so `npm run dev` alone is not enough.
+        run: |
+          nohup npm start > start.log 2>&1 &
+          for i in $(seq 1 100); do
+            atlas=$(curl -s -o /dev/null -w '%{http_code}' http://localhost:5173/chronicle || true)
+            api=$(curl -s -o /dev/null -w '%{http_code}' http://localhost:5200/ || true)
+            if [ "$atlas" = "200" ] && [ "$api" != "000" ]; then exit 0; fi
+            sleep 3
+          done
+          cat start.log
+          exit 1
+      - run: npm run smoke
+      - if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: smoke-screenshots
+          path: |
+            .smoke/
+            start.log
+          if-no-files-found: ignore
+          retention-days: 7

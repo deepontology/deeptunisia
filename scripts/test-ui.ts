@@ -137,12 +137,11 @@ const ENTITY_PANEL = readFileSync(join(HERE, '..', 'src', 'lib', 'components', '
 const INSPECTOR = readFileSync(join(HERE, '..', 'src', 'lib', 'shell', 'Inspector.svelte'), 'utf8');
 const SEARCH = readFileSync(join(HERE, '..', 'src', 'lib', 'components', 'SearchPalette.svelte'), 'utf8');
 const MODEL = readFileSync(join(HERE, '..', 'src', 'lib', 'model.ts'), 'utf8');
-ok('the record card exists and carries basis chips', RECORD_PANEL.includes('basisLabel') && RECORD_PANEL.includes('CommunityActions'));
+ok('the record card exists and carries its basis line', RECORD_PANEL.includes('BasisLine') && RECORD_PANEL.includes('CommunityActions'));
 ok(
 	'the entity panel shows kind and strength as separate chips',
-	ENTITY_PANEL.includes('basisLabel(') &&
-		ENTITY_PANEL.includes('confidenceLabel(') &&
-		ENTITY_PANEL.includes('tint="var(--basis-')
+	ENTITY_PANEL.includes('<BasisLine') &&
+		ENTITY_PANEL.includes('confidenceLabel(')
 );
 ok('every record kind has a lookup map', ['companyById', 'contractById', 'licenceById', 'declarationById', 'educationById', 'eventById'].every((m) => MODEL.includes(m)));
 ok('the Inspector routes records away from the entity panel', INSPECTOR.includes('RecordPanel') && INSPECTOR.includes('personById.has(panelSel)'));
@@ -316,7 +315,7 @@ ok(
 	CHRONICLE.includes('function openCluster') &&
 		CHRONICLE.includes('function zoomToCluster') &&
 		CHRONICLE.includes('ev-pop') &&
-		CHRONICLE.includes('Zoom in')
+		CHRONICLE.includes("t('view.zoomin')")
 );
 ok('the lane respects the evidence dial via the shared predicate', CHRONICLE.includes('meetsBasis(e.basis') && CHRONICLE.includes('eventPasses('));
 ok(
@@ -531,7 +530,7 @@ ok(
 );
 ok(
 	'both chronicle table alternatives gained an origins column',
-	(CHRONICLE.match(/<th>Origins<\/th>/g) ?? []).length === 2 &&
+	(CHRONICLE.match(/<th>\{t\('tbl\.origins'\)\}<\/th>/g) ?? []).length === 2 &&
 		CHRONICLE.includes('pos.origins ?? pos.independence') &&
 		CHRONICLE.includes('e.origins ?? e.independence')
 );
@@ -545,19 +544,19 @@ for (const loc of ['en', 'fr', 'ar'] as const) {
 
 console.log('\n  ── Phase 8: review coverage is flags and denominators, not one bucket ──\n');
 
-const ABOUT_PAGE = readFileSync(join(HERE, '..', 'src', 'routes', 'about', '+page.svelte'), 'utf8');
-const DATA_PAGE = readFileSync(join(HERE, '..', 'src', 'routes', 'data', '+page.svelte'), 'utf8');
+const ABOUT_PAGE = readFileSync(join(HERE, '..', 'src', 'routes', '(read)', 'about', '+page.svelte'), 'utf8');
+const DATA_PAGE = readFileSync(join(HERE, '..', 'src', 'routes', '(read)', 'data', '+page.svelte'), 'utf8');
 ok(
 	'the about page reads overlapping flags, not the retired partition',
-	ABOUT_PAGE.includes('ds.meta.review.flags') && !ABOUT_PAGE.includes('meta.review.byRisk')
+	ABOUT_PAGE.includes('figures.reviewFlags') && !ABOUT_PAGE.includes('meta.review.byRisk')
 );
 ok(
 	'the data page shows a denominator for every claim kind',
-	DATA_PAGE.includes('ds.meta.review.byKind') && DATA_PAGE.includes('coverage.kind.')
+	DATA_PAGE.includes('figures.review.byKind') && DATA_PAGE.includes('coverage.kind.')
 );
 ok(
 	'the data page shows the overlapping risk flags with their denominators',
-	DATA_PAGE.includes('ds.meta.review.flags') && DATA_PAGE.includes("coverage.flagsNote") && !DATA_PAGE.includes('byRisk')
+	DATA_PAGE.includes('figures.review.flags') && DATA_PAGE.includes("coverage.flagsNote") && !DATA_PAGE.includes('byRisk')
 );
 ok(
 	'the independence limit is stated where the numbers are read',
@@ -568,13 +567,14 @@ for (const loc of ['en', 'fr', 'ar'] as const) {
 		`the review coverage note resolves in ${loc}`,
 		translate(loc, 'coverage.flagsNote') !== 'coverage.flagsNote' &&
 			translate(loc, 'coverage.kind.relationship') !== 'coverage.kind.relationship' &&
-			translate(loc, 'about.stat.reviewed').includes('{reviewed}'),
+			translate(loc, 'about.stat.checkedByPerson').includes('{human}') &&
+				translate(loc, 'about.stat.checkedByAgent').includes('{agent}'),
 		translate(loc, 'coverage.byKind')
 	);
 }
 console.log('\n  ── Phase 10D: the H1 card carries both continuity tests ──\n');
 
-const EVIDENCE_PAGE = readFileSync(join(HERE, '..', 'src', 'routes', 'evidence', '+page.svelte'), 'utf8');
+const EVIDENCE_PAGE = readFileSync(join(HERE, '..', 'src', 'routes', '(instrument)', 'evidence', '+page.svelte'), 'utf8');
 ok(
 	'the H1 card renders the continuity table from the probe output',
 	EVIDENCE_PAGE.includes('network-continuity.json') && EVIDENCE_PAGE.includes("ev.continuity.title")
@@ -636,7 +636,7 @@ console.log('\n  ── the survey runner: resume, re-entry, shared links, prese
  * the essentiality ratings they were asked beside.
  */
 const PARTICIPATE = readFileSync(
-	join(HERE, '..', 'src', 'routes', 'research', '[slug]', 'participate', '+page.svelte'),
+	join(HERE, '..', 'src', 'routes', '(read)', 'research', '[slug]', 'participate', '+page.svelte'),
 	'utf8'
 );
 const INDEX_STUDY = readFileSync(join(HERE, '..', 'src', 'lib', 'index-study', 'IndexStudy.svelte'), 'utf8');
@@ -659,7 +659,7 @@ ok(
 const INSTRUMENT_002 = readFileSync(join(HERE, '..', 'research', 'portal', 'study-002', 'instrument-v0.yaml'), 'utf8');
 const WRANGLER = readFileSync(join(HERE, '..', 'wrangler.toml'), 'utf8');
 const PAGE_EN = readFileSync(join(HERE, '..', 'src', 'content', 'police-index.en.md'), 'utf8');
-const HUB = readFileSync(join(HERE, '..', 'src', 'routes', 'research', '+page.svelte'), 'utf8');
+const HUB = readFileSync(join(HERE, '..', 'src', 'routes', '(read)', 'research', '+page.svelte'), 'utf8');
 ok(
 	'the consent box names the one-word repeat mark and claims no absence of device information',
 	INSTRUMENT_002.includes('No name, email, IP address or device identifier is kept with them. If this browser has already answered this month, one word saying so is kept') &&
@@ -830,6 +830,53 @@ for (const loc of ['en', 'fr', 'ar'] as const) {
 	);
 }
 
+
+console.log('\n  ── D3: one component prints what a record rests on ──\n');
+
+import { readdirSync } from 'node:fs';
+
+const SRC = join(HERE, '..', 'src');
+function sourceFiles(dir: string): string[] {
+	return readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
+		const full = join(dir, e.name);
+		if (e.isDirectory()) return e.name === 'generated' ? [] : sourceFiles(full);
+		return e.name.endsWith('.svelte') || e.name.endsWith('.ts') ? [full] : [];
+	});
+}
+
+/* The only places a bare basis word may come from the dictionary: the one
+   component, the dictionary itself, and two legends or totals that print a
+   distribution rather than one record. */
+const BARE_BASIS_ALLOWED = new Set([
+	join(SRC, 'lib', 't.svelte.ts'),
+	join(SRC, 'lib', 'ui', 'BasisLine.svelte'),
+	join(SRC, 'lib', 'components', 'network', 'NetworkMatrix.svelte'),
+	join(SRC, 'routes', '(read)', 'methodology', '+page.svelte')
+]);
+const ALL_SOURCES = sourceFiles(SRC);
+const BARE_BASIS = ALL_SOURCES.filter(
+	(f) => readFileSync(f, 'utf8').includes('basisLabel(') && !BARE_BASIS_ALLOWED.has(f)
+);
+const RECORD_BASIS = ALL_SOURCES.filter((f) => /<BasisLine\b|basisLineText\(/.test(readFileSync(f, 'utf8')));
+const BASIS_LINE = readFileSync(join(SRC, 'lib', 'ui', 'BasisLine.svelte'), 'utf8');
+
+ok(
+	'basisLabel is called only inside the one component and in legends or totals',
+	BARE_BASIS.length === 0,
+	BARE_BASIS.map((f) => f.slice(SRC.length + 1)).join(', ') || `${ALL_SOURCES.length} source files`
+);
+ok(
+	'every surface that prints one record uses BasisLine or its text helper',
+	RECORD_BASIS.length >= 14,
+	`${RECORD_BASIS.length} files`
+);
+ok(
+	'the one component carries basis, grade and the origins note',
+	BASIS_LINE.includes('record.confidence') &&
+		BASIS_LINE.includes('restsOnNote') &&
+		BASIS_LINE.includes('encyclopediaOnly') &&
+		BASIS_LINE.includes('restsOnOrigins')
+);
 console.log(`
    ${checks - failures}/${checks} checks passed${failures ? `, ${failures} FAILED` : ''}
 `);

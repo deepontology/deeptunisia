@@ -4718,14 +4718,14 @@
   category: security
   subcategory: migration
   actors: [mohamed-ali-nafti]
-  summary: "Foreign Minister Mohamed Ali Nafti met IOM Director General Amy Pope in New York on Tuesday 22 September 2026, on the margins of the high-level segment of the 81st UN General Assembly, per a Foreign Ministry communiqué published 23 September and relayed by African Manager. The readout states the voluntary return and reintegration mechanism produced 5,077 voluntary returns of irregular migrants since 1 January 2026, bringing the total since the mechanism's establishment to 25,351. Nafti restated Tunisia's position that it refuses to be a land of settlement or transit, and called for a comprehensive approach based on shared responsibility, state sovereignty, human dignity and human rights, and action against human-trafficking networks; Pope praised the cooperation level and stressed development programmes and dismantling trafficking networks. The figures are the ministry's, not IOM-published here."
+  summary: "Foreign Minister Mohamed Ali Nafti met IOM Director General Amy Pope in New York on Tuesday 22 September 2026, on the margins of the high-level segment of the 81st UN General Assembly, per a Foreign Ministry communiqué published 23 September and relayed by African Manager. The readout states the voluntary return and reintegration mechanism produced 5,077 voluntary returns of irregular migrants since 1 January 2026, bringing the total since the mechanism's establishment to 25,351. Nafti restated Tunisia's position that it refuses to be a land of settlement or transit, and called for a comprehensive approach based on shared responsibility, state sovereignty, human dignity and human rights, and action against human-trafficking networks; Pope praised the cooperation level and stressed development programmes and dismantling trafficking networks. The figures are the ministry's, not IOM-published here. On 17 November 2026 Nafti put the cumulative total at 27,342, a figure he said excludes individual returns handled by the Interior Ministry (African Manager, 18 November 2026)."
   confidence: C
   basis: inferred
   verification: needs-primary-source
   attributed_to: "Tunisian Ministry of Foreign Affairs, Migration and Tunisians Abroad communiqué via African Manager"
   reasoning: The meeting and the return figures are the ministry's own communiqué relayed by one outlet; no IOM readout or IOM-published statistic for Tunisia 2026 was fetched. The record states the figures as a reasoned reading of that relay.
   falsifiable_by: MFA communiqué of 22-23 September 2026; IOM readout or IOM return statistics for Tunisia in 2026
-  sources: [am-nafti-iom-2026-09-23]
+  sources: [am-nafti-iom-2026-09-23, am-nafti-voluntary-returns-2026-11-18]
 
 - id: ev-elmed-steering-committee-2026-09-22
   date: "2026-09-22"
@@ -4811,7 +4811,6 @@
   summary: "On Tuesday 29 September 2026 President Kaïs Saïed chaired a Council of Ministers at Carthage Palace; the presidency communiqué, published on Wednesday 30 September and relayed by Business News, Le Temps News and other outlets, states that it examined four draft decrees: one amending Decree-Law 54/2022 on offences related to information and communication systems; one amending Decree-Law 13/2022 on penal reconciliation and the allocation of its revenues; one amending certain provisions of organic law 2012-23 on the Independent High Authority for Elections (ISIE); and one concerning municipal councils. The meeting also covered questions of public-service operation. The communiqué did not state the content of the changes; all four texts were published the following day in JORT n° 96 (see the four linked events). The presidency communiqué is a single origin; the outlets relaying it are not independent corroboration."
   confidence: B
   basis: reported
-  verification: verified
   sources: [businessnews-conseil-ministres-2026-09-30, letemps-conseil-ministres-2026-09-30, africanmanager-decret54-revision-2026-09-30]
   attributed_to: "Présidence de la République communiqué, relayed by Business News, Le Temps News and African Manager"
 
@@ -4829,7 +4828,6 @@
   summary: "JORT n° 96 of 30 September 2026 (p. 2056) published Decree No. 1 of 2026, dated 30 September 2026, which repeals and replaces article 24 of Decree-Law 54/2022 of 13 September 2022 on combating offences related to information and communication systems; it does not repeal the article, it rewrites it, and the rest of Decree-Law 54 is untouched. The new article 24 punishes with a fine of 10,000 to 20,000 dinars — no custodial sentence for the base offence — anyone who deliberately uses information and communication networks or systems to produce, promote, publish, send or prepare false news, data or rumours, fabricated or forged documents, or material falsely attributed to others, where the purpose is to harm others' rights or public security or national defence, or to spread terror among the population; the same fine applies to deliberate publication of false personal data or untrue attributions intended to defame or harm, incite an attack on a person, or incite hatred. On recidivism the penalty is six months' imprisonment and a 50,000-dinar fine; the penalties double where the targeted person is a public official or equivalent; article 53 of the Penal Code does not apply to these offences in cases of recidivism. The decree followed the Council of Ministers of 29 September 2026 and bypasses Parliament, where MP Mohamed Ali's February 2024 initiative to delete article 24 had remained blocked in committee; the SNJT, RSF and other organisations had demanded repeal of article 24, not its conversion to a fine. Press readings describe the headline change as the abolition of the prison sentence (Mosaïque FM); the gazette text keeps imprisonment on recidivism."
   confidence: A
   basis: documented
-  verification: verified
   falsifiable_by: The gazette text itself is the record; a misreading would be shown by a human re-read of JORT n° 96 p. 2056 (the two-column extraction is artefacted).
   sources: [jort-2026-096, tunisienumerique-decret54-article24-2026-09-30, mosaiquefm-decret54-amendement-2026-09-30, businessnews-decret54-mohamed-ali-2026-09-24, africanmanager-decret54-revision-2026-09-30]
 
@@ -4847,7 +4845,6 @@
   summary: "JORT n° 96 of 30 September 2026 (p. 2056) published Decree No. 2 of 2026, dated 30 September 2026, amending Decree-Law 13/2022 of 20 March 2022 on penal reconciliation and the allocation of its revenues. The repeals and replacements: article 25's second paragraph now allows a provisional settlement project providing for payment of at least 50% of the sums due, with a commitment to pay the remainder within a period proposed by the commission that must not exceed two years, based on solid and serious evidence provided by the applicant; a new final paragraph of article 25 lets the commission propose a lower rate where it deems that justified from the file; article 30's third paragraph now allocates penal-reconciliation revenues to financing the projects mentioned in its first paragraph, in accordance with the decisions of the National Security Council; the last paragraph of article 30 is repealed. African Manager described the same instrument as concerning prison regulations (\"règlements pénitentiaires\"), while the gazette title, Business News, Mosaïque FM and Le Temps News identify it as penal reconciliation; the discrepancy is recorded as a rejected dispute below."
   confidence: A
   basis: documented
-  verification: verified
   disputes: [{claim: The instrument amended by the second draft decree is the prison-regulations decree (décret-loi 2022-13), held_by: African Manager, source: africanmanager-decret54-revision-2026-09-30, assessment: 'The gazette title ("الصلح الجزائي وتوظيف عائداته وإتمامه") and three other outlets identify décret-loi 2022-13 as the penal-reconciliation text; the primary source settles it against the African Manager wording, which is not adopted.', status: rejected}]
   sources: [jort-2026-096, mosaiquefm-reconciliation-penale-2026-09-30, businessnews-conseil-ministres-2026-09-30, africanmanager-decret54-revision-2026-09-30]
 
@@ -4865,7 +4862,6 @@
   summary: "JORT n° 96 of 30 September 2026 (p. 2057) published Decree No. 3 of 2026, dated 30 September 2026, amending organic law 2012-23 on the Independent High Authority for Elections. It repeals articles 5, 6 and 9 and replaces them: the ISIE council is composed of nine independent, neutral members chosen as follows — three with at least ten years' experience in election administration chosen by the President; a judicial judge with at least ten years' seniority from three proposed by the Conseil supérieur de la magistrature; an administrative judge proposed by the administrative judiciary council; a financial judge proposed by the financial judiciary council; an engineer specialised in information systems and security from three proposed by the National Information Centre; a statistics engineer from three proposed by the National Institute of Statistics; and a retired diplomat from three proposed by the Ministry of Foreign Affairs. Members are appointed by decree, public-sector members keep their original ranks, and the President appoints the ISIE president from among the members. Each member serves a non-renewable six-year term, with one third of the council renewed every two years; a lottery fixes the first renewals at the end of the second and fourth years, the president not being drawn in the first two rounds; the ISIE president informs the President three months before a term ends. Members appointed under Decree-Law 2022-22 continue until the new council takes office. The article 3 substitutions also drop references to \"the head of government\" and replace \"five members\" with \"seven members\", \"by presidential decree\" with \"by decree\", \"accountant\" with \"specialist in accounting or financial audit\", and the Audit Court references."
   confidence: A
   basis: documented
-  verification: verified
   sources: [jort-2026-096, businessnews-conseil-ministres-2026-09-30]
 
 - id: ev-decret-2026-4-municipal-councils-2026-09-30
@@ -4882,7 +4878,6 @@
   summary: "JORT n° 96 of 30 September 2026 (p. 2058) published Decree No. 4 of 2026, dated 30 September 2026, on municipal councils: a comprehensive text running to p. 2074 (the next sommaire item begins at p. 2075). The pages read so far cover general provisions (the municipal council as a local collectivity with legal personality and administrative and financial autonomy, mandated to deliver citizen services and guarantee residents' participation), the merger of two or more municipal areas by decree with transfer of rights and obligations and an Interior Ministry inventory of the merged councils' assets, state support for municipal financial balance and staffing, council tasks (local regulations, budget, planning schemes, environmental and social programmes, cooperation, naming of public spaces), civil-status functions of the mayor and assistants, and standing committees. Full-text analysis of the whole text (roughly seventeen gazette pages) is owed before any detailed record; this candidate records the act and its scope only."
   confidence: A
   basis: documented
-  verification: verified
   falsifiable_by: A full reading of p. 2058-2074 would correct or extend the scope summary; the candidate deliberately states only what was read.
   sources: [jort-2026-096]
 
@@ -5832,7 +5827,6 @@
     publication.
   confidence: A
   basis: documented
-  verification: verified
   reasoning: >-
     The instrument is read from the gazette itself, on the page the sommaire
     assigns it, and the candidate transcribes what the arrêté says. The reading
@@ -5879,7 +5873,6 @@
     from, so the record does not assert who signed them.
   confidence: A
   basis: documented
-  verification: verified
   reasoning: >-
     The seven instruments, their numbers, their date, the employer and the grades
     of the seven staff are read directly from the gazette page. Nothing further
@@ -7472,7 +7465,6 @@
     PDF returned HTTP 403 when fetched on 2026-11-08, so its point-by-point content is not carried here.
     No attendance list, minutes or verbatim record was retrieved.'
   confidence: A
-  verification: verified
   attributed_to: European Parliament inter-parliamentary meetings page and the joint declaration of 5
     November 2026 (institutional records); the ARP communiqué as relayed by African Manager (6 November
     2026), La Presse de Tunisie (5 November 2026) and Nessma TV (5 November 2026)
@@ -8585,3 +8577,165 @@
     different rate would correct the record.
   sources:
     - am-zenith-robbana-resume-2026-11-16
+
+# ---------------------------------------------------------------------------
+# Daily sweep 2026-11-16 to 2026-11-19 (data/contrib/daily-2026-11-19.yaml)
+# ---------------------------------------------------------------------------
+
+- id: ev-tunisair-agm-egm-convocation-2026-11-19
+  date: "2026-11-19"
+  title_en: "Tunisair convokes its shareholders to ordinary and extraordinary meetings for 15 December 2026"
+  title_fr: "Tunisair convoque ses actionnaires en assemblée générale ordinaire et extraordinaire pour le 15 décembre 2026"
+  category: economic
+  location: [gov-tunis]
+  actors: []
+  institutions: [tunisair]
+  causes: []
+  consequences: []
+  summary: >-
+    Tunisair convoked its shareholders to an ordinary general meeting and an
+    extraordinary general meeting for 15 December 2026, per an Amen Invest
+    analysis relayed by African Manager on 19 November 2026. The extraordinary
+    meeting is to vote on continuation of activity under article 388 of the
+    commercial companies code, a recurring formality because the carrier's
+    equity is structurally negative; the analysis recalls that the May 2026
+    extraordinary meeting approved continuation on the 2023 accounts, which
+    showed an equity deficit of 1,759.7 million dinars, against 1,473.4
+    million dinars in 2022. The ordinary meeting is to approve the 2024
+    financial statements and to decide the quitus, a partial renewal of the
+    board and the appointment of auditors for 2025-2027. The convocation
+    notice, the 2024 accounts and the May 2026 resolution were not retrieved;
+    the meeting date is future and is carried in this summary, not as the
+    record date.
+  confidence: C
+  verification: needs-primary-source
+  attributed_to: "Amen Invest analysis relayed by African Manager (19 November 2026)"
+  reasoning: >-
+    One outlet relaying a broker's analysis of a convocation. The agenda, the
+    article 388 procedure and the equity figures are as that relay states
+    them; no convocation notice, board minutes or financial statements were
+    retrieved. The record is dated to the announcement, not to the December
+    meeting.
+  falsifiable_by: >-
+    The convocation notice published by Tunisair (BVMT or company site), the
+    2024 financial statements and the May 2026 extraordinary-meeting minutes
+    would confirm the agenda and the equity figures; a different date, agenda
+    or figures would correct the record.
+  sources:
+    - am-tunisair-agm-2026-11-19
+
+- id: ev-bct-reserve-requirement-tripled-2026-10-09
+  date: "2026-10-09"
+  title_en: "Central Bank triples the reserve-requirement rate on demand deposits from 1% to 3%"
+  title_fr: "La Banque centrale triple le taux des réserves obligatoires sur les comptes à vue, de 1 % à 3 %"
+  category: economic
+  subcategory: monetary-policy
+  location: []
+  actors: [fethi-zouhair-nouri]
+  institutions: [bct]
+  causes: []
+  consequences: []
+  summary: >-
+    The Central Bank of Tunisia issued circular to banks no. 2026-11 on 9 October
+    2026, replacing annexe II.3 of the 2017-02 circular of 10 March 2017 and
+    setting the reserve-requirement rate at 3% on demand accounts (P02010000) and
+    other sums due to customers (P02990000), against 1% in the replaced grid, with
+    special and other savings accounts, time deposits, bons de caisse and
+    certificates of deposit unchanged at 0%. It enters into force on 1 November
+    2026 and recites the board deliberation of 7 October 2026; the reserve is
+    averaged over the month after the declaration, so the first reserve at the new
+    rate is constituted in December 2026. The board held the policy rate at 7.00%
+    at that meeting, saying inflation risks remained tilted upward, with inflation
+    at 5.6% in September 2026. African Manager reported the measure on 19 November
+    2026, deriving about 2.2 bn TND immobilised from 110.7 bn TND of listed banks'
+    deposits at end-June 2026 against a regulatory base it concedes may differ, and
+    citing an unrecovered Tunisie Valeurs sector study of 23 October 2026 for the
+    liquidity and credit context.
+  confidence: A
+  attributed_to: "Circular and press release: Banque centrale de Tunisie. Derived 2.2 bn TND and the sector figures: African Manager (19 November 2026), citing a Tunisie Valeurs study of 23 October 2026."
+  reasoning: >-
+    The circular and the annex it replaces were both retrieved from the BCT and
+    read, so the number, date, headings, the 1% to 3% change and the 1 November
+    2026 entry into force are the instrument's own words. The 7% decision is the
+    board's press release. Dated on the circular rather than on the effective date
+    because the instrument is the event; the effective date and the December
+    constitution are stated in the summary. Only the quantities are second hand,
+    and they are marked derived and attributed.
+  falsifiable_by: >-
+    A JORT printing showing another rate or entry into force, an amending or
+    repealing circular before 1 November 2026, or BCT statistics showing a reserve
+    base different from African Manager's derivation would correct the record; a
+    7 October board decision at another rate would correct the policy-rate
+    sentence.
+  sources:
+    - bct-circulaire-2026-11-2026-10-09
+    - bct-circulaire-2017-02-2017-03-10
+    - bct-conseil-administration-2026-10-07
+    - am-reserves-obligatoires-triplees-2026-11-19
+    - wmc-tap-bct-reserves-obligatoires-2026-10-17
+
+- id: ev-arp-water-financing-bills-committee-2026-11-17
+  date: "2026-11-17"
+  title_en: "ARP finance and budget committee approves seven bills on water-sector loan and guarantee agreements"
+  title_fr: "La commission des finances et du budget de l'ARP approuve sept projets de loi sur des accords de prêt et de garantie dans le secteur de l'eau"
+  category: political
+  subcategory: legislation
+  location: [gov-tunis]
+  actors: []
+  institutions: [arp-2023, sonede]
+  causes: []
+  consequences: []
+  summary: >-
+    The finance and budget committee of the Assembly of the Representatives of the
+    People approved on Tuesday 17 November 2026, at the end of a hearing of
+    representatives of the economy and planning, agriculture/water resources/
+    fisheries and finance ministries and of the SONEDE chief executive, seven
+    draft laws approving water-sector loan, guarantee and supplementary-financing
+    agreements concluded between the Republic of Tunisia and international lenders
+    for the benefit of SONEDE, per a Parliament communiqué of Wednesday evening 18
+    November as relayed by African Manager, La Presse de Tunisie and Managers on
+    19 November. The seven, as African Manager quotes the communiqué: an EIB
+    first-demand guarantee of 28 April 2025 on a supplementary loan for the
+    Bejaoua water treatment plant and its connection to SONEDE's networks; an AFD
+    first-demand guarantee of 19 February 2026 on a supplementary loan for the
+    treated-water transport works; an EIB supplementary financing contract of 28
+    April 2025 for the Greater Tunis drinking-water supply security programme; an
+    AFD loan agreement of 12 September 2025 for the same programme; an AFD
+    first-demand guarantee of 19 February 2026 for the same programme; an IsDB
+    murabaha (forward-sale) agreement of 10 May 2026 for additional financing of
+    the Saida and Kalaat El Kebir dams and their associated water-transfer works;
+    and an AfDB guarantee agreement of 22 September 2026 for the Greater Tunis
+    drinking-water network technical and energy performance project. Per the ARP
+    bureau minutes of 2 November 2026 the seven carry bill numbers 64, 65 and 67
+    to 71 of 2026; a ninth law referred the same day, n° 66, is an EBRD guarantee
+    for a STEG Grombalia-Kandar line and is not among the seven. Committee approval
+    is one stage: no plenary vote, promulgated law or JORT act was found for any of
+    the seven, and none of the sources read states an amount, tenor or dinar value.
+  confidence: B
+  verification: needs-primary-source
+  attributed_to: "A Parliament communiqué of Wednesday 18 November 2026, as relayed by African Manager, La Presse de Tunisie and Managers on 19 November 2026; the committee's agenda for 17 November 2026 on arp.tn"
+  reasoning: >-
+    Two institutional facts carry this record and one does not. The ARP's own
+    committee calendar fixes the committee, the date, the hour and the count of
+    seven bills on exactly this subject, so the sitting is tier-2 documented. The
+    vote, the attendance list and the seven instruments come from a communiqué
+    that was not retrieved, relayed near-verbatim by three outlets on the same day
+    — enough for B (several credible outlets), not for A, which needs the
+    communiqué itself. The bill-number mapping is the ARP bureau minutes of 2
+    November as transcribed by Espacemanager; the underlying PDF is a scan whose
+    Arabic was read only through a search index's OCR. The event is graded on the
+    approval, not on the financing: each of the seven agreements is older (April
+    2025 to September 2026) and none was verified here. No figure is carried
+    because no source states one.
+  falsifiable_by: >-
+    The Parliament communiqué of 18 November 2026, the committee's minutes or
+    report for the 17 November sitting, the plenary record, or a JORT law
+    ratifying any of the seven would confirm or correct the date, the count and the
+    list; a different bill number for any instrument, or a sitting held on
+    Wednesday 18 November instead of Tuesday 17, would correct the record.
+  sources:
+    - arp-finance-committee-calendar-2026-11-17
+    - am-arp-water-bills-2026-11-19
+    - lapresse-arp-water-bills-2026-11-19
+    - managers-arp-water-bills-2026-11-19
+    - espacemanager-arp-bureau-nine-bills-2026-11-02

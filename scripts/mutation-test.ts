@@ -10,10 +10,12 @@
  * survived and why.
  *
  * Targets are the files DeepTunisia owns (scripts/schema.ts,
- * scripts/build-data.ts, scripts/canonical.ts) and the pinned engine the time
- * predicates live in (node_modules/deepepisteme/src/time.ts). Mutating the
- * engine copy is deliberate: it simulates a bad engine bump, which is the
- * failure mode the pinned dependency and the conformance suite exist to catch.
+ * scripts/build-data.ts) and the pinned engine where the time predicates, the
+ * canonical projection and the schema's own kernel symbols (the grade ladder,
+ * deriveBasis, the dispute shape, the prose guards) live
+ * (node_modules/deepepisteme/src). Mutating the engine copy is deliberate: it
+ * simulates a bad engine bump, which is the failure mode the pinned
+ * dependency and the conformance suite exist to catch.
  *
  * CLASSIFICATION
  * --------------
@@ -51,7 +53,27 @@ const ROOT = join(HERE, '..');
 const TSR = join(ROOT, 'node_modules', 'tsx', 'dist', 'cli.mjs');
 const DATASET = join(ROOT, 'src', 'generated', 'dataset.json');
 const S = (f: string) => join(HERE, f);
-const ENGINE_TIME = '../node_modules/deepepisteme/src/time.ts';
+const ENGINE_TIME = '../node_modules/deepepisteme/src/kernel/time.ts';
+const ENGINE_CANONICAL = '../node_modules/deepepisteme/src/kernel/canonical.ts';
+const ENGINE_EVIDENCE = '../node_modules/deepepisteme/src/kernel/evidence.ts';
+const ENGINE_KERNEL_KINDS = '../node_modules/deepepisteme/src/kernel/kinds.ts';
+const ENGINE_BASIS = '../node_modules/deepepisteme/src/kernel/basis.ts';
+const ENGINE_REVIEW = '../node_modules/deepepisteme/src/kernel/review.ts';
+const ENGINE_ENVELOPE = '../node_modules/deepepisteme/src/kernel/envelope.ts';
+const ENGINE_PLACE_GEOGRAPHY = '../node_modules/deepepisteme/src/atlas/rules/place-geography.ts';
+const ENGINE_CONTRACT_AWARD = '../node_modules/deepepisteme/src/atlas/rules/contract-award.ts';
+const ENGINE_OWNERSHIP_SUM = '../node_modules/deepepisteme/src/atlas/rules/ownership-sum.ts';
+const ENGINE_BOARD_OVERLAP = '../node_modules/deepepisteme/src/atlas/rules/board-overlap.ts';
+const ENGINE_COMPANY_REGISTRATION = '../node_modules/deepepisteme/src/atlas/rules/company-registration.ts';
+const ENGINE_EVENT_ORPHAN = '../node_modules/deepepisteme/src/atlas/rules/event-orphan.ts';
+const ENGINE_HORIZON = '../node_modules/deepepisteme/src/atlas/rules/horizon.ts';
+const ENGINE_VACANCY_OVERLAP = '../node_modules/deepepisteme/src/atlas/rules/vacancy-overlap.ts';
+const ENGINE_INTERVAL_TRIMS = '../node_modules/deepepisteme/src/atlas/rules/interval-trims.ts';
+const ENGINE_SUCCESSION = '../node_modules/deepepisteme/src/atlas/succession.ts';
+const ENGINE_UNMOORED_INFLUENCE = '../node_modules/deepepisteme/src/atlas/rules/unmoored-influence.ts';
+const ENGINE_EVENT_CAUSAL = '../node_modules/deepepisteme/src/atlas/rules/event-causal.ts';
+const ENGINE_EVENT_RUPTURE = '../node_modules/deepepisteme/src/atlas/rules/event-rupture.ts';
+const ENGINE_RELATIONSHIP_DUPLICATES = '../node_modules/deepepisteme/src/atlas/rules/relationship-duplicates.ts';
 
 const hash = (p: string) => {
 	if (!existsSync(p)) return 'missing';
@@ -84,145 +106,145 @@ interface Mutation {
 }
 
 const MUTATIONS: Mutation[] = [
-	// --- schema.ts: deriveBasis -------------------------------------------------
+	// --- engine kernel/basis.ts: deriveBasis (schema move, engine target) --------
 	{
-		id: 'm01', file: 'schema.ts', expect: 'test-data deriveBasis truth table (rows 14-15)',
+		id: 'm01', file: ENGINE_BASIS, expect: 'test-data deriveBasis truth table (rows 14-15)',
 		label: 'deriveBasis ignores the explicit override',
 		from: 'if (explicit) return explicit;',
 		to: "if (explicit) return 'reported';"
 	},
 	{
-		id: 'm02', file: 'schema.ts', expect: 'test-data deriveBasis truth table (row C/nps)',
+		id: 'm02', file: ENGINE_BASIS, expect: 'test-data deriveBasis truth table (row C/nps)',
 		label: 'C + needs-primary-source no longer derives inferred',
 		from: "if (confidence === 'C' && verification === 'needs-primary-source') return 'inferred';",
 		to: "if (false && confidence === 'C' && verification === 'needs-primary-source') return 'inferred';"
 	},
 	{
-		id: 'm03', file: 'schema.ts', expect: 'test-data deriveBasis truth table (D rows)',
+		id: 'm03', file: ENGINE_BASIS, expect: 'test-data deriveBasis truth table (D rows)',
 		label: 'grade D no longer derives unsubstantiated',
 		from: "if (confidence === 'D') return 'unsubstantiated';",
 		to: "if (false && confidence === 'D') return 'unsubstantiated';"
 	},
-	// --- schema.ts: the claim envelope (V18/V20, now nonBlank) -------------------
+	// --- engine kernel: the claim envelope (V18/V20, now nonBlank) --------------
 	{
-		id: 'm04', file: 'schema.ts', expect: 'test-validators V20 (C/D attribution)',
+		id: 'm04', file: ENGINE_ENVELOPE, expect: 'test-validators V20 (C/D attribution)',
 		label: 'envelope stops requiring attributed_to on C/D',
 		from: "(r: any) => !((r.confidence === 'C' || r.confidence === 'D') && !nonBlank(r.attributed_to))",
 		to: '(r: any) => true'
 	},
 	{
-		id: 'm05', file: 'schema.ts', expect: 'test-validators V18 (inferred completeness)',
+		id: 'm05', file: ENGINE_ENVELOPE, expect: 'test-validators V18 (inferred completeness)',
 		label: 'envelope stops requiring reasoning/falsifier on inferred',
-		from: "\t\t\t(r: any) => {\n\t\t\t\tconst derived = deriveBasis(r.confidence, r.verification, r.basis);\n\t\t\t\treturn !(derived === 'inferred' && (!nonBlank(r.reasoning) || !nonBlank(r.falsifiable_by)));\n\t\t\t}",
-		to: '(r: any) => true'
+		from: "return !(derived === 'inferred' && (!nonBlank(r.reasoning) || !nonBlank(r.falsifiable_by)));",
+		to: 'return true;'
 	},
 	{
-		id: 'm06', file: 'schema.ts', expect: 'test-validators V18 (explicit unsubstantiated)',
+		id: 'm06', file: ENGINE_ENVELOPE, expect: 'test-validators V18 (explicit unsubstantiated)',
 		label: 'envelope stops requiring attribution on unsubstantiated',
-		from: "(r: any) =>\n\t\t\t\t!(deriveBasis(r.confidence, r.verification, r.basis) === 'unsubstantiated' &&\n\t\t\t\t\t!nonBlank(r.attributed_to)),",
-		to: '(r: any) => true,'
+		from: "deriveBasis(r.confidence, r.verification, r.basis) === 'unsubstantiated' &&",
+		to: 'false &&'
 	},
 	{
-		id: 'm07', file: 'schema.ts', expect: 'latent — redundant with the envelope, documented below',
+		id: 'm07', file: ENGINE_KERNEL_KINDS, expect: 'latent — redundant with the envelope, documented below',
 		label: 'claim envelope drops the sources minimum',
 		from: "sources: z.array(slug).min(1, 'every claim record needs at least one source')",
 		to: 'sources: z.array(slug),',
 		known: 'by design after the required-source rule: the envelope refine rejects an empty sources list for every kind that carries it (company, contract, licence, declaration, education, place), so the field minimum no longer changes acceptance — only the error message.'
 	},
-	// --- schema.ts: review guard (V23) ------------------------------------------
+	// --- engine kernel/review.ts: review guard (V23) ----------------------------
 	{
-		id: 'm08', file: 'schema.ts', expect: 'test-validators V23 (method enum)',
+		id: 'm08', file: ENGINE_REVIEW, expect: 'test-validators V23 (method enum)',
 		label: 'review method becomes free text',
 		from: 'method: ReviewMethod,',
 		to: 'method: z.string(),'
 	},
 	{
-		id: 'm09', file: 'schema.ts', expect: 'latent — by design, documented below',
+		id: 'm09', file: ENGINE_REVIEW, expect: 'latent — by design, documented below',
 		label: 'review date loses its ISO format check',
-		from: "\t\t.regex(/^\\d{4}-\\d{2}-\\d{2}$/, 'review date must be an ISO date (YYYY-MM-DD)')",
-		to: '',
+		from: '.refine((v) => /^\\d{4}-\\d{2}-\\d{2}$/.test(v), {',
+		to: '.refine((v) => true, {',
 		known: 'by design: the V23 calendar round-trip (m10) already rejects any non-calendar date — "26/07/2026" splits to a single NaN segment, "2026-31-07" rolls over and fails the round-trip — so the format regex is redundant defense-in-depth that only improves the error message.'
 	},
 	{
-		id: 'm10', file: 'schema.ts', expect: 'test-validators V23 (calendar round-trip)',
+		id: 'm10', file: ENGINE_REVIEW, expect: 'test-validators V23 (calendar round-trip)',
 		label: 'review date loses its calendar round-trip (2026-02-31 accepted)',
-		from: "return t.getUTCFullYear() === y && t.getUTCMonth() === mo - 1 && t.getUTCDate() === da;\n\t\t\t},\n\t\t\t'review date must be a calendar-valid date (V23)'",
-		to: "return true;\n\t\t\t},\n\t\t\t'review date must be a calendar-valid date (V23)'"
+		from: 'return t.getUTCFullYear() === y && t.getUTCMonth() === mo - 1 && t.getUTCDate() === da;',
+		to: 'return true;'
 	},
 	{
-		id: 'm11', file: 'schema.ts', expect: 'test-validators V23-guard (disclaimer clause)',
+		id: 'm11', file: ENGINE_REVIEW, expect: 'test-validators V23-guard (disclaimer clause)',
 		label: 'reviewOverclaims stops honouring the "not verified" disclaimer',
 		from: 'if (/\\bnot\\b[^.]{0,40}\\b(verified|checked)\\b/i.test(method)) return false;',
 		to: ''
 	},
-	// --- schema.ts: dispute status (R11) -----------------------------------------
+	// --- engine kernel/review.ts: dispute status (R11, schema move) --------------
 	{
-		id: 'm12', file: 'schema.ts', expect: 'test-validators R11 (dispute status enum)',
+		id: 'm12', file: ENGINE_REVIEW, expect: 'test-validators R11 (dispute status enum)',
 		label: 'dispute status becomes free text',
 		from: "status: z.enum(['open', 'adopted', 'rejected']).optional(),",
 		to: 'status: z.string().optional(),'
 	},
-	// --- schema.ts: non-blank mandatory text and override provenance --------------
+	// --- engine kernel/envelope.ts and schema.ts: non-blank text and override provenance --
 	{
-		id: 'm27', file: 'schema.ts', expect: 'test-validators whitespace fixtures (V18/V20)',
+		id: 'm27', file: ENGINE_ENVELOPE, expect: 'test-validators whitespace fixtures (V18/V20)',
 		label: 'nonBlank stops trimming, so a space passes for prose',
-		from: "\treturn typeof v === 'string' && v.trim().length >= min;",
-		to: "\treturn typeof v === 'string' && v.length > 0;"
+		from: '  return typeof v === \'string\' && v.trim().length >= min;',
+		to: '  return typeof v === \'string\' && v.length > 0;'
 	},
 	{
-		id: 'm28', file: 'schema.ts', expect: 'test-validators V23 (whitespace reviewer name)',
-		label: 'reviewer names stop being trimmed before the minimum',
-		from: "\tby: z.string().refine((v) => nonBlank(v, 2), 'reviewer name must be at least 2 non-blank characters (V23)'),",
-		to: '\tby: z.string().min(2),'
+		id: 'm28', file: ENGINE_REVIEW, expect: 'test-validators V23 (reviewer must be a role label)',
+		label: 'a reviewer may sign with any name, not a role label',
+		from: 'by: z.string().refine((v) => labels.test(v), {',
+		to: 'by: z.string().refine((v) => nonBlank(v, 2), {'
 	},
 	{
-		id: 'm29', file: 'schema.ts', expect: 'the build gate (legacy override register)',
+		id: 'm29', file: ENGINE_ENVELOPE, expect: 'the build gate (legacy override register)',
 		label: 'legacy basis-override exception register stops being consulted',
-		from: '\t\t\tif (schemaExceptions.basisOverrides?.has(overrideKey(kind, r))) return;',
-		to: '\t\t\tif (false) return;'
+		from: 'if (live(exceptions).basisOverrides?.has(`${kind}:${r.id}:${derived}>${r.basis}`)) return;',
+		to: 'if (false) return;'
 	},
 	{
-		id: 'm30', file: 'schema.ts', expect: 'test-validators V27 (override review requirement)',
+		id: 'm30', file: ENGINE_ENVELOPE, expect: 'test-validators V27 (override review requirement)',
 		label: 'override review requirement stops issuing',
-		from: "\t\t\tif (!r.review) issue('a basis override requires a review object with a date and method');",
-		to: "\t\t\tif (false) issue('a basis override requires a review object with a date and method');"
+		from: "if (!record.review) gaps.push('a basis override requires a review object with a date and method');",
+		to: "if (false) gaps.push('a basis override requires a review object with a date and method');"
 	},
 	{
-		id: 'm40', file: 'schema.ts', expect: 'test-validators V26 (incompatible relation)',
+		id: 'm40', file: ENGINE_ENVELOPE, expect: 'test-validators V26 (incompatible relation)',
 		label: 'source relations stop being checked against the authored kind',
 		from: 'if (!allowed.includes(r.source_relation)) {',
 		to: 'if (false && !allowed.includes(r.source_relation)) {'
 	},
 	{
-		id: 'm41', file: 'schema.ts', expect: 'test-validators V26 (relation needs independence)',
+		id: 'm41', file: ENGINE_ENVELOPE, expect: 'test-validators V26 (relation needs independence)',
 		label: 'a source relation no longer requires an origin count',
 		from: 'if (r.independence === undefined) {',
 		to: 'if (false && r.independence === undefined) {'
 	},
-	// --- schema.ts: claim evidence and archive snapshots (V29) -------------------
+	// --- claim evidence and archive snapshots (V29): the engine's kernel ---------
 	{
-		id: 'm42', file: 'schema.ts', expect: 'test-validators V29 (year-only/date-only lookup fixtures)',
-		label: 'archive lookup format check disabled (a lookup passes as a snapshot)',
-		from: 'return /^https?:\\/\\/(www\\.)?web\\.archive\\.org\\/web\\/\\d{14}(?:[a-z_]+)?\\//i.test(url);',
-		to: 'return true;'
-	},
-	{
-		id: 'm43', file: 'schema.ts', expect: 'test-validators V29 (capture or retry required)',
+		id: 'm43', file: ENGINE_EVIDENCE, expect: 'test-validators V29 (capture or retry required)',
 		label: 'evidence no longer needs a capture or a dated retry',
 		from: 'if (!e.capture_url && !e.capture_missing) {',
 		to: 'if (false && !e.capture_url && !e.capture_missing) {'
 	},
 	{
-		id: 'm44', file: 'schema.ts', expect: 'test-validators V29 (locator required)',
+		id: 'm44', file: ENGINE_EVIDENCE, expect: 'test-validators V29 (locator required)',
 		label: 'the evidence locator minimum is weakened to allow whitespace',
 		from: ".refine((v) => nonBlank(v, 2), 'evidence needs a locator (page, section or timestamp)'),",
 		to: ".refine((v) => nonBlank(v, 0), 'evidence needs a locator (page, section or timestamp)'),"
 	},
 	{
-		id: 'm45', file: 'schema.ts', expect: 'test-validators V29 source (http(s) url required)',
+		id: 'm45', file: ENGINE_KERNEL_KINDS, expect: 'test-validators V29 source (http(s) url required)',
 		label: 'source URLs stop being restricted to http(s)',
-		from: ".refine((v) => /^https?:\\/\\//i.test(v), 'a source URL must be http(s) (V29)')",
-		to: ".refine(() => true, 'a source URL must be http(s) (V29)')"
+		from: ".refine((v) => /^https?:\\/\\//i.test(v), {",
+		to: ".refine(() => true, {"
+	},
+	{
+		id: 'm72', file: ENGINE_KERNEL_KINDS, expect: 'test-validators V29 source (year-only/date-only lookup fixtures)',
+		label: 'an archive lookup passes as a snapshot, for a source or for evidence (V29)',
+		from: 'return /^https?:\\/\\/(www\\.)?web\\.archive\\.org\\/web\\/\\d{14}(?:[a-z_]+)?\\//i.test(url);',
+		to: 'return true;'
 	},
 	// --- build-data.ts: the pipeline ---------------------------------------------
 	{
@@ -232,7 +254,7 @@ const MUTATIONS: Mutation[] = [
 		to: ''
 	},
 	{
-		id: 'm22', file: 'build-data.ts', expect: 'test-pipeline (injected causal cycle)',
+		id: 'm22', file: ENGINE_EVENT_CAUSAL, expect: 'test-pipeline (injected causal cycle)',
 		label: 'causal-cycle detection disabled (V8/Tarjan)',
 		from: 'if (low.get(v) === index.get(v)) {',
 		to: 'if (false && low.get(v) === index.get(v)) {'
@@ -244,22 +266,106 @@ const MUTATIONS: Mutation[] = [
 		to: 'if (false && !sourceById.has(id)) fail(where, `unknown source "${id}"`);'
 	},
 	{
-		id: 'm24', file: 'build-data.ts', expect: 'test-pipeline (injected cause-after-consequence)',
+		id: 'm24', file: ENGINE_EVENT_CAUSAL, expect: 'test-pipeline (injected cause-after-consequence)',
 		label: 'cause-after-consequence ordering disabled (V8 temporal)',
-		from: 'if (cause && cause.interval.startEarliest > ends) {',
-		to: 'if (false && cause && cause.interval.startEarliest > ends) {'
+		from: 'if (causeInterval.startEarliest > ends) {',
+		to: 'if (false && causeInterval.startEarliest > ends) {'
 	},
 	{
-		id: 'm25', file: 'build-data.ts', expect: 'test-pipeline (injected unmoored influence edge)',
+		id: 'm25', file: ENGINE_UNMOORED_INFLUENCE, expect: 'test-pipeline (injected unmoored influence edge)',
 		label: 'unmoored-influence rejection disabled (V9 anchoring)',
-		from: 'if (!attached) {',
-		to: 'if (false && !attached) {'
+		from: 'if (holds.has(from) || holds.has(to) || documented.has(from) || documented.has(to)) continue;',
+		to: 'continue;'
 	},
 	{
 		id: 'm26', file: 'build-data.ts', expect: 'test-pipeline (injected ghost edge endpoint)',
 		label: 'ghost relationship endpoint detection disabled (referential integrity)',
 		from: 'if (!entityIds.has(rel.from)) fail(`relationship ${label}`, `unknown "from" entity "${rel.from}"`);',
 		to: 'if (false && !entityIds.has(rel.from)) fail(`relationship ${label}`, `unknown "from" entity "${rel.from}"`);'
+	},
+	{
+		id: 'm58', file: ENGINE_CONTRACT_AWARD, expect: 'test-pipeline (injected floating award value)',
+		label: 'award values stop needing an attribution or a primary source (V4/V5)',
+		from: 'if (primary || attributed) continue;',
+		to: 'if (true) continue;'
+	},
+	{
+		id: 'm59', file: ENGINE_PLACE_GEOGRAPHY, expect: 'test-pipeline (injected parentless place)',
+		label: 'a point place no longer needs a parent region (V10)',
+		from: "if (typeof place.kind !== 'string' || !PARENTLESS_KINDS.has(place.kind)) {",
+		to: "if (false) {"
+	},
+	{
+		id: 'm60', file: 'build-data.ts', expect: 'test-pipeline (injected reversed prosecution)',
+		label: 'a directed edge may run from a person where an institution is required (V14)',
+		from: "if (rule.from === 'institution' && fromPerson) {",
+		to: "if (false && rule.from === 'institution' && fromPerson) {"
+	},
+	{
+		id: 'm61', file: ENGINE_RELATIONSHIP_DUPLICATES, expect: 'test-pipeline (injected duplicate relationship)',
+		label: 'overlapping duplicate relationships are no longer found (V16)',
+		from: 'const overlap = aInterval.startEarliest <= bEnd && bInterval.startEarliest <= aEnd;',
+		to: 'const overlap = false;'
+	},
+	{
+		id: 'm62', file: ENGINE_EVENT_RUPTURE, expect: 'test-pipeline (injected floating rupture)',
+		label: 'a rupture event linked to nothing is no longer flagged (V17)',
+		from: 'if (causes !== 0 || consequences !== 0) continue;',
+		to: 'if (true) continue;'
+	},
+	{
+		id: 'm63', file: ENGINE_OWNERSHIP_SUM, expect: 'test-pipeline (injected stakes over 100 percent)',
+		label: 'direct stakes summing past 100 percent are no longer found (V1)',
+		from: 'if (sum <= 100 + TOLERANCE || flagged.has(probe.id)) continue;',
+		to: 'if (true) continue;'
+	},
+	{
+		id: 'm64', file: ENGINE_COMPANY_REGISTRATION, expect: 'test-pipeline (injected repeated registration number)',
+		label: 'a registration number carried by two companies is no longer found (V3)',
+		from: 'if (first !== undefined) {',
+		to: 'if (false) {'
+	},
+	{
+		id: 'm65', file: ENGINE_BOARD_OVERLAP, expect: 'test-pipeline (injected two overlapping board seats)',
+		label: 'one person on two boards over the same years is no longer flagged (V7)',
+		from: 'if (a.from < b.until && b.from < a.until) {',
+		to: 'if (false) {'
+	},
+	{
+		id: 'm66', file: ENGINE_EVENT_ORPHAN, expect: 'test-pipeline (injected orphan event)',
+		label: 'an event linked to nothing is no longer flagged (V11)',
+		from: 'if (carries(event.actors) || carries(event.institutions) || carries(event.documents) || carries(event.disputes)) continue;',
+		to: 'if (true) continue;'
+	},
+	{
+		id: 'm67', file: ENGINE_HORIZON, expect: 'test-pipeline (injected event dated past the cutoff)',
+		label: 'a record that begins past the research cutoff is no longer flagged (V31)',
+		from: 'if (interval.startEarliest > cutoff) {',
+		to: 'if (false) {'
+	},
+	{
+		id: 'm68', file: ENGINE_VACANCY_OVERLAP, expect: 'test-pipeline (injected vacancy over a titular holder)',
+		label: 'a vacancy over a titular holder of the same office is no longer flagged (V32)',
+		from: 'if (held && certainlyOverlap(own, held)) {',
+		to: 'if (false) {'
+	},
+	{
+		id: 'm69', file: ENGINE_INTERVAL_TRIMS, expect: 'test-data (clamped intervals missing from the published report)',
+		label: 'a clamped interval is no longer reported, so the trims file stops listing it (V22)',
+		from: 'if (!interval.trimmed && !interval.startClamped) continue;',
+		to: 'continue;'
+	},
+	{
+		id: 'm70', file: ENGINE_SUCCESSION, expect: 'test-data (published overlaps no longer match the pairwise comparison)',
+		label: 'an overlap counts a previous holder who is not ended (V24)',
+		from: "if (overlap > thresholds.overlapYears && prev.interval.status === 'ended' && cur.interval.status !== 'unknown') {",
+		to: "if (overlap > thresholds.overlapYears && cur.interval.status !== 'unknown') {"
+	},
+	{
+		id: 'm71', file: ENGINE_SUCCESSION, expect: 'test-data (published gaps no longer match the recomputed chain gaps)',
+		label: 'a handover is a gap only past twice the published threshold (V24)',
+		from: 'if (gap > thresholds.gapYears) {',
+		to: 'if (gap > thresholds.gapYears * 2) {'
 	},
 	{
 		id: 'm31', file: 'build-data.ts', expect: 'the build gate (grade-A primary rule)',
@@ -319,20 +425,20 @@ const MUTATIONS: Mutation[] = [
 	{
 		id: 'm20', file: ENGINE_TIME, expect: 'test-validators (open-ended duration, engine target)',
 		label: 'open-ended durations measured from the epoch instead of the cutoff',
-		from: '? DATASET_CUTOFF\n      : (iv.endEarliest + iv.endLatest) / 2;',
-		to: '? 0\n      : (iv.endEarliest + iv.endLatest) / 2;'
+		from: '        ? DATASET_CUTOFF\n        : (iv.endEarliest + iv.endLatest) / 2;',
+		to: '        ? 0\n        : (iv.endEarliest + iv.endLatest) / 2;'
 	},
 	{
 		id: 'm33', file: ENGINE_TIME, expect: 'test-validators (no assertion past cutoff, engine target)',
 		label: 'certainlyActive loses its cutoff clamp',
-		from: 'if (t > DATASET_CUTOFF) return false;\n  if (t < iv.startLatest) return false;',
-		to: 'if (t < iv.startLatest) return false;'
+		from: '    if (t > DATASET_CUTOFF) return false;\n    if (t < iv.startLatest) return false;',
+		to: '    if (t < iv.startLatest) return false;'
 	},
 	{
 		id: 'm34', file: ENGINE_TIME, expect: 'test-validators (no assertion past cutoff, engine target)',
 		label: 'possiblyActive loses its cutoff clamp',
-		from: 'if (t > DATASET_CUTOFF) return false;\n  if (t < iv.startEarliest) return false;',
-		to: 'if (t < iv.startEarliest) return false;'
+		from: '    if (t > DATASET_CUTOFF) return false;\n    if (t < iv.startEarliest) return false;',
+		to: '    if (t < iv.startEarliest) return false;'
 	},
 	{
 		id: 'm35', file: ENGINE_TIME, expect: 'test-validators (unknown-end certainty horizon, engine target)',
@@ -349,8 +455,8 @@ const MUTATIONS: Mutation[] = [
 	{
 		id: 'm37', file: ENGINE_TIME, expect: 'test-validators (ongoing confirmation window, engine target)',
 		label: 'ongoing is always treated as recently confirmed',
-		from: 'lastObservation !== null &&\n    lastObservation >= cutoff - ONGOING_CONFIRMATION_DAYS * 86_400_000;',
-		to: 'true;'
+		from: '      lastObservation !== null &&\n      lastObservation >= cutoff - ONGOING_CONFIRMATION_DAYS * MS_PER_DAY;',
+		to: '      true;'
 	},
 	{
 		id: 'm38', file: ENGINE_TIME, expect: 'test-validators (unknown-end observation, engine target)',
@@ -377,11 +483,11 @@ const MUTATIONS: Mutation[] = [
 		from: 'const origin = entry.lineage?.[0];',
 		to: 'const origin = entry.lineage?.[entry.lineage.length - 1];'
 	},
-	// --- canonical.ts: byte reproducibility --------------------------------------
+	// --- engine kernel/canonical.ts: byte reproducibility ------------------------
 	{
-		id: 'm39', file: 'canonical.ts', expect: 'test-pipeline (canonical byte equality)',
+		id: 'm39', file: ENGINE_CANONICAL, expect: 'test-pipeline (canonical byte equality, engine target)',
 		label: 'canonical bytes keep the wall-clock generated timestamp',
-		from: '\tcopy.meta.generated = CANONICAL_GENERATED;\n',
+		from: '    (meta as Record<string, unknown>).generated = CANONICAL_GENERATED;\n',
 		to: ''
 	},
 	// --- review-coverage.ts: overlapping flags and honest columns (Phase 8) ------
@@ -447,7 +553,26 @@ const MUTATIONS: Mutation[] = [
 const SUITES_FOR: Record<string, string[]> = {
 	'schema.ts': ['test-data.ts', 'test-validators.ts'],
 	'build-data.ts': ['test-data.ts', 'test-validators.ts', 'test-pipeline.ts'],
-	'canonical.ts': ['test-data.ts', 'test-pipeline.ts'],
+	[ENGINE_CANONICAL]: ['test-data.ts', 'test-pipeline.ts'],
+	[ENGINE_BASIS]: ['test-data.ts', 'test-validators.ts'],
+	[ENGINE_REVIEW]: ['test-data.ts', 'test-validators.ts'],
+	[ENGINE_ENVELOPE]: ['test-data.ts', 'test-validators.ts'],
+	[ENGINE_CONTRACT_AWARD]: ['test-data.ts', 'test-pipeline.ts'],
+	[ENGINE_PLACE_GEOGRAPHY]: ['test-data.ts', 'test-pipeline.ts'],
+	[ENGINE_EVENT_CAUSAL]: ['test-data.ts', 'test-pipeline.ts'],
+	[ENGINE_OWNERSHIP_SUM]: ['test-data.ts', 'test-pipeline.ts'],
+	[ENGINE_BOARD_OVERLAP]: ['test-data.ts', 'test-pipeline.ts'],
+	[ENGINE_COMPANY_REGISTRATION]: ['test-data.ts', 'test-pipeline.ts'],
+	[ENGINE_EVENT_ORPHAN]: ['test-data.ts', 'test-pipeline.ts'],
+	[ENGINE_HORIZON]: ['test-data.ts', 'test-pipeline.ts'],
+	[ENGINE_VACANCY_OVERLAP]: ['test-data.ts', 'test-pipeline.ts'],
+	[ENGINE_INTERVAL_TRIMS]: ['test-data.ts', 'test-pipeline.ts'],
+	[ENGINE_UNMOORED_INFLUENCE]: ['test-data.ts', 'test-pipeline.ts'],
+	[ENGINE_SUCCESSION]: ['test-data.ts'],
+	[ENGINE_KERNEL_KINDS]: ['test-validators.ts', 'test-data.ts'],
+	[ENGINE_EVIDENCE]: ['test-validators.ts', 'test-data.ts'],
+	[ENGINE_EVENT_RUPTURE]: ['test-data.ts', 'test-pipeline.ts'],
+	[ENGINE_RELATIONSHIP_DUPLICATES]: ['test-data.ts', 'test-pipeline.ts'],
 	'origins.ts': ['test-validators.ts'],
 	'review-coverage.ts': ['test-data.ts', 'test-validators.ts', 'test-emit.ts'],
 	'network-continuity.ts': ['test-network-continuity.ts'],

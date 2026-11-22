@@ -225,7 +225,7 @@ console.log('\n  ── the page uses the states and the police path is untouche
 	ok('the landing reads the live study and the stored count', studyPage.includes('/api/studies/citizen-budget') && studyPage.includes('/count') && studyPage.includes('countNote'));
 	ok('the landing uses the live and paused labels, not only the design one', studyPage.includes('statusLive') && studyPage.includes('statusPaused'));
 
-	const police = readFileSync(join(ROOT, 'src/routes/research/[slug]/participate/+page.svelte'), 'utf8');
+	const police = readFileSync(join(ROOT, 'src/routes/(read)/research/[slug]/participate/+page.svelte'), 'utf8');
 	ok('the police runner keeps its own submit call', police.includes('fetch(`/api/studies/${study.slug}/submit`'));
 	ok('the police runner does not import the budget submit module', !police.includes('research-submit'));
 	ok('the police runner still sends the same payload fields', ['instrumentHash:', 'consentVersion:', 'startedAt:', 'completionMs:', 'answers:', 'assignment', 'pow'].every((f) => police.includes(f)));

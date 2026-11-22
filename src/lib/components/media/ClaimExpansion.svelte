@@ -6,6 +6,7 @@
 	 */
 
 	import type { Claim, Source } from '$lib/media/types';
+	import { t, tf } from '$lib/t.svelte';
 
 	interface Props {
 		claim: Claim;
@@ -21,23 +22,23 @@
 	const claimText = $derived(claim.text.en ?? '');
 </script>
 
-<div class="expansion" id={`claim-expansion-${claim.id}`} role="region" aria-label="Evidence for claim {claim.id}">
+<div class="expansion" id={`claim-expansion-${claim.id}`} role="region" aria-label={tf('media.claim.aria', { id: claim.id, grade: claim.grade })}>
 	<header class="card-head">
 		<span class="id">{claim.id}</span>
 		<span class="grade" class:documented={grade === 'documented'} class:reported={grade === 'reported'} class:inferred={grade === 'inferred'} class:unsubstantiated={grade === 'unsubstantiated'}>
 			{grade}
 		</span>
 		{#if isNegative}
-			<span class="negative">documented negative</span>
+			<span class="negative">{t('media.claim.negative')}</span>
 		{/if}
-		<button class="close" onclick={onclose} aria-label="Close claim detail">✕</button>
+		<button class="close" onclick={onclose} aria-label={t('media.claim.close')}>✕</button>
 	</header>
 
 	<p class="claim-text">{claimText}</p>
 
 	{#if sources.length > 0}
 		<div class="sources">
-			<div class="label">Evidence</div>
+			<div class="label">{t('media.claim.evidence')}</div>
 			{#each sources as source}
 				<div class="source">
 					<span class="source-id">{source.id}</span>
@@ -50,7 +51,7 @@
 							{source.citation.en ?? 'Source'}
 						</span>
 					{/if}
-					<span class="tier">tier {source.tier}</span>
+					<span class="tier">{tf('media.claim.tier', { n: source.tier ?? '' })}</span>
 				</div>
 			{/each}
 		</div>
@@ -58,7 +59,7 @@
 
 	{#if dispute}
 		<div class="dispute">
-			<div class="label">Disputed</div>
+			<div class="label">{t('media.claim.disputed')}</div>
 			<p class="dispute-desc">{dispute.description}</p>
 			{#each (dispute.positions ?? []) as pos}
 				<div class="pos">
@@ -69,7 +70,7 @@
 			{/each}
 			{#if dispute.adopted}
 				<div class="adopted">
-					<strong>Adopted:</strong> {dispute.adopted}
+					<strong>{t('media.claim.adopted')}:</strong> {dispute.adopted}
 				</div>
 			{/if}
 		</div>

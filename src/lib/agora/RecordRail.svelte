@@ -14,8 +14,11 @@
 	import RecordPanel from '$lib/components/RecordPanel.svelte';
 	import ConnectionCard from '$lib/components/ConnectionCard.svelte';
 	import Chip from '$lib/ui/Chip.svelte';
+	import BasisLine from '$lib/ui/BasisLine.svelte';
 	import SourceList from '$lib/components/SourceList.svelte';
-	import { t, basisLabel, confidenceLabel, describeInterval, nameOf } from '$lib/t.svelte';
+	import { t, basisLabel, confidenceLabel, describeInterval } from '$lib/t.svelte';
+	import { nameOf } from '$lib/names.svelte';
+	import { excerptOf } from '$lib/source-prose.svelte';
 	import {
 		communityTypeOf,
 		institutionById,
@@ -106,8 +109,8 @@
 				</a>
 			{/if}
 		</div>
-		{#if source.excerpt}
-			<p class="excerpt">{source.excerpt}</p>
+		{#if excerptOf(source.id)}
+			<p class="excerpt">{excerptOf(source.id)}</p>
 		{/if}
 		<SourceList ids={[source.id]} compact />
 	</div>
@@ -117,7 +120,7 @@
 		<h3>{nameOf(roleById.get(position.role))}</h3>
 		<p class="pub">{nameOf(personById.get(position.holder))}</p>
 		<div class="meta">
-			<Chip size="xs" dot tint="var(--basis-{position.basis})">{basisLabel(position.basis as Basis)}</Chip>
+			<BasisLine record={position} grade={false} />
 			<Chip variant="outline" size="xs">{position.confidence}</Chip>
 			<span class="span mono">{describeInterval(position.interval)}</span>
 		</div>

@@ -87,15 +87,21 @@ inventory:
       - '\b(?:18|19|20)\d{2}\b'
       # The PSI cell floor quoted on /introduction: a fixed suppression rule from a hashed instrument, not a current-state count.
       - '\bfewer than 20 people\b'
-  - path: output/deeptunisia-release-paper-v0.1.2.md
+  - path: output/deeptunisia-release-paper-v1.0.0.md
     rule: release-paper
     note: Active release paper. Only its `<!--stat:-->` spans and its current-state summary are governed; the methodology history is historical prose.
+  - path: output/deeptunisia-release-paper-v0.1.2.md
+    rule: historical-prose
+    note: Superseded release paper, kept as release history.
   - path: output/deeptunisia-release-paper-v0.1.1.md
     rule: historical-prose
     note: Superseded release paper, kept as release history.
   - path: static/deeptunisia-release-paper-v1.0.pdf
     rule: generated-artifact
     note: Generated PDF bound to the active release identity, not hand-edited.
+  - path: static/deeptunisia-release-paper-v1.0.0.pdf
+    rule: generated-artifact
+    note: Release paper PDF rendered from the tracked source; scripts/test-paper.ts reads its text.
   - path: docs/agora-deployment.md
     rule: authored-prose
     note: Current-state operational documentation; the mode contract.
@@ -744,7 +750,9 @@ claims:
     kind: metric
     claim: Records carrying an editorial review note, as emitted for tagged documents.
     surfaces: []
-    resolver: { source: stats, key: reviewed }
+    # 1.0 removed the single `stats.reviewed` key. The count is the sum of the
+    # three actor keys and is published through the review channel instead.
+    resolver: { source: review, key: editorial-notes }
     format: plain
     population: editorial review notes (not independent checks)
     lifecycle: current
@@ -760,6 +768,45 @@ claims:
     resolver: { source: stats, key: reviewable }
     format: plain
     population: reviewable records (the denominator for editorial notes)
+    lifecycle: current
+    locale: all
+    owner: EDITORIAL
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: review-checked-by-person-stat
+    kind: metric
+    claim: Reviewable records whose review names a person, as emitted for tagged documents.
+    surfaces: []
+    resolver: { source: stats, key: reviewedHuman }
+    format: plain
+    population: reviewable records with a review whose actor is human
+    lifecycle: current
+    locale: all
+    owner: EDITORIAL
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: review-passed-by-agent-stat
+    kind: metric
+    claim: Reviewable records whose review names an agent, as emitted for tagged documents.
+    surfaces: []
+    resolver: { source: stats, key: reviewedAgent }
+    format: plain
+    population: reviewable records with a review whose actor is agent
+    lifecycle: current
+    locale: all
+    owner: EDITORIAL
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: review-unstated-actor-stat
+    kind: metric
+    claim: Reviewable records whose review does not record its actor, as emitted for tagged documents.
+    surfaces: []
+    resolver: { source: stats, key: reviewedUnstated }
+    format: plain
+    population: reviewable records whose review predates the actor field
     lifecycle: current
     locale: all
     owner: EDITORIAL
@@ -859,7 +906,7 @@ claims:
     kind: metric
     claim: Unsubstantiated records carrying an editorial note.
     surfaces: []
-    resolver: { source: stats, key: reviewed-unsubstantiated }
+    resolver: { source: stats, key: reviewNotes-unsubstantiated }
     format: plain
     population: records flagged unsubstantiated that carry an editorial note
     lifecycle: current
@@ -872,7 +919,7 @@ claims:
     kind: metric
     claim: Attributed records carrying an editorial note.
     surfaces: []
-    resolver: { source: stats, key: reviewed-attributed }
+    resolver: { source: stats, key: reviewNotes-attributed }
     format: plain
     population: records flagged attributed that carry an editorial note
     lifecycle: current
@@ -885,7 +932,7 @@ claims:
     kind: metric
     claim: Inferred records carrying an editorial note.
     surfaces: []
-    resolver: { source: stats, key: reviewed-inferred }
+    resolver: { source: stats, key: reviewNotes-inferred }
     format: plain
     population: records flagged inferred that carry an editorial note
     lifecycle: current

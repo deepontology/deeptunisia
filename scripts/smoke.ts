@@ -18,6 +18,7 @@ import { resolveClientMode } from '../src/lib/agora-gate.ts';
 import { TOUR_KEY, TOUR_VERSION } from '../src/lib/shell/tour-version.ts';
 import { translate } from '../src/lib/i18n.ts';
 import { hasDoubleEncoding } from './encoding-guard.ts';
+import { ARABIC_TITLE_EXCEPTION, arabicTitleExceptionActive } from './prose-exceptions.ts';
 
 /**
  * A returning reader has already seen the current tour. Seeding the seen-flag
@@ -453,6 +454,15 @@ function isIgnorable(text: string) {
 		text.includes('GPU stall due to ReadPixels') ||
 		text.includes('GroupMarkerNotSet')
 	) {
+		return true;
+	}
+	/*
+	 * Two lines that only the dev server writes. Record pages (/e/<id>) are written
+	 * into build/ after the build, so the dev server has no such route and says so
+	 * when a reading page forwards a link to one; and it warns that its next
+	 * hot-reload will reload the page. A built site has neither.
+	 */
+	if (text.includes('Not found: /e/') || text.includes('The next HMR update will cause the page to reload')) {
 		return true;
 	}
 	return text.includes('favicon') || text.includes('Download the React DevTools');
@@ -1047,6 +1057,111 @@ console.log('\n  ── interaction ──');
 	await context.close();
 }
 
+// --- Record text -------------------------------------------------------------
+/*
+ * The long English text of a record (a person's tagline and summary, a connection's
+ * description) is not in the graph the page loads: it is `/prose-en.json`, fetched
+ * once. These runs hold the two places a reader meets that: a record's panel, and
+ * the palette, whose index is built from that text and so is not ready until it has
+ * arrived. Expected strings are read from the generated dataset, not typed here.
+ */
+if (runSection('record text')) {
+console.log('\n  ── record text ──');
+	const datasetText = readFileSync(join(HERE, '..', 'src', 'generated', 'dataset.json'), 'utf8');
+	const people = (
+		JSON.parse(datasetText) as {
+			people: { id: string; name_en: string; tagline?: string; summary?: string }[];
+		}
+	).people;
+	/*
+	 * A word that is in few records' text anywhere in the dataset, taken from one person's
+	 * tagline, so that a search for it must find that person through the fetched prose and
+	 * through nothing else.
+	 */
+	const occurrences = (w: string) => datasetText.toLowerCase().split(w.toLowerCase()).length - 1;
+	let subject = people[0];
+	let word = '';
+	for (const p of people) {
+		if (!p.tagline || !p.summary) continue;
+		const w = p.tagline.split(/[^A-Za-z]+/).find((x) => x.length >= 8 && occurrences(x) <= 3 && !p.name_en.includes(x));
+		if (w) {
+			subject = p;
+			word = w;
+			break;
+		}
+	}
+	ok('the record text test has a subject and a distinctive word', !!word, `${subject.id}, "${word}" in ${word ? occurrences(word) : 0} places`);
+
+	const context = await browser.newContext({ viewport: { width: 1600, height: 1000 } });
+	await context.addInitScript(TOUR_SEEN_INIT);
+	const problems: string[] = [];
+
+	// 1. A record's panel shows its tagline and summary from the fetched file.
+	{
+		const page = await context.newPage();
+		page.on('pageerror', (e) => problems.push(e.message));
+		const fetchedProse: string[] = [];
+		page.on('response', (r) => {
+			if (r.url().includes('/prose-en.json')) fetchedProse.push(`${r.status()} ${r.url().split('/').pop()}`);
+		});
+		await page.goto(BASE + '/chronicle?id=' + encodeURIComponent(subject.id), { waitUntil: 'networkidle', timeout: 30_000 });
+		await settle(page);
+		const want = subject.tagline!.slice(0, 40);
+		await page.waitForFunction(
+			(w) => Array.from(document.querySelectorAll('.tagline')).some((e) => (e.textContent ?? '').includes(w)),
+			want,
+			{ timeout: 10_000 }
+		).catch(() => {});
+		const tagline = await page.locator('.tagline').first().innerText().catch(() => '');
+		ok("a record's panel shows its tagline", tagline.includes(want), tagline.slice(0, 60));
+		const summaryText = await page.locator('.summary').first().innerText().catch(() => '');
+		ok("a record's panel shows its summary", summaryText.includes(subject.summary!.slice(0, 40)), summaryText.slice(0, 60));
+		ok('the prose file is requested once with the build hash', fetchedProse.length === 1 && /prose-en\.json\?v=/.test(await page.evaluate(`performance.getEntriesByType('resource').map(e => e.name).find(n => n.includes('prose-en.json')) ?? ''`) as string), fetchedProse.join(', '));
+		await page.close();
+	}
+
+	// 2. The palette says "still building" until the prose is in, then finds a person by it.
+	{
+		const page = await context.newPage();
+		page.on('pageerror', (e) => problems.push(e.message));
+		await page.route(/prose-en\.json/, async (route) => {
+			await new Promise((res) => setTimeout(res, 3000));
+			await route.continue();
+		});
+		await page.goto(BASE + '/chronicle', { waitUntil: 'load', timeout: 30_000 });
+		await settle(page);
+		await page.keyboard.press('/');
+		await page.waitForSelector('.palette input', { timeout: 5_000 });
+		await page.keyboard.type(word);
+		const building = await page.locator('.palette li.empty').innerText().catch(() => '');
+		ok('the palette says the index is still loading while the prose is on its way', building.trim() === 'Loading the index…', building.trim());
+		await page.waitForFunction(
+			(n) => Array.from(document.querySelectorAll('.palette li .name')).some((e) => (e.textContent ?? '') === n),
+			subject.name_en,
+			{ timeout: 15_000 }
+		).catch(() => {});
+		const names = await page.locator('.palette li .name').allInnerTexts();
+		ok('once the prose has arrived the palette finds a person by a word of their tagline', names.includes(subject.name_en), `${word} → ${names.slice(0, 4).join(', ')}`);
+		await page.keyboard.press('Escape');
+		await page.close();
+	}
+
+	// 3. Offline for the prose: the panel still names the record and says nothing it does not have.
+	{
+		const page = await context.newPage();
+		page.on('pageerror', (e) => problems.push(e.message));
+		await page.route(/prose-en\.json/, (route) => route.abort());
+		await page.goto(BASE + '/chronicle?id=' + encodeURIComponent(subject.id), { waitUntil: 'networkidle', timeout: 30_000 });
+		await settle(page);
+		const heading = await page.locator('h2, h1').allInnerTexts();
+		ok('without the prose the panel still names the record', heading.some((h) => h.includes(subject.name_en)), heading.slice(0, 3).join(' | '));
+		ok('without the prose the panel shows no tagline and no error', (await page.locator('.tagline').count()) === 0 && problems.length === 0, problems.slice(0, 2).join(' | '));
+		await page.close();
+	}
+	ok('record text console clean', problems.length === 0, problems.slice(0, 3).join(' | '));
+	await context.close();
+}
+
 // --- The timeline -----------------------------------------------------------
 /*
  * The dock is the app's primary control and its labels are the easiest thing to
@@ -1135,6 +1250,7 @@ console.log('\n  ── timeline ──');
 if (runSection('chronicle navigation')) {
 console.log('\n  ── chronicle navigation ──');
 	const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+	await context.addInitScript(TOUR_SEEN_INIT);
 	const page = await context.newPage();
 	await page.goto(BASE + '/chronicle', { waitUntil: 'networkidle' });
 	await settle(page);
@@ -1149,7 +1265,10 @@ console.log('\n  ── chronicle navigation ──');
 	 * measures the clamp, not the gesture.
 	 */
 	await page.mouse.move(box.x + box.width / 2, y);
+	// A plain vertical wheel scrolls the page; ctrl (or cmd) with the wheel zooms the chart.
+	await page.keyboard.down('Control');
 	await page.mouse.wheel(0, -600);
+	await page.keyboard.up('Control');
 	await page.waitForTimeout(500);
 	const zoomed = await page.getByRole('button', { name: /full range|toute la période|المدى/i }).count();
 	ok('wheel-zoom narrows the window', zoomed >= 1);
@@ -1202,10 +1321,12 @@ console.log('\n  ── chronicle navigation ──');
 	// The axis is a scrub surface, and its ticks adapt to the zoom.
 	const plotBox = (await page.locator('.plot').boundingBox())!;
 	await page.mouse.move(plotBox.x + plotBox.width * 0.5, plotBox.y + 200);
+	await page.keyboard.down('Control');
 	for (let i = 0; i < 10; i++) {
 		await page.mouse.wheel(0, -600);
 		await page.waitForTimeout(100);
 	}
+	await page.keyboard.up('Control');
 	const tickLabels = await page.locator('.plot .tick-label').allTextContents();
 	ok(
 		'axis ticks adapt to months when zoomed in',
@@ -1242,6 +1363,7 @@ console.log('\n  ── chronicle navigation ──');
 if (runSection('chronicle events lane')) {
 console.log('\n  ── chronicle events lane ──');
 	const context = await browser.newContext({ viewport: { width: 1600, height: 1000 } });
+	await context.addInitScript(TOUR_SEEN_INIT);
 	const page = await context.newPage();
 	const problems: string[] = [];
 	page.on('pageerror', (e) => problems.push(`[pageerror] ${e.message}`));
@@ -1260,9 +1382,15 @@ console.log('\n  ── chronicle events lane ──');
 	// equal the table's row count.
 	const marks = await page.locator('.ev-mark').count();
 	ok('events lane renders marks', marks > 0, `${marks} marks`);
+	// The tables are the chart's text alternative and are drawn only while the section is open.
+	await page.locator('.a11y summary').click();
+	await page.waitForSelector('.a11y table');
 	const tables = await page.locator('.a11y table').count();
 	ok('events table present beside the tenures table', tables >= 2, `${tables} tables`);
 	const evRows = await page.locator('.a11y table').nth(1).locator('tbody tr').count();
+	// Close it again: an open section sits over the chart and takes the clicks aimed at it.
+	await page.locator('.a11y summary').click();
+	await page.waitForSelector('.a11y table', { state: 'detached' });
 	const recon = (await page.evaluate(`(() => {
 		const marks = Array.from(document.querySelectorAll('.chronicle .ev-mark'));
 		const clusters = marks.filter((m) => m.querySelector('.ev-cluster'));
@@ -1494,6 +1622,7 @@ console.log('\n  ── chronicle events lane ──');
 if (runSection('chronicle events expanded')) {
 	console.log('\n  ── chronicle events expanded ──');
 	const context = await browser.newContext({ viewport: { width: 1600, height: 1000 } });
+	await context.addInitScript(TOUR_SEEN_INIT);
 	const page = await context.newPage();
 	const problems: string[] = [];
 	page.on('pageerror', (e) => problems.push(`[pageerror] ${e.message}`));
@@ -1537,7 +1666,15 @@ if (runSection('chronicle events expanded')) {
 	// Row labels live in the gutter and must never sit on top of a mark.
 	const overlaps = await page.evaluate(`(() => {
 		const labels = Array.from(document.querySelectorAll('.exp-gl text')).map((l) => l.getBoundingClientRect());
-		const marks = Array.from(document.querySelectorAll('.ev-mark.clickable .ev-dot, .ev-mark.clickable .ev-pill, .ev-mark.clickable .ev-diamond, .ev-mark.clickable .ev-spanbar')).map((el) => el.getBoundingClientRect());
+		// A span that began before the window is clipped at the gutter's edge, but its box is not:
+		// only the part right of the gutter is on screen, so that is the part that can overlap.
+		const clip = document.querySelector('#plot-clip rect');
+		const plotLeft = document.querySelector('.plot').getBoundingClientRect().left;
+		const visibleFrom = plotLeft + (clip ? Number(clip.getAttribute('x')) : 0);
+		const marks = Array.from(document.querySelectorAll('.ev-mark.clickable .ev-dot, .ev-mark.clickable .ev-pill, .ev-mark.clickable .ev-diamond, .ev-mark.clickable .ev-spanbar')).map((el) => {
+			const r = el.getBoundingClientRect();
+			return { left: Math.max(r.left, visibleFrom), right: r.right, top: r.top, bottom: r.bottom };
+		});
 		const hit = (a, b) => !(a.right <= b.left || a.left >= b.right || a.bottom <= b.top || a.top >= b.bottom);
 		let n = 0;
 		for (const l of labels) if (marks.some((m) => hit(l, m))) n++;
@@ -1546,7 +1683,18 @@ if (runSection('chronicle events expanded')) {
 	ok('no gutter label overlaps a mark', overlaps === 0, `${overlaps} overlaps`);
 
 	// Clicking a mark opens the record.
-	await page.locator('.ev-mark.clickable').first().click();
+	// A mark whose span began before the window is centred under the gutter; click one that is on screen.
+	const onScreen = (await page.evaluate(`(() => {
+		const clip = document.querySelector('#plot-clip rect');
+		const from = document.querySelector('.plot').getBoundingClientRect().left + (clip ? Number(clip.getAttribute('x')) : 0);
+		for (const el of document.querySelectorAll('.ev-mark.clickable .ev-dot, .ev-mark.clickable .ev-pill, .ev-mark.clickable .ev-diamond')) {
+			const r = el.getBoundingClientRect();
+			const x = r.left + r.width / 2, y = r.top + r.height / 2;
+			if (x > from + 10 && x < window.innerWidth - 10 && y > 0 && y < window.innerHeight) return { x, y };
+		}
+		return null;
+	})()`)) as { x: number; y: number } | null;
+	if (onScreen) await page.mouse.click(onScreen.x, onScreen.y);
 	await page.waitForTimeout(600);
 	ok('clicking an expanded mark opens the inspector', (await page.locator('.inspector').count()) === 1);
 	await page.keyboard.press('Escape');
@@ -2773,6 +2921,7 @@ console.log('\n  ── deep-link round trips ──');
 	 */
 	{
 		const page = await context.newPage();
+		const seen = problems.length;
 		await page.goto(BASE + '/data?id=bourguiba', { waitUntil: 'networkidle', timeout: 30_000 });
 		await settle(page);
 		await page.waitForTimeout(1000);
@@ -2780,11 +2929,18 @@ console.log('\n  ── deep-link round trips ──');
 			'deep-link /data?id=bourguiba does not open the inspector',
 			(await page.locator('.inspector').count()) === 0
 		);
+		// /data is a reading page with no panel to open a record in, so a link that names one
+		// goes to the record's own page, replacing the entry rather than adding one.
 		ok(
-			'deep-link /data?id=bourguiba leaves the URL untouched',
-			page.url().includes('id=bourguiba') && !page.url().includes('region='),
+			'deep-link /data?id=bourguiba goes to the record page',
+			new URL(page.url()).pathname === '/e/bourguiba' && !page.url().includes('region='),
 			page.url().replace(BASE, '')
 		);
+		// The dev server has no /e/ route, so the forwarded request is a 404 it reports as a
+		// resource error; that one line is the dev server's, not the page's.
+		for (let i = problems.length - 1; i >= seen; i--) {
+			if (problems[i].includes('status of 404')) problems.splice(i, 1);
+		}
 		await page.close();
 	}
 
@@ -2946,7 +3102,8 @@ if (runSection('captions')) {
 console.log('\n  ── captions ──');
 	const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
 	await context.addInitScript(TOUR_SEEN_INIT);
-	for (const path of ['/rankings', '/map']) {
+	// /map forwards to /world, and the world view has its About while it shows the globe.
+	for (const path of ['/rankings', '/world']) {
 		const page = await context.newPage();
 		await page.goto(BASE + path, { waitUntil: 'networkidle', timeout: 30_000 });
 		await settle(page);
@@ -3352,6 +3509,10 @@ if (runSection('every language')) for (const locale of ['ar', 'fr'] as const) {
 			// (atlas), git commit subjects (corrections), hypothesis prose from
 			// records lacking fr/ar (evidence). Ceilings fall as DATA translation
 			// lands; the UI-chrome part of each landing is done.
+			// The ceiling stays 37. The Arabic page stands above it only under the
+			// dated exception in scripts/prose-exceptions.ts (75 of 198 roles without
+			// `title_ar`), applied below until its date, and the build fails when the
+			// date passes with titles still missing.
 			'/methodology': 37,
 			'/map': 5,
 			'/network': 5,
@@ -3385,7 +3546,14 @@ if (runSection('every language')) for (const locale of ['ar', 'fr'] as const) {
 			'/agora': 20
 		};
 		const PROSE_BACKSTOP = 200;
-		const proseCeiling = PROSE_CEILINGS[path] ?? PROSE_BACKSTOP;
+		let proseCeiling = PROSE_CEILINGS[path] ?? PROSE_BACKSTOP;
+		if (
+			locale === ARABIC_TITLE_EXCEPTION.locale &&
+			path === ARABIC_TITLE_EXCEPTION.route &&
+			arabicTitleExceptionActive()
+		) {
+			proseCeiling = ARABIC_TITLE_EXCEPTION.ceiling;
+		}
 		ok(
 			`${where} English prose within ceiling`,
 			englishProse <= proseCeiling,
@@ -4502,6 +4670,67 @@ if (runSection('layout')) for (const vp of VIEWPORTS) {
 		}
 	}
 	await context.close();
+}
+
+if (runSection('now rows')) {
+console.log('\n  ── now rows ──');
+/*
+ * The Now page prints six cells per row (name, office, what the claim rests on,
+ * time in office, the comparison with the usual term, last confirmed). The cells
+ * sat in fixed columns sized for a one-letter basis code, so the basis chip and
+ * its "rests on N origins" note drew through the elapsed text and out of the
+ * row at every width above the phone layout. Measured the way a reader sees it:
+ * the boxes of the printed parts, per row, must not intersect each other and
+ * must stay inside the row.
+ */
+for (const width of [390, 800, 1100, 1440, 1920]) {
+	const context = await browser.newContext({ viewport: { width, height: 1000 } });
+	const page = await context.newPage();
+	await page.addInitScript(TOUR_SEEN_INIT);
+	await page.goto(`${BASE}/now`, { waitUntil: 'networkidle', timeout: 30_000 });
+	await settle(page);
+	await page.waitForSelector('.holders li');
+	await page.evaluate(() => document.fonts.ready);
+	const result = await page.evaluate(() => {
+		const parts = ['.who', '.office', '.basis-line', '.elapsed', '.vs', '.stale'];
+		const rows = [...document.querySelectorAll('.holders li')];
+		let bad = 0;
+		let example = '';
+		for (const row of rows) {
+			const bounds = row.getBoundingClientRect();
+			const boxes = parts
+				.map((selector) => [selector, row.querySelector(selector)] as const)
+				.filter((entry): entry is readonly [string, Element] => entry[1] !== null)
+				.map(([selector, el]) => [selector, el.getBoundingClientRect()] as const)
+				.filter(([, box]) => box.width > 0 && box.height > 0);
+			let problem = '';
+			for (let i = 0; i < boxes.length && !problem; i++) {
+				const [a, boxA] = boxes[i];
+				if (boxA.left < bounds.left - 0.5 || boxA.right > bounds.right + 0.5) problem = `${a} leaves the row`;
+				for (let j = i + 1; j < boxes.length && !problem; j++) {
+					const boxB = boxes[j][1];
+					const crossing =
+						boxA.left < boxB.right - 0.5 &&
+						boxB.left < boxA.right - 0.5 &&
+						boxA.top < boxB.bottom - 0.5 &&
+						boxB.top < boxA.bottom - 0.5;
+					if (crossing) problem = `${a} meets ${boxes[j][0]}`;
+				}
+			}
+			if (problem) {
+				bad++;
+				example ||= problem;
+			}
+		}
+		return { rows: rows.length, bad, example, layout: getComputedStyle(rows[0]).display };
+	});
+	ok(
+		`now rows at ${width}px: no printed part meets another or leaves its row`,
+		result.rows > 20 && result.bad === 0,
+		result.bad ? `${result.bad} of ${result.rows} rows, e.g. ${result.example}` : `${result.rows} rows, ${result.layout} layout`
+	);
+	await context.close();
+}
 }
 
 if (runSection('study page')) {

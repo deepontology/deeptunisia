@@ -141,11 +141,13 @@ const { issues, resolved } = validateClaims(file, ROOT, ctx);
 		ok('the build manifest carries the graph hash', m.graph?.datasetHash === ds.meta.datasetHash, String(m.graph?.datasetHash).slice(0, 16));
 		ok(
 			'the build manifest keeps the review populations separate',
-			m.populations?.review?.editorialNotes !== undefined &&
+			m.populations?.review?.checkedByPerson !== undefined &&
+				m.populations?.review?.passedByAgent !== undefined &&
+				m.populations?.review?.unstated !== undefined &&
 				m.populations?.review?.independentChecks !== undefined &&
 				m.populations?.review?.editorialQueue !== undefined &&
 				m.populations.review.note.includes('never summed'),
-			`notes ${m.populations?.review?.editorialNotes} · queue ${m.populations?.review?.editorialQueue} · independent ${m.populations?.review?.independentChecks}`
+			`person ${m.populations?.review?.checkedByPerson} · agent ${m.populations?.review?.passedByAgent} · unstated ${m.populations?.review?.unstated} · queue ${m.populations?.review?.editorialQueue} · independent ${m.populations?.review?.independentChecks}`
 		);
 		ok(
 			'the build manifest keeps the translation populations separate',
@@ -178,10 +180,13 @@ const { issues, resolved } = validateClaims(file, ROOT, ctx);
 		file.claims.filter((c) => c.assurance === 'independent').map((c) => c.id).join(', ')
 	);
 	ok(
-		'the stats and review channels agree on editorial notes',
-		asNum('stats', 'reviewed') === asNum('review', 'editorial-notes') &&
+		'the stats channel splits editorial notes by actor and agrees with the review channel',
+		asNum('stats', 'reviewedHuman') +
+			asNum('stats', 'reviewedAgent') +
+			asNum('stats', 'reviewedUnstated') ===
+			asNum('review', 'editorial-notes') &&
 			asNum('stats', 'reviewable') === asNum('review', 'editorial-notes-denominator'),
-		`${resolve('stats', 'reviewed')} of ${resolve('stats', 'reviewable')}`
+		`${resolve('stats', 'reviewedHuman')} person + ${resolve('stats', 'reviewedAgent')} agent + ${resolve('stats', 'reviewedUnstated')} unstated of ${resolve('stats', 'reviewable')}`
 	);
 	ok(
 		'the emitted translation total and the data-prose population agree',

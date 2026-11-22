@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { app } from '$lib/state.svelte';
-	import { t, basisLabel, confidenceLabel, describeInterval, formatDate, nameOf } from '$lib/t.svelte';
+	import { t, basisLabel, confidenceLabel, describeInterval, formatDate } from '$lib/t.svelte';
+	import { english, nameOf } from '$lib/names.svelte';
 	import SourceList from './SourceList.svelte';
-	import Chip from '$lib/ui/Chip.svelte';
 	import OriginsChip from '$lib/ui/OriginsChip.svelte';
+	import BasisLine from '$lib/ui/BasisLine.svelte';
 	import CommunityActions from '$lib/ui/CommunityActions.svelte';
 	import ShareMenu from '$lib/ui/ShareMenu.svelte';
 	import { canonicalShareUrl } from '$lib/share';
 	import {
-		BASIS_COLOR,
 		companyById,
 		contractById,
 		declarationById,
@@ -19,7 +19,6 @@
 		licenceById,
 		personById,
 		entityName,
-		type Basis,
 		type Contract,
 		type Declaration,
 		type Education,
@@ -84,8 +83,7 @@
 		return id;
 	});
 
-	const basis = $derived((contract ?? declaration ?? event ?? education)?.basis as Basis | undefined);
-	const confidence = $derived((contract ?? declaration ?? event ?? education)?.confidence as string | undefined);
+	const record = $derived(contract ?? declaration ?? event ?? education);
 	const origins = $derived((contract ?? declaration ?? event ?? education)?.origins);
 	const independence = $derived((contract ?? declaration ?? event ?? education)?.independence);
 	const attributedTo = $derived((contract ?? declaration ?? event ?? education)?.attributed_to);
@@ -167,7 +165,7 @@
 	const actors = $derived((event as EventRec | null)?.actors ?? []);
 	const eventInstitutions = $derived((event as EventRec | null)?.institutions ?? []);
 	const summary = $derived(
-		(declaration as Declaration | null)?.summary ?? (event as EventRec | null)?.summary ?? ''
+		(declaration as Declaration | null)?.summary ?? english(event, 'summary')
 	);
 
 	const dated = $derived((contract as Contract | null)?.interval ?? (event as EventRec | null)?.interval ?? null);
@@ -203,11 +201,7 @@
 	<h2>{title}</h2>
 
 	<div class="meta">
-		{#if basis}
-			<Chip size="xs" dot tint="var(--basis-{basis})">
-				{confidence ? `${confidence} — ` : ''}{basisLabel(basis)}
-			</Chip>
-		{/if}
+		<BasisLine {record} />
 		<OriginsChip origins={origins} independence={independence} />
 		{#if dated}
 			<span class="span mono">{describeInterval(dated)}</span>
@@ -239,7 +233,7 @@
 		<div class="kf">
 			{#if company.founded}<div class="kv"><span>{t('record.founded')}</span><b>{company.founded}</b></div>{/if}
 			{#if company.legal_form}<div class="kv"><span>{t('record.legalform')}</span><b>{company.legal_form}</b></div>{/if}
-			{#if company.capital?.tnd}<div class="kv"><span>{t('record.capital')}</span><b>{(company.capital.tnd / 1_000_000).toLocaleString()} M TND</b></div>{/if}
+			{#if company.capital?.amount}<div class="kv"><span>{t('record.capital')}</span><b>{(company.capital.amount / 1_000_000).toLocaleString()} M {company.capital.currency}</b></div>{/if}
 			{#if company.state_owned !== undefined}<div class="kv"><span>{t('record.stateowned')}</span><b>{company.state_owned ? t('record.yes') : t('record.no')}</b></div>{/if}
 		</div>
 	{/if}

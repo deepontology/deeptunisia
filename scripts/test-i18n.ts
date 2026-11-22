@@ -53,8 +53,9 @@ const locales = LOCALES.map((l) => l.id);
  * exactly what a reviewer reads in the file rather than a processed copy of it.
  */
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
-import { join, dirname } from 'node:path';
+import { join, dirname, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { parse } from 'svelte/compiler';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const SRC = readFileSync(join(HERE, '..', 'src', 'lib', 'i18n.ts'), 'utf8');
@@ -240,7 +241,11 @@ const IDENTICAL_IS_FINE = new Set([
 	'map.basemap',
 	// Only placeholders: the words arrive through {month} and {value}.
 	'index.series.pointAria',
-	'research.hub.latest'
+	'research.hub.latest',
+	// A citation format and a lifespan: punctuation and parameters only, and a
+	// citation that changed shape by interface language would not be citable.
+	'rec.cite.line',
+	'rec.life.both'
 ]);
 
 for (const l of locales.filter((x) => x !== 'en')) {
@@ -429,6 +434,135 @@ for (const l of locales) {
 		`every key the views call exists in ${l}`,
 		missing.length === 0,
 		missing.length ? missing.slice(0, 6).join(', ') : `${usedKeys.size} keys in use`
+	);
+}
+
+// --- No hard-coded English left in the markup -----------------------------
+//
+// A dictionary audit cannot see a string that never reached the dictionary. This
+// walks the markup of every .svelte file and flags visible text, and the
+// placeholder, title, aria-label, aria-description and alt attributes, that carry
+// a run of two or more Latin letters without going through t()/tf()/format().
+//
+// Two narrow exclusions, both stated rather than silent: <svelte:head> and
+// <svelte:window> are page metadata, not page text, and <code>/<pre>/<samp>
+// hold code samples. Everything else that reads as words must come from the
+// dictionary or be named in scripts/i18n-allow-list.json with a reason.
+
+console.log('\n  ── no hard-coded English in the markup ──\n');
+
+{
+	const ALLOW = JSON.parse(
+		readFileSync(join(HERE, 'i18n-allow-list.json'), 'utf8')
+	) as { file: string; text: string; reason: string }[];
+
+	const allowed = new Set(ALLOW.map((a) => `${a.file}\u0000${a.text}`));
+	const usedAllow = new Set<string>();
+	const ATTRS = new Set(['placeholder', 'title', 'aria-label', 'aria-description', 'alt']);
+	const SKIP = new Set(['code', 'pre', 'samp']);
+	const latin = (s: string) => /[A-Za-z]{2,}/.test(s);
+	const tidy = (s: string) => s.replace(/&[a-z#0-9]+;/gi, ' ').replace(/\s+/g, ' ').trim();
+
+	for (const entry of ALLOW) {
+		ok(`allow-list entry for "${entry.text}" gives a reason`, entry.reason.trim().length > 10);
+	}
+
+	function scan(file: string, src: string): string[] {
+		const found: string[] = [];
+		let ast: any;
+		try {
+			ast = parse(src, { modern: true });
+		} catch (e) {
+			found.push(`unparseable markup: ${String(e)}`);
+			return found;
+		}
+		const lineStarts = [0];
+		for (let i = 0; i < src.length; i++) if (src[i] === '\n') lineStarts.push(i + 1);
+		const lineOf = (pos: number) => {
+			let lo = 0;
+			let hi = lineStarts.length - 1;
+			while (lo < hi) {
+				const mid = (lo + hi + 1) >> 1;
+				if (lineStarts[mid] <= pos) lo = mid;
+				else hi = mid - 1;
+			}
+			return lo + 1;
+		};
+		const add = (pos: number, text: string) => {
+			if (allowed.has(`${file}\u0000${text}`)) {
+				usedAllow.add(`${file}\u0000${text}`);
+				return;
+			}
+			found.push(`${file}:${lineOf(pos)} "${text}"`);
+		};
+		function fragment(frag: any, parent: string) {
+			if (!frag || !frag.nodes) return;
+			for (const n of frag.nodes) node(n, parent);
+		}
+		function node(n: any, parent: string) {
+			switch (n.type) {
+				case 'Text': {
+					const text = tidy(n.data);
+					if (text && latin(text)) add(n.start, text);
+					return;
+				}
+				case 'RegularElement':
+				case 'Component': {
+					for (const a of n.attributes ?? []) {
+						if (a.type !== 'Attribute' || !ATTRS.has(a.name)) continue;
+						if (!Array.isArray(a.value)) continue;
+						const text = tidy(
+							a.value
+								.filter((p: any) => p.type === 'Text')
+								.map((p: any) => p.data)
+								.join(' ')
+						);
+						if (text && latin(text)) add(a.start, text);
+					}
+					if (n.type === 'RegularElement' && SKIP.has(n.name)) return;
+					return fragment(n.fragment, parent);
+				}
+				case 'SvelteHead':
+				case 'SvelteWindow':
+					return;
+				case 'IfBlock':
+					fragment(n.consequent, parent);
+					fragment(n.alternate, parent);
+					return;
+				case 'EachBlock':
+					fragment(n.body, parent);
+					fragment(n.fallback, parent);
+					return;
+				case 'KeyBlock':
+					return fragment(n.fragment, parent);
+				case 'SnippetBlock':
+					return fragment(n.body, parent);
+				default:
+					return;
+			}
+		}
+		fragment(ast.fragment, 'root');
+		return found;
+	}
+
+	const root = join(HERE, '..');
+	const svelteFiles = walkSvelte(join(root, 'src')).filter((f) => f.endsWith('.svelte'));
+	const offenders: string[] = [];
+	for (const file of svelteFiles) {
+		const rel = relative(root, file).split(sep).join('/');
+		offenders.push(...scan(rel, readFileSync(file, 'utf8')));
+	}
+	ok(
+		'every visible string in src/*.svelte comes from the dictionary or the allow-list',
+		offenders.length === 0,
+		offenders.slice(0, 8).join(' | ')
+	);
+	ok('the guard saw the whole markup tree', svelteFiles.length > 120, `${svelteFiles.length} files`);
+	const stale = ALLOW.filter((a) => !usedAllow.has(`${a.file}\u0000${a.text}`));
+	ok(
+		'the allow-list has no entries the markup no longer needs',
+		stale.length === 0,
+		stale.slice(0, 6).map((a) => `${a.file}: ${a.text}`).join(', ')
 	);
 }
 

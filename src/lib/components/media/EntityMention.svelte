@@ -9,6 +9,7 @@
 	 */
 
 	import type { Entity } from '$lib/media/types';
+	import { tf } from '$lib/t.svelte';
 
 	interface Props {
 		entity: Entity;
@@ -39,7 +40,7 @@
 	class:active
 	style:--c={roleTint}
 	onclick={(e) => { e.stopPropagation(); onclick(); }}
-	aria-label="{displayName} — view in graph"
+	aria-label={tf('media.card.viewInGraph', { name: displayName })}
 >
 	<span class="dot" aria-hidden="true"></span>
 	{displayName}

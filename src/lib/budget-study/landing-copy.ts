@@ -204,7 +204,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			sources: 'Sources, revenue side, with pages and kept crops'
 		},
 		verification: {
-			note: 'Adopted years: 215 figures, every one read from its law and audited twice. 214 are verified: 188 by two readers agreeing, 26 settled by a third reader or by the programme arithmetic. One is read once, the 2024 Constitutional Court at 0 MD, page 3502, marked 1. A d marks a figure computed from verified printed lines, so it is never presented as a printed cell. Each cell carries its Journal Officiel page.',
+			note: 'Adopted years: 215 figures, every one read from its law and audited twice. 212 are verified: 186 by two readers agreeing, 26 settled by a third reader or by the programme arithmetic. Two, the 2020 Interior and Environment lines, are computed from a printed split and are not counted as verified. One is read once, the 2024 Constitutional Court at 0 MD, page 3502, marked 1. A d marks a figure computed from verified printed lines, so it is never presented as a printed cell. Each cell carries its Journal Officiel page.',
 		},
 		sections: [
 			{
@@ -413,7 +413,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			sources: 'Sources, côté recettes, avec pages et images conservées'
 		},
 		verification: {
-			note: "Années adoptées : 215 chiffres, tous lus dans leur loi et audités deux fois. 214 sont vérifiés : 188 par deux lecteurs d'accord, 26 tranchés par un troisième lecteur ou par l'arithmétique des programmes. Un est lu une seule fois, la Cour constitutionnelle 2024 à 0 MD, page 3502, marqué 1. Un d marque un chiffre calculé à partir de lignes imprimées vérifiées, jamais présenté comme une cellule imprimée. Chaque cellule porte sa page au Journal officiel.",
+			note: "Années adoptées : 215 chiffres, tous lus dans leur loi et audités deux fois. 212 sont vérifiés : 186 par deux lecteurs d'accord, 26 tranchés par un troisième lecteur ou par l'arithmétique des programmes. Deux, les lignes Intérieur et Environnement de 2020, sont calculés à partir d'une répartition imprimée et ne sont pas comptés comme vérifiés. Un est lu une seule fois, la Cour constitutionnelle 2024 à 0 MD, page 3502, marqué 1. Un d marque un chiffre calculé à partir de lignes imprimées vérifiées, jamais présenté comme une cellule imprimée. Chaque cellule porte sa page au Journal officiel.",
 		},
 		sections: [
 			{
@@ -622,7 +622,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			sources: 'المصادر، من جهة الإيرادات، مع الصفحات والصور المحفوظة'
 		},
 		verification: {
-			note: 'السنوات المصادق عليها: 215 رقمًا، كلّها مقروءة من قانونها ومُدقَّقة مرتين. 214 مُتحقَّق منها: 188 بتوافق قارئين، و26 حُسمت بقارئ ثالث أو بحساب البرامج. ورقم واحد قُرئ مرة واحدة، المحكمة الدستورية 2024 عند 0 م.د، صفحة 3502، معلَّم بـ 1. والحرف d يعلّم رقمًا محسوبًا من بنود مطبوعة مُتحقَّق منها، فلا يُقدَّم بندًا مطبوعًا. ولكل خلية صفحتها في الرائد الرسمي.',
+			note: 'السنوات المصادق عليها: 215 رقمًا، كلّها مقروءة من قانونها ومُدقَّقة مرتين. 212 مُتحقَّق منها: 186 بتوافق قارئين، و26 حُسمت بقارئ ثالث أو بحساب البرامج. ورقمان، بندا الداخلية والبيئة لسنة 2020، محسوبان من توزيع مطبوع ولا يُحتسبان متحقَّقًا منهما. ورقم واحد قُرئ مرة واحدة، المحكمة الدستورية 2024 عند 0 م.د، صفحة 3502، معلَّم بـ 1. والحرف d يعلّم رقمًا محسوبًا من بنود مطبوعة مُتحقَّق منها، فلا يُقدَّم بندًا مطبوعًا. ولكل خلية صفحتها في الرائد الرسمي.',
 		},
 		sections: [
 			{
