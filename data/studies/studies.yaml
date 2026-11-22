@@ -83,16 +83,31 @@
 - id: dt-research-003
   slug: citizen-budget
   title_en: "Citizen Budget 2027"
-  title_fr: null
-  title_ar: null
-  status: design
+  title_fr: "Budget citoyen 2027"
+  title_ar: "الميزانية المواطنة 2027"
+  status: fielding
   design_type: cross-sectional-online-allocation
   population: open-online-18-plus
   population_statement: "Among respondents to an open, self-selected online survey of adults. Results describe the people who took part, not Tunisians as a whole."
   locales: [en, fr, ar]
-  ethics_review: null
-  data_protection_review: null
-  preregistration: null
+  ethics_review: >-
+    None. No external ethics review has taken place. DeepTunisia is a young,
+    independent and unfunded project, and approaching an ethics board or an
+    accredited auditor is not yet possible for us. The study has been reviewed
+    only by the project's maintainers and the AI tools they work with.
+    Reviewers are invited to examine the instrument, the code and the
+    participant protections, and we will publish and act on what they find.
+  data_protection_review: >-
+    None. No external data-protection review has taken place, for the same
+    reasons. Only the project's maintainers and the AI tools they work with
+    have reviewed the design. The privacy text describes exactly what is
+    stored. The code is open, so anyone can check those statements against
+    it, and we will correct them if they are wrong.
+  preregistration: >-
+    This study's own preregistration document, fixed before the first answer
+    with the instrument hash and the fielding window, including the dated
+    amendments of 22 November 2026 that open fielding on the 2027 draft.
+    Commit 87a104cf03644e1cef242db5eff706c393378779, 22 November 2026.
   instrument_versions:
     - id: dt003-citizen-budget
       version: 1.0.0
