@@ -298,7 +298,7 @@ const en: BoardCopy = {
 			years: { t: 'Past years', b: 'Choose a year to compare every row with what that year’s finance law gave. The chart button shows one system year by year. Past years are in dinars of each year, not adjusted for inflation.' },
 			undo: { t: 'Changing your mind', b: 'Undo takes back your last move. Start again puts every system back on the draft.' },
 			keep: { t: 'Keeping the draft', b: 'If you would change nothing, tick this. It is a real answer, not a skip, and Finish opens.' },
-			finish: { t: 'Finishing', b: 'Finish opens when every dinar is placed, or when what is left in the purse is under 0.5% of the budget. Two short questions follow, then a result that sets your budget beside the draft.' },
+			finish: { t: 'Finishing', b: 'Finish opens when every dinar is placed, or when what is left in the purse is under 0.5% of the budget. Three short questions follow, then a result that sets your budget beside the draft.' },
 			done: { t: 'Your turn', b: 'The 2027 figures are a draft reported by the press, not verified; past years are checked against each law. Whether answers are collected, and how to withdraw, is on the About step before the board. How to play, at the top of the board, shows this tour again.' }
 		}
 	}
@@ -450,7 +450,7 @@ const fr: BoardCopy = {
 			years: { t: 'Les années passées', b: 'Choisissez une année pour comparer chaque ligne à ce que la loi de finances de cette année a donné. Le bouton de courbe montre un poste année par année. Les années passées sont en dinars de chaque année, sans correction de l’inflation.' },
 			undo: { t: 'Changer d’avis', b: 'Annuler reprend votre dernier mouvement. Recommencer remet chaque poste au projet.' },
 			keep: { t: 'Garder le projet', b: 'Si vous ne changeriez rien, cochez ceci. C’est une vraie réponse, pas un saut, et Terminer s’ouvre.' },
-			finish: { t: 'Terminer', b: 'Terminer s’ouvre quand chaque dinar est placé, ou quand ce qui reste dans la bourse est sous 0,5 % du budget. Suivent deux questions courtes, puis un résultat qui place votre budget à côté du projet.' },
+			finish: { t: 'Terminer', b: 'Terminer s’ouvre quand chaque dinar est placé, ou quand ce qui reste dans la bourse est sous 0,5 % du budget. Suivent trois questions courtes, puis un résultat qui place votre budget à côté du projet.' },
 			done: { t: 'À vous', b: 'Les chiffres 2027 sont un projet rapporté par la presse, non vérifié ; les années passées sont vérifiées sur chaque loi. Si les réponses sont recueillies, et comment se retirer, est indiqué à l’étape Présentation, avant le plateau. Comment jouer, en haut du plateau, relance cette visite.' }
 		}
 	}
@@ -602,7 +602,7 @@ const ar: BoardCopy = {
 			years: { t: 'السنوات الماضية', b: 'اختر سنة لتقارن كل سطر بما منحه قانون المالية لتلك السنة. وزرّ المنحنى يُظهر قطاعًا واحدًا سنة بسنة. السنوات الماضية بدنانير كل سنة، دون احتساب التضخّم.' },
 			undo: { t: 'إذا غيّرت رأيك', b: '«تراجع» يلغي آخر نقلة. و«ابدأ من جديد» يعيد كل القطاعات إلى المشروع.' },
 			keep: { t: 'الإبقاء على المشروع', b: 'إذا كنت لن تغيّر شيئًا، فأشّر هنا. هذه إجابة حقيقية وليست تخطّيًا، ويُتاح «إنهاء».' },
-			finish: { t: 'الإنهاء', b: 'يُتاح «إنهاء» عندما يوضع كل دينار في مكانه، أو عندما يكون ما بقي في المحفظة أقل من 0.5% من الميزانية. ثم يأتي سؤالان قصيران، ونتيجة تضع ميزانيتك بجانب المشروع.' },
+			finish: { t: 'الإنهاء', b: 'يُتاح «إنهاء» عندما يوضع كل دينار في مكانه، أو عندما يكون ما بقي في المحفظة أقل من 0.5% من الميزانية. ثم تأتي ثلاثة أسئلة قصيرة، ونتيجة تضع ميزانيتك بجانب المشروع.' },
 			done: { t: 'دورك الآن', b: 'أرقام 2027 مشروع نقلته الصحافة ولم يُتحقَّق منه، والسنوات الماضية مُتحقَّق منها على كل قانون. أمّا إن كانت الإجابات تُجمع، وكيف تنسحب، فمذكور في خطوة «تعريف» قبل اللوحة. ويعيد «طريقة اللعب»، أعلى اللوحة، هذه الجولة.' }
 		}
 	}
