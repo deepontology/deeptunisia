@@ -130,6 +130,26 @@ export interface BoardCopy {
 	/** Phone-first instruction. */
 	howToPhone: string;
 	yearLegend: string;
+	/**
+	 * The board tour: a spotlight walk over the board's own controls. It
+	 * explains the mechanics only. Whether an answer is collected is said on
+	 * the About step, which reads the study state; the tour points there and
+	 * never says it itself.
+	 */
+	tour: TourCopy;
+}
+
+export type TourStepId = 'welcome' | 'purse' | 'locked' | 'row' | 'move' | 'dock' | 'years' | 'undo' | 'keep' | 'finish' | 'done';
+
+export interface TourCopy {
+	/** The link that replays the tour, and the tour dialog's name. */
+	open: string;
+	progress: (n: number, total: number) => string;
+	skip: string;
+	back: string;
+	next: string;
+	start: string;
+	steps: Record<TourStepId, { t: string; b: string }>;
 }
 
 const en: BoardCopy = {
@@ -260,7 +280,28 @@ const en: BoardCopy = {
 	setRefused: (amount) => `The purse holds ${amount} MD. That change needs more.`,
 	historyNominal: (pct) => `Since 2024: ${pct}% (nominal)`,
 	howToPhone: 'Tap a system, then hold Take. Or drag one system onto another on a desk.',
-	yearLegend: 'The vertical mark is the 2027 draft level. Every past year is checked against its law.'
+	yearLegend: 'The vertical mark is the 2027 draft level. Every past year is checked against its law.',
+	tour: {
+		open: 'How to play',
+		progress: (n, total) => `${n} of ${total}`,
+		skip: 'Skip',
+		back: 'Back',
+		next: 'Next',
+		start: 'Start',
+		steps: {
+			welcome: { t: 'Your 2027 budget', b: 'This board holds the 2027 draft budget, split into systems such as health, schools and the police. Share it the way you think it should be shared. The total stays the same: you move money between systems, you never add any. There is no right answer and no score.' },
+			purse: { t: 'The purse', b: 'Money you take out of a system lands here. From the purse you give it to another system. You cannot give what the purse does not hold.' },
+			locked: { t: 'Spent before you start', b: 'Debt interest and the unforeseen reserve are owed whatever you choose, so they cannot be moved.' },
+			row: { t: 'Reading a row', b: 'Each system has three bars: a past year’s finance law, the 2027 draft, and yours. The number is your amount in millions of dinars, then the change from the draft. A system can go down to zero and up to twice its draft.' },
+			move: { t: 'Moving money', b: '' },
+			dock: { t: 'Take and Give', b: 'Choose a system and it appears here, with Take and Give. Hold a button to keep money flowing. Details shows what the system is made of in the 2026 law, with the Journal Officiel pages.' },
+			years: { t: 'Past years', b: 'Choose a year to compare every row with what that year’s finance law gave. The chart button shows one system year by year. Past years are in dinars of each year, not adjusted for inflation.' },
+			undo: { t: 'Changing your mind', b: 'Undo takes back your last move. Start again puts every system back on the draft.' },
+			keep: { t: 'Keeping the draft', b: 'If you would change nothing, tick this. It is a real answer, not a skip, and Finish opens.' },
+			finish: { t: 'Finishing', b: 'Finish opens when every dinar is placed, or when what is left in the purse is under 0.5% of the budget. Three short questions follow, then a result that sets your budget beside the draft.' },
+			done: { t: 'Your turn', b: 'The 2027 figures are a draft reported by the press, not verified; past years are checked against each law. Whether answers are collected, and how to withdraw, is on the About step before the board. How to play, at the top of the board, shows this tour again.' }
+		}
+	}
 };
 
 const fr: BoardCopy = {
@@ -391,7 +432,28 @@ const fr: BoardCopy = {
 	setRefused: (amount) => `La bourse contient ${amount} MD. Ce changement en demande plus.`,
 	historyNominal: (pct) => `Depuis 2024 : ${pct} % (nominal)`,
 	howToPhone: 'Touchez un poste, puis maintenez Retirer. Ou glissez un poste sur un autre sur un ordinateur.',
-	yearLegend: 'Le repère vertical est le niveau du projet 2027. Chaque année passée est vérifiée sur sa loi.'
+	yearLegend: 'Le repère vertical est le niveau du projet 2027. Chaque année passée est vérifiée sur sa loi.',
+	tour: {
+		open: 'Comment jouer',
+		progress: (n, total) => `${n} sur ${total}`,
+		skip: 'Passer',
+		back: 'Retour',
+		next: 'Suivant',
+		start: 'Commencer',
+		steps: {
+			welcome: { t: 'Votre budget 2027', b: 'Ce plateau contient le projet de budget 2027, réparti en postes comme la santé, l’école ou la police. Répartissez-le comme vous pensez qu’il devrait l’être. Le total ne change pas : vous déplacez de l’argent entre les postes, vous n’en ajoutez jamais. Il n’y a ni bonne réponse ni score.' },
+			purse: { t: 'La bourse', b: 'L’argent que vous retirez d’un poste arrive ici. Depuis la bourse, vous le versez à un autre poste. Vous ne pouvez pas verser ce que la bourse ne contient pas.' },
+			locked: { t: 'Dépensé avant de commencer', b: 'Les intérêts de la dette et la réserve pour imprévus sont dus quoi que vous choisissiez : ils ne peuvent pas être déplacés.' },
+			row: { t: 'Lire une ligne', b: 'Chaque poste a trois barres : la loi de finances d’une année passée, le projet 2027 et le vôtre. Le nombre est votre montant en millions de dinars, puis l’écart avec le projet. Un poste peut descendre jusqu’à zéro et monter jusqu’au double de son projet.' },
+			move: { t: 'Déplacer de l’argent', b: '' },
+			dock: { t: 'Retirer et Verser', b: 'Choisissez un poste : il apparaît ici, avec Retirer et Verser. Maintenez un bouton pour que l’argent continue de passer. Détails montre de quoi le poste est fait dans la loi 2026, avec les pages du Journal officiel.' },
+			years: { t: 'Les années passées', b: 'Choisissez une année pour comparer chaque ligne à ce que la loi de finances de cette année a donné. Le bouton de courbe montre un poste année par année. Les années passées sont en dinars de chaque année, sans correction de l’inflation.' },
+			undo: { t: 'Changer d’avis', b: 'Annuler reprend votre dernier mouvement. Recommencer remet chaque poste au projet.' },
+			keep: { t: 'Garder le projet', b: 'Si vous ne changeriez rien, cochez ceci. C’est une vraie réponse, pas un saut, et Terminer s’ouvre.' },
+			finish: { t: 'Terminer', b: 'Terminer s’ouvre quand chaque dinar est placé, ou quand ce qui reste dans la bourse est sous 0,5 % du budget. Suivent trois questions courtes, puis un résultat qui place votre budget à côté du projet.' },
+			done: { t: 'À vous', b: 'Les chiffres 2027 sont un projet rapporté par la presse, non vérifié ; les années passées sont vérifiées sur chaque loi. Si les réponses sont recueillies, et comment se retirer, est indiqué à l’étape Présentation, avant le plateau. Comment jouer, en haut du plateau, relance cette visite.' }
+		}
+	}
 };
 
 const ar: BoardCopy = {
@@ -522,7 +584,28 @@ const ar: BoardCopy = {
 	setRefused: (amount) => `في المحفظة ${amount} م.د. هذا التغيير يحتاج أكثر.`,
 	historyNominal: (pct) => `منذ 2024: ${pct}% (اسمي)`,
 	howToPhone: 'اختر بندًا، ثم اضغط مطوّلًا على «خذ». أو اسحب بندًا على آخر على الحاسوب.',
-	yearLegend: 'العلامة العمودية هي مستوى مشروع 2027. وكل سنة ماضية مُتحقَّق منها على قانونها.'
+	yearLegend: 'العلامة العمودية هي مستوى مشروع 2027. وكل سنة ماضية مُتحقَّق منها على قانونها.',
+	tour: {
+		open: 'طريقة اللعب',
+		progress: (n, total) => `${n} من ${total}`,
+		skip: 'تخطي',
+		back: 'الرجوع',
+		next: 'التالي',
+		start: 'ابدأ',
+		steps: {
+			welcome: { t: 'ميزانيتك لسنة 2027', b: 'تضمّ هذه اللوحة مشروع ميزانية 2027 موزّعًا على قطاعات مثل الصحة والتعليم والأمن. وزّعها كما ترى أنه يجب أن تُوزَّع. يبقى المجموع كما هو: تنقل المال بين القطاعات ولا تضيف إليه شيئًا. لا توجد إجابة صحيحة ولا نقاط.' },
+			purse: { t: 'المحفظة', b: 'المال الذي تأخذه من قطاع يصل إلى هنا. ومن المحفظة تعطيه لقطاع آخر. لا يمكنك أن تعطي ما ليس في المحفظة.' },
+			locked: { t: 'مصروف قبل أن تبدأ', b: 'فوائد الدين واحتياطي النفقات الطارئة مستحقّة مهما اخترت، فلا يمكن نقلها.' },
+			row: { t: 'قراءة السطر', b: 'لكل قطاع ثلاثة أشرطة: قانون مالية سنة ماضية، ومشروع 2027، وتوزيعك. الرقم هو مبلغك بملايين الدنانير، ثم الفرق عن المشروع. يمكن أن ينزل القطاع إلى الصفر وأن يرتفع إلى ضعف مخصّصه في المشروع.' },
+			move: { t: 'نقل المال', b: '' },
+			dock: { t: '«خذ» و«أعطِ»', b: 'اختر قطاعًا فيظهر هنا مع «خذ» و«أعطِ». واصل الضغط على الزر ليستمر انتقال المال. وتُظهر «التفاصيل» مكوّنات القطاع في قانون 2026 مع صفحات الرائد الرسمي.' },
+			years: { t: 'السنوات الماضية', b: 'اختر سنة لتقارن كل سطر بما منحه قانون المالية لتلك السنة. وزرّ المنحنى يُظهر قطاعًا واحدًا سنة بسنة. السنوات الماضية بدنانير كل سنة، دون احتساب التضخّم.' },
+			undo: { t: 'إذا غيّرت رأيك', b: '«تراجع» يلغي آخر نقلة. و«ابدأ من جديد» يعيد كل القطاعات إلى المشروع.' },
+			keep: { t: 'الإبقاء على المشروع', b: 'إذا كنت لن تغيّر شيئًا، فأشّر هنا. هذه إجابة حقيقية وليست تخطّيًا، ويُتاح «إنهاء».' },
+			finish: { t: 'الإنهاء', b: 'يُتاح «إنهاء» عندما يوضع كل دينار في مكانه، أو عندما يكون ما بقي في المحفظة أقل من 0.5% من الميزانية. ثم تأتي ثلاثة أسئلة قصيرة، ونتيجة تضع ميزانيتك بجانب المشروع.' },
+			done: { t: 'دورك الآن', b: 'أرقام 2027 مشروع نقلته الصحافة ولم يُتحقَّق منه، والسنوات الماضية مُتحقَّق منها على كل قانون. أمّا إن كانت الإجابات تُجمع، وكيف تنسحب، فمذكور في خطوة «تعريف» قبل اللوحة. ويعيد «طريقة اللعب»، أعلى اللوحة، هذه الجولة.' }
+		}
+	}
 };
 
 const COPY: Record<Locale, BoardCopy> = { en, fr, ar };
