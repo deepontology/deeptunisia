@@ -60,7 +60,7 @@ if (!existsSync(SRC)) fail('landing/index.html is missing');
 if (!WRITE_SOURCE && !existsSync(BUILD)) fail('build/ does not exist — run `vite build` first');
 
 /*
- * adapter-static prerenders the dev-fallback root route (src/routes/+page.svelte,
+ * adapter-static prerenders the dev-fallback root route (src/routes/(read)/+page.svelte,
  * an empty page that redirects to /chronicle) to build/index.html. That stub is
  * exactly what the landing page replaces, so it is allowed to exist — but it
  * must be recognisable as itself. The page carries a marker comment; any other
@@ -76,7 +76,7 @@ if (!WRITE_SOURCE && existsSync(OUT)) {
 		fail(
 			'build/index.html exists but is not the dev-fallback root stub — a route is\n' +
 				'  prerendering to `/`. The site root belongs to the landing page;\n' +
-				'  Chronicle lives at /chronicle. Check src/routes/+page.svelte.'
+				'  Chronicle lives at /chronicle. Check src/routes/(read)/+page.svelte.'
 		);
 	}
 }

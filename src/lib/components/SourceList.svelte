@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { archiveLookup, sourcesFor } from '$lib/model';
+	import { ensureSourceProse, excerptOf, sourceProseState } from '$lib/source-prose.svelte';
 	import Tooltip from '$lib/ui/Tooltip.svelte';
 	import { t } from '$lib/t.svelte';
 
@@ -7,6 +8,10 @@
 
 	const sources = $derived(sourcesFor(ids));
 
+	// The citation is in the graph; the excerpt is fetched the first time a source that has one is listed.
+	$effect(() => {
+		if (sources.some((s) => s.hasExcerpt)) void ensureSourceProse();
+	});
 </script>
 
 {#if sources.length}
@@ -23,11 +28,21 @@
 					<span dir="auto">{s.publisher}</span>
 					{#if s.date}<span class="mono">{s.date}</span>{/if}
 					<a class="archive" href={archiveLookup(s)} target="_blank" rel="noopener noreferrer"
-						>archive</a
+						>{t('sources.archive')}</a
 					>
 				</div>
-				{#if s.excerpt}
-					<p class="excerpt" dir="auto">{s.excerpt}</p>
+				{#if s.hasExcerpt}
+					{@const excerpt = excerptOf(s.id)}
+					{#if excerpt}
+						<p class="excerpt" dir="auto">{excerpt}</p>
+					{:else if sourceProseState.status === 'error'}
+						<p class="excerpt-note" role="status">
+							{t('sources.excerptOffline')}
+							<button type="button" onclick={() => ensureSourceProse()}>{t('sources.excerptRetry')}</button>
+						</p>
+					{:else}
+						<p class="excerpt-note" role="status">{t('sources.excerptLoading')}</p>
+					{/if}
 				{/if}
 			</li>
 		{/each}
@@ -99,6 +114,20 @@
 	.archive {
 		text-decoration: underline;
 		text-decoration-color: var(--border-default);
+	}
+	.excerpt-note {
+		margin: 5px 0 0;
+		font-size: 11px;
+		color: var(--text-faint);
+	}
+	.excerpt-note button {
+		background: none;
+		border: 0;
+		padding: 0;
+		font: inherit;
+		color: var(--accent);
+		text-decoration: underline;
+		cursor: pointer;
 	}
 	.excerpt {
 		margin: 5px 0 0;

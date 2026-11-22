@@ -19,7 +19,8 @@
 		type Basis,
 		type Layer
 	} from '$lib/model';
-	import { durationLabel, formatDate, nameOf, t } from '$lib/t.svelte';
+	import { t, durationLabel, formatDate } from '$lib/t.svelte';
+	import { nameOf } from '$lib/names.svelte';
 	import { MIN_HOLDERS, tenureByRole } from '$lib/tenure';
 
 	/**

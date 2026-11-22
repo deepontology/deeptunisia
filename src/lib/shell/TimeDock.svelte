@@ -4,7 +4,8 @@
 	import { page } from '$app/state';
 	import { app } from '$lib/state.svelte';
 	import { theme } from '$lib/design/theme.svelte';
-	import { t, tf, nameOf } from '$lib/t.svelte';
+	import { t, tf, formatDate } from '$lib/t.svelte';
+	import { nameOf } from '$lib/names.svelte';
 	import {
 		CUTOFF,
 		FLOOR,
@@ -18,7 +19,7 @@
 		type Basis,
 		type Layer
 	} from '$lib/model';
-	import { layerLabel, formatDate } from '$lib/t.svelte';
+	import { layerLabel } from '$lib/t.svelte';
 	import { compact } from '$lib/design/media.svelte';
 	import { fits } from '$lib/viz/measure';
 	import Segmented from '$lib/ui/Segmented.svelte';
@@ -396,7 +397,7 @@
 						style:width="{b.w}%"
 						style:--c={b.era.accent}
 						class:current={b.current}
-						aria-label="Jump to {b.era.label_en}"
+						aria-label={tf('dock.jumpTo', { name: b.era.label_en })}
 						onclick={(e) => {
 							e.stopPropagation();
 							app.playing = false;
@@ -436,7 +437,7 @@
 					class="rupture"
 					class:lit={hoverRupture === ev.id}
 					style:left="{pct(ev.interval.startEarliest)}%"
-					aria-label="Jump to {nameOf(ev)}, {formatDate(ev.interval.startEarliest, 'day')}"
+					aria-label={tf('dock.jumpToDated', { name: nameOf(ev), date: formatDate(ev.interval.startEarliest, 'day') })}
 					onmouseenter={() => (hoverRupture = ev.id)}
 					onmouseleave={() => (hoverRupture = null)}
 					onfocus={() => (hoverRupture = ev.id)}
@@ -522,7 +523,7 @@
 	class:no-track={!compact.current && !showTrack}
 	id="timeline"
 	tabindex="-1"
-	aria-label="Timeline controls"
+	aria-label={t('dock.controls')}
 >
 	<!-- Row 1: transport and filters -->
 	<div class="row controls" bind:this={controlsEl}>

@@ -4,11 +4,11 @@
 	import { app } from '$lib/state.svelte';
 	import { applyEntityLink } from '$lib/deeplink.svelte';
 	import Chip from '$lib/ui/Chip.svelte';
+	import BasisLine from '$lib/ui/BasisLine.svelte';
 	import Button from '$lib/ui/Button.svelte';
 	import Tooltip from '$lib/ui/Tooltip.svelte';
 	import Content from '$lib/ui/Content.svelte';
 	import {
-		BASIS_COLOR,
 		CUTOFF,
 		LAYER_COLOR,
 		ds,
@@ -19,7 +19,8 @@
 		type Basis,
 		type Layer
 	} from '$lib/model';
-	import { t, basisLabel, durationLabel, formatDate, nameOf } from '$lib/t.svelte';
+	import { t, basisLabel, durationLabel, formatDate } from '$lib/t.svelte';
+	import { nameOf } from '$lib/names.svelte';
 	import { format } from '$lib/i18n';
 	import { currencyOf, elapsedYears, monthsSince, tenureByRole, type Currency } from '$lib/tenure';
 
@@ -80,6 +81,9 @@
 		institution: string;
 		layer: Layer;
 		basis: Basis;
+		confidence: string;
+		restsOnOrigins?: number | null;
+		encyclopediaOnly?: boolean | null;
 		authority: number;
 		acting: boolean;
 		elapsed: number;
@@ -110,6 +114,9 @@
 				institution: nameOf(institutionById.get(p.institution)) ?? '',
 				layer: p.layer as Layer,
 				basis: p.basis as Basis,
+				confidence: p.confidence as string,
+				restsOnOrigins: p.restsOnOrigins,
+				encyclopediaOnly: p.encyclopediaOnly,
 				authority: p.authority,
 				acting: p.acting,
 				elapsed,
@@ -249,7 +256,7 @@
 								</span>
 
 								<span class="basis">
-									<Chip tint={BASIS_COLOR[r.basis]} dot size="xs">{basisLabel(r.basis)}</Chip>
+									<BasisLine record={r} />
 								</span>
 
 								<span class="elapsed">{format(app.locale, 'now.inoffice', { duration: durationLabel(r.elapsed) })}</span>
@@ -374,12 +381,20 @@
 		border: 1px solid var(--border-subtle);
 		border-radius: var(--r-md);
 		overflow: hidden;
+		/* The row layout is chosen by the width of the list, not of the window:
+		   the shell around it takes a different share at every window width. */
+		container-type: inline-size;
 	}
+	/* Six cells, each wide enough for what it prints. The basis cell holds the
+	   chip and the "rests on N origins" note, which wraps under the chip rather
+	   than running into its neighbour; the elapsed cell holds "11y 11m in office".
+	   With the gaps and the padding the minimums come to 64rem, which is where
+	   the container query below hands over to the stacked layout. */
 	.holders li {
 		display: grid;
 		grid-template-columns:
-			minmax(150px, 20ch) minmax(180px, 1fr) 5.5ch 6ch minmax(120px, 15ch)
-			minmax(0, 13ch);
+			minmax(140px, 18ch) minmax(150px, 1fr) minmax(150px, 22ch) minmax(8rem, 9rem)
+			minmax(110px, 15ch) minmax(6.5rem, 8rem);
 		align-items: center;
 		gap: var(--s-4);
 		padding: var(--s-3) var(--s-5);
@@ -534,7 +549,7 @@
 	   figures (time in office · against the usual term · last verified), so a
 	   row reads top to bottom instead of as a stack of loose labels.
 	*/
-	@media (max-width: 900px) {
+	@container (max-width: 64rem) {
 		.holders li {
 			display: flex;
 			flex-wrap: wrap;

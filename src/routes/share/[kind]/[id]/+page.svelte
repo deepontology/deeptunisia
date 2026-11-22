@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { personById, institutionById, relationshipById, resolveEntity } from '$lib/model';
-	import { nameOf } from '$lib/t.svelte';
+	import { personById, institutionById, relationshipById } from '$lib/model';
+	import { t } from '$lib/t.svelte';
+	import { nameOf } from '$lib/names.svelte';
 
-	let { data } = $props<{ data: { kind: string; id: string } }>();
+	let { data } = $props<{ data: { kind: string; id: string; text: string } }>();
 
 	const kind = $derived(data.kind);
 	const id = $derived(data.id);
@@ -16,33 +17,21 @@
 			const to = personById.get(r.to) ? nameOf(personById.get(r.to)!) : (institutionById.get(r.to) ? nameOf(institutionById.get(r.to)!) : r.to);
 			return `${from} → ${to} · DeepTunisia`;
 		}
-		if (kind === 'flow' || kind === 'agreement') return `${id} · DeepTunisia`;
-		const p = personById.get(id);
-		if (p) return `${nameOf(p)} · DeepTunisia`;
-		const inst = institutionById.get(id);
-		if (inst) return `${nameOf(inst)} · DeepTunisia`;
-		const ref = resolveEntity(id);
-		return `${ref?.name ?? id} · DeepTunisia`;
+		return `${id} · DeepTunisia`;
 	});
 
 	const desc = $derived.by(() => {
 		if (kind === 'relationship') {
-			const r = relationshipById.get(id);
-			return r?.description?.slice(0, 160) ?? 'A documented relationship in the DeepTunisia graph.';
+			return data.text || 'A documented relationship in the DeepTunisia graph.';
 		}
 		if (kind === 'flow') return 'A measured flow between Tunisia and a counterparty.';
 		if (kind === 'agreement') return 'An agreement in the DeepTunisia world dataset.';
-		const p = personById.get(id);
-		if (p?.summary) return p.summary.slice(0, 160);
-		const inst = institutionById.get(id);
-		if (inst?.summary) return inst.summary.slice(0, 160);
-		return 'An entity in the DeepTunisia atlas of power, 1956–2026.';
+		return data.text || 'A record in the DeepTunisia atlas of power, 1956–2026.';
 	});
 
 	const shareUrl = $derived(`https://deeptunisia.org/share/${encodeURIComponent(kind)}/${encodeURIComponent(id)}`);
 
 	const canonical = $derived.by(() => {
-		if (kind === 'entity') return `https://deeptunisia.org/network?id=${encodeURIComponent(id)}`;
 		if (kind === 'relationship') return `https://deeptunisia.org/network?rel=${encodeURIComponent(id)}`;
 		if (kind === 'flow') return `https://deeptunisia.org/network?flow=${encodeURIComponent(id)}`;
 		if (kind === 'agreement') return `https://deeptunisia.org/network?agreement=${encodeURIComponent(id)}`;
@@ -66,10 +55,10 @@
 </svelte:head>
 
 <main class="sheet">
-	<p class="eyebrow">DeepTunisia — share</p>
+	<p class="eyebrow">{t('share.eyebrow')}</p>
 	<h1>{title}</h1>
 	<p class="desc">{desc}</p>
-	<p class="goto">Redirecting to <a href={canonical}>{canonical}</a>…</p>
+	<p class="goto">{t('share.redirecting')} <a href={canonical}>{canonical}</a>…</p>
 </main>
 
 <style>

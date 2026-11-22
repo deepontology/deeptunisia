@@ -1,10 +1,10 @@
 /**
  * Assertions over the built share pages.
  *
- * A share link is handed out for every record, so every person, institution and
- * relationship in the dataset needs its own prerendered page. Each page is a
- * redirect stub: small, without the app's JavaScript, and carrying the preview
- * tags a crawler reads.
+ * A person or an institution is shared as its record page (/e/<id>, asserted in
+ * test-records.ts); the old /share/entity/<id> address answers 301 to it. Every
+ * relationship has a prerendered share page. Each is a redirect stub: small,
+ * without the app's JavaScript, and carrying the preview tags a crawler reads.
  *
  * Reads the built site, so it runs after `npm run build`. Fails if build/ is absent.
  * Usage: `npx tsx scripts/test-share.ts`
@@ -48,11 +48,7 @@ const dataset = JSON.parse(readFileSync(DATASET_FILE, 'utf8')) as {
 	relationships: { id: string }[];
 };
 
-const targets: { kind: string; id: string }[] = [
-	...dataset.people.map((p) => ({ kind: 'entity', id: p.id })),
-	...dataset.institutions.map((i) => ({ kind: 'entity', id: i.id })),
-	...dataset.relationships.map((r) => ({ kind: 'relationship', id: r.id }))
-];
+const targets: { kind: string; id: string }[] = dataset.relationships.map((r) => ({ kind: 'relationship', id: r.id }));
 
 const missing: string[] = [];
 const oversize: string[] = [];
@@ -78,7 +74,7 @@ for (const { kind, id } of targets) {
 const sample = (list: string[]) => list.slice(0, 3).join(', ') + (list.length > 3 ? ` and ${list.length - 3} more` : '');
 
 ok(
-	`every person, institution and relationship has a share page (${targets.length})`,
+	`every relationship has a share page (${targets.length})`,
 	missing.length === 0,
 	missing.length ? `missing ${missing.length}: ${sample(missing)}` : ''
 );
@@ -97,6 +93,17 @@ ok(
 	shelled.length === 0,
 	shelled.length ? `${shelled.length} with a module script: ${sample(shelled)}` : ''
 );
+
+/* An entity is shared as its record page. The address earlier links carry must not be a
+   page of its own again, and must answer 301 to the record. */
+ok('no entity share page is built', !existsSync(join(SHARE_DIR, 'entity')));
+const redirectsFile = join(ROOT, 'build', '_redirects');
+const redirects = existsSync(redirectsFile) ? readFileSync(redirectsFile, 'utf8').split(/\r?\n/).filter((l) => l.trim() && !l.startsWith('#')) : [];
+ok('/share/entity/* answers 301 to /e/', redirects.includes('/share/entity/* /e/:splat 301'), redirects.join(' | ') || 'build/_redirects is missing');
+const sourceOfShare = readFileSync(join(ROOT, 'src', 'lib', 'share.ts'), 'utf8');
+ok('an entity share link is the record page', /kind === 'entity'\) return `\$\{origin\}\/e\//.test(sourceOfShare));
+const noRecordPage = [...dataset.people, ...dataset.institutions].filter((r) => !existsSync(join(ROOT, 'build', 'e', `${r.id}.html`)));
+ok('every person and institution the old entity address named has a record page', noRecordPage.length === 0, noRecordPage.length ? sample(noRecordPage.map((r) => r.id)) : '');
 
 console.log(`
   ${checks - failures}/${checks} checks passed${failures ? `, ${failures} FAILED` : ''}

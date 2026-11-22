@@ -46,7 +46,9 @@ import {
 	configureSchemaExceptions,
 	isBasisUpgrade,
 	nonBlank,
-	reviewOverclaims
+	reviewOverclaims,
+	verifiedGrounded,
+	deriveBasis
 } from './schema.ts';
 import {
 	parseDateEdge,
@@ -60,7 +62,7 @@ import {
 } from './dates.ts';
 import { configureTime } from './dates.ts';
 import { loadParameters } from './parameters.ts';
-import { countOrigins } from './origins.ts';
+import { countOrigins, originOf, restsOn } from './origins.ts';
 import {
 	reviewFlagsOf,
 	reviewRiskOf,
@@ -518,6 +520,25 @@ ok(
 	'V29 origins: no evidence leaves the authored independence alone',
 	countOrigins([]) === undefined && countOrigins(undefined) === undefined
 );
+
+// ---------------------------------------------------------------------------
+// D3: what a record rests on. `restsOnOrigins` counts distinct origins among
+// the publishers a record cites; `encyclopediaOnly` is true only when it cites
+// something and every citation is an encyclopedia. Both are separate from the
+// V29 lineage count above.
+// ---------------------------------------------------------------------------
+
+ok('D3: Wikipedia resolves to the wikipedia origin', originOf('Wikipedia (FR)').origin === 'wikipedia');
+ok('D3: a French spelling resolves to the same origin', originOf('Wikipédia (français)').origin === 'wikipedia');
+ok('D3: an Arabic spelling resolves to the same origin', originOf('ويكيبيديا (العربية)').origin === 'wikipedia');
+ok('D3: Wikidata is its own origin', originOf('Wikidata').origin === 'wikidata');
+ok('D3: both encyclopedia origins are class encyclopedia', originOf('Wikidata').class === 'encyclopedia' && originOf('Wikipedia').class === 'encyclopedia');
+ok('D3: an unmapped publisher is its own origin, class other', originOf('Le Monde').origin === 'Le Monde' && originOf('Le Monde').class === 'other');
+ok('D3: two Wikipedia spellings are one origin', restsOn(['Wikipedia', 'Wikipédia (fr)'])?.restsOnOrigins === 1);
+ok('D3: Wikipedia and Wikidata are two origins', restsOn(['Wikipedia', 'Wikidata'])?.restsOnOrigins === 2);
+ok('D3: encyclopedia only when every citation is one', restsOn(['Wikipedia', 'Wikidata'])?.encyclopediaOnly === true);
+ok('D3: one other publisher breaks encyclopediaOnly', restsOn(['Wikipedia', 'Le Monde'])?.encyclopediaOnly === false);
+ok('D3: citing nothing derives nothing', restsOn([]) === undefined);
 rejectsWith(
 	PositionSchema,
 	pos({ evidence: [evidence({ passage_type: 'summary' })] }),
@@ -793,9 +814,21 @@ rejectsWith(
 );
 rejectsWith(
 	CompanySchema,
-	co({ capital: { tnd: 100, date: '2020-01-01', extra: 'x' } }),
+	co({ capital: { amount: 100, currency: 'TND', date: '2020-01-01', extra: 'x' } }),
 	'V28: an unknown capital key fails',
 	'Unrecognized key'
+);
+rejectsWith(
+	CompanySchema,
+	co({ capital: { tnd: 100, currency: 'TND', date: '2020-01-01' } }),
+	'V28: the amount under a currency-named key fails',
+	'Unrecognized key'
+);
+rejectsWith(
+	CompanySchema,
+	co({ capital: { amount: 100, date: '2020-01-01' } }),
+	'V19: a capital with no currency fails',
+	'expected string'
 );
 rejectsWith(
 	ContractSchema,
@@ -917,6 +950,41 @@ accepts(
 	'V13: finance metadata on a funding edge parses'
 );
 
+// V13's second half: an equity share is a percentage. The bound was declared in
+// the schema and asserted nowhere, so a mutation widening it survived.
+rejectsWith(
+	RelationshipSchema,
+	rel({ type: 'ownership', equity: { pct: 100.5, direct: true, beneficial: false } }),
+	'V13: an equity share above 100 is rejected',
+	'<=100'
+);
+rejectsWith(
+	RelationshipSchema,
+	rel({ type: 'ownership', equity: { pct: -1, direct: true, beneficial: false } }),
+	'V13: a negative equity share is rejected',
+	'>=0'
+);
+accepts(
+	RelationshipSchema,
+	rel({ type: 'ownership', equity: { pct: 100, direct: true, beneficial: false } }),
+	'V13: an equity share of exactly 100 parses'
+);
+accepts(
+	RelationshipSchema,
+	rel({ type: 'ownership', equity: { pct: 0, direct: true, beneficial: false } }),
+	'V13: an equity share of exactly 0 parses'
+);
+
+// V10's coordinate half: a point outside the jurisdiction box is refused by the
+// schema itself, so the fixture build and a hand edit fail the same way.
+rejectsWith(
+	PlaceSchema,
+	placeRec({ parent: 'gov-fixture', coordinates: [100, 10] }),
+	'V10: coordinates outside the jurisdiction box are rejected',
+	'coordinates must fall inside'
+);
+accepts(PlaceSchema, placeRec({ parent: 'gov-fixture', coordinates: [10.29, 36.8] }), 'V10: coordinates inside the box parse');
+
 // ---------------------------------------------------------------------------
 // V23 — every review carries a calendar-valid ISO date and an enum method.
 // Kills m8, m9, m10. Note the shape: the review DATE is not a dateToken; it is
@@ -970,6 +1038,53 @@ ok(
 	reviewOverclaims('reviewed the press coverage of the handover', ['tier3-article']) === false
 );
 ok('V23-guard: an undefined method is never a claim', reviewOverclaims(undefined, []) === false);
+
+// ---------------------------------------------------------------------------
+// V33: verified means a person opened the source and confirmed it. The
+// pipeline fixture that fails a whole build lives in test-pipeline.ts; these
+// pin the predicate the build calls and the default that replaced `verified`.
+// ---------------------------------------------------------------------------
+
+ok('V33: unflagged needs no review', verifiedGrounded({ verification: 'unflagged' }));
+ok('V33: no verification value needs no review', verifiedGrounded({}));
+ok(
+	'V33: verified with a human source-check passes',
+	verifiedGrounded({ verification: 'verified', review: { actor: 'human', method: 'source-check' } })
+);
+ok('V33: verified with no review fails', !verifiedGrounded({ verification: 'verified' }));
+ok(
+	'V33: verified with an agent review fails',
+	!verifiedGrounded({ verification: 'verified', review: { actor: 'agent', method: 'source-check' } })
+);
+ok(
+	'V33: verified with a human review of another method fails',
+	!verifiedGrounded({ verification: 'verified', review: { actor: 'human', method: 'judge' } })
+);
+ok(
+	'V33: verified with a review that names no actor fails',
+	!verifiedGrounded({ verification: 'verified', review: { method: 'source-check' } })
+);
+accepts(ReviewSchema, review({ actor: 'human' }), 'V33: a review names a human actor');
+accepts(ReviewSchema, review({ actor: 'agent' }), 'V33: a review names an agent actor');
+rejects(ReviewSchema, review({ actor: 'model' }), 'V33: an actor outside human/agent is rejected');
+
+{
+	const withoutVerification: Record<string, unknown> = { ...pos() };
+	delete withoutVerification.verification;
+	ok(
+		'V33: a claim-bearing record defaults to unflagged, not verified',
+		PositionSchema.parse(withoutVerification).verification === 'unflagged'
+	);
+}
+
+// `unflagged` is the absence of a check, so it derives exactly as `verified`
+// did: changing the word may not move any basis (the canonical diff pins this).
+for (const confidence of ['A', 'B', 'C', 'D'] as const) {
+	ok(
+		`V33: basis for ${confidence} is the same under unflagged and verified`,
+		deriveBasis(confidence, 'unflagged') === deriveBasis(confidence, 'verified')
+	);
+}
 
 // ---------------------------------------------------------------------------
 // R11 — dispute status is a closed enum. Kills m12.
@@ -1053,6 +1168,17 @@ throws(
 	'V22: an interval that ends before it begins is rejected (m16)',
 	'start 2020-01-01 / end 2018-01-01'
 );
+// V15 is the same rule under its own number: the register names the engine's
+// interval check as the site, and this is the assertion that carries the label.
+throws(
+	() => resolveInterval({ start: '2020-01-01', end: '2018-01-01' }),
+	'V15: an interval may not end before it begins',
+	'start 2020-01-01 / end 2018-01-01'
+);
+// V19 is the strict-schema rule; its cases live under V28 above because the two
+// ids were merged in the register. These two carry the V19 label directly.
+rejectsWith(PersonSchema, personRec({ not_a_declared_field: 1 }), 'V19: an undeclared key on a person fails', 'Unrecognized key');
+rejectsWith(PositionSchema, pos({ not_a_declared_field: 1 }), 'V19: an undeclared key on a position fails', 'Unrecognized key');
 
 ok(
 	'V22: an over-wide fuzzy start is clamped down to the known end and flagged (m17)',
@@ -1299,8 +1425,21 @@ ok(
 	);
 	ok(
 		'Phase 8: examined never implies independently checked',
-		summary.coverage.every((c) => c.independentlyChecked === 0) && summary.reviewed === 1,
-		`examined ${summary.reviewed}, independent 0`
+		summary.coverage.every((c) => c.independentlyChecked === 0) && summary.reviewedUnstated === 1,
+		`unstated ${summary.reviewedUnstated}, independent 0`
+	);
+	const split = summariseReview([
+		{ kind: 'person', review: { by: 'maintainer', actor: 'human' } },
+		{ kind: 'person', review: { by: 'Research pass 2026-08-04', actor: 'agent' } },
+		{ kind: 'person', review: { by: 'maintainer' } }
+	] as ReviewInput[]);
+	ok(
+		'D2: a review is counted by the actor it names, and an unnamed actor is not folded into either',
+		split.reviewedHuman === 1 &&
+			split.reviewedAgent === 1 &&
+			split.reviewedUnstated === 1 &&
+			split.reviewable === 3,
+		`${split.reviewedHuman} person, ${split.reviewedAgent} agent, ${split.reviewedUnstated} unstated`
 	);
 	const csv = reviewCoverageCsv(summary);
 	const header = csv.split('\n')[0];

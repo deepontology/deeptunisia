@@ -18,7 +18,8 @@
 	 * established" everywhere else in the product. It is deliberately not an error
 	 * colour: an untranslated field is a gap in the work, not a fault in the record.
 	 */
-	import { prose, t } from '$lib/t.svelte';
+	import { t } from '$lib/t.svelte';
+	import { prose } from '$lib/names.svelte';
 
 	interface Props {
 		/** The record the field lives on. */

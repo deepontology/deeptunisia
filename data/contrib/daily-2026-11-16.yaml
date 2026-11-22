@@ -1,0 +1,273 @@
+# daily-2026-11-16: daily dataset sweep (full mode), consolidated outbox
+#
+# Window swept: 2026-11-03T14:25:07Z (last persisted lastRun) to 2026-11-16.
+#   Feed refreshed 2026-11-16: 1200 archived, +114 new, 114 aged out, 432 KB.
+#   Languages fr 1177 / ar 18 / en 5. Newest item 2026-11-16T16:56:44Z.
+#   624 items are dated 3-16 November; 572 of them were not in the saved
+#   lastSeen list. The saved list holds only the previous run's top ~200 ids,
+#   so "unseen" is a first cut, not a novelty test; every item was screened by
+#   title and the shortlisted ones read at source.
+# Sources swept: African Manager, Kapitalis, Nawaat, Inkyfada, BBC News,
+#   France 24, Al Jazeera. Inkyfada was skipped this run (robots.txt
+#   unreachable, timeout); BBC, France 24 and Al Jazeera returned few or no new
+#   Tunisia items.
+# Read at source (direct fetch, 16 November): African Manager (Al Karama
+#   verdict, Nafti-Barrot call, Tende/Maamoura drilling, three public
+#   enterprises, Zenith arbitration costs, Zenith Robbana restart, Qatar-TABC
+#   partnership, Alicante property case, UIT re-election), Kapitalis (Al Karama
+#   verdict, Elmed phase). One African Manager item on Abiod of 16 November
+#   redirected in a loop and could not be read; it is a research note below.
+#   African Manager's Al Karama and public-enterprise pieces were readable; no
+#   paywall was hit.
+# Failure vocabulary (must not be collapsed):
+#   - The Al Karama Holding verdict is relayed by two outlets, both citing TAP.
+#     Neither names the convicted former chief executive. No judgment text,
+#     court communiqué or case file was retrieved. The record carries the
+#     office, not a person id.
+#   - The Nafti-Barrot call is the Tunisian foreign ministry's readout through
+#     one outlet. The French account was not retrieved. The article says
+#     "mercredi"; the article date is Thursday 5 November, so the call is
+#     dated Wednesday 4 November 2026.
+#   - The Tende/Maamoura item relays Splash247 and Anglo Tunisian Oil & Gas
+#     technical material through one outlet. The 49/51 split and the Eni stake
+#     transfer are the outlet's background, not a retrieved corporate filing.
+#     The potential 6,000 boe/d is conditional, as the piece says.
+#   - The three public enterprises (El Fouladh, Ciments de Bizerte, Tunisian
+#     Sugar Company) have no graph records. They are named in the summary and
+#     listed in notes; no dangling id was created. The figures are the
+#     minister's statements in a plenary, not audited accounts.
+#   - The Zenith items are company statements relayed by one outlet. The USD
+#     573 million remains a claim, not an adjudicated debt; the arbitration is
+#     pending and the award is expected in the first quarter of 2027.
+#   - The Elmed bill number (66/2026), its 2 November transmittal and the
+#     EUR 43 million EBRD loan terms are as Kapitalis states them, citing the
+#     Aius consultancy update. The bill text was not retrieved.
+# Cutoff: these candidates include records dated through 2026-11-16, past the
+#   previous time.cutoff (2026-11-08). The merge advanced the cutoff to the sweep
+#   coverage date 2026-11-16 in the same edit and moved the pinned defaults in
+#   scripts/parameters.ts and scripts/test-parameters.ts with it.
+# CANDIDATES ARE PROPOSALS, NOT GRAPH DATA. The two candidates kept below were
+#   not merged on 2026-11-16; the three events and two corrections that were
+#   merged left this file. The notes are the research backlog.
+# DISPOSITION 2026-11-16 (maintainer merge): five candidates merged, two held.
+#   Merged into canonical data: ev-nafti-barrot-association-agreement-2026-11-04,
+#   ev-al-karama-holding-verdict-2026-11-10 (office only, no person id, as the
+#   outlets name nobody) and ev-zenith-robbana-production-resume-2026-11-16 into
+#   data/events.yaml, with six of the eight sources. The flag on
+#   ev-zenith-pompeo-arbitration-2026-10-29 was applied as one attributed sentence
+#   in that event summary (events carry no notes field) and its source was added to
+#   the record. The flag on ctr-elmed-financing-2023-2024 was applied as a financing
+#   note and the Kapitalis item added to its sources. The research cutoff moved to
+#   2026-11-16.
+#   Held, not merged: ev-tende-maamoura-abiod-drilling-2026-11-09 (Tende Energy,
+#   Ocean Oilfield and Anglo Tunisian Oil & Gas have no records, and the 49/51 split
+#   is the outlet's background, not a filing) and
+#   ev-public-enterprises-restructuring-2026-11-14 (El Fouladh, the Bizerte cement
+#   company and the Tunisian Sugar Company have no records, and the item rests on
+#   one outlet). Both need their company records, or a decision that the event
+#   stands without them, before they can merge. Their sources stay here with them.
+sources:
+  - id: am-tende-maamoura-drilling-2026-11-09
+    title: "Tende Energy loue une plateforme de forage au large des côtes tunisiennes"
+    publisher: African Manager
+    date: 2026-11-09
+    url: https://africanmanager.com/tende-energy-loue-une-plateforme-de-forage-au-large-des-cotes-tunisiennes/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      La société de forage offshore Ocean Oilfield a décroché un contrat auprès
+      de Tende Energy pour déployer sa plateforme autoélévatrice Ocean MVM dans
+      le cadre d'une campagne de forage au large des côtes tunisiennes,
+      rapporte le site Splash 247, précisant que la plateforme sera utilisée
+      pour le programme de forage Abiod sur la concession de Maâmoura dans le
+      golfe d'Hammamet, ciblant un réservoir carbonaté fracturé jusqu'alors
+      inexploité. [...] Tende détient une participation de 49 % dans Maâmoura,
+      les 51 % restants étant contrôlés par l'ETAP, société d'État tunisienne.
+    note: >-
+      Relays Splash247 and technical material attributed to Anglo Tunisian Oil &
+      Gas. Says Eni's Tunisian subsidiary transferred its previous stake to
+      Tende earlier in 2026. The 6,000 boe/d potential is explicitly
+      conditional on drilling success and reservoir performance. Contract date
+      and value are not given; the article date is the report date.
+  - id: am-public-enterprises-restructuring-2026-11-14
+    title: "Trois entreprises publiques en cours de restructuration"
+    publisher: African Manager
+    date: 2026-11-14
+    url: https://africanmanager.com/trois-entreprises-publiques-en-cours-de-restructuration/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Le ministre de l'Economie et de la Planification, Samir Abdelhafidh, a
+      indiqué que les programmes de restructuration d'entreprises publiques se
+      poursuivent afin de renforcer leurs capacités de production, améliorer
+      leur situation financière et garantir la continuité de leur activité. Ces
+      projets concernent, notamment, la Société tunisienne de sidérurgie « El
+      Fouladh », la Société des ciments de Bizerte et la Société tunisienne du
+      sucre (STS) de Béja, a-t-il précisé samedi à l'aube au palais du Bardo.
+    note: >-
+      Reports the minister's answers in a joint plenary of the ARP and the
+      National Council of Regions and Districts on the ministry's 2027 budget.
+      Gives the El Fouladh cost revision (USD 70m to USD 130m), the Islamic
+      Development Bank delegation of 19-23 October 2026 and the April 2027 board
+      timetable; the Bizerte cement package (50 MD, capital +53.1 MD); the sugar
+      company package (40 MD). These are statements, not audited figures.
+events:
+  - id: ev-tende-maamoura-abiod-drilling-2026-11-09
+    date: "2026-11-09"
+    title_en: "Ocean Oilfield rig contracted for Tende's Abiod drilling on the Maamoura concession"
+    title_fr: "Une plateforme d'Ocean Oilfield louée pour le forage Abiod de Tende sur la concession de Maâmoura"
+    category: economic
+    subcategory: oil-and-gas
+    location: [gov-nabeul]
+    actors: []
+    institutions: [etap]
+    causes: []
+    consequences: []
+    summary: >-
+      Ocean Oilfield won a contract from Tende Energy to deploy its Ocean MVM
+      jack-up rig for a drilling campaign offshore Tunisia, to be used for the
+      Abiod drilling programme on the Maamoura concession in the Gulf of
+      Hammamet, targeting a fractured carbonate reservoir not previously
+      produced, per African Manager on 9 November relaying Splash247 and
+      technical material attributed to Anglo Tunisian Oil & Gas. The plan is to
+      drill a deviated sidetrack from the existing Maamoura E2 well. Tende holds
+      49% of Maamoura and state oil company ETAP the other 51%; the outlet says
+      Eni's Tunisian subsidiary transferred its previous stake to Tende earlier
+      in 2026. The piece puts potential output above 6,000 barrels of oil
+      equivalent per day, explicitly subject to drilling success and reservoir
+      performance. Tende Energy, Ocean Oilfield and Anglo Tunisian Oil & Gas have
+      no graph records and are named only; the 49/51 split and the Eni transfer
+      are the outlet's background, not a retrieved corporate filing.
+    confidence: C
+    verification: needs-primary-source
+    attributed_to: "African Manager (9 November 2026), relaying Splash247 and Anglo Tunisian Oil & Gas technical material"
+    reasoning: >-
+      One outlet relaying trade press and operator background. The contract,
+      the rig, the well plan and the ownership split are as the piece states
+      them; no contract, licence or corporate filing was retrieved. The
+      conditional production figure is carried as conditional.
+    falsifiable_by: >-
+      The Ocean Oilfield or Tende announcement, the ETAP joint-venture record,
+      or a JORT concession act would confirm the contract, the ownership split
+      and the stake transfer; a different split or operator would correct the
+      record.
+    sources:
+      - am-tende-maamoura-drilling-2026-11-09
+  - id: ev-public-enterprises-restructuring-2026-11-14
+    date: "2026-11-14"
+    title_en: "Economy minister sets out the restructuring of El Fouladh, the Bizerte cement company and the Tunisian Sugar Company"
+    title_fr: "Le ministre de l'Economie expose la restructuration d'El Fouladh, de la cimenterie de Bizerte et de la Société tunisienne du sucre"
+    category: economic
+    subcategory: state-owned-enterprises
+    location: [gov-tunis]
+    actors: [samir-abdelhafidh]
+    institutions: [etat-tunisien]
+    causes: []
+    consequences: []
+    summary: >-
+      At a joint plenary of the Assembly of People's Representatives and the
+      National Council of Regions and Districts on the 2027 budget of the
+      economy ministry, held Saturday 14 November 2026 at the Bardo palace,
+      economy and planning minister Samir Abdelhafidh said restructuring
+      programmes continue at three state companies: El Fouladh (Tunisian steel
+      company), the Bizerte cement company and the Tunisian Sugar Company of
+      Beja. For El Fouladh he said a new steel plant is under evaluation after
+      an Islamic Development Bank delegation visit on 19-23 October 2026, with
+      the estimated cost rising from USD 70 million to USD 130 million and a
+      financing offer awaiting the bank's board in April 2027. For the Bizerte
+      cement company he cited a 50 million dinar energy and environment
+      project, a 53.1 million dinar capital increase and rescheduled debt. For
+      the sugar company he cited 40 million dinars of equipment upgrades and a
+      business plan, plus debt rescheduling, with targets of 180,000 tonnes of
+      raw sugar for refining and 171,000 tonnes of white sugar. None of the
+      three companies has a graph record; they are named only.
+    confidence: C
+    verification: needs-primary-source
+    attributed_to: "Samir Abdelhafidh, minister of economy and planning, in a joint plenary on 14 November 2026, reported by African Manager"
+    reasoning: >-
+      One outlet reporting a minister's oral answers in a plenary. The figures
+      and the timetable are as the piece states them; no ministry document,
+      plenary record or company account was retrieved. The three companies have
+      no graph records, so the event carries no company ids and names them in
+      the summary.
+    falsifiable_by: >-
+      The plenary record, a ministry communiqué, the Islamic Development Bank
+      board decision of April 2027 or the companies' published accounts would
+      confirm the figures and the timetable; different figures would correct
+      the record.
+    sources:
+      - am-public-enterprises-restructuring-2026-11-14
+notes:
+  - >-
+    Note, not a record: Tunisia-Cote d'Ivoire security talks (7 November 2026).
+    Tunisian ambassador to Abidjan Zied Saadaoui met Ivorian interior and
+    security minister Vagondo Diomande; the Tunisian embassy communiqué relayed
+    by African Manager says they discussed terrorism, cross-border and
+    organised crime, irregular migration and document fraud, and information
+    sharing, joint training and capacity building. Neither the ambassador nor
+    Cote d'Ivoire has a graph record, and the embassy is not an institution
+    record, so the signal becomes a research note rather than a candidate.
+    NEEDS RESEARCH to create the country entity and the posting before any
+    event can cite them.
+  - >-
+    Note, not a record: Alicante real estate case (10 November 2026). The
+    criminal chamber specialised in financial corruption at the Tunis Court of
+    First Instance on Monday 9 November 2026 rejected a release request from a
+    detained businessman in the case known as the "Alicante real estate
+    assets" and set the first hearing for 30 November 2026. Two lawyers are
+    among the accused; charges include money laundering through professional
+    activity, holding assets and bank accounts abroad without central bank
+    authorisation, complicity, misuse of travel allowances and export of
+    prohibited goods without declaration. The item names no defendant.
+    NEEDS RESEARCH: the businessman's identity and a court record, before an
+    event can be written.
+  - >-
+    Note, not a record: ITU Council re-election (16 November 2026). Tunisia was
+    re-elected to the International Telecommunication Union Council for
+    2027-2030 at the Plenipotentiary Conference PP-26 in Doha (9-27 November),
+    per the telecom ministry relayed by African Manager. The ITU has no
+    institution record and the item is a membership announcement; kept as a
+    note. NEEDS RESEARCH only if international-organisation memberships enter
+    the graph.
+  - >-
+    Note, not a record: Tunisian-African Business Council and Qatari Business
+    Forum partnership (14 November 2026). The TABC signed a partnership with
+    the Qatari Business Forum, chaired by businessman Mohamed Al-Dabbagh, to
+    promote investment in Africa and bring a Gulf business delegation to the
+    10th Africa investment and trade financing forum in Tunis on 6-7 April
+    2027. Neither body nor Al-Dabbagh has a graph record. NEEDS RESEARCH before
+    a record.
+  - >-
+    Note, not a record: second Abiod item (16 November 2026). African Manager
+    published "Hammamet: les forages sont prets a commencer dans le champ
+    petrolier Abiod" on 16 November; the page redirected in a loop and could
+    not be read. The 9 November Tende/Maamoura item is the sourced basis for
+    that event. NEEDS RESEARCH if the second piece adds a date or a contractor
+    change.
+  - >-
+    No change: former RNTA chief executive sentenced in absentia to 18 years
+    (6 November 2026). Already merged in the 2026-11-03 to 2026-11-06 batch
+    (commit e2b9985), which records the in-absentia sentence of the former
+    Regie nationale des tabacs et des allumettes chief executive.
+  - >-
+    No change: penal reconciliation commission denial (7 November 2026). The
+    same denial was merged in the 2026-11-06 to 2026-11-08 batch (commit
+    262f6bf), with the claim it denies and the open dispute.
+  - >-
+    No change: fourth EU-Tunisia joint parliamentary committee session in
+    Brussels (5-6 November 2026). Merged in commit 262f6bf.
+  - >-
+    No change: Nafti's meetings with Libyan acting foreign minister Taher Baour
+    (6 November) and Libyan prime minister Abdelhamid Dbeibah (7 November).
+    Merged in commit 262f6bf.
+  - >-
+    No change: Badreddine Ouali's sale of Vermeg (3 November 2026). The
+    Advent/Vermeg acquisition is already a candidate record in
+    data/contrib/daily-2026-11-03.yaml (ev-advent-vermeg-acquisition-2026-11-02),
+    announced but not completed, completion expected in the first half of 2027.
+    This run adds no new fact.
+  - >-
+    No change: OneTech carve-out (15 November), Delice Holding and SAH market
+    moves (13 November), and the daily Bourse and budget-plenary items. These
+    are market or parliamentary-budget reporting about companies with no graph
+    record; they do not change an existing record.

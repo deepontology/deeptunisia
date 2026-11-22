@@ -29,9 +29,11 @@ The dock at the bottom is the timeline. Scrub it and every view projects onto th
 - The **density curve** behind the track shows how much of the record exists at each date. It thins before 1987 not because less happened, but because the archive is thinner. That is the project's honesty signal: the map shows the record, not the past.
 - A position is an **interval**, not a line in a table. "X held post Y" and "between these dates" are separate claims with separate standing — one can be documented while the other is inferred.
 
-## What "verified" means {#verified}
+## What "unflagged" and "verified" mean {#verified}
 
-The project's architecture is machines propose, humans verify. At this stage most records have not been through a second pair of eyes — the real number is published on the [about page](/about) rather than hidden. A record flagged "awaiting a primary source" is not an accusation; it is a to-do list the project shows you.
+Every record carries one verification state, and the state says who, if anyone, has checked it against its source. **Unflagged** is the default: nobody has checked the record and nothing has been flagged on it. It is not a claim that the record is wrong, and it is not a claim that it is right. **Verified** means a person opened the source and confirmed that it says what the record says; only a record whose review names that person and the method `source-check` may carry it. Two authored states sit beside them: **needs-primary-source**, where someone noted that the official document behind the claim has not been found, and **disputed**, where someone contests the claim and the dispute is written on the record.
+
+The project's architecture is machines propose, humans verify. At this stage most records are unflagged, and the split between checks by a person and passes by an agent is published on the [about page](/about) rather than hidden. A record flagged "awaiting a primary source" is not an accusation; it is a to-do list the project shows you.
 
 ## Which view answers your question {#views}
 

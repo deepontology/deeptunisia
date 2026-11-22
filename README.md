@@ -27,7 +27,8 @@ npm run check         # svelte-check — must be 0 errors, 0 warnings
 npm run dev           # builds the graph, then starts the dev server on :5173
 npm start             # atlas on :5173 AND the Agora API on :5200, one command
 npm run build         # validates, exports, and produces a static site in build/
-npm run smoke         # real browser, both themes, desktop AND phone — needs a dev server (mode defaults to beta; override with VITE_COMMUNITY_MODE)
+npm run smoke         # real browser, both themes, desktop AND phone — run it against `npm start`, not `npm run dev` (the Agora checks need the API; mode defaults to beta, override with VITE_COMMUNITY_MODE). SMOKE_CHROMIUM=/path/to/chromium names the browser. It is not part of `npm test`: CI runs it as its own job (`.github/workflows/smoke.yml`) on every pull request into `release/1.0` and nightly. A full run is 1,273 checks and takes about 15 minutes, and it is expected to finish with none failing
+npm run measure:phone # load time of a route on a 390 wide throttled phone profile, against build/ or --url; reports a tap gate and a search gate apart, asserts nothing
 npm run feed          # fetch news headlines into feed/ (also runs every 4h in CI)
 npm run audit:probes  # reproduce the external code review's compiler probes
 ```
@@ -45,9 +46,9 @@ halves of the dev loop as `beta` so the Agora tab is reachable during
 development; a reader on deeptunisia.org never touches it. The mode contract is
 `docs/agora-deployment.md`.
 
-The complete graph is <!--stat:graphKB-->14530<!--/stat--> KB as the internal
+The complete graph is <!--stat:graphKB-->14980<!--/stat--> KB as the internal
 bundle, and the public exports (dataset, CSVs, geographic layers, changelog)
-ship at <!--stat:shippedKB-->20790<!--/stat--> KB — both are computed by the
+ship at <!--stat:shippedKB-->21270<!--/stat--> KB — both are computed by the
 build, and `npm run test` fails if the README ever disagrees with them.
 
 ## Reproducibility
@@ -84,7 +85,7 @@ this table mirrors it and must be kept in step.
 | View | What it answers |
 | --- | --- |
 | **Chronicle** | Who held which post, when, drawn to scale. Bar length is tenure, so continuity is visible without reading. |
-| **Now** | Who holds which office today — split by how recently each was verified, and measured against that office's historical median tenure. |
+| **Now** | Who holds which office today — split by how recently each was confirmed in post, and measured against that office's historical median tenure. |
 | **Network** | Who connects to whom. Fixed lane per layer, so cross-layer bridges are literally the edges that cross lanes. |
 | **Atlas** | Everything at once: structure per era as small multiples, a survival matrix of people against eras, an institution-crossing matrix, and median tenure per office. |
 | **Rankings** | Six separate structural indices with reader-adjustable weights. Deliberately no single power score. |
@@ -137,7 +138,7 @@ Six decisions carry most of the weight:
 
 **Positions are the join table.** A `Position` is `(role, holder, start, end)`. You cannot ask "who held power in 1994" from a list of people, only from a set of intervals.
 
-**Dates are ranges, not points.** Four fields — earliest/latest start, earliest/latest end — plus a status (`ended`, `ongoing`, `last-verified`, `unknown`). The Chronicle draws the documented core solid and the uncertain envelope hatched. Grammar: `2018-06-01`, `2018-06`, `2018`, `~2017`, `<=2018-06`, `ongoing`, `verified:2025-12`, `?`.
+**Dates are ranges, not points.** Four fields — earliest/latest start, earliest/latest end — plus a status (`ended`, `ongoing`, `last-verified`, `unknown`). The Chronicle draws the documented core solid and the uncertain envelope hatched. Grammar: `2018-06-01`, `2018-06`, `2018`, `~2017`, `<=2018-06`, `ongoing`, `verified:2025-12`, `?`. The `verified:` token is an interval status and says when the post was last confirmed; it is not the record's `verification` field, which is `unflagged` unless a person opened the source.
 
 **Basis describes the claim, not its dates.** A position bundles two separable claims — "X held this post" and "between these dates" — which routinely have different standing. A security chief whose office is well reported but whose start date nobody published is a *reported* officeholding with an *inferred* span. `datesInferred` is a separate flag so imprecise dating never looks like speculation.
 
@@ -178,6 +179,7 @@ Editorial state is separate from both counts. `status` and `reviewer` come from 
 2. Add the claim, referencing that source id.
 3. Grade it honestly. Single-outlet assessment → `C` + `attributed_to`. Reasoned estimate → `basis: inferred` + `reasoning` + `falsifiable_by`.
 4. Run `npm run data`, then `npm run test`. Fix what they reject.
+5. Leave `verification` out of a new record. `verified` is not typed by hand: it means a person opened the source and confirmed the claim, and from Release 1.0 the build refuses it unless the record carries a review whose `actor` is `human` and whose `method` is `source-check`.
 
 Prefer gazette appointment decrees above everything else: they give exact dates, which is what the whole timeline depends on.
 
@@ -189,15 +191,15 @@ This is not neutrality for its own sake — it is the project's only real protec
 
 ## Known limits
 
-- **<!--stat:reviewed-->52<!--/stat--> of <!--stat:reviewable-->8842<!--/stat--> records carry an editorial review note, and independent human verification is <!--stat:independent-->0<!--/stat-->.** The stated architecture is that machines propose and humans verify; almost nothing has been through a second pair of eyes. The real numbers are published on `/about` because that is the only way the commitment means anything.
+- **<!--stat:reviewedHuman-->0<!--/stat--> of <!--stat:reviewable-->8850<!--/stat--> records have been checked by a person and <!--stat:reviewedAgent-->0<!--/stat--> by an agent; <!--stat:reviewedUnstated-->52<!--/stat--> carry a review note that does not say who read it, and independent human verification is <!--stat:independent-->0<!--/stat-->.** The stated architecture is that machines propose and humans verify; almost nothing has been through a second pair of eyes. The real numbers are published on `/about` because that is the only way the commitment means anything.
 - **Defence intelligence (ANRSD) has no primary sourcing at all** — statute, appointment date, current status all unestablished. Largest hole in the security map.
 - **Pre-2011 police chronology is the weakest area**, resting largely on secondary sources.
 - **The 2014–2019 police succession does not fit its endpoints.** Three reported tenures cannot fit between two firmly dated ones; recorded as an unresolved contradiction rather than smoothed over.
 - **`<=` bounds use an 8-year window.** Stated modelling assumption, not a fact.
 - **UI is translated for chrome only.** Arabic, French and English navigation, controls and labels, with RTL. Entity names are trilingual in the data and all three are searchable. Long-form analytical prose is deliberately *not* machine-translated — a machine-translated epistemology page would undermine the point.
-- **<!--stat:needsPrimarySource-->432<!--/stat--> records await a primary source.** Listed in full on `/evidence`.
-- **Human review is not merely thin, it is not independent.** Independent checks stand at <!--stat:independent-->0<!--/stat--> in every category, and the editorial notes that do exist are unevenly spread: <!--stat:reviewed-unsubstantiated-->18<!--/stat--> of <!--stat:reviewable-unsubstantiated-->23<!--/stat--> unsubstantiated claims, <!--stat:reviewed-attributed-->25<!--/stat--> of <!--stat:reviewable-attributed-->2904<!--/stat--> that name a source and <!--stat:reviewed-inferred-->2<!--/stat--> of <!--stat:reviewable-inferred-->129<!--/stat--> inferences carry one. The breakdown is on `/about`.
-- **<!--stat:sourcesUncited-->71<!--/stat--> of <!--stat:sources-->2615<!--/stat--> sources back no claim.** Staged reading, kept in the file but excluded from the published count of <!--stat:sourcesCited-->2544<!--/stat--> — a bibliography entry that holds nothing up is not evidence.
+- **<!--stat:needsPrimarySource-->438<!--/stat--> records await a primary source.** Listed in full on `/evidence`.
+- **Human review is not merely thin, it is not independent.** Independent checks stand at <!--stat:independent-->0<!--/stat--> in every category, and the editorial notes that do exist are unevenly spread: <!--stat:reviewNotes-unsubstantiated-->18<!--/stat--> of <!--stat:reviewable-unsubstantiated-->23<!--/stat--> unsubstantiated claims, <!--stat:reviewNotes-attributed-->25<!--/stat--> of <!--stat:reviewable-attributed-->2911<!--/stat--> that name a source and <!--stat:reviewNotes-inferred-->2<!--/stat--> of <!--stat:reviewable-inferred-->132<!--/stat--> inferences carry one. The breakdown is on `/about`.
+- **<!--stat:sourcesUncited-->71<!--/stat--> of <!--stat:sources-->2643<!--/stat--> sources back no claim.** Staged reading, kept in the file but excluded from the published count of <!--stat:sourcesCited-->2572<!--/stat--> — a bibliography entry that holds nothing up is not evidence.
 
 ## Deliberately not built yet
 

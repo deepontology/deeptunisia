@@ -28,7 +28,8 @@
 	import { compact } from '$lib/design/media.svelte';
 	import { app } from '$lib/state.svelte';
 	import { ds, LAYER_COLOR } from '$lib/model';
-	import { t, tf, nameOf } from '$lib/t.svelte';
+	import { t, tf } from '$lib/t.svelte';
+	import { nameOf } from '$lib/names.svelte';
 	import { world, type WorldFamily } from '$lib/world/store.svelte';
 	import { prefersReducedMotion } from 'svelte/motion';
 
