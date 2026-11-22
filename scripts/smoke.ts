@@ -4672,6 +4672,67 @@ if (runSection('layout')) for (const vp of VIEWPORTS) {
 	await context.close();
 }
 
+if (runSection('now rows')) {
+console.log('\n  ── now rows ──');
+/*
+ * The Now page prints six cells per row (name, office, what the claim rests on,
+ * time in office, the comparison with the usual term, last confirmed). The cells
+ * sat in fixed columns sized for a one-letter basis code, so the basis chip and
+ * its "rests on N origins" note drew through the elapsed text and out of the
+ * row at every width above the phone layout. Measured the way a reader sees it:
+ * the boxes of the printed parts, per row, must not intersect each other and
+ * must stay inside the row.
+ */
+for (const width of [390, 800, 1100, 1440, 1920]) {
+	const context = await browser.newContext({ viewport: { width, height: 1000 } });
+	const page = await context.newPage();
+	await page.addInitScript(TOUR_SEEN_INIT);
+	await page.goto(`${BASE}/now`, { waitUntil: 'networkidle', timeout: 30_000 });
+	await settle(page);
+	await page.waitForSelector('.holders li');
+	await page.evaluate(() => document.fonts.ready);
+	const result = await page.evaluate(() => {
+		const parts = ['.who', '.office', '.basis-line', '.elapsed', '.vs', '.stale'];
+		const rows = [...document.querySelectorAll('.holders li')];
+		let bad = 0;
+		let example = '';
+		for (const row of rows) {
+			const bounds = row.getBoundingClientRect();
+			const boxes = parts
+				.map((selector) => [selector, row.querySelector(selector)] as const)
+				.filter((entry): entry is readonly [string, Element] => entry[1] !== null)
+				.map(([selector, el]) => [selector, el.getBoundingClientRect()] as const)
+				.filter(([, box]) => box.width > 0 && box.height > 0);
+			let problem = '';
+			for (let i = 0; i < boxes.length && !problem; i++) {
+				const [a, boxA] = boxes[i];
+				if (boxA.left < bounds.left - 0.5 || boxA.right > bounds.right + 0.5) problem = `${a} leaves the row`;
+				for (let j = i + 1; j < boxes.length && !problem; j++) {
+					const boxB = boxes[j][1];
+					const crossing =
+						boxA.left < boxB.right - 0.5 &&
+						boxB.left < boxA.right - 0.5 &&
+						boxA.top < boxB.bottom - 0.5 &&
+						boxB.top < boxA.bottom - 0.5;
+					if (crossing) problem = `${a} meets ${boxes[j][0]}`;
+				}
+			}
+			if (problem) {
+				bad++;
+				example ||= problem;
+			}
+		}
+		return { rows: rows.length, bad, example, layout: getComputedStyle(rows[0]).display };
+	});
+	ok(
+		`now rows at ${width}px: no printed part meets another or leaves its row`,
+		result.rows > 20 && result.bad === 0,
+		result.bad ? `${result.bad} of ${result.rows} rows, e.g. ${result.example}` : `${result.rows} rows, ${result.layout} layout`
+	);
+	await context.close();
+}
+}
+
 if (runSection('study page')) {
 console.log('\n  ── study page ──');
 /*
