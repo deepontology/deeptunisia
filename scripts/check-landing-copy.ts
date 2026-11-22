@@ -2,14 +2,20 @@
  * Gate for the citizen budget landing copy.
  *
  * Checks that the three locales share a structure, that no string carries an em
- * or en dash or a banned phrase, and that the figure 91 appears exactly once per
- * locale, inside the approved sentence.
+ * or en dash or a banned phrase, and that the figure 91 appears in exactly two
+ * strings per locale: the hook, which carries the approved sentence, and the
+ * revenue definition, which names the denominator of that 91. Anywhere else, or
+ * a second 91 inside either string, fails.
  */
 import { landingCopy } from '../src/lib/budget-study/landing-copy';
 import type { Locale } from '../src/lib/budget-study/landing-copy';
 
 const LOCALES: Locale[] = ['en', 'fr', 'ar'];
-const SECTION_IDS = ['question', 'board', 'figures', 'method', 'stored', 'cannot', 'record', 'take'];
+const SECTION_IDS = ['question', 'board', 'figures', 'method', 'questions', 'stored', 'cannot', 'record', 'take'];
+/** The only strings allowed to carry the figure 91, by path. */
+const NINETY_ONE_PATHS = ['hook', 'revenue.per100.text'];
+/** The definition must name what the 91 is divided by. */
+const DENOMINATOR: Record<Locale, string> = { en: 'denominator of the 91', fr: 'dénominateur du 91', ar: 'مقام الرقم 91' };
 const APPROVED_EN = '91 dinars in every 100 the state raises itself come from tax.';
 const BANNED = ['tunisians want', 'the people\u2019s budget', "the people's budget", 'the public rejects'];
 
@@ -149,24 +155,27 @@ for (const locale of LOCALES) {
 		}
 	}
 
-	if (ninetyOne !== 1) {
-		fail(`${locale}: "91" appears ${ninetyOne} times, expected exactly once`);
-	} else if (carriers.length !== 1) {
-		fail(`${locale}: "91" is spread across ${carriers.length} strings`);
+	const paths = carriers.map((entry) => entry.path).sort();
+	if (JSON.stringify(paths) !== JSON.stringify([...NINETY_ONE_PATHS].sort())) {
+		fail(`${locale}: "91" is carried by ${paths.join(', ') || 'nothing'}, expected exactly ${NINETY_ONE_PATHS.join(' and ')}`);
+	}
+	if (ninetyOne !== NINETY_ONE_PATHS.length) {
+		fail(`${locale}: "91" appears ${ninetyOne} times, expected once in each of ${NINETY_ONE_PATHS.join(' and ')}`);
 	}
 
 	if (locale === 'en') {
 		if (!copy.hook.includes(APPROVED_EN)) {
 			fail(`en: hook does not carry the approved sentence "${APPROVED_EN}"`);
 		}
-		if (carriers[0] && !carriers[0].text.includes(APPROVED_EN)) {
-			fail('en: "91" sits outside the approved sentence');
-		}
-	} else if (carriers[0]) {
+	} else {
 		const marker = locale === 'fr' ? 'dinars' : 'دينار';
-		if (!carriers[0].text.includes(marker) || !carriers[0].text.includes('100')) {
-			fail(`${locale}: "91" sits outside the translated approved sentence`);
+		if (!copy.hook.includes('91') || !copy.hook.includes(marker) || !copy.hook.includes('100')) {
+			fail(`${locale}: the hook does not carry the translated approved sentence`);
 		}
+	}
+	const definition = carriers.find((entry) => entry.path === 'revenue.per100.text');
+	if (definition && !definition.text.includes(DENOMINATOR[locale])) {
+		fail(`${locale}: the 91 in the revenue definition does not sit beside its denominator`);
 	}
 }
 
