@@ -2,7 +2,7 @@
    scripts/verify-deploy.cjs — the gate, run against the live deployment
    ============================================================================
 
-       node scripts/verify-deploy.cjs https://deeptunisia.org
+       node scripts/verify-deploy.cjs https://deeptunisia.org off <dataset-hash>
 
    Everything else verifies something we control. This verifies the thing the
    public will actually get: real DNS, real TLS, real headers from the real
@@ -23,7 +23,7 @@ const fs = require('node:fs');
 
 const ORIGIN = (process.argv[2] || '').replace(/\/$/, '');
 if (!/^https?:\/\//.test(ORIGIN)) {
-  console.error('\n  usage: node scripts/verify-deploy.cjs https://your-domain [off|read-only|beta]\n');
+  console.error('\n  usage: node scripts/verify-deploy.cjs https://your-domain [off|read-only|beta] <dataset-hash>\n');
   process.exit(2);
 }
 /*
@@ -36,18 +36,38 @@ if (!['off', 'read-only', 'beta'].includes(MODE)) {
   console.error('\n  mode must be off, read-only or beta\n');
   process.exit(2);
 }
+/*
+ * The release surface is checked against a hash somebody states, never one the
+ * script reads from the site it is checking: a deployment cannot vouch for
+ * itself. Eight hex characters or more; the run fails without it.
+ */
+const EXPECTED_HASH = (process.argv[4] || '').toLowerCase();
+/** A record the release surface is read through: its page and its share address. */
+const KNOWN_RECORD = 'bourguiba';
+/** The address Cloudflare gives the Worker; it must stay out of search indexes. */
+const WORKERS_DEV = 'https://deeptunisia.deeptunisia.workers.dev';
+const RELEASE_PAPER = '/deeptunisia-release-paper-v1.0.0.pdf';
+const RELEASE_PAPER_TITLE = '/Title (deeptunisia-release-paper-v1.0.0)';
 const OUT = (process.env.SHOT_DIR || path.join(os.tmpdir(), 'dt-deploy-shots')) + path.sep;
 fs.mkdirSync(OUT, { recursive: true });
 
 (async () => {
-  let pass = 0, fail = 0, warn = 0;
-  const ok = (c, n, d = '') => { c ? pass++ : (fail++, console.log('  FAIL   ' + n + (d ? ' — ' + d : ''))); };
-  const should = (c, n, d = '') => { c ? pass++ : (warn++, console.log('  WARN   ' + n + (d ? ' — ' + d : ''))); };
+  /*
+   * Every check belongs to a group, and the summary at the end is printed from
+   * the groups' own counters. Nothing in the output is a number somebody
+   * counted: copy the summary, do not retype it.
+   */
+  const groups = [];
+  let current = null;
+  const group = (name) => { current = { name, pass: 0, fail: 0, warn: 0 }; groups.push(current); console.log('\n  ── ' + name + ' ──\n'); };
+  const ok = (c, n, d = '') => { c ? current.pass++ : (current.fail++, console.log('  FAIL   ' + n + (d ? ' — ' + d : ''))); };
+  const should = (c, n, d = '') => { c ? current.pass++ : (current.warn++, console.log('  WARN   ' + n + (d ? ' — ' + d : ''))); };
 
   console.log(`\n  ── ${ORIGIN} ──\n`);
   console.log(`  expected community mode: ${MODE}\n`);
 
   // ---------------------------------------------------------------- headers
+  group('headers and landing');
   const root = await fetch(ORIGIN + '/', { redirect: 'follow' });
   ok(root.ok, 'the site answers', String(root.status));
   ok(root.url.startsWith('https://'), 'served over HTTPS', root.url);
@@ -91,6 +111,7 @@ fs.mkdirSync(OUT, { recursive: true });
     return { status: res.status, text, body, cache: res.headers.get('cache-control'), ct: res.headers.get('content-type') };
   };
 
+  group('community API, mode ' + MODE);
   const threads = await apiGet('/api/threads');
   const identity = await apiPost('/api/whoami', {});
   const write = await apiPost('/api/posts', { body: 'verify-deploy probe — this must never be accepted' });
@@ -139,6 +160,7 @@ fs.mkdirSync(OUT, { recursive: true });
   }
 
   // ---------------------------------------------------------------- routes
+  group('public routes');
   for (const r of ['/chronicle', '/now', '/network', '/world', '/atlas', '/rankings',
                    '/investigate', '/evidence', '/methodology', '/corrections', '/data', '/about', '/agora', '/feed', '/guide']) {
     const res = await fetch(ORIGIN + r);
@@ -156,6 +178,7 @@ fs.mkdirSync(OUT, { recursive: true });
   ok(/There is no record/.test(await missing.text()), 'the 404 page is the project’s own');
 
   // ---------------------------------------------------------------- browser
+  group('browser: landing and atlas');
   const browser = await chromium.launch(process.env.SMOKE_CHROMIUM ? { executablePath: process.env.SMOKE_CHROMIUM } : undefined);
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   const offsite = [], csp = [], errors = [];
@@ -199,6 +222,7 @@ fs.mkdirSync(OUT, { recursive: true });
   await page.screenshot({ path: OUT + 'D-atlas.png' });
   await page.locator('.card button.skip').click();
 
+  group('browser: Agora client, mode ' + MODE);
   await page.goto(ORIGIN + '/agora', { waitUntil: 'networkidle' });
   await page.waitForTimeout(800);
   /*
@@ -230,6 +254,7 @@ fs.mkdirSync(OUT, { recursive: true });
    * (Alternative: disable Web Analytics in the Cloudflare dashboard; the
    * check tolerates either state.)
    */
+  group('browser: third parties and console');
   const CF_BEACON = /static\.cloudflareinsights\.com\/beacon/;
   const offsiteOther = offsite.filter((u) => !CF_BEACON.test(u));
   const cspOther = csp.filter((m) => !CF_BEACON.test(m));
@@ -239,8 +264,56 @@ fs.mkdirSync(OUT, { recursive: true });
 
   await browser.close();
 
-  console.log(`\n  ${pass} passed, ${fail} failed, ${warn} warnings`);
-  console.log(`  screenshots → ${OUT}\n`);
-  if (fail) console.log('  DO NOT ANNOUNCE THE SITE until these are green.\n');
-  process.exit(fail ? 1 : 0);
+  // ---------------------------------------------------------------- release surface
+  /*
+   * What a reader of the release gets: the dataset the tag names, a record page
+   * and its share address, the release paper, the study that is fielding, and a
+   * search-engine policy that differs between the real domain and the Worker's
+   * own address. Each is read from outside, through the same public addresses.
+   */
+  group('release surface');
+  ok(/^[0-9a-f]{8,64}$/.test(EXPECTED_HASH), 'the expected dataset hash was given as the third argument', EXPECTED_HASH || 'none');
+  const datasetRes = await fetch(ORIGIN + '/dataset.json');
+  let servedHash = '';
+  try { servedHash = String(((await datasetRes.json()).meta || {}).datasetHash || '').toLowerCase(); } catch { /* not json */ }
+  ok(/^[0-9a-f]{8,64}$/.test(EXPECTED_HASH) && servedHash.startsWith(EXPECTED_HASH), 'the served dataset hash is the expected one', `served ${servedHash.slice(0, 8) || 'none'}, expected ${EXPECTED_HASH.slice(0, 8) || 'none'}`);
+
+  const recordRes = await fetch(ORIGIN + '/e/' + KNOWN_RECORD);
+  ok(recordRes.status === 200, `/e/${KNOWN_RECORD} is served`, String(recordRes.status));
+  const shareRes = await fetch(ORIGIN + '/share/entity/' + KNOWN_RECORD, { redirect: 'manual' });
+  const shareTo = shareRes.headers.get('location') || '';
+  ok(shareRes.status === 301 && new URL(shareTo, ORIGIN).pathname === '/e/' + KNOWN_RECORD, `/share/entity/${KNOWN_RECORD} answers 301 to /e/${KNOWN_RECORD}`, `${shareRes.status} ${shareTo}`);
+
+  const paperRes = await fetch(ORIGIN + RELEASE_PAPER);
+  const paperBytes = Buffer.from(await paperRes.arrayBuffer());
+  ok(paperRes.status === 200 && /application\/pdf/.test(paperRes.headers.get('content-type') || ''), 'the release paper is served as a PDF', `${paperRes.status} ${paperRes.headers.get('content-type')}`);
+  ok(paperBytes.subarray(0, 5).toString() === '%PDF-' && paperBytes.includes(RELEASE_PAPER_TITLE), 'the release paper carries its V1.0.0 title', `${paperBytes.length} bytes`);
+
+  const studiesRes = await fetch(ORIGIN + '/api/studies');
+  let studies = [];
+  try { studies = (await studiesRes.json()).studies || []; } catch { /* not json */ }
+  const police = studies.find((st) => st.slug === 'police');
+  ok(Boolean(police) && police.status === 'fielding', 'the police study is fielding', police ? police.status : 'not listed');
+
+  const indexed = async (url) => {
+    const res = await fetch(url);
+    const header = res.headers.get('x-robots-tag') || '';
+    const meta = /<meta[^>]*name=["']robots["'][^>]*noindex/i.test(await res.text());
+    return { noindexed: /noindex/i.test(header) || meta, header };
+  };
+  const onWorkers = new URL(ORIGIN).hostname.endsWith('.workers.dev');
+  const origin = await indexed(ORIGIN + '/');
+  ok(onWorkers ? origin.noindexed : !origin.noindexed, onWorkers ? 'the Workers address is noindex' : 'the custom domain is not noindex', origin.header || 'no x-robots-tag');
+  const workers = await indexed(WORKERS_DEV + '/');
+  ok(workers.noindexed, 'the Workers address is noindex', workers.header || 'no x-robots-tag');
+
+  // ---------------------------------------------------------------- summary
+  const total = groups.reduce((t, g) => ({ pass: t.pass + g.pass, fail: t.fail + g.fail, warn: t.warn + g.warn }), { pass: 0, fail: 0, warn: 0 });
+  const width = Math.max(...groups.map((g) => g.name.length), 5);
+  console.log('\n  ── summary ──\n');
+  for (const g of groups) console.log(`  ${g.name.padEnd(width)}  ${g.pass} passed, ${g.fail} failed, ${g.warn} warnings`);
+  console.log(`  ${'total'.padEnd(width)}  ${total.pass} passed, ${total.fail} failed, ${total.warn} warnings`);
+  console.log(`\n  screenshots → ${OUT}\n`);
+  if (total.fail) console.log('  DO NOT ANNOUNCE THE SITE until these are green.\n');
+  process.exit(total.fail ? 1 : 0);
 })();
