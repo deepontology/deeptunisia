@@ -108,5 +108,30 @@
 		"file": "src/routes/(read)/research/+page.svelte",
 		"text": "DT Research",
 		"reason": "Programme name, a proper noun"
+	},
+	{
+		"file": "src/lib/budget-study/BudgetStudy.svelte",
+		"text": "CB ·",
+		"reason": "Study code and separator, not prose, as PSI on the police index"
+	},
+	{
+		"file": "src/lib/budget-study/BudgetStudy.svelte",
+		"text": ", pages",
+		"reason": "French citation of a JORT source, shown in the source language under lang=fr in every locale"
+	},
+	{
+		"file": "src/lib/budget-study/BudgetStudy.svelte",
+		"text": ". Tableau A, page",
+		"reason": "French citation of a JORT source, shown in the source language under lang=fr in every locale"
+	},
+	{
+		"file": "src/lib/budget-study/BudgetStudy.svelte",
+		"text": ". Recadrage :",
+		"reason": "French citation of a JORT source, shown in the source language under lang=fr in every locale"
+	},
+	{
+		"file": "src/lib/budget-study/BudgetStudy.svelte",
+		"text": "; recadrage du tableau A :",
+		"reason": "French citation of a JORT source, shown in the source language under lang=fr in every locale"
 	}
 ]

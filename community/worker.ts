@@ -42,6 +42,14 @@ interface WorkerEnv {
 	RESEARCH_DB?: D1Database;
 	/** Worker var. '1' opens research submissions; absent or anything else fails closed. */
 	RESEARCH_OPEN?: string;
+	/**
+	 * Worker secret. The per-study allowlist for research submissions,
+	 * comma-separated slugs or registry ids. Absent or blank: RESEARCH_OPEN alone
+	 * decides, as before. Set: only the named studies accept. It is a secret
+	 * rather than a [vars] entry so it can be changed with one command and no
+	 * rebuild, and so a routine deploy can never reset it.
+	 */
+	RESEARCH_ACCEPT?: string;
 	/** Turnstile secret for the research bot challenge (contract §4). */
 	TURNSTILE_SECRET?: string;
 	/**
@@ -133,9 +141,11 @@ export default {
 				mode: resolveMode(env.COMMUNITY_MODE),
 				// Research (contract §6). No RESEARCH_DB binding → storage endpoints
 				// answer 503; no RESEARCH_OPEN var, or anything but '1' → submissions
-				// are closed. Both absences are the safe direction.
+				// are closed. RESEARCH_ACCEPT, when set, narrows acceptance to the
+				// studies it names. Every absence is the safe direction.
 				RESEARCH_DB: env.RESEARCH_DB ? asDb(env.RESEARCH_DB) : undefined,
 				RESEARCH_OPEN: env.RESEARCH_OPEN,
+				RESEARCH_ACCEPT: env.RESEARCH_ACCEPT,
 				STUDIES: studies,
 				TURNSTILE_SECRET: env.TURNSTILE_SECRET,
 				TURNSTILE_SITEKEY: env.TURNSTILE_SITEKEY,

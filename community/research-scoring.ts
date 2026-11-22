@@ -1786,3 +1786,326 @@ export function applyPublicationFloor(
 		}
 	};
 }
+
+// ---------------------------------------------------------------------------
+// The budget allocation (study 003, item alloc_budget)
+//
+// A respondent hands back one basis-point share per declared line (10000 is
+// the draft, 500 is the instrument's step, 20000 is double) plus `kept_draft`.
+// Locked lines can only stay at the draft. These figures sit downstream of the
+// validator in research-contract.ts: an answer that reaches them was already
+// balanced within the envelope and inside the declared steps, so nothing here
+// re-checks the envelope.
+//
+// The unit is one valid answer. The two floors the index uses stand in front
+// of every figure: below ALLOCATION_FIRST_FIGURE_N valid answers nothing
+// computed is published, and any cell below ALLOCATION_CELL_FLOOR is
+// suppressed. The share split also applies the complement rule from `cells`
+// above: hiding one small branch is not enough when the published branches
+// and the total would solve for it, so the smallest published branch goes too
+// until what is left outside them is empty or at least the floor.
+// ---------------------------------------------------------------------------
+
+/** One line of the allocation item, as the instrument declares it. */
+export interface AllocationCategory {
+	id: string;
+	draft_md: number;
+	locked: boolean;
+}
+
+/** A valid allocation answer: integer basis points per line, plus kept_draft. */
+export type AllocationAnswer = Record<string, number | boolean>;
+
+/** The basis-point value of an untouched line. */
+export const ALLOCATION_DRAFT_BP = 10000;
+/** The step the instrument allows between answers. */
+export const ALLOCATION_STEP_BP = 500;
+/** The largest share a line may take: 200% of its draft. */
+export const ALLOCATION_MAX_BP = 20000;
+/** Below this many valid answers no figure is published. */
+export const ALLOCATION_FIRST_FIGURE_N = 100;
+/** Below this many answers a cell is suppressed. */
+export const ALLOCATION_CELL_FLOOR = 20;
+
+/** The line's basis points on one answer, or null when the answer has none. */
+function allocationBp(answer: AllocationAnswer, lineId: string): number | null {
+	const value = answer[lineId];
+	if (typeof value !== 'number' || !Number.isInteger(value)) return null;
+	if (value < 0 || value > ALLOCATION_MAX_BP || value % ALLOCATION_STEP_BP !== 0) return null;
+	return value;
+}
+
+/** The change an answer makes to a line, as a fraction of its draft: 0.2 is +20%. */
+function allocationChange(bp: number): number {
+	return (bp - ALLOCATION_DRAFT_BP) / ALLOCATION_DRAFT_BP;
+}
+
+/** Every valid change on one line, in answer order. */
+function changeValues(answers: AllocationAnswer[], lineId: string): number[] {
+	const values: number[] = [];
+	for (const answer of answers) {
+		const bp = allocationBp(answer, lineId);
+		if (bp !== null) values.push(allocationChange(bp));
+	}
+	return values;
+}
+
+/** A linear-interpolated quantile over a list that is already sorted. */
+function quantile(sorted: number[], p: number): number {
+	if (sorted.length === 1) return sorted[0];
+	const position = (sorted.length - 1) * p;
+	const low = Math.floor(position);
+	const high = Math.ceil(position);
+	return low === high ? sorted[low] : sorted[low] + (sorted[high] - sorted[low]) * (position - low);
+}
+
+/** One branch of the share split: more than, the same as or less than the draft. */
+export interface ShareCell {
+	/** Respondents in the branch; null when suppressed. */
+	n: number | null;
+	/** Share of the valid answers; null when suppressed. */
+	share: number | null;
+	suppressed: boolean;
+}
+
+export interface AllocationShares {
+	/** Valid answers the split is computed over; null when the figure is suppressed. */
+	n: number | null;
+	more: ShareCell;
+	same: ShareCell;
+	less: ShareCell;
+}
+
+function suppressedShareCell(): ShareCell {
+	return { n: null, share: null, suppressed: true };
+}
+
+type ShareKey = 'more' | 'same' | 'less';
+
+/**
+ * The headline split: how many respondents would give the line more, the same
+ * or less than the draft. A kept-draft answer is one "same", not a missing one.
+ */
+export function shareMoreSameLess(answers: AllocationAnswer[], lineId: string): AllocationShares {
+	let more = 0;
+	let same = 0;
+	let less = 0;
+	for (const answer of answers) {
+		const bp = allocationBp(answer, lineId);
+		if (bp === null) continue;
+		if (bp > ALLOCATION_DRAFT_BP) more++;
+		else if (bp < ALLOCATION_DRAFT_BP) less++;
+		else same++;
+	}
+	const n = more + same + less;
+	if (n < ALLOCATION_FIRST_FIGURE_N) {
+		return { n: null, more: suppressedShareCell(), same: suppressedShareCell(), less: suppressedShareCell() };
+	}
+	const counts: Record<ShareKey, number> = { more, same, less };
+	const published = new Set<ShareKey>(
+		(['more', 'same', 'less'] as ShareKey[]).filter((key) => counts[key] >= ALLOCATION_CELL_FLOOR)
+	);
+	const remainder = () => n - [...published].reduce((sum, key) => sum + counts[key], 0);
+	while (published.size > 0 && remainder() > 0 && remainder() < ALLOCATION_CELL_FLOOR) {
+		const smallest = [...published].sort((a, b) => counts[a] - counts[b])[0];
+		published.delete(smallest);
+	}
+	const cell = (key: ShareKey): ShareCell =>
+		published.has(key)
+			? { n: counts[key], share: counts[key] / n, suppressed: false }
+			: suppressedShareCell();
+	return { n, more: cell('more'), same: cell('same'), less: cell('less') };
+}
+
+export interface ChangeSummary {
+	/** Valid answers the figure is computed over; null when suppressed. */
+	n: number | null;
+	/** Fraction of the draft: 0.2 is +20%. */
+	median: number | null;
+	suppressed: boolean;
+}
+
+/**
+ * The median change on one line, as a fraction of its draft. The median is the
+ * headline because a few extreme budgets (a line taken to zero) cannot move it
+ * the way they move the mean.
+ */
+export function medianChange(answers: AllocationAnswer[], lineId: string): ChangeSummary {
+	const values = changeValues(answers, lineId);
+	if (values.length < ALLOCATION_FIRST_FIGURE_N) return { n: null, median: null, suppressed: true };
+	return { n: values.length, median: median(values), suppressed: false };
+}
+
+export interface ChangeSpread {
+	/** Valid answers the figure is computed over; null when suppressed. */
+	n: number | null;
+	/** First quartile, as a fraction of the draft. */
+	q1: number | null;
+	/** Third quartile, as a fraction of the draft. */
+	q3: number | null;
+	/** q3 minus q1: the interquartile range, in the same unit. */
+	iqr: number | null;
+	suppressed: boolean;
+}
+
+/** The interquartile range of the change on one line. */
+export function iqrChange(answers: AllocationAnswer[], lineId: string): ChangeSpread {
+	const values = changeValues(answers, lineId).sort((a, b) => a - b);
+	if (values.length < ALLOCATION_FIRST_FIGURE_N) {
+		return { n: null, q1: null, q3: null, iqr: null, suppressed: true };
+	}
+	const q1 = quantile(values, 0.25);
+	const q3 = quantile(values, 0.75);
+	return { n: values.length, q1, q3, iqr: q3 - q1, suppressed: false };
+}
+
+export interface MeanBudget {
+	/** Valid answers the figure is computed over; null when suppressed. */
+	n: number | null;
+	/** Mean allocation per line, in MD; null when suppressed. */
+	md: Record<string, number> | null;
+	/** The line means added up: the movable envelope plus the locked drafts. */
+	total_md: number | null;
+	suppressed: boolean;
+}
+
+/**
+ * The average citizen budget: the mean allocation per line, in MD. The mean of
+ * balanced budgets is itself balanced, so the movable lines still sum to the
+ * envelope; a median would not, and is never shown as a budget.
+ */
+export function meanBudget(answers: AllocationAnswer[], categories: AllocationCategory[]): MeanBudget {
+	const valid = answers.filter((answer) => categories.every((category) => allocationBp(answer, category.id) !== null));
+	if (valid.length < ALLOCATION_FIRST_FIGURE_N) {
+		return { n: null, md: null, total_md: null, suppressed: true };
+	}
+	const md: Record<string, number> = {};
+	for (const category of categories) {
+		const values = valid.map(
+			(answer) => category.draft_md * ((allocationBp(answer, category.id) as number) / ALLOCATION_DRAFT_BP)
+		);
+		md[category.id] = mean(values);
+	}
+	const total = sortedSum(categories.map((category) => md[category.id]));
+	return { n: valid.length, md, total_md: total, suppressed: false };
+}
+
+export interface MeanInterval {
+	/** Valid answers the interval is computed over; null when suppressed. */
+	n: number | null;
+	/** Lower end of the 95% percentile interval, in MD. */
+	low_md: number | null;
+	/** Upper end, in MD. */
+	high_md: number | null;
+	suppressed: boolean;
+}
+
+/**
+ * The 95% percentile bootstrap interval of the mean allocation on one line, in
+ * MD. The answers are sorted before drawing, so the interval never depends on
+ * the order the rows were read in, and the seed makes a re-run identical.
+ */
+export function bootstrapInterval(
+	answers: AllocationAnswer[],
+	categories: AllocationCategory[],
+	lineId: string,
+	draws: number,
+	seed: number
+): MeanInterval {
+	const category = categories.find((entry) => entry.id === lineId);
+	if (category === undefined) throw new Error(`allocation category "${lineId}" is not declared`);
+	if (!Number.isInteger(draws) || draws < 1) {
+		throw new Error('bootstrapInterval needs a positive whole number of draws');
+	}
+	const valid = answers.filter((answer) => categories.every((entry) => allocationBp(answer, entry.id) !== null));
+	if (valid.length < ALLOCATION_FIRST_FIGURE_N) {
+		return { n: null, low_md: null, high_md: null, suppressed: true };
+	}
+	const values = valid
+		.map((answer) => category.draft_md * ((allocationBp(answer, category.id) as number) / ALLOCATION_DRAFT_BP))
+		.sort((a, b) => a - b);
+	const random = mulberry32(seed);
+	const means = new Array<number>(draws);
+	for (let i = 0; i < draws; i++) {
+		let sum = 0;
+		for (let j = 0; j < values.length; j++) sum += values[Math.floor(random() * values.length)];
+		means[i] = sum / values.length;
+	}
+	means.sort((a, b) => a - b);
+	const low = means[Math.min(means.length - 1, Math.floor(0.025 * means.length))];
+	const high = means[Math.min(means.length - 1, Math.floor(0.975 * means.length))];
+	return { n: values.length, low_md: low, high_md: high, suppressed: false };
+}
+
+/** How close to the median an answer must sit to count as consensus: 10 points. */
+export const ALLOCATION_CONSENSUS_BAND = 0.1;
+
+export interface ConsensusSummary {
+	/** Valid answers the figure is computed over; null when suppressed. */
+	n: number | null;
+	/** The median change the band is drawn around, as a fraction of the draft. */
+	median: number | null;
+	/** Share of valid answers within the band of it. */
+	share: number | null;
+	suppressed: boolean;
+}
+
+/** The share of answers within plus or minus 10 percentage points of the median change. */
+export function consensus(answers: AllocationAnswer[], lineId: string): ConsensusSummary {
+	const values = changeValues(answers, lineId);
+	if (values.length < ALLOCATION_FIRST_FIGURE_N) {
+		return { n: null, median: null, share: null, suppressed: true };
+	}
+	const middle = median(values);
+	const within = values.filter((value) => Math.abs(value - middle) <= ALLOCATION_CONSENSUS_BAND).length;
+	return { n: values.length, median: middle, share: within / values.length, suppressed: false };
+}
+
+export interface CounterfactualMedian {
+	/** Valid answers the counterfactual median is computed over; null when suppressed. */
+	n: number | null;
+	/** Answers in the channel removed; null when suppressed. */
+	removed_n: number | null;
+	/** The median change without that channel, as a fraction of the draft. */
+	median: number | null;
+	suppressed: boolean;
+}
+
+/**
+ * The median change with the single largest channel removed (the sensitivity
+ * check the pre-registration promises). `channelOf` maps an answer to a link
+ * label; the label itself is never returned. The removed group must reach the
+ * cell floor, or the counterfactual would describe a handful of people, and
+ * enough answers must remain to publish a figure at all.
+ */
+export function withoutLargestChannel(
+	answers: AllocationAnswer[],
+	channelOf: (answer: AllocationAnswer) => string,
+	lineId: string
+): CounterfactualMedian {
+	const valid = answers.filter((answer) => allocationBp(answer, lineId) !== null);
+	const perChannel = new Map<string, number>();
+	for (const answer of valid) {
+		const label = channelOf(answer);
+		perChannel.set(label, (perChannel.get(label) ?? 0) + 1);
+	}
+	let largest: string | null = null;
+	let largestN = 0;
+	for (const [label, count] of perChannel) {
+		if (count > largestN) {
+			largest = label;
+			largestN = count;
+		}
+	}
+	if (largest === null || largestN < ALLOCATION_CELL_FLOOR) {
+		return { n: null, removed_n: null, median: null, suppressed: true };
+	}
+	const remaining = changeValues(
+		valid.filter((answer) => channelOf(answer) !== largest),
+		lineId
+	);
+	if (remaining.length < ALLOCATION_FIRST_FIGURE_N) {
+		return { n: null, removed_n: null, median: null, suppressed: true };
+	}
+	return { n: remaining.length, removed_n: largestN, median: median(remaining), suppressed: false };
+}

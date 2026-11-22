@@ -64,6 +64,14 @@ database_id = "d5538482-77ab-4c0c-800d-269b82962c34"
 # default and needs no secret. Cloudflare's human check is an optional switch for
 # an attack, on only when both TURNSTILE_SITEKEY (a var) and TURNSTILE_SECRET
 # (`wrangler secret put TURNSTILE_SECRET`) are set (research/portal/backend.md).
+#
+# RESEARCH_ACCEPT is the per-study switch, and it is deliberately NOT in [vars]:
+# it is set with `wrangler secret put RESEARCH_ACCEPT` so it can change without a
+# rebuild, and so a routine deploy cannot reset it. It is a comma-separated list
+# of study slugs or registry ids. Unset or blank: RESEARCH_OPEN alone decides,
+# which is what every earlier deploy did. Set: only the named studies accept.
+# Naming one study never opens or closes another. The operator runbook for the
+# citizen budget study carries the one command, the two curls and the way back.
 
 [observability]
 enabled = true

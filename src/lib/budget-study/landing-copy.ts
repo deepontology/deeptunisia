@@ -1,0 +1,850 @@
+/**
+ * Landing copy for the citizen budget study, in English, French and Arabic.
+ *
+ * The structure follows the police index landing: a plate with the cover, a
+ * count strip, numbered sections, and the study's honest states. English is
+ * the source text. French and Arabic are interim drafts and say so.
+ *
+ * No amount is typed here: every figure on the page is computed from the
+ * figures file at build time and set beside these words. The only sentence
+ * allowed to carry the approved tax share is the approved one, in the hook.
+ */
+
+export type Locale = 'en' | 'fr' | 'ar';
+
+export interface LandingSection {
+	id: 'question' | 'board' | 'figures' | 'method' | 'questions' | 'stored' | 'cannot' | 'record' | 'take';
+	num: string;
+	label: string;
+	heading: string;
+	body: string[];
+}
+
+export type FactKey = 'locked' | 'subsidies' | 'largest' | 'zero';
+
+export interface LandingCopy {
+	kicker: string;
+	title: string;
+	hook: string;
+	cover: string;
+	status: string;
+	notCollecting: string;
+	statusLive: string;
+	statusPaused: string;
+	countNote: (n: number) => string;
+	countUnknown: string;
+	pausedNote: string;
+	ctaNoteLive: string;
+	ctaBoard: string;
+	ctaNote: string;
+	unit: string;
+	tally: { total: string; locked: string; movable: string; systems: string; answers: string; answer: string };
+	field: {
+		caption: (perDot: string) => string;
+		idle: string;
+		share: (pct: string) => string;
+		lockedNote: string;
+		hint: string;
+		listLabel: string;
+	};
+	facts: { heading: string; items: { key: FactKey; title: string; body: string }[] };
+	demo: {
+		title: string;
+		body: string;
+		purse: string;
+		reset: string;
+		take: (name: string) => string;
+		give: (name: string) => string;
+		fullBoard: string;
+	};
+	example: {
+		title: string;
+		intro: string;
+		stored: string;
+		note: string;
+		head: { system: string; plan: string; yours: string; change: string; storedAs: string };
+	};
+	figures: {
+		system: string;
+		draft: string;
+		status: string;
+		auditLegend: string;
+		madeOf: string;
+		madeOfNote: string;
+		less: string;
+		chip: { 'draft-press': string; 'draft-derived': string; 'draft-plf': string; 'adopted-lf': string };
+		sources: string;
+		locked: string;
+		total: string;
+		/** Past years: the adopted laws, column header and sources. */
+		adopted: (year: string) => string;
+		pastHeading: string;
+		historySources: string;
+		historyNote: string;
+	};
+	/** The revenue side: the two ratios in words, and the year table that carries them. */
+	revenue: {
+		heading: string;
+		intro: string;
+		per100: { label: string; text: string };
+		covered: { label: string; text: string };
+		caption: string;
+		th: { year: string; spending: string; tax: string; own: string; per100: string; covered: string; page: string };
+		note: string;
+		leftOut: string;
+		sources: string;
+	};
+	/** The JORT audit note under the figures table. */
+	verification: { note: string };
+	sections: LandingSection[];
+	cannotSay: string[];
+	recordFacts: { label: string; value: string }[];
+	draftNotice: string;
+	interimNotice: string | null;
+	withdrawal: { heading: string; body: string };
+	closing: [string, string];
+	share: { button: string; heading: string; text: string };
+	/** How each kind of answer is given, for the questions section. */
+	answerKinds: Record<string, string>;
+	optional: string;
+	/** Shown when the instrument has no reviewed translation for this language yet. */
+	questionsPending: string;
+	/**
+	 * What replaces the design wording once the registry or the live read says
+	 * the study is fielding. Which one shows is decided by the page state, never
+	 * by the branch: the take-part text has one version for accepting and one
+	 * for paused.
+	 */
+	live: {
+		sections: Partial<Record<LandingSection['id'], { heading?: string; body: string[] }>>;
+		takePaused: { heading: string; body: string[] };
+		recordFacts: { label: string; value: string }[];
+		withdrawal: string;
+		share: string;
+	};
+}
+
+export const landingCopy: Record<Locale, LandingCopy> = {
+	en: {
+		kicker: 'DeepTunisia research · 003 · budget study',
+		title: 'Citizen budget 2027',
+		hook: '91 dinars in every 100 the state raises itself come from tax. The rest of the budget is a set of choices. This study asks how you would make them.',
+		cover: 'Divide the 2027 state budget yourself, on one board, with the draft figures. Every dinar you give one system, you take from another.',
+		status: 'In design · not collecting',
+		notCollecting: 'Not collecting answers yet. The question, the figures and the rules are published here first, so they can be checked before anyone answers.',
+		statusLive: 'In the field · collecting',
+		statusPaused: 'In the field · not collecting right now',
+		countNote: (n) => `${n} ${n === 1 ? 'answer' : 'answers'} stored so far.`,
+		countUnknown: 'The count could not be read.',
+		pausedNote: 'The study is in the field but is not collecting answers right now. Nothing is stored.',
+		ctaNoteLive: 'About five minutes. Draft figures are labelled. A receipt is shown at the end.',
+		ctaBoard: 'Try the board',
+		ctaNote: 'Prototype. Draft figures. Nothing is sent or stored.',
+		unit: 'MD',
+		tally: {
+			total: 'Draft spending, 2027',
+			locked: 'Owed before any choice',
+			movable: 'Yours to divide',
+			systems: 'systems on the board',
+			answers: 'answers collected',
+			answer: 'answer collected'
+		},
+		field: {
+			caption: (perDot) => `The 2027 draft, one dot for every ${perDot} MD. Touch a block to read it.`,
+			idle: 'The whole draft budget',
+			share: (pct) => `${pct}% of the draft`,
+			lockedNote: 'Owed before any choice. It does not move.',
+			hint: 'Draft figures, reported by the press, not verified.',
+			listLabel: 'The draft budget, line by line'
+		},
+		facts: {
+			heading: 'Why it is harder than it looks',
+			items: [
+				{ key: 'locked', title: 'Owed before any choice', body: 'Interest on past debt and a reserve for the unforeseen are paid first. Nobody can move them this year, so they sit apart on the board.' },
+				{ key: 'subsidies', title: 'Subsidies sit inside ministries', body: 'Fuel and electricity subsidies, and basic food subsidies, are paid through the Industry and Trade budgets. The board cuts them into two lines, so a citizen can protect food and cut fuel, or the other way round. The 2027 split between the two is derived and labelled.' },
+				{ key: 'largest', title: 'A few systems hold most of the money', body: 'The four largest systems hold this share of everything that can be moved. On one scale, the smallest are slivers.' },
+				{ key: 'zero', title: 'Every dinar comes from somewhere', body: 'The total does not move. Give 100 MD to one system and you have taken 100 MD from another, or from the purse.' }
+			]
+		},
+		demo: {
+			title: 'Try it with three systems',
+			body: 'Drag one system onto another, or use the buttons. These are the draft figures for three of the twenty-seven systems.',
+			purse: 'Purse',
+			reset: 'Put it back',
+			take: (name) => `Take 100 MD from ${name}`,
+			give: (name) => `Give 100 MD to ${name}`,
+			fullBoard: 'Open the full board'
+		},
+		example: {
+			title: 'A worked example',
+			intro: 'Start from the plan and drag Defence onto Health three times. Three coins of 100 MD move. The purse stays empty, so the board can be finished.',
+			stored: 'Stored as each line’s share of its plan, in basis points: 10,000 is the plan.',
+			note: 'Draft figures. The choice is invented.',
+			head: { system: 'System', plan: 'Plan', yours: 'Yours', change: 'Change', storedAs: 'Stored' }
+		},
+		figures: {
+			system: 'Board line',
+			draft: 'Draft, MD',
+			status: '2027 draft',
+			madeOf: 'Made of',
+			madeOfNote: 'The composition notes are in English until the translation pass.',
+			less: 'less',
+			chip: { 'draft-press': '2027 draft: press, not verified', 'draft-derived': '2027 draft: derived, not verified', 'draft-plf': '2027 draft: draft law, not verified', 'adopted-lf': 'Adopted: verified' },
+			auditLegend: 'Adopted years are verified against the Journal Officiel; hover a figure for its page. d = derived from verified rows; 1 = read once, not counted as verified.',
+			sources: 'Every row of the figures file, with its source',
+			locked: 'Owed, does not move',
+			total: 'Total',
+			adopted: (y) => y,
+			pastHeading: 'Past years, adopted',
+			historySources: 'The adopted laws, with their Journal Officiel pages and kept page images',
+			historyNote: 'The past-year columns are the budgets as voted in each finance law (tableau C of the Journal Officiel), in dinars of each year, not adjusted for inflation. The two subsidy lines are read from the energy and domestic trade programmes in those years. The 2027 split between fuel and food is derived from the two ministry lines that contain the memo, because the 2027 split by type has not been reported.'
+		},
+		revenue: {
+			heading: 'Where the money came from',
+			intro: 'Two ratios, read from each law, answer two different questions. One says how much of what the state raises itself is tax. The other says how much of its spending that tax pays for.',
+			per100: {
+				label: 'Tax in every 100 dinars the state raises itself',
+				text: 'Tax receipts divided by tax plus non-tax receipts. Grants and borrowing are not money the state raises itself, so they sit outside this denominator. This is the denominator of the 91 in the opening line.'
+			},
+			covered: {
+				label: 'Spending covered by tax',
+				text: 'Tax receipts divided by the payment credits of the same law. The rest is covered by non-tax receipts, grants and borrowing.'
+			},
+			caption: 'The adopted laws, revenue side',
+			th: { year: 'Law', spending: 'Spending, MD', tax: 'Tax, MD', own: 'Raised itself, MD', per100: 'Tax per 100 raised', covered: 'Spending covered, %', page: 'p.' },
+			note: 'Tax, non-tax receipts and grants are read from Article premier and Article 2 of each finance law, printed in the Journal Officiel. The spending column is tableau C of the same law, the total the spending side of this study already uses. Each figure has a printed page and a kept full-page crop in the study files.',
+			leftOut: 'No adopted year between 2020 and 2026 is missing. 2021 is not in the study: its spending table was not sourced, so it has no revenue row either. 2018 and 2019 are left out on purpose: those laws print one revenue total split into Titre I, Titre II and the special treasury funds, with loans inside Titre II and no tax or non-tax split, so they cannot sit on these two ratios without inventing a mapping.',
+			sources: 'Sources, revenue side, with pages and kept crops'
+		},
+		verification: {
+			note: 'Adopted years: 215 figures, every one read from its law and audited twice. 212 are verified: 186 by two readers agreeing, 26 settled by a third reader or by the programme arithmetic. Two, the 2020 Interior and Environment lines, are computed from a printed split and are not counted as verified. One is read once, the 2024 Constitutional Court at 0 MD, page 3502, marked 1. A d marks a figure computed from verified printed lines, so it is never presented as a printed cell. Each cell carries its Journal Officiel page.',
+		},
+		sections: [
+			{
+				id: 'question',
+				num: '01',
+				label: 'The question',
+				heading: 'If the budget were yours to divide',
+				body: [
+					'The study asks one thing: given the 2027 budget the state has drafted, where would you put the money? You answer on a board that holds the draft figures, and you finish when every dinar is placed.',
+					'A budget is not a list of separate wishes. Money given to schools is money not given to hospitals, the army or fuel subsidies. The board makes that trade visible, and the study records the choices people make with it.'
+				]
+			},
+			{
+				id: 'board',
+				num: '02',
+				label: 'The board',
+				heading: 'One board, one coin, no score',
+				body: [
+					'Each system shows two bars on one scale: the state’s 2027 plan, and yours. Thin bars above them show the adopted budgets of past years, oldest first. Drag one system onto another and a coin of 100 MD moves between them. Money you take and have not placed waits in the purse, and you finish when the purse is empty.',
+					'Nothing is scored or ranked. A line can be opened for its 2026 programmes, and set to zero or back to the draft; a prototype aid also sets it to its 2024 level, outside the study task. Keeping the plan as it is counts as an answer: tick that you would keep it, and Finish opens.'
+				]
+			},
+			{
+				id: 'figures',
+				num: '03',
+				label: 'The figures',
+				heading: 'Draft figures, each with its status',
+				body: [
+					'Every amount here is a draft reported by the press during the budget hearings. None has been checked against the official document yet. When the 2027 finance law is adopted, a new version of the study takes the adopted figures, each with its page.',
+					'Some lines on the board join several ministries, and the two subsidy lines are cut out of two of them. The table says what each board line is made of, and each line can be opened for its 2026 programme detail.'
+				]
+			},
+			{
+				id: 'method',
+				num: '04',
+				label: 'Method',
+				heading: 'How the answers will be read',
+				body: [
+					'For each line: the share of respondents who would give it more, the same, or less than its plan, and the median change with its interquartile range. The average budget submitted, with a bootstrap interval. A consensus measure. A result without the largest link channel.',
+					'Results are shown only above 300 valid answers, and no cell under 20 is shown. The number of valid answers and the fielding dates lead the results page, not a footnote. Population: among respondents to an open, self-selected online survey of adults. Results describe the people who took part, not the country as a whole.'
+				]
+			},
+			{
+				id: 'questions',
+				num: '05',
+				label: 'Questions',
+				heading: 'Every question, as it will be asked',
+				body: ['The whole instrument, in order. Nothing else is asked. The words are a draft until the study is frozen.']
+			},
+			{
+				id: 'stored',
+				num: '06',
+				label: 'What is stored',
+				heading: 'Only what the answers need',
+				body: [
+					'Stored per response: your budget as a share of each line, two short answers, optional region, the study version and locale, the channel that brought you, timings, and a random receipt code.',
+					'Never stored: your name, email, IP address, device details, location beyond the optional region, or free text. The prototype stores nothing.'
+				]
+			},
+			{
+				id: 'cannot',
+				num: '07',
+				label: 'What it cannot say',
+				heading: 'What these answers are not',
+				body: ['The answers are a record of choices by the people who made them. They cannot stand in for a country.']
+			},
+			{
+				id: 'record',
+				num: '08',
+				label: 'Record',
+				heading: 'The status, stated plainly',
+				body: ['The study is in design. Nothing is collected, and no review has cleared it.']
+			},
+			{
+				id: 'take',
+				num: '09',
+				label: 'Take part',
+				heading: 'Not open yet',
+				body: [
+					'There is nothing to submit yet. The board is open as a prototype: it uses the draft figures and stores nothing.',
+					'The study opens only after the figures are checked against the adopted law and the reviews are complete.'
+				]
+			}
+		],
+		cannotSay: [
+			'Not a picture of national preference, and not a national result. Taking part is open and self-selected.',
+			'Not what the budget should be.',
+			'Not whether any line is wasteful.',
+			'Not a ranking of respondents, or of their choices.'
+		],
+		recordFacts: [
+			{ label: 'Stage', value: 'Design. The study is not open.' },
+			{ label: 'Ethics review', value: 'None has taken place.' },
+			{ label: 'Data-protection review', value: 'None has taken place.' },
+			{ label: 'Preregistration', value: 'Not registered.' },
+			{ label: 'Principal investigator', value: 'Not named.' },
+			{ label: 'Figures', value: 'Draft, press-reported, not verified.' },
+			{ label: 'Translation', value: 'English only for now. French and Arabic are drafts pending review.' }
+		],
+		draftNotice: 'Every 2027 figure on this page is a press-reported draft, not a verified official figure. The past-year figures come from the adopted laws, with their Journal Officiel pages.',
+		interimNotice: null,
+		withdrawal: {
+			heading: 'Withdrawal and the receipt',
+			body: 'In the real study, submitting a budget would produce a random receipt code. That code is the only handle on your answers: you could enter it on the withdrawal page to delete your response while the study window is open. Once the window closes and the data are frozen, deletion is no longer possible. In this prototype nothing is submitted, no receipt is issued, and there is nothing to withdraw.'
+		},
+		closing: ['The total does not move.', 'Only where it goes does.'],
+		answerKinds: { consent: 'Required tick', allocation: 'On the board', single_choice: 'One choice', scale_0_10: 'From 0 to 10' },
+		optional: 'optional',
+		live: {
+			sections: {
+				questions: { body: ['The whole instrument, in order. Nothing else is asked. This is version 1.0.0, frozen before the first answer.'] },
+				stored: {
+					body: [
+						'Stored per response: your budget as a share of each line, two short answers, optional region, the study version and locale, the channel that brought you, timings, and a random receipt code.',
+						'Never stored: your name, email, IP address, device details, location beyond the optional region, or free text.'
+					]
+				},
+				record: { body: ['The study is in the field, on the 2027 draft figures, with the adopted budgets of past years beside them. The line at the top of this page says whether answers are being collected right now. No external review has cleared it.'] },
+				take: {
+					heading: 'Take part',
+					body: ['Open the board, divide the budget, answer three short questions and send it. About six minutes. You get a receipt code: keep it to withdraw your answer while the study is open.']
+				}
+			},
+			takePaused: {
+				heading: 'Not collecting right now',
+				body: ['The study is in the field, but it is not taking answers at the moment. The board still works, and it says so before anything would be sent.']
+			},
+			recordFacts: [
+				{ label: 'Stage', value: 'In the field. Version 1.0.0, frozen before the first answer.' },
+				{ label: 'Ethics review', value: 'None has taken place.' },
+				{ label: 'Data-protection review', value: 'None has taken place.' },
+				{ label: 'Preregistration', value: 'Fixed before the first answer, with the instrument hash, in the public repository.' },
+				{ label: 'Principal investigator', value: 'Not named.' },
+				{ label: 'Figures', value: '2027: the draft, press-reported. Past years: the adopted laws, with their pages.' },
+				{ label: 'Translation', value: 'English is the source. French and Arabic are interim project translations, not yet reviewed.' }
+			],
+			withdrawal:
+				'Sending a budget produces a random receipt code. That code is the only handle on your answer: enter it on the withdrawal page to delete your response while the study window is open. Once the window closes and the data are frozen, deletion is no longer possible.',
+			share: 'In the field. The link opens the study page.'
+		},
+		questionsPending: 'Shown in English until the translation is reviewed.',
+		share: {
+			button: 'Copy link',
+			heading: 'Share this page',
+			text: 'In design, not collecting. The link opens the published landing page.'
+		}
+	},
+
+	fr: {
+		kicker: 'Recherche DeepTunisia · 003 · étude budgétaire',
+		title: 'Budget citoyen 2027',
+		hook: '91 dinars sur 100 que l’État prélève lui-même proviennent de l’impôt. Le reste du budget est un ensemble de choix. Cette étude demande comment vous les feriez.',
+		cover: 'Répartissez vous-même le budget de l’État 2027, sur un seul plateau, avec les chiffres du projet. Chaque dinar donné à un poste est pris à un autre.',
+		status: 'En conception · pas de collecte',
+		notCollecting: 'Aucune réponse n’est collectée. La question, les chiffres et les règles sont publiés ici d’abord, pour être vérifiés avant que quiconque réponde.',
+		statusLive: 'Sur le terrain · collecte en cours',
+		statusPaused: 'Sur le terrain · pas de collecte pour le moment',
+		countNote: (n) => `${n} ${n === 1 ? 'réponse enregistrée' : 'réponses enregistrées'} à ce jour.`,
+		countUnknown: 'Le décompte n’a pas pu être lu.',
+		pausedNote: 'L’étude est sur le terrain mais ne collecte pas de réponses pour le moment. Rien n’est conservé.',
+		ctaNoteLive: 'Environ cinq minutes. Les chiffres du projet sont étiquetés. Un reçu s’affiche à la fin.',
+		ctaBoard: 'Essayer le plateau',
+		ctaNote: 'Prototype. Chiffres du projet. Rien n’est envoyé ni conservé.',
+		unit: 'MD',
+		tally: {
+			total: 'Dépenses du projet, 2027',
+			locked: 'Dû avant tout choix',
+			movable: 'À vous de répartir',
+			systems: 'postes sur le plateau',
+			answers: 'réponses collectées',
+			answer: 'réponse collectée'
+		},
+		field: {
+			caption: (perDot) => `Le projet 2027, un point pour ${perDot} MD. Touchez un bloc pour le lire.`,
+			idle: 'Tout le projet de budget',
+			share: (pct) => `${pct} % du projet`,
+			lockedNote: 'Dû avant tout choix. Ne bouge pas.',
+			hint: 'Chiffres du projet, rapportés par la presse, non vérifiés.',
+			listLabel: 'Le projet de budget, ligne par ligne'
+		},
+		facts: {
+			heading: 'Pourquoi c’est plus difficile qu’il n’y paraît',
+			items: [
+				{ key: 'locked', title: 'Dû avant tout choix', body: 'Les intérêts de la dette passée et une réserve pour imprévus sont payés d’abord. Personne ne peut les déplacer cette année, ils restent à part sur le plateau.' },
+				{ key: 'subsidies', title: 'Les subventions sont dans les ministères', body: 'Les subventions aux carburants et à l’électricité, et celles aux produits de base, passent par les budgets de l’Industrie et du Commerce. Le plateau les sépare en deux lignes, pour qu’on puisse protéger l’alimentation et réduire le carburant, ou l’inverse. La répartition 2027 entre les deux est dérivée et signalée.' },
+				{ key: 'largest', title: 'Quelques postes tiennent l’essentiel', body: 'Les quatre plus grands postes tiennent cette part de tout ce qui peut bouger. Sur une même échelle, les plus petits sont des filets.' },
+				{ key: 'zero', title: 'Chaque dinar vient de quelque part', body: 'Le total ne bouge pas. Donnez 100 MD à un poste et vous les avez pris à un autre, ou à la bourse.' }
+			]
+		},
+		demo: {
+			title: 'Essayez avec trois postes',
+			body: 'Glissez un poste sur un autre, ou utilisez les boutons. Ce sont les chiffres du projet pour trois des vingt-sept postes.',
+			purse: 'Bourse',
+			reset: 'Remettre',
+			take: (name) => `Retirer 100 MD de ${name}`,
+			give: (name) => `Verser 100 MD à ${name}`,
+			fullBoard: 'Ouvrir le plateau complet'
+		},
+		example: {
+			title: 'Un exemple chiffré',
+			intro: 'Partez du projet et glissez la Défense sur la Santé trois fois. Trois pièces de 100 MD se déplacent. La bourse reste vide, le plateau peut donc être terminé.',
+			stored: 'Conservé comme la part de chaque ligne par rapport à son projet, en points de base : 10 000 est le projet.',
+			note: 'Chiffres du projet. Le choix est inventé.',
+			head: { system: 'Poste', plan: 'Projet', yours: 'Le vôtre', change: 'Écart', storedAs: 'Conservé' }
+		},
+		figures: {
+			system: 'Ligne du plateau',
+			draft: 'Projet, MD',
+			status: 'Projet 2027',
+			madeOf: 'Composée de',
+			madeOfNote: "Les notes de composition sont en anglais jusqu'à la passe de traduction.",
+			less: 'moins',
+			chip: { 'draft-press': 'Projet 2027 : presse, non vérifié', 'draft-derived': 'Projet 2027 : calculé, non vérifié', 'draft-plf': 'Projet 2027 : projet de loi, non vérifié', 'adopted-lf': 'Loi adoptée : vérifiée' },
+			auditLegend: 'Les années adoptées sont vérifiées au Journal officiel ; survolez un chiffre pour voir sa page. d = calculé à partir de lignes vérifiées ; 1 = lu une seule fois, non compté comme vérifié.',
+			sources: 'Chaque ligne du fichier des chiffres, avec sa source',
+			locked: 'Dû, ne bouge pas',
+			total: 'Total',
+			adopted: (y) => y,
+			pastHeading: 'Années passées, adoptées',
+			historySources: 'Les lois adoptées, avec leurs pages au Journal officiel et les images de page conservées',
+			historyNote: "Les colonnes des années passées sont les budgets votés dans chaque loi de finances (tableau C du Journal officiel), en dinars de chaque année, sans correction de l'inflation. Les deux lignes de subventions sont lues sur les programmes énergie et commerce intérieur. La répartition 2027 entre carburant et alimentation est dérivée des deux lignes ministérielles qui contiennent la note, car la répartition par type n'est pas publiée."
+		},
+		revenue: {
+			heading: "D'où venait l'argent",
+			intro: "Deux ratios, lus dans chaque loi, répondent à deux questions différentes. L'un dit quelle part de ce que l'État prélève lui-même est de l'impôt. L'autre dit quelle part de ses dépenses cet impôt paie.",
+			per100: {
+				label: "L'impôt dans chaque tranche de 100 dinars que l'État prélève lui-même",
+				text: "L'impôt divisé par l'impôt plus les recettes non fiscales. Les dons et l'emprunt ne sont pas de l'argent que l'État prélève lui-même : ils sont hors de ce dénominateur. C'est le dénominateur du 91 de la phrase d'ouverture."
+			},
+			covered: {
+				label: "Dépenses couvertes par l'impôt",
+				text: "L'impôt divisé par les crédits de paiement de la même loi. Le reste est couvert par les recettes non fiscales, les dons et l'emprunt."
+			},
+			caption: "Les lois adoptées, côté recettes",
+			th: { year: 'Loi', spending: 'Dépenses, MD', tax: 'Impôt, MD', own: 'Prélevé lui-même, MD', per100: 'Impôt pour 100 prélevés', covered: 'Dépenses couvertes, %', page: 'p.' },
+			note: "L'impôt, les recettes non fiscales et les dons sont lus dans l'article premier et l'article 2 de chaque loi de finances, publiés au Journal officiel. La colonne des dépenses est le tableau C de la même loi, le total que le volet dépenses de cette étude utilise déjà. Chaque chiffre a sa page imprimée et une image de page conservée dans les fichiers de l'étude.",
+			leftOut: "Aucune année adoptée entre 2020 et 2026 ne manque. 2021 n'est pas dans l'étude : son tableau de dépenses n'a pas été sourcé, donc elle n'a pas non plus de ligne de recettes. 2018 et 2019 sont écartées volontairement : ces lois impriment un seul total de recettes réparti en Titre I, Titre II et fonds spéciaux du Trésor, avec les emprunts dans le Titre II et sans ventilation impôt / non-impôt ; elles ne peuvent pas figurer sur ces deux ratios sans inventer une correspondance.",
+			sources: 'Sources, côté recettes, avec pages et images conservées'
+		},
+		verification: {
+			note: "Années adoptées : 215 chiffres, tous lus dans leur loi et audités deux fois. 212 sont vérifiés : 186 par deux lecteurs d'accord, 26 tranchés par un troisième lecteur ou par l'arithmétique des programmes. Deux, les lignes Intérieur et Environnement de 2020, sont calculés à partir d'une répartition imprimée et ne sont pas comptés comme vérifiés. Un est lu une seule fois, la Cour constitutionnelle 2024 à 0 MD, page 3502, marqué 1. Un d marque un chiffre calculé à partir de lignes imprimées vérifiées, jamais présenté comme une cellule imprimée. Chaque cellule porte sa page au Journal officiel.",
+		},
+		sections: [
+			{
+				id: 'question',
+				num: '01',
+				label: 'La question',
+				heading: 'Si le budget était à vous de répartir',
+				body: [
+					'L’étude pose une seule question : avec le budget 2027 préparé par l’État, où mettriez-vous l’argent ? Vous répondez sur un plateau qui contient les chiffres du projet, et vous terminez quand chaque dinar est placé.',
+					'Un budget n’est pas une liste de souhaits séparés. L’argent donné aux écoles n’est pas donné aux hôpitaux, à l’armée ou aux subventions. Le plateau rend cet arbitrage visible, et l’étude enregistre les choix que les gens font avec lui.'
+				]
+			},
+			{
+				id: 'board',
+				num: '02',
+				label: 'Le plateau',
+				heading: 'Un plateau, une pièce, aucun score',
+				body: [
+					'Chaque poste montre deux barres sur une même échelle : le projet de l’État pour 2027, et le vôtre. Des barres fines au-dessus montrent les budgets adoptés des années passées, de la plus ancienne à la plus récente. Glissez un poste sur un autre et une pièce de 100 MD passe de l’un à l’autre. L’argent retiré et pas encore placé attend dans la bourse, et vous terminez quand la bourse est vide.',
+					'Rien n’est noté ni classé. Garder le projet tel quel est une réponse.'
+				]
+			},
+			{
+				id: 'figures',
+				num: '03',
+				label: 'Les chiffres',
+				heading: 'Chiffres du projet, chacun avec son statut',
+				body: [
+					'Chaque montant ici est un chiffre du projet rapporté par la presse pendant les auditions budgétaires. Aucun n’a encore été vérifié sur le document officiel. Quand la loi de finances 2027 sera adoptée, une nouvelle version de l’étude prendra les chiffres adoptés, chacun avec sa page.',
+					'Certaines lignes du plateau réunissent plusieurs ministères, et la ligne des subventions est découpée dans deux d’entre eux. Le tableau dit de quoi chaque ligne est faite.'
+				]
+			},
+			{
+				id: 'method',
+				num: '04',
+				label: 'Méthode',
+				heading: 'Comment les réponses seront lues',
+				body: [
+					'Pour chaque ligne : la part des répondants qui lui donneraient plus, autant ou moins que son projet, et l’écart médian avec son intervalle interquartile. Le budget moyen soumis, avec un intervalle bootstrap. Une mesure de consensus. Un résultat sans le plus grand canal de lien.',
+					'Les résultats ne sont affichés qu’au-dessus de 300 réponses valides, et aucune cellule de moins de 20 n’est montrée. Le nombre de réponses valides et les dates de terrain ouvrent la page de résultats, pas une note de bas de page. Population : parmi les répondants à une enquête en ligne ouverte et auto-sélectionnée auprès d’adultes. Les résultats décrivent les personnes qui ont participé, pas le pays dans son ensemble.'
+				]
+			},
+			{
+				id: 'questions',
+				num: '05',
+				label: 'Questions',
+				heading: 'Chaque question, telle qu’elle sera posée',
+				body: ['Tout le questionnaire, dans l’ordre. Rien d’autre n’est demandé. Les mots restent un projet jusqu’au gel de l’étude.']
+			},
+			{
+				id: 'stored',
+				num: '06',
+				label: 'Ce qui est conservé',
+				heading: 'Seulement ce que les réponses exigent',
+				body: [
+					'Conservé par réponse : votre budget en part de chaque ligne, deux courtes réponses, la région facultative, la version et la langue de l’étude, le canal qui vous a amené, les durées, et un code de reçu aléatoire.',
+					'Jamais conservés : votre nom, votre adresse e-mail, votre adresse IP, les détails de votre appareil, la localisation au-delà de la région facultative, ou le texte libre. Le prototype ne conserve rien.'
+				]
+			},
+			{
+				id: 'cannot',
+				num: '07',
+				label: 'Ce qu’elle ne peut pas dire',
+				heading: 'Ce que ces réponses ne sont pas',
+				body: ['Les réponses sont la trace des choix des personnes qui les ont faits. Elles ne peuvent pas tenir lieu de pays.']
+			},
+			{
+				id: 'record',
+				num: '08',
+				label: 'Registre',
+				heading: 'Le statut, dit simplement',
+				body: ['L’étude est en conception. Rien n’est collecté, et aucune instance n’a validé le dispositif.']
+			},
+			{
+				id: 'take',
+				num: '09',
+				label: 'Participer',
+				heading: 'Pas encore ouvert',
+				body: [
+					'Il n’y a encore rien à soumettre. Le plateau est ouvert comme prototype : il utilise les chiffres du projet et ne conserve rien.',
+					'L’étude n’ouvrira qu’après la vérification des chiffres sur la loi adoptée et la fin des examens.'
+				]
+			}
+		],
+		cannotSay: [
+			'Pas une image de la préférence nationale, et pas un résultat national. La participation est ouverte et auto-sélectionnée.',
+			'Pas ce que le budget devrait être.',
+			'Pas si une ligne est gaspillée.',
+			'Pas un classement des répondants, ni de leurs choix.'
+		],
+		recordFacts: [
+			{ label: 'Étape', value: 'Conception. L’étude n’est pas ouverte.' },
+			{ label: 'Examen éthique', value: 'Aucun n’a eu lieu.' },
+			{ label: 'Examen de protection des données', value: 'Aucun n’a eu lieu.' },
+			{ label: 'Préenregistrement', value: 'Non enregistré.' },
+			{ label: 'Responsable de recherche', value: 'Non nommé.' },
+			{ label: 'Chiffres', value: 'Provisoires, rapportés par la presse, non vérifiés.' },
+			{ label: 'Traduction', value: 'Anglais seulement pour l’instant. Le français et l’arabe sont des brouillons en attente de relecture.' }
+		],
+		draftNotice: 'Chaque chiffre 2027 de cette page est un projet rapporté par la presse, non un chiffre officiel vérifié. Les chiffres des années passées viennent des lois adoptées, avec leurs pages au Journal officiel.',
+		interimNotice: 'Traduction provisoire, non relue par une personne de langue maternelle.',
+		withdrawal: {
+			heading: 'Retrait et reçu',
+			body: "Dans l'étude réelle, l'envoi d'un budget produirait un code de reçu aléatoire. Ce code est le seul lien avec vos réponses : vous pourriez le saisir sur la page de retrait pour supprimer votre réponse tant que la période de l'étude est ouverte. Une fois la période close et les données figées, la suppression n'est plus possible. Dans ce prototype, rien n'est envoyé, aucun reçu n'est délivré et il n'y a rien à retirer."
+		},
+		closing: ['Le total ne bouge pas.', 'Seule sa répartition change.'],
+		answerKinds: { consent: 'Case obligatoire', allocation: 'Sur le plateau', single_choice: 'Un seul choix', scale_0_10: 'De 0 à 10' },
+		optional: 'facultatif',
+		live: {
+			sections: {
+				questions: { body: ['Tout le questionnaire, dans l’ordre. Rien d’autre n’est demandé. C’est la version 1.0.0, figée avant la première réponse.'] },
+				stored: {
+					body: [
+						'Conservé pour chaque réponse : votre budget en parts de chaque ligne, deux réponses courtes, la région si vous la donnez, la version de l’étude et la langue, le canal qui vous a amené, les durées et un code de reçu aléatoire.',
+						'Jamais conservé : votre nom, votre courriel, votre adresse IP, les détails de votre appareil, un lieu plus précis que la région facultative, ni aucun texte libre.'
+					]
+				},
+				record: { body: ['L’étude est sur le terrain, avec les chiffres du projet 2027 et, à côté, les budgets adoptés des années passées. La ligne en haut de cette page dit si des réponses sont collectées en ce moment. Aucun examen externe ne l’a validée.'] },
+				take: {
+					heading: 'Participer',
+					body: ['Ouvrez le plateau, répartissez le budget, répondez à trois courtes questions et envoyez. Environ six minutes. Vous recevez un code de reçu : gardez-le pour retirer votre réponse tant que l’étude est ouverte.']
+				}
+			},
+			takePaused: {
+				heading: 'Pas de collecte pour le moment',
+				body: ['L’étude est sur le terrain, mais elle ne prend pas de réponses en ce moment. Le plateau fonctionne toujours, et il le dit avant que quoi que ce soit ne soit envoyé.']
+			},
+			recordFacts: [
+				{ label: 'Étape', value: 'Sur le terrain. Version 1.0.0, figée avant la première réponse.' },
+				{ label: 'Examen éthique', value: 'Aucun n’a eu lieu.' },
+				{ label: 'Examen de protection des données', value: 'Aucun n’a eu lieu.' },
+				{ label: 'Préenregistrement', value: 'Figé avant la première réponse, avec l’empreinte du questionnaire, dans le dépôt public.' },
+				{ label: 'Chercheur principal', value: 'Non nommé.' },
+				{ label: 'Chiffres', value: '2027 : le projet, rapporté par la presse. Années passées : les lois adoptées, avec leurs pages.' },
+				{ label: 'Traduction', value: 'L’anglais est la source. Le français et l’arabe sont des traductions provisoires du projet, pas encore relues.' }
+			],
+			withdrawal:
+				"L'envoi d'un budget produit un code de reçu aléatoire. Ce code est le seul lien avec votre réponse : saisissez-le sur la page de retrait pour supprimer votre réponse tant que la période de l'étude est ouverte. Une fois la période close et les données figées, la suppression n'est plus possible.",
+			share: 'Sur le terrain. Le lien ouvre la page de l’étude.'
+		},
+		questionsPending: 'Affichées en anglais jusqu’à la relecture de la traduction.',
+		share: {
+			button: 'Copier le lien',
+			heading: 'Partager cette page',
+			text: 'En conception, pas de collecte. Le lien ouvre la page publique publiée.'
+		}
+	},
+
+	ar: {
+		kicker: 'أبحاث DeepTunisia · 003 · دراسة الميزانية',
+		title: 'الميزانية المواطنة 2027',
+		hook: '91 دينارًا من كل 100 دينار تجمعها الدولة بنفسها تأتي من الضريبة. وما بقي من الميزانية مجموعة اختيارات. تسأل هذه الدراسة كيف كنت ستتّخذها.',
+		cover: 'وزّع بنفسك ميزانية الدولة لسنة 2027، على لوحة واحدة، بأرقام المشروع. كلّ دينار تعطيه لقطاع تأخذه من قطاع آخر.',
+		status: 'قيد التصميم · لا جمع للردود',
+		notCollecting: 'لا تُجمع أيّ إجابة بعد. نُشرت السؤال والأرقام والقواعد هنا أوّلًا، ليمكن التحقّق منها قبل أن يجيب أحد.',
+		statusLive: 'قيد الميدان · جمع الإجابات',
+		statusPaused: 'قيد الميدان · لا جمع للردود الآن',
+		countNote: (n) => `${n} ${n === 1 ? 'إجابة مخزّنة' : 'إجابات مخزّنة'} حتى الآن.`,
+		countUnknown: 'تعذّرت قراءة العدد.',
+		pausedNote: 'الدراسة قيد الميدان لكنها لا تجمع إجابات الآن. لا يُخزَّن شيء.',
+		ctaNoteLive: 'نحو خمس دقائق. أرقام المشروع موسومة. يظهر إيصال في النهاية.',
+		ctaBoard: 'جرّب اللوحة',
+		ctaNote: 'نموذج أوّلي. أرقام المشروع. لا يُرسل شيء ولا يُحفظ.',
+		unit: 'م.د',
+		tally: {
+			total: 'نفقات المشروع، 2027',
+			locked: 'واجب الدفع قبل أيّ اختيار',
+			movable: 'لك أن توزّعه',
+			systems: 'قطاعًا على اللوحة',
+			answers: 'إجابة مجمّعة',
+			answer: 'إجابة مجمّعة'
+		},
+		field: {
+			caption: (perDot) => `مشروع 2027، نقطة لكلّ ${perDot} م.د. المس كتلة لتقرأها.`,
+			idle: 'مشروع الميزانية كاملًا',
+			share: (pct) => `${pct}% من المشروع`,
+			lockedNote: 'واجب الدفع قبل أيّ اختيار. لا يتحرّك.',
+			hint: 'أرقام المشروع، نقلتها الصحافة، غير متحقّق منها.',
+			listLabel: 'مشروع الميزانية، بندًا بندًا'
+		},
+		facts: {
+			heading: 'لماذا هو أصعب ممّا يبدو',
+			items: [
+				{ key: 'locked', title: 'واجب الدفع قبل أيّ اختيار', body: 'تُدفع فوائد الديون السابقة واحتياطي النفقات الطارئة أوّلًا. لا يستطيع أحد تحريكها هذه السنة، لذلك تبقى منفصلة على اللوحة.' },
+				{ key: 'subsidies', title: 'الدعم مخفيّ داخل الوزارات', body: 'يُصرف دعم المحروقات والكهرباء والمواد الأساسية عبر ميزانيتي الصناعة والتجارة. تفصله اللوحة في بند خاصّ به، ليُرى ويمكن تحريكه.' },
+				{ key: 'largest', title: 'قطاعات قليلة تحمل معظم المال', body: 'تحمل أكبر أربعة قطاعات هذه النسبة من كلّ ما يمكن تحريكه. وعلى سلّم واحد، تبدو أصغر القطاعات خيوطًا رفيعة.' },
+				{ key: 'zero', title: 'كلّ دينار يأتي من مكان ما', body: 'المجموع لا يتغيّر. أعطِ قطاعًا 100 م.د وتكون قد أخذتها من قطاع آخر، أو من المحفظة.' }
+			]
+		},
+		demo: {
+			title: 'جرّب بثلاثة قطاعات',
+			body: 'اسحب قطاعًا على آخر، أو استعمل الأزرار. هذه أرقام المشروع لثلاثة من القطاعات السبعة والعشرين.',
+			purse: 'المحفظة',
+			reset: 'أعدها كما كانت',
+			take: (name) => `خذ 100 م.د من ${name}`,
+			give: (name) => `أعطِ 100 م.د إلى ${name}`,
+			fullBoard: 'افتح اللوحة كاملة'
+		},
+		example: {
+			title: 'مثال محسوب',
+			intro: 'ابدأ من المشروع واسحب الدفاع على الصحّة ثلاث مرّات. تنتقل ثلاث قطع من 100 م.د. تبقى المحفظة فارغة، فيمكن إنهاء اللوحة.',
+			stored: 'يُحفظ كلّ بند كنسبة من مخصّصه في المشروع، بالنقاط الأساسية: 10000 هي المشروع.',
+			note: 'أرقام المشروع. الاختيار مُتخيَّل.',
+			head: { system: 'القطاع', plan: 'المشروع', yours: 'توزيعك', change: 'الفرق', storedAs: 'ما يُحفظ' }
+		},
+		figures: {
+			system: 'بند اللوحة',
+			draft: 'المشروع، م.د',
+			status: 'مشروع 2027',
+			madeOf: 'يتكوّن من',
+			madeOfNote: 'ملاحظات التكوين بالإنجليزية إلى حين مراجعة الترجمة.',
+			less: 'ناقص',
+			chip: { 'draft-press': 'مشروع 2027: الصحافة، غير متحقّق', 'draft-derived': 'مشروع 2027: محسوب، غير متحقّق', 'draft-plf': 'مشروع 2027: مشروع القانون، غير متحقّق', 'adopted-lf': 'القانون المصادق عليه: متحقّق منه' },
+			auditLegend: 'السنوات المعتمدة متحقَّق منها في الرائد الرسمي؛ مرّر المؤشر على رقم لترى صفحته. d = محسوب من بنود متحقَّق منها؛ 1 = قُرئ مرة واحدة ولا يُحتسب متحقَّقًا منه.',
+			sources: 'كلّ صفّ في ملفّ الأرقام، مع مصدره',
+			locked: 'واجب، لا يتحرّك',
+			total: 'المجموع',
+			adopted: (y) => y,
+			pastHeading: 'السنوات الماضية، مصادق عليها',
+			historySources: 'قوانين المالية المصادق عليها، مع صفحاتها في الرائد الرسمي وصور الصفحات المحفوظة',
+			historyNote: 'أعمدة السنوات الماضية هي الميزانيات كما صودق عليها في كل قانون مالية (جدول نفقات ميزانية الدولة في الرائد الرسمي)، بدنانير كل سنة، دون احتساب التضخّم. ويُقرأ بندا الدعم من برنامجي الطاقة والتجارة الداخلية. أمّا تقسيم 2027 بين المحروقات والغذاء فمشتقّ من بندي الوزارتين اللذين يحتويان المذكرة، لأن التقسيم حسب النوع لم يُنشر.'
+		},
+		revenue: {
+			heading: 'من أين جاء المال',
+			intro: 'نسبتان، تُقرآن من كل قانون، تجيبان عن سؤالين مختلفين. الأولى تقول كم من أموال تجمعها الدولة بنفسها هي ضريبة. والثانية تقول كم من نفقاتها تغطيه هذه الضريبة.',
+			per100: {
+				label: 'الضريبة في كل 100 دينار تجمعها الدولة بنفسها',
+				text: 'الضريبة مقسومة على الضريبة زائد الإيرادات غير الجبائية. الهبات والاقتراض ليست أموالًا تجمعها الدولة بنفسها، فهي خارج هذا المقام. وهذا هو مقام الرقم 91 في الجملة الافتتاحية.'
+			},
+			covered: {
+				label: 'النفقات التي تغطيها الضريبة',
+				text: 'الضريبة مقسومة على اعتمادات الدفع في القانون نفسه. ويُغطّى الباقي بالإيرادات غير الجبائية والهبات والاقتراض.'
+			},
+			caption: 'القوانين المصادق عليها، من جهة الإيرادات',
+			th: { year: 'القانون', spending: 'النفقات، م.د', tax: 'الضريبة، م.د', own: 'ما تجمعه بنفسها، م.د', per100: 'الضريبة من كل 100', covered: 'النفقات المغطاة، %', page: 'ص.' },
+			note: 'تُقرأ الضريبة والإيرادات غير الجبائية والهبات من الفصل الأول والفصل 2 من كل قانون مالية، كما نُشرت في الرائد الرسمي. وعمود النفقات هو الجدول «ج» من القانون نفسه، وهو المجموع الذي يستعمله جانب النفقات في هذه الدراسة. ولكل رقم صفحته المطبوعة وصورة الصفحة المحفوظة في ملفات الدراسة.',
+			leftOut: 'لا تنقص أي سنة مصادق عليها بين 2020 و2026. وسنة 2021 ليست في الدراسة: لم يُوثَّق جدول نفقاتها، فلا سطر إيرادات لها أيضًا. أمّا 2018 و2019 فمستبعدتان بقرار: تلك القوانين تطبع مجموع إيرادات واحدًا موزعًا على العنوان الأول والعنوان الثاني وصناديق الخزينة الخاصة، والاقتراض داخل العنوان الثاني، ودون تفصيل بين ضريبة وغير ضريبة، فلا يمكن إدراجهما في هاتين النسبتين دون اختراع مطابقة.',
+			sources: 'المصادر، من جهة الإيرادات، مع الصفحات والصور المحفوظة'
+		},
+		verification: {
+			note: 'السنوات المصادق عليها: 215 رقمًا، كلّها مقروءة من قانونها ومُدقَّقة مرتين. 212 مُتحقَّق منها: 186 بتوافق قارئين، و26 حُسمت بقارئ ثالث أو بحساب البرامج. ورقمان، بندا الداخلية والبيئة لسنة 2020، محسوبان من توزيع مطبوع ولا يُحتسبان متحقَّقًا منهما. ورقم واحد قُرئ مرة واحدة، المحكمة الدستورية 2024 عند 0 م.د، صفحة 3502، معلَّم بـ 1. والحرف d يعلّم رقمًا محسوبًا من بنود مطبوعة مُتحقَّق منها، فلا يُقدَّم بندًا مطبوعًا. ولكل خلية صفحتها في الرائد الرسمي.',
+		},
+		sections: [
+			{
+				id: 'question',
+				num: '01',
+				label: 'السؤال',
+				heading: 'لو كانت الميزانية بين يديك',
+				body: [
+					'تطرح الدراسة سؤالًا واحدًا: مع ميزانية 2027 التي أعدّتها الدولة، أين كنت ستضع المال؟ تجيب على لوحة تحمل أرقام المشروع، وتنهي حين يكون كلّ دينار في مكانه.',
+					'الميزانية ليست قائمة أمنيات منفصلة. المال الذي يُعطى للمدارس لا يُعطى للمستشفيات أو الجيش أو دعم المحروقات. تجعل اللوحة هذه المقايضة مرئيّة، وتسجّل الدراسة اختيارات الناس بها.'
+				]
+			},
+			{
+				id: 'board',
+				num: '02',
+				label: 'اللوحة',
+				heading: 'لوحة واحدة، قطعة واحدة، بلا نقاط',
+				body: [
+					'يُظهر كلّ قطاع شريطين على سلّم واحد: مشروع الدولة لسنة 2027، وتوزيعك. وفوقهما أشرطة رفيعة تبيّن الميزانيات المصادق عليها للسنوات الماضية، من الأقدم إلى الأحدث. اسحب قطاعًا على آخر فتنتقل بينهما قطعة من 100 م.د. المال الذي تأخذه ولم تضعه بعد ينتظر في المحفظة، وتنهي حين تفرغ المحفظة.',
+					'لا شيء يُنقَّط أو يُرتَّب. الإبقاء على المشروع كما هو إجابة مقبولة.'
+				]
+			},
+			{
+				id: 'figures',
+				num: '03',
+				label: 'الأرقام',
+				heading: 'أرقام المشروع، كلّ منها بوضعه',
+				body: [
+					'كلّ مبلغ هنا رقم من المشروع نقلته الصحافة خلال جلسات الميزانية. لم يُتحقَّق من أيّ منها بعد في الوثيقة الرسمية. عند المصادقة على قانون المالية لسنة 2027، تأخذ نسخة جديدة من الدراسة الأرقام المصادق عليها، كلّ رقم مع صفحته.',
+					'تجمع بعض بنود اللوحة عدّة وزارات، وبند الدعم مقتطع من اثنتين منها. يبيّن الجدول ممّا يتكوّن كلّ بند.'
+				]
+			},
+			{
+				id: 'method',
+				num: '04',
+				label: 'المنهج',
+				heading: 'كيف ستُقرأ الإجابات',
+				body: [
+					'لكلّ بند: نسبة المستجيبين الذين سيعطونه أكثر أو مثله أو أقلّ من مشروعه، والتغيّر الوسيط مع مداه الربيعي. والميزانية المتوسّطة المقدَّمة، مع مجال ثقة بطريقة bootstrap. ومقياس توافق. ونتيجة دون أكبر قناة ربط.',
+					'لا تُعرض النتائج إلّا فوق 300 إجابة صالحة، ولا تُعرض أيّ خليّة أقلّ من 20. وعدد الإجابات الصالحة وتواريخ العمل الميداني تتصدّر صفحة النتائج، لا هامشها. المجتمع: بين المستجيبين لاستبيان إلكتروني مفتوح وقائم على الانتقاء الذاتي للبالغين. تصف النتائج الأشخاص الذين شاركوا، لا البلد في مجموعه.'
+				]
+			},
+			{
+				id: 'questions',
+				num: '05',
+				label: 'الأسئلة',
+				heading: 'كلّ سؤال، كما سيُطرح',
+				body: ['الاستبيان كاملًا، بالترتيب. لا يُسأل شيء غير ذلك. تبقى الصياغة مسودّة إلى أن تُثبَّت الدراسة.']
+			},
+			{
+				id: 'stored',
+				num: '06',
+				label: 'ما يُحفظ',
+				heading: 'فقط ما تحتاجه الإجابات',
+				body: [
+					'يُحفظ لكلّ ردّ: ميزانيتك كنسبة من كلّ بند، وإجابتان قصيرتان، والمنطقة الاختيارية، ونسخة الدراسة ولغتها، والقناة التي أوصلتك، والمدد، ورمز إيصال عشوائي.',
+					'لا يُحفظ أبدًا: اسمك، أو بريدك الإلكتروني، أو عنوان IP، أو تفاصيل جهازك، أو موقع يتجاوز المنطقة الاختيارية، أو نصّ حرّ. النموذج الأوّلي لا يحفظ شيئًا.'
+				]
+			},
+			{
+				id: 'cannot',
+				num: '07',
+				label: 'ما لا تستطيع قوله',
+				heading: 'ما ليست هذه الإجابات',
+				body: ['الإجابات سجلّ لاختيارات من قاموا بها. ولا يمكنها أن تنوب عن بلد.']
+			},
+			{
+				id: 'record',
+				num: '08',
+				label: 'السجل',
+				heading: 'الوضع، مقولًا ببساطة',
+				body: ['الدراسة قيد التصميم. لا يُجمع شيء، ولم تُقرّها أيّ مراجعة.']
+			},
+			{
+				id: 'take',
+				num: '09',
+				label: 'المشاركة',
+				heading: 'ليست مفتوحة بعد',
+				body: [
+					'لا شيء للإرسال بعد. اللوحة مفتوحة كنموذج أوّلي: تستعمل أرقام المشروع ولا تحفظ شيئًا.',
+					'لن تُفتح الدراسة إلّا بعد التحقّق من الأرقام في القانون المصادق عليه واكتمال المراجعات.'
+				]
+			}
+		],
+		cannotSay: [
+			'ليست صورة للتفضيل الوطني، وليست نتيجة وطنية. المشاركة مفتوحة وقائمة على الانتقاء الذاتي.',
+			'ليست ما ينبغي أن تكون عليه الميزانية.',
+			'ليست حكمًا على جدوى أيّ بند أو هدره.',
+			'ليست ترتيبًا للمستجيبين ولا لاختياراتهم.'
+		],
+		recordFacts: [
+			{ label: 'المرحلة', value: 'التصميم. الدراسة ليست مفتوحة.' },
+			{ label: 'المراجعة الأخلاقية', value: 'لم تجرِ أيّ مراجعة.' },
+			{ label: 'مراجعة حماية البيانات', value: 'لم تجرِ أيّ مراجعة.' },
+			{ label: 'التسجيل المسبق', value: 'غير مسجّل.' },
+			{ label: 'الباحث الرئيسي', value: 'غير مسمّى.' },
+			{ label: 'الأرقام', value: 'مؤقّتة، نقلتها الصحافة، غير متحقّق منها.' },
+			{ label: 'الترجمة', value: 'الإنجليزية فقط في الوقت الحالي. الفرنسية والعربية مسودّتان في انتظار المراجعة.' }
+		],
+		draftNotice: 'كلّ رقم لسنة 2027 في هذه الصفحة مشروع نقلته الصحافة، وليس رقمًا رسميًّا متحقّقًا منه. أرقام السنوات الماضية مأخوذة من القوانين المصادق عليها، مع صفحاتها في الرائد الرسمي.',
+		interimNotice: 'ترجمة مؤقّتة، لم يراجعها متحدّث بالعربية كلغة أم.',
+		withdrawal: {
+			heading: 'السحب والإيصال',
+			body: 'في الدراسة الحقيقية، سيؤدي إرسال الميزانية إلى رمز إيصال عشوائي. هذا الرمز هو الرابط الوحيد بإجاباتك: يمكنك إدخاله في صفحة السحب لحذف إجابتك ما دامت فترة الدراسة مفتوحة. وبعد إغلاق الفترة وتثبيت البيانات، لا يعود الحذف ممكنًا. في هذا النموذج الأوّلي لا يُرسَل شيء، ولا يُسلَّم إيصال، ولا يوجد ما يُسحب.'
+		},
+		closing: ['المجموع لا يتغيّر.', 'وحده توزيعه يتغيّر.'],
+		answerKinds: { consent: 'خانة إلزامية', allocation: 'على اللوحة', single_choice: 'اختيار واحد', scale_0_10: 'من 0 إلى 10' },
+		optional: 'اختياري',
+		live: {
+			sections: {
+				questions: { body: ['الاستبيان كاملًا، بالترتيب. لا يُسأل أيّ شيء آخر. هذه النسخة 1.0.0، ثُبّتت قبل أوّل إجابة.'] },
+				stored: {
+					body: [
+						'يُحفظ لكل إجابة: ميزانيتك كنسبة من كل بند، وإجابتان قصيرتان، والإقليم إن ذكرته، ونسخة الدراسة واللغة، والقناة التي أوصلتك، والتوقيتات، ورمز إيصال عشوائي.',
+						'لا يُحفظ أبدًا: اسمك، ولا بريدك الإلكتروني، ولا عنوان IP، ولا تفاصيل جهازك، ولا مكان أدقّ من الإقليم الاختياري، ولا أيّ نصّ حرّ.'
+					]
+				},
+				record: { body: ['الدراسة في الميدان، بأرقام مشروع 2027 وبجانبها الميزانيات المصادق عليها في السنوات الماضية. السطر أعلى هذه الصفحة يقول إن كانت الإجابات تُجمع الآن. لم تُقرّها أيّ مراجعة خارجية.'] },
+				take: {
+					heading: 'شارك',
+					body: ['افتح اللوحة، ووزّع الميزانية، وأجب عن ثلاثة أسئلة قصيرة، ثم أرسل. نحو ست دقائق. تحصل على رمز إيصال: احتفظ به لسحب إجابتك ما دامت الدراسة مفتوحة.']
+				}
+			},
+			takePaused: {
+				heading: 'لا تُجمع الإجابات الآن',
+				body: ['الدراسة في الميدان، لكنها لا تستقبل إجابات في الوقت الحالي. اللوحة ما زالت تعمل، وتقول ذلك قبل أن يُرسل أيّ شيء.']
+			},
+			recordFacts: [
+				{ label: 'المرحلة', value: 'في الميدان. النسخة 1.0.0، ثُبّتت قبل أوّل إجابة.' },
+				{ label: 'المراجعة الأخلاقية', value: 'لم تجرِ أيّ مراجعة.' },
+				{ label: 'مراجعة حماية البيانات', value: 'لم تجرِ أيّ مراجعة.' },
+				{ label: 'التسجيل المسبق', value: 'ثُبّت قبل أوّل إجابة، مع بصمة الاستبيان، في المستودع العامّ.' },
+				{ label: 'الباحث الرئيسي', value: 'غير مسمّى.' },
+				{ label: 'الأرقام', value: '2027: المشروع، كما نقلته الصحافة. السنوات الماضية: القوانين المصادق عليها، مع صفحاتها.' },
+				{ label: 'الترجمة', value: 'الإنجليزية هي المصدر. الفرنسية والعربية ترجمتان مؤقّتتان من المشروع، لم تُراجعا بعد.' }
+			],
+			withdrawal:
+				'يُنتج إرسال الميزانية رمز إيصال عشوائيًا. هذا الرمز هو الرابط الوحيد بإجابتك: أدخله في صفحة السحب لحذف إجابتك ما دامت فترة الدراسة مفتوحة. وبعد إغلاق الفترة وتثبيت البيانات، لا يعود الحذف ممكنًا.',
+			share: 'في الميدان. الرابط يفتح صفحة الدراسة.'
+		},
+		questionsPending: 'تُعرض بالإنجليزية إلى أن تُراجَع الترجمة.',
+		share: {
+			button: 'انسخ الرابط',
+			heading: 'شارك هذه الصفحة',
+			text: 'قيد التصميم، لا جمع للردود. الرابط يفتح صفحة الهبوط المنشورة.'
+		}
+	}
+};

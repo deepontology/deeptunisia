@@ -1,0 +1,272 @@
+# JORT verification of the adopted-year figures (ticket 0027).
+#
+# Every mission and programme line the spending side uses was read twice from its kept
+# JORT page crop, by two different readers. Where the two reads disagreed, a third
+# reader or the programme arithmetic decided; nothing was averaged. The audit found
+# 0 corrections: every stored amount matched the page.
+#
+# status:
+#   verified  a printed mission or programme line, read twice or resolved.
+#   derived   a figure the study computes from printed components (a sum, a
+#             subtraction, or the documented 2020 mission 6 split). Its components
+#             are verified; the figure itself is not a printed cell.
+#   single    a component was read once only and is not counted as verified.
+#
+# values_sha256 pins the stored amounts the audit cleared for that year: the check
+# script fails if a figure changes without a new audit.
+#
+# One ledger cell is 0.0002 MD from the stored figure: 2020 domestic trade, printed
+# 1 843 201 200 dinars (1,843.2012 MD) and written 1,843.201 in the audit ledger.
+# The stored figure is the printed one; the difference is a transcription slip in
+# the ledger, not a correction.
+
+study: dt-research-003
+audit: "ticket 0027, ledger.jsonl and VERIFICATION.md"
+checked: 2026-11-17
+summary:
+  audited: 215
+  verified: 212
+  two_readers_agree: 186
+  resolved: 26
+  derived: 2
+  single_read: 1
+years:
+  2020:
+    pages: [4445, 4446, 4447, 4448, 4449]
+    values_sha256: "d453784fd451d6f1cf69748b786fd97719f8927de0983164eb193a09deee2608"
+    rows:
+      arp: { page: 4445, status: verified, basis: "two readers agree" }
+      presidency: { page: 4445, status: verified, basis: "two readers agree" }
+      head_of_government: { page: 4445, status: verified, basis: "two readers agree" }
+      other_fonction_publique: { page: 4445, status: verified, basis: "two readers agree" }
+      interior: { page: 4445, status: derived, basis: "derived from printed mission 6 split; components read", note: "mission 5 (3712.321) + mission 6 programme 2 Affaires locales (849.735) + pilotage share (8.430)" }
+      environment: { page: 4445, status: derived, basis: "derived from printed mission 6 split; components read", note: "mission 6 programme 1 Environnement (295.839) + pilotage share (2.937)" }
+      justice: { page: 4445, status: verified, basis: "two readers agree" }
+      foreign_affairs: { page: 4445, status: verified, basis: "two readers agree" }
+      national_defence: { page: 4446, status: verified, basis: "two readers agree" }
+      religious_affairs: { page: 4446, status: verified, basis: "two readers agree" }
+      finance: { page: 4446, status: verified, basis: "two readers agree" }
+      state_domains: { page: 4446, status: verified, basis: "two readers agree" }
+      economy_planning: { page: 4446, status: verified, basis: "two readers agree" }
+      agriculture_water_fisheries: { page: 4446, status: verified, basis: "two readers agree" }
+      industry_mines_energy: { page: 4446, status: verified, basis: "two readers agree" }
+      trade_export: { page: 4447, status: verified, basis: "two readers agree" }
+      communication_technologies: { page: 4447, status: verified, basis: "two readers agree" }
+      tourism: { page: 4447, status: verified, basis: "two readers agree" }
+      equipment_housing: { page: 4447, status: verified, basis: "two readers agree" }
+      transport: { page: 4447, status: verified, basis: "two readers agree" }
+      culture_arts: { page: 4447, status: verified, basis: "two readers agree" }
+      youth_sports: { page: 4448, status: verified, basis: "two readers agree" }
+      family_women_children_seniors: { page: 4448, status: verified, basis: "two readers agree" }
+      health: { page: 4448, status: verified, basis: "two readers agree" }
+      social_affairs: { page: 4448, status: verified, basis: "two readers agree" }
+      education: { page: 4448, status: verified, basis: "two readers agree" }
+      higher_education_research: { page: 4448, status: verified, basis: "two readers agree" }
+      employment_training: { page: 4448, status: verified, basis: "two readers agree" }
+      judicial_council: { page: 4448, status: verified, basis: "two readers agree" }
+      constitutional_court: { page: 4449, status: verified, basis: "two readers agree" }
+      court_of_accounts: { page: 4449, status: verified, basis: "two readers agree" }
+      isie_elections: { page: 4449, status: verified, basis: "two readers agree" }
+      financing_costs: { page: 4449, status: verified, basis: "two readers agree" }
+      unforeseen: { page: 4449, status: verified, basis: "two readers agree" }
+      energy: { page: 4446, status: verified, basis: "two readers agree" }
+      domestic_trade: { page: 4447, status: verified, basis: "two readers agree" }
+  2022:
+    pages: [3113, 3114, 3115, 3116]
+    values_sha256: "9a3e9d3833ae94cd6caba168011b20e1d1e49ca6d1ee3a206a908ba3a876d82c"
+    rows:
+      arp: { page: 3113, status: verified, basis: "two readers agree" }
+      presidency: { page: 3113, status: verified, basis: "two readers agree" }
+      head_of_government: { page: 3113, status: verified, basis: "two readers agree" }
+      interior: { page: 3113, status: verified, basis: "two readers agree" }
+      justice: { page: 3113, status: verified, basis: "two readers agree" }
+      foreign_affairs: { page: 3113, status: verified, basis: "two readers agree" }
+      national_defence: { page: 3113, status: verified, basis: "two readers agree" }
+      religious_affairs: { page: 3113, status: verified, basis: "two readers agree" }
+      finance: { page: 3114, status: verified, basis: "two readers agree" }
+      economy_planning: { page: 3114, status: verified, basis: "two readers agree" }
+      state_domains: { page: 3114, status: verified, basis: "two readers agree" }
+      agriculture_water_fisheries: { page: 3114, status: verified, basis: "two readers agree" }
+      industry_mines_energy: { page: 3114, status: verified, basis: "two readers agree" }
+      trade_export: { page: 3114, status: verified, basis: "two readers agree" }
+      communication_technologies: { page: 3114, status: verified, basis: "two readers agree" }
+      tourism: { page: 3114, status: verified, basis: "two readers agree" }
+      equipment_housing: { page: 3115, status: verified, basis: "two readers agree" }
+      environment: { page: 3115, status: verified, basis: "two readers agree" }
+      transport: { page: 3115, status: verified, basis: "two readers agree" }
+      culture_arts: { page: 3115, status: verified, basis: "two readers agree" }
+      youth_sports: { page: 3115, status: verified, basis: "arithmetic: programme lines sum to this total" }
+      family_women_children_seniors: { page: 3115, status: verified, basis: "two readers agree" }
+      health: { page: 3115, status: verified, basis: "two readers agree" }
+      social_affairs: { page: 3115, status: verified, basis: "two readers agree" }
+      education: { page: 3116, status: verified, basis: "two readers agree" }
+      higher_education_research: { page: 3116, status: verified, basis: "two readers agree" }
+      employment_training: { page: 3116, status: verified, basis: "two readers agree" }
+      judicial_council: { page: 3116, status: verified, basis: "two readers agree" }
+      constitutional_court: { page: 3116, status: verified, basis: "two readers agree" }
+      court_of_accounts: { page: 3116, status: verified, basis: "two readers agree" }
+      isie_elections: { page: 3116, status: verified, basis: "two readers agree" }
+      financing_costs: { page: 3116, status: verified, basis: "two readers agree" }
+      unforeseen: { page: 3116, status: verified, basis: "two readers agree" }
+      energy: { page: 3114, status: verified, basis: "two readers agree" }
+      domestic_trade: { page: 3114, status: verified, basis: "two readers agree" }
+  2023:
+    pages: [3582, 3583, 3584, 3585]
+    values_sha256: "b1543dd8012d95bdf0aacc4d1db478380a88ca3dcd9c7c000a60c704558d8912"
+    rows:
+      arp: { page: 3582, status: verified, basis: "two readers agree" }
+      anrd: { page: 3582, status: verified, basis: "two readers agree" }
+      presidency: { page: 3582, status: verified, basis: "two readers agree" }
+      head_of_government: { page: 3582, status: verified, basis: "two readers agree" }
+      interior: { page: 3582, status: verified, basis: "two readers agree" }
+      justice: { page: 3582, status: verified, basis: "two readers agree" }
+      foreign_affairs: { page: 3582, status: verified, basis: "two readers agree" }
+      national_defence: { page: 3582, status: verified, basis: "two readers agree" }
+      religious_affairs: { page: 3583, status: verified, basis: "two readers agree" }
+      finance: { page: 3583, status: verified, basis: "two readers agree" }
+      economy_planning: { page: 3583, status: verified, basis: "two readers agree" }
+      state_domains: { page: 3583, status: verified, basis: "two readers agree" }
+      agriculture_water_fisheries: { page: 3583, status: verified, basis: "two readers agree" }
+      industry_mines_energy: { page: 3583, status: verified, basis: "two readers agree" }
+      trade_export: { page: 3583, status: verified, basis: "two readers agree" }
+      communication_technologies: { page: 3584, status: verified, basis: "two readers agree" }
+      tourism: { page: 3584, status: verified, basis: "two readers agree" }
+      equipment_housing: { page: 3584, status: verified, basis: "two readers agree" }
+      environment: { page: 3584, status: verified, basis: "two readers agree" }
+      transport: { page: 3584, status: verified, basis: "two readers agree" }
+      culture_arts: { page: 3584, status: verified, basis: "two readers agree" }
+      youth_sports: { page: 3584, status: verified, basis: "two readers agree" }
+      family_women_children_seniors: { page: 3584, status: verified, basis: "two readers agree" }
+      health: { page: 3585, status: verified, basis: "two readers agree" }
+      social_affairs: { page: 3585, status: verified, basis: "two readers agree" }
+      education: { page: 3585, status: verified, basis: "two readers agree" }
+      higher_education_research: { page: 3585, status: verified, basis: "two readers agree" }
+      employment_training: { page: 3585, status: verified, basis: "two readers agree" }
+      judicial_council: { page: 3585, status: verified, basis: "two readers agree" }
+      constitutional_court: { page: 3585, status: verified, basis: "two readers agree" }
+      court_of_accounts: { page: 3585, status: verified, basis: "two readers agree" }
+      isie_elections: { page: 3585, status: verified, basis: "two readers agree" }
+      financing_costs: { page: 3585, status: verified, basis: "two readers agree" }
+      unforeseen: { page: 3585, status: verified, basis: "two readers agree" }
+      energy: { page: 3583, status: verified, basis: "two readers agree" }
+      domestic_trade: { page: 3583, status: verified, basis: "two readers agree" }
+  2024:
+    pages: [3499, 3500, 3501, 3502]
+    values_sha256: "a3243f2fa6df946093e60afdc50dfd2a787fef8773b84391df3fe750f88c6405"
+    rows:
+      arp: { page: 3499, status: verified, basis: "two readers agree" }
+      anrd: { page: 3499, status: verified, basis: "two readers agree" }
+      presidency: { page: 3499, status: verified, basis: "two readers agree" }
+      head_of_government: { page: 3499, status: verified, basis: "two readers agree" }
+      interior: { page: 3499, status: verified, basis: "two readers agree" }
+      justice: { page: 3499, status: verified, basis: "two readers agree" }
+      foreign_affairs: { page: 3499, status: verified, basis: "third reader" }
+      national_defence: { page: 3500, status: verified, basis: "two readers agree" }
+      religious_affairs: { page: 3500, status: verified, basis: "two readers agree" }
+      finance: { page: 3500, status: verified, basis: "two readers agree" }
+      economy_planning: { page: 3500, status: verified, basis: "two readers agree" }
+      state_domains: { page: 3500, status: verified, basis: "two readers agree" }
+      agriculture_water_fisheries: { page: 3500, status: verified, basis: "two readers agree" }
+      industry_mines_energy: { page: 3500, status: verified, basis: "arithmetic: programme lines sum to this total" }
+      trade_export: { page: 3500, status: verified, basis: "two readers agree" }
+      communication_technologies: { page: 3501, status: verified, basis: "third reader" }
+      tourism: { page: 3501, status: verified, basis: "arithmetic: programme lines sum to this total" }
+      equipment_housing: { page: 3501, status: verified, basis: "arithmetic: longcat programmes sum to its total" }
+      environment: { page: 3501, status: verified, basis: "two readers agree" }
+      transport: { page: 3501, status: verified, basis: "two readers agree" }
+      culture_arts: { page: 3501, status: verified, basis: "two readers agree" }
+      youth_sports: { page: 3501, status: verified, basis: "arithmetic: programme lines sum to this total" }
+      family_women_children_seniors: { page: 3501, status: verified, basis: "two readers agree" }
+      health: { page: 3501, status: verified, basis: "two readers agree" }
+      social_affairs: { page: 3502, status: verified, basis: "two readers agree" }
+      education: { page: 3502, status: verified, basis: "two readers agree" }
+      higher_education_research: { page: 3502, status: verified, basis: "two readers agree" }
+      employment_training: { page: 3502, status: verified, basis: "two readers agree" }
+      judicial_council: { page: 3502, status: verified, basis: "two readers agree" }
+      constitutional_court: { page: 3502, status: single, basis: "single read, not verified" }
+      court_of_accounts: { page: 3502, status: verified, basis: "two readers agree" }
+      isie_elections: { page: 3502, status: verified, basis: "two readers agree" }
+      financing_costs: { page: 3502, status: verified, basis: "two readers agree" }
+      unforeseen: { page: 3502, status: verified, basis: "third reader" }
+      energy: { page: 3500, status: verified, basis: "two readers agree" }
+      domestic_trade: { page: 3500, status: verified, basis: "two readers agree" }
+  2025:
+    pages: [3462, 3463, 3464]
+    values_sha256: "65c4166f03c786d668d5ad9d6746ef537f824a84e0b08280577cbda0f5ea8ba1"
+    rows:
+      arp: { page: 3462, status: verified, basis: "two readers agree" }
+      anrd: { page: 3462, status: verified, basis: "two readers agree" }
+      presidency: { page: 3462, status: verified, basis: "two readers agree" }
+      head_of_government: { page: 3462, status: verified, basis: "two readers agree" }
+      interior: { page: 3462, status: verified, basis: "two readers agree" }
+      justice: { page: 3462, status: verified, basis: "third reader" }
+      foreign_affairs: { page: 3462, status: verified, basis: "two readers agree" }
+      national_defence: { page: 3462, status: verified, basis: "two readers agree" }
+      religious_affairs: { page: 3462, status: verified, basis: "two readers agree" }
+      finance: { page: 3462, status: verified, basis: "two readers agree" }
+      economy_planning: { page: 3462, status: verified, basis: "two readers agree" }
+      state_domains: { page: 3463, status: verified, basis: "two readers agree" }
+      agriculture_water_fisheries: { page: 3463, status: verified, basis: "two readers agree" }
+      industry_mines_energy: { page: 3463, status: verified, basis: "readers agree; arithmetic overrides: programme lines sum to this total", arithmetic_override: true }
+      trade_export: { page: 3463, status: verified, basis: "arithmetic: programme lines sum to this total" }
+      communication_technologies: { page: 3463, status: verified, basis: "two readers agree" }
+      tourism: { page: 3463, status: verified, basis: "two readers agree" }
+      equipment_housing: { page: 3463, status: verified, basis: "two readers agree" }
+      environment: { page: 3463, status: verified, basis: "arithmetic: longcat programmes sum to its total" }
+      transport: { page: 3463, status: verified, basis: "arithmetic: programme lines sum to this total" }
+      culture_arts: { page: 3463, status: verified, basis: "two readers agree" }
+      youth_sports: { page: 3463, status: verified, basis: "arithmetic: longcat programmes sum to its total" }
+      family_women_children_seniors: { page: 3464, status: verified, basis: "two readers agree" }
+      health: { page: 3464, status: verified, basis: "third reader" }
+      social_affairs: { page: 3464, status: verified, basis: "third reader" }
+      education: { page: 3464, status: verified, basis: "two readers agree" }
+      higher_education_research: { page: 3464, status: verified, basis: "two readers agree" }
+      employment_training: { page: 3464, status: verified, basis: "third reader" }
+      judicial_council: { page: 3464, status: verified, basis: "two readers agree" }
+      constitutional_court: { page: 3464, status: verified, basis: "two readers agree" }
+      court_of_accounts: { page: 3464, status: verified, basis: "two readers agree" }
+      isie_elections: { page: 3464, status: verified, basis: "two readers agree" }
+      financing_costs: { page: 3464, status: verified, basis: "two readers agree" }
+      unforeseen: { page: 3464, status: verified, basis: "two readers agree" }
+      energy: { page: 3463, status: verified, basis: "two readers agree" }
+      domestic_trade: { page: 3463, status: verified, basis: "two readers agree" }
+  2026:
+    pages: [3374, 3375, 3376]
+    values_sha256: "de46af28b006e79a8223c02ec67b902890bd75a250faf322b5f7d0ad379385ba"
+    rows:
+      arp: { page: 3374, status: verified, basis: "two readers agree" }
+      anrd: { page: 3374, status: verified, basis: "two readers agree" }
+      presidency: { page: 3374, status: verified, basis: "two readers agree" }
+      head_of_government: { page: 3374, status: verified, basis: "third reader" }
+      interior: { page: 3374, status: verified, basis: "two readers agree" }
+      justice: { page: 3374, status: verified, basis: "two readers agree" }
+      foreign_affairs: { page: 3374, status: verified, basis: "two readers agree" }
+      national_defence: { page: 3374, status: verified, basis: "two readers agree" }
+      religious_affairs: { page: 3374, status: verified, basis: "third reader" }
+      finance: { page: 3374, status: verified, basis: "third reader" }
+      economy_planning: { page: 3374, status: verified, basis: "third reader" }
+      state_domains: { page: 3375, status: verified, basis: "two readers agree" }
+      agriculture_water_fisheries: { page: 3375, status: verified, basis: "two readers agree" }
+      industry_mines_energy: { page: 3375, status: verified, basis: "third reader" }
+      trade_export: { page: 3375, status: verified, basis: "two readers agree" }
+      communication_technologies: { page: 3375, status: verified, basis: "two readers agree" }
+      tourism: { page: 3375, status: verified, basis: "two readers agree" }
+      equipment_housing: { page: 3375, status: verified, basis: "two readers agree" }
+      environment: { page: 3375, status: verified, basis: "two readers agree" }
+      transport: { page: 3375, status: verified, basis: "third reader" }
+      culture_arts: { page: 3375, status: verified, basis: "third reader" }
+      youth_sports: { page: 3375, status: verified, basis: "third reader" }
+      family_women_children_seniors: { page: 3376, status: verified, basis: "third reader" }
+      health: { page: 3376, status: verified, basis: "two readers agree" }
+      social_affairs: { page: 3376, status: verified, basis: "two readers agree" }
+      education: { page: 3376, status: verified, basis: "two readers agree" }
+      higher_education_research: { page: 3376, status: verified, basis: "third reader" }
+      employment_training: { page: 3376, status: verified, basis: "two readers agree" }
+      higher_council_education: { page: 3376, status: verified, basis: "two readers agree" }
+      judicial_council: { page: 3376, status: verified, basis: "two readers agree" }
+      court_of_accounts: { page: 3376, status: verified, basis: "two readers agree" }
+      isie_elections: { page: 3376, status: verified, basis: "two readers agree" }
+      financing_costs: { page: 3376, status: verified, basis: "two readers agree" }
+      unforeseen: { page: 3376, status: verified, basis: "two readers agree" }
+      energy: { page: 3375, status: verified, basis: "two readers agree" }
+      domestic_trade: { page: 3375, status: verified, basis: "two readers agree" }
