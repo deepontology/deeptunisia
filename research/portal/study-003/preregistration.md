@@ -1,10 +1,12 @@
-# Pre-registration: DT Research 003
+# Pre-registration: DT Research 003, Citizen Budget 2027
 
-**Working title:** Citizen Budget 2027
-**Registration:** [PLATFORM] on [DATE], with the frozen instrument hash below.
-**Registration DOI:** [pending]
-**Status:** draft, 2026-11-09. Not yet filed or registered. The study has not opened and no data exist.
-**Companion documents:** `protocol.md`, `instrument-v0.yaml` (draft item bank), `legal-brief.md`, `figures-2027.yaml`.
+**Study:** `dt-research-003` · **Instrument:** `dt003-citizen-budget` · **Version:** 1.0.0
+**Instrument hash (sha256):** `8a2882784a89dd69cd8c4ae9255dad0c6097360fc259d43546976cbe9e1369d7`
+**Fielding window:** 2026-11-22 (opens) to 2027-10-15 (closes)
+**Registered:** 2026-11-22
+**Companion documents:** `protocol.md`, `instrument-v0.yaml` (workshop copy), the frozen copy in `data/studies/dt-research-003/`, `legal-brief.md`, `figures-2027.yaml`.
+
+This document is fixed before the first response is collected. It is committed to the public repository next to the instrument, and the commit date is the registration date. There is no external registry entry and no DOI yet. Section 9 lists the amendments made on 22 November 2026, before the first answer; they take precedence over the earlier draft text where the two differ.
 
 This document is the pre-registration plan for DT Research 003. It defines the research questions, estimands, exclusion rules, and analysis plan before data collection begins. No amendments will be made after the fielding window opens, except to repair technical faults that would otherwise invalidate the data, with any amendment logged and published.
 
@@ -18,7 +20,7 @@ This document is the pre-registration plan for DT Research 003. It defines the r
 
 **Unit of analysis:** one valid submitted budget.
 
-**Fielding window:** opens after the 2027 finance law is adopted and published in the official gazette (scheduled for December 2026) and closes when the 2028 draft budget is tabled in parliament in mid-October 2027.
+**Fielding window:** opens on 22 November 2026, on the 2027 draft (amendment A1), and closes on 15 October 2027, when the 2028 draft budget is expected in parliament. When the 2027 finance law is adopted, a new instrument version takes the adopted figures (amendment A1).
 
 **Target:** 1,000 valid submitted budgets. The realized sample size is published regardless of target achievement, with no single recruitment channel exceeding 50% of valid responses.
 
@@ -38,9 +40,9 @@ The study does not claim to measure what the wider population prefers, what the 
 
 Respondents move money between movable spending systems on a board, one coin of 100 MD at a time. A coin moves from one system to another, or between a system and the purse. The last coin out of a system, or into a system at 200% of its draft, is short, so a system can reach exactly 0% or 200%. Each respondent starts from the draft. Locked lines (debt interest, reserve) are fixed. To finish, the purse must be empty, and the respondent must either have made at least one move or tick "I would keep the draft exactly as it is". The tick sets every line back to the draft and records kept_draft; Finish stays disabled without a move or the tick. Every finished board places the whole movable envelope to the dinar.
 
-The 2027 subsidy memo is 11,846 MD inside the Industry and Trade lines. It is presented as two lines, fuel and electricity versus basic food, because one line cannot distinguish a respondent who would cut fuel and protect food from one who would do the opposite. The 2027 split by type has not been reported. It is apportioned between the two ministry lines that contain the memo, in proportion to their 2027 draft totals (Industry 7,890.2, Trade 4,228.6); the two rows sum to the memo to the dinar. The apportionment is a presentation assumption, not a reported figure, and the board labels it as derived. Results for the two sub-lines are conditional on it. The combined subsidy total, which does not depend on it, is reported alongside. Before freezing, either an official 2027 programme split replaces the apportionment, or this preregistration states that the sub-line estimands are conditional and the combined total is the primary subsidy estimate. What remains of the two ministry lines after the memo, 272.8 MD, is shown as a derived line: it is not a ministry budget, and results for it are read with that in mind. If the memo sits wholly inside those lines, as assumed here, energy can only fall between 7,617.4 and 7,890.2 MD; the apportionment is within 177.6 MD of any split that keeps both lines non-negative. The 2027 memo is a press total; past years are two programme lines.
+The 2027 subsidy memo is 11,846 MD inside the Industry and Trade lines. It is presented as two lines, fuel and electricity versus basic food, because one line cannot distinguish a respondent who would cut fuel and protect food from one who would do the opposite. The 2027 split by type has not been reported. It is apportioned between the two ministry lines that contain the memo, in proportion to their 2027 draft totals (Industry 7,890.2, Trade 4,228.6); the two rows sum to the memo to the dinar. The apportionment is a presentation assumption, not a reported figure, and the board labels it as derived. Results for the two sub-lines are conditional on it. The combined subsidy total, which does not depend on it, is reported alongside. No official 2027 programme split exists at the freeze, so the sub-line estimands are conditional on the apportionment and the combined subsidy total is the primary subsidy estimate (amendment A4). What remains of the two ministry lines after the memo, 272.8 MD, is shown as a derived line: it is not a ministry budget, and results for it are read with that in mind. If the memo sits wholly inside those lines, as assumed here, energy can only fall between 7,617.4 and 7,890.2 MD; the apportionment is within 177.6 MD of any split that keeps both lines non-negative. The 2027 memo is a press total; past years are two programme lines.
 
-The board shows 27 movable lines; no catch-all line hides a large share of the budget. It also shows the adopted budgets of 2020, 2022, 2023, 2024, 2025 and 2026 for every line, on by default, each year switchable by the respondent (see game-design.md, "Past years"). This is part of the stimulus and is the same for every respondent at the start. 2018 is not shown because its tableau C is organised by ministry chapter, includes debt principal and has no programme split; 2015 was not sourced. Open before fielding: whether past years stay on by default, and recording which years were shown at submission.
+The board shows 27 movable lines; no catch-all line hides a large share of the budget. It also shows the adopted budgets of 2020, 2022, 2023, 2024, 2025 and 2026 for every line, on by default, each year switchable by the respondent (see game-design.md, "Past years"). This is part of the stimulus and is the same for every respondent at the start. 2018 is not shown because its tableau C is organised by ministry chapter, includes debt principal and has no programme split; 2015 was not sourced. Past years are on by default. Version 1.0.0 does not record which years were shown at submission (amendment A5).
 
 **Presentation order:** systems are shown in official budget order for every respondent in this version. A randomised presentation order (an order arm) is not part of version 1 and is not estimated. A later version that adds it must amend this preregistration first.
 
@@ -59,11 +61,11 @@ Exclusions are applied mechanically. Every exclusion is logged and reported by r
 |---|---|---|
 | Age gate | Self-reported under 18 | Session terminated, nothing stored |
 | Consent | Consent statements not confirmed | Session terminated, nothing stored |
-| Edge challenge | Turnstile failure or bot detection | Blocked at edge |
+| Edge challenge | First-party proof of work fails; Turnstile only when the operator switches it on | Blocked at edge |
 | Honeypot | Hidden bot-detection field completed | Excluded |
 | Balance failure | Movable total outside plus or minus 0.5% tolerance | Submission rejected at edge |
-| Speed exclusion | Completion time below threshold derived from pretest median | Excluded from primary estimands |
-| Fast draft | Unchanged draft allocation and completion time below 1.5 times speed threshold | Excluded from primary estimands |
+| Speed floor | Completion time below 144 seconds (40% of the estimated 6 minutes; no pretest was run, amendment A3) | Refused at submission, nothing stored |
+| Fast draft | Unchanged draft allocation and completion time below 216 seconds (1.5 times the floor) | Excluded from primary estimands |
 
 ## 6. Estimands and analysis plan
 
@@ -82,7 +84,7 @@ All estimands are pre-specified:
 - Primary estimands evaluated with and without respondents who kept the draft unchanged.
 
 **Reporting floors and presentation rules:**
-- No statistics published until at least 300 valid responses are reached. The 300 floor is a proposed amendment, dated 16 November 2026, pending the owner's confirmation: the draft said 100; the review recommended 300; it is raised before any data exist.
+- No statistics published until at least 300 valid responses are reached (amendment A2).
 - When results are published, the number of valid responses and the fielding dates lead the page, not a footnote.
 - Subgroup analyses on optional governorate report only at the level of the seven INS regions; any cell with fewer than 20 respondents is suppressed, with complementary suppression applied.
 - Categories are displayed strictly in official budget order, never sorted into winners and losers.
@@ -90,3 +92,21 @@ All estimands are pre-specified:
 ## 8. Data and materials
 
 Anonymized microdata (allocation vectors, INS region, month, locale, coarsened completion time) and codebooks will be released under CC BY 4.0 with a DOI. Analysis scripts will be versioned in the project repository with an automated verification script that reproduces all published figures.
+
+## 9. Amendments before the first answer, 22 November 2026
+
+These were made before the fielding window opened and before any answer existed.
+
+**A1. Fielding opens on the 2027 draft.** The earlier draft of this document opened fielding only after the 2027 finance law was adopted. The study opens on 22 November 2026 instead. The reason: the respondent's reference on the board is the adopted budgets of 2020 to 2026, shown for every line; the 2027 draft is an extra reference, and each respondent builds their own 2027 budget against all of them. The estimands in section 6 are therefore read relative to the 2027 draft as published at the freeze, and every report says so. When the 2027 finance law is adopted and published, a new instrument version carries the adopted figures. Answers given under version 1.0.0 and under the later version are reported separately, each against the figures its respondents saw, and are never pooled without saying so.
+
+**A2. Reporting floor.** The floor of 300 valid responses before any statistic is published is confirmed. The draft said 100.
+
+**A3. Speed floor.** No pretest was run before opening. The speed rule is fixed at 144 seconds, 40% of the estimated 6 minutes, and applied at submission: a faster answer is refused and nothing is stored. The fast-draft rule uses 1.5 times that floor, 216 seconds.
+
+**A4. Subsidy lines.** No official 2027 programme split of the subsidy memo exists. The two sub-line estimands are conditional on the apportionment in section 3, and the combined subsidy total is the primary subsidy estimate.
+
+**A5. Past years.** Past years are on by default. Version 1.0.0 does not record which years a respondent had switched on at submission; a later version that records it will say so.
+
+**A6. Optional governorate.** The board asks the optional governorate described in section 7, with the list and labels of study 002 (24 governorates, outside Tunisia, prefer not to say). It is published only as the seven INS regions, under the cell floor of 20.
+
+**A7. Reviews and translations.** No external ethics or data-protection review has taken place; the registry states this in the same terms as study 002. French and Arabic are interim project translations, marked as such on screen, not yet reviewed by an independent reader.
