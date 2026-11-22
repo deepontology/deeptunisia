@@ -88,7 +88,7 @@ Wording that is banned on every surface per SPEC section 6: phrases imputing col
 
 **Population statement:** all surfaces must display: "Among respondents to an open, self-selected online survey of adults. Results describe the people who took part, not Tunisians as a whole."
 
-**Floors:** minimum 300 valid responses before publishing counts (proposed amendment, dated 16 November 2026, pending the owner's confirmation: raised from 100 before any data exist); cells under 20 suppressed with complementary suppression. The results page leads with n and the fielding dates.
+**Floors:** minimum 300 valid responses before publishing counts (raised from 100 before any data existed; confirmed in preregistration amendment A2, 22 November 2026); cells under 20 suppressed with complementary suppression. The results page leads with n and the fielding dates.
 
 ## 7. Governance
 
