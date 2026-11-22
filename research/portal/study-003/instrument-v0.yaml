@@ -192,11 +192,15 @@ items:
     module: about
     tier: optional
     construct: demographics
-    provenance: reused from study 001 (demo_governorate)
+    provenance: reused from study 002 (demo_governorate), the re-cut list with its labels
     text_en: "Which governorate do you live in?"
-    text_fr: null
-    text_ar: null
+    text_fr: "Dans quel gouvernorat vivez-vous ?"
+    text_ar: "في أيّ ولاية تقيم؟"
     response: single_choice
     required: false
-    notes: "Published only as the seven INS regions, under the cell floor of 20 (SPEC section 5). Options below are the study 001 list, to be re-cut before fielding."
-    options: [ariana, beja, ben_arous, bizerte, gabes, gafsa, jendouba, kairouan, kasserine, kebili, kef, mahdia, manouba, medenine, monastir, nabeul, sfax, sidi_bouzid, siliana, sousse, tataouine, tozeur, tunis, zaghouan, prefer_not_to_say]
+    notes: "Optional. Published only as the seven INS regions (scoring.regions), each under the cell floor."
+    options: [tunis, ariana, ben_arous, manouba, nabeul, zaghouan, bizerte, beja, jendouba, kef, siliana, sousse, monastir, mahdia, sfax, kairouan, kasserine, sidi_bouzid, gabes, medenine, tataouine, gafsa, tozeur, kebili, outside_tunisia, prefer_not_to_say]
+    option_labels:
+      en: { tunis: "Tunis", ariana: "Ariana", ben_arous: "Ben Arous", manouba: "Manouba", nabeul: "Nabeul", zaghouan: "Zaghouan", bizerte: "Bizerte", beja: "Béja", jendouba: "Jendouba", kef: "Le Kef", siliana: "Siliana", sousse: "Sousse", monastir: "Monastir", mahdia: "Mahdia", sfax: "Sfax", kairouan: "Kairouan", kasserine: "Kasserine", sidi_bouzid: "Sidi Bouzid", gabes: "Gabès", medenine: "Médenine", tataouine: "Tataouine", gafsa: "Gafsa", tozeur: "Tozeur", kebili: "Kébili", outside_tunisia: "I live outside Tunisia", prefer_not_to_say: "Prefer not to answer" }
+      fr: { tunis: "Tunis", ariana: "Ariana", ben_arous: "Ben Arous", manouba: "La Manouba", nabeul: "Nabeul", zaghouan: "Zaghouan", bizerte: "Bizerte", beja: "Béja", jendouba: "Jendouba", kef: "Le Kef", siliana: "Siliana", sousse: "Sousse", monastir: "Monastir", mahdia: "Mahdia", sfax: "Sfax", kairouan: "Kairouan", kasserine: "Kasserine", sidi_bouzid: "Sidi Bouzid", gabes: "Gabès", medenine: "Médenine", tataouine: "Tataouine", gafsa: "Gafsa", tozeur: "Tozeur", kebili: "Kébili", outside_tunisia: "Je vis hors de Tunisie", prefer_not_to_say: "Je préfère ne pas répondre" }
+      ar: { tunis: "تونس", ariana: "أريانة", ben_arous: "بن عروس", manouba: "منوبة", nabeul: "نابل", zaghouan: "زغوان", bizerte: "بنزرت", beja: "باجة", jendouba: "جندوبة", kef: "الكاف", siliana: "سليانة", sousse: "سوسة", monastir: "المنستير", mahdia: "المهدية", sfax: "صفاقس", kairouan: "القيروان", kasserine: "القصرين", sidi_bouzid: "سيدي بوزيد", gabes: "قابس", medenine: "مدنين", tataouine: "تطاوين", gafsa: "قفصة", tozeur: "توزر", kebili: "قبلي", outside_tunisia: "أقيم خارج تونس", prefer_not_to_say: "أفضّل عدم الإجابة" }

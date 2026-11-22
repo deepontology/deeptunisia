@@ -67,6 +67,8 @@ export interface BudgetAnswersInput {
 	allocation: Record<string, number | boolean>;
 	q1: 'lower' | 'same' | 'higher' | 'skip' | null;
 	q2: number | null;
+	/** The optional governorate, an option id from the instrument. Null when not given. */
+	region?: string | null;
 }
 
 /**
@@ -83,6 +85,7 @@ export function budgetAnswers(input: BudgetAnswersInput): Record<string, unknown
 	};
 	if (input.q1 !== null && input.q1 !== 'skip') answers.q_spending = input.q1;
 	if (input.q2 !== null) answers.q_say = input.q2;
+	if (input.region) answers.demo_governorate = input.region;
 	return answers;
 }
 

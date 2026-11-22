@@ -568,6 +568,7 @@ export function compileInstrument(doc: InstrumentDocument): RuntimeInstrument {
 // unknown-item          an answer key is not a displayed item (includes `auto`)
 // missing-consent       a consent item is absent
 // consent-not-given     a consent item is present but not `true`
+// missing-allocation    a required allocation item is absent or skipped
 // invalid-answer        a value fails its response type's rule
 // invalid-maxdiff       the MaxDiff block is missing, malformed or incomplete
 // maxdiff-not-generated the block's design has not been generated yet (refused
@@ -748,6 +749,17 @@ export function validateSubmission(
 		if (item.response !== 'consent') continue;
 		if (!(item.id in answers)) return invalid('missing-consent', `consent item "${item.id}" is missing`);
 		if (answers[item.id] !== true) return invalid('consent-not-given', `consent item "${item.id}" must be true`);
+	}
+
+	// An allocation study's answer is the allocation. Without it the row is two
+	// short answers with no budget, so a required allocation may not be left out
+	// or skipped. Other required items keep their explicit skip: the question
+	// runners allow it, and the stored rows of fielding studies depend on that.
+	for (const item of instrument.items) {
+		if (item.response !== 'allocation' || !item.required || !item.displayed) continue;
+		if (!(item.id in answers) || answers[item.id] === null) {
+			return invalid('missing-allocation', `required allocation item "${item.id}" is missing`);
+		}
 	}
 
 	// A design that has not been generated is not a design to answer against.

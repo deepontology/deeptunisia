@@ -96,6 +96,25 @@ console.log('\n  ── a finished board is a valid submission ──\n');
 	});
 	ok('skipping both optional questions still validates', skippedResult.ok, skippedResult.ok ? '' : skippedResult.error);
 	ok('a skipped question is omitted, not sent as the UI word "skip"', !('q_spending' in skipped) && !('q_say' in skipped));
+	ok('no governorate given means no governorate key', !('demo_governorate' in skipped));
+
+	const withRegion = budgetAnswers({ readInfo: true, withdrawal: true, adult: true, allocation, q1: 'same', q2: 4, region: 'sfax' });
+	const regionResult = validateSubmission(instrument, {
+		instrumentHash: instrument.hash,
+		locale: 'en',
+		channel: 'direct',
+		consentVersion: `${instrument.version}+${instrument.hash.slice(0, 12)}`,
+		startedAt: 1_000,
+		completionMs: 300_000,
+		answers: withRegion
+	});
+	ok('a governorate from the instrument list validates', regionResult.ok && withRegion.demo_governorate === 'sfax', regionResult.ok ? '' : regionResult.error);
+	const region = instrument.items.find((item) => item.id === 'demo_governorate');
+	ok(
+		'every governorate option has a label in en, fr and ar, so the board never shows a raw id',
+		!!region?.options?.length && (['en', 'fr', 'ar'] as const).every((l) => region.options!.every((o) => !!region.optionLabels?.[l]?.[o])),
+		String(region?.options?.length ?? 0)
+	);
 }
 
 console.log('\n  ── the payload is the shape the submit route parses ──\n');
@@ -160,6 +179,12 @@ console.log('\n  ── the page uses the states and the police path is untouche
 	const game = readFileSync(join(ROOT, 'src/lib/budget-game/BudgetGame.svelte'), 'utf8');
 	ok('the board posts the budget study through the shared submit path', game.includes("submitResponse('citizen-budget'"));
 	ok('the board builds the answers with the instrument keys', game.includes('budgetAnswers({'));
+	ok('the board passes the live state to the board header', game.includes('live={studyState}'));
+	const boardSrc = readFileSync(join(ROOT, 'src/lib/budget-game/BudgetBoard.svelte'), 'utf8');
+	ok(
+		'only the design prototype header says nothing is sent',
+		boardSrc.includes("t.badge[mode === 'empty' ? 'design' : live]") && !/<p class="badge">\{t\.badge\}/.test(boardSrc)
+	);
 	ok('the board never shows a fake prototype receipt', !game.includes('CB-PROTO'));
 	ok('the stored state links to the real withdrawal page', game.includes('href="/research/citizen-budget/withdraw"'));
 	ok('the closed states have their own captions', game.includes('c.study.refused') && game.includes('c.study.notOpen') && game.includes('c.study.failed'));

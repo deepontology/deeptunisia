@@ -111,6 +111,10 @@ export interface Copy {
 		q2Low: string;
 		q2High: string;
 		optional: string;
+		/** The optional governorate question; its options come from the instrument. */
+		q3: string;
+		q3Pick: string;
+		q3Note: string;
 		skip: string;
 		submit: string;
 		back: string;
@@ -181,7 +185,7 @@ const en: Copy = {
 			'How you would move money between the lines of the 2027 state budget, as a citizen. About five minutes. There is no right answer and no score.',
 		stored: 'What is stored',
 		storedBody:
-			'In this prototype, nothing. In the real study: your budget as shares of each line, two short answers, the version of the study and how long it took. No name, email, IP address or device details.',
+			'In this prototype, nothing. In the real study: your budget as shares of each line, two short answers, your governorate if you give it, the version of the study and how long it took. No name, email, IP address or device details.',
 		who: 'Who runs it',
 		whoBody: 'DeepTunisia. This is a design prototype. The study has not been approved and has not opened.',
 		figures: 'Where the figures come from',
@@ -271,7 +275,10 @@ const en: Copy = {
 		q2: 'How much say do citizens have today over how the budget is spent? 0 means none, 10 means a lot.',
 		q2Low: 'None',
 		q2High: 'A lot',
-		optional: 'Optional. You can skip either question.',
+		optional: 'Optional. You can skip any question.',
+		q3: 'Which governorate do you live in?',
+		q3Pick: 'Choose, or leave it',
+		q3Note: 'Published only as one of seven regions, and only where at least 20 people answered.',
 		skip: 'Prefer not to say',
 		submit: 'See my result',
 		back: 'Back'
@@ -303,7 +310,7 @@ const en: Copy = {
 		statusPaused: 'The study is fielding, but it is not collecting answers right now.',
 		statusAccepting: 'The study is fielding and collecting answers.',
 		storedBody:
-			'Your budget as shares of each line, two short answers, the version of the study and how long it took. No name, email, IP address or device details.',
+			'Your budget as shares of each line, two short answers, your governorate if you give it, the version of the study and how long it took. No name, email, IP address or device details.',
 		whoBody:
 			'DeepTunisia. The study is fielding. The answers describe the people who take part in an open, self-selected online survey of adults.',
 		consentWithdrawal:
@@ -370,7 +377,7 @@ const fr: Copy = {
 			"Comment vous déplaceriez l'argent entre les lignes du budget de l'État 2027, en tant que citoyen. Environ cinq minutes. Il n'y a pas de bonne réponse et pas de score.",
 		stored: 'Ce qui est conservé',
 		storedBody:
-			"Dans ce prototype, rien. Dans l'étude réelle : votre budget en parts de chaque ligne, deux courtes réponses, la version de l'étude et sa durée. Ni nom, ni e-mail, ni adresse IP, ni détails de l'appareil.",
+			"Dans ce prototype, rien. Dans l'étude réelle : votre budget en parts de chaque ligne, deux courtes réponses, votre gouvernorat si vous le donnez, la version de l'étude et sa durée. Ni nom, ni e-mail, ni adresse IP, ni détails de l'appareil.",
 		who: 'Qui la mène',
 		whoBody:
 			"DeepTunisia. Il s'agit d'un prototype de conception. L'étude n'a pas été approuvée et n'est pas ouverte.",
@@ -469,7 +476,10 @@ const fr: Copy = {
 		q2: "Quelle influence les citoyens ont-ils aujourd'hui sur la façon dont le budget est dépensé ? 0 signifie aucune, 10 signifie beaucoup.",
 		q2Low: 'Aucune',
 		q2High: 'Beaucoup',
-		optional: 'Facultatif. Vous pouvez sauter l’une ou l’autre question.',
+		optional: 'Facultatif. Vous pouvez sauter n’importe quelle question.',
+		q3: 'Dans quel gouvernorat vivez-vous ?',
+		q3Pick: 'Choisir, ou laisser vide',
+		q3Note: 'Publié seulement comme l’une de sept régions, et seulement là où au moins 20 personnes ont répondu.',
 		skip: 'Préfère ne pas répondre',
 		submit: 'Voir mon résultat',
 		back: 'Retour'
@@ -502,7 +512,7 @@ const fr: Copy = {
 		statusPaused: "L'étude est en cours, mais elle ne collecte pas de réponses pour le moment.",
 		statusAccepting: "L'étude est en cours et collecte des réponses.",
 		storedBody:
-			'Votre budget en parts de chaque ligne, deux réponses courtes, la version de l’étude et sa durée. Aucun nom, courriel, adresse IP ni détail d’appareil.',
+			'Votre budget en parts de chaque ligne, deux réponses courtes, votre gouvernorat si vous le donnez, la version de l’étude et sa durée. Aucun nom, courriel, adresse IP ni détail d’appareil.',
 		whoBody:
 			'DeepTunisia. L’étude est en cours. Les réponses décrivent les personnes qui participent à une enquête en ligne ouverte et auto-sélectionnée auprès d’adultes.',
 		consentWithdrawal:
@@ -570,7 +580,7 @@ const ar: Copy = {
 			'كيف ستنقل المال بين بنود ميزانية الدولة لسنة 2027، كمواطن. نحو خمس دقائق. لا توجد إجابة صحيحة ولا نقاط.',
 		stored: 'ما يُحفظ',
 		storedBody:
-			'في هذا النموذج الأوّلي، لا شيء. في الدراسة الحقيقية: ميزانيتك كنسب من كل بند، وإجابتان قصيرتان، ونسخة الدراسة ومدّتها. لا اسم، ولا بريد إلكتروني، ولا عنوان IP، ولا تفاصيل الجهاز.',
+			'في هذا النموذج الأوّلي، لا شيء. في الدراسة الحقيقية: ميزانيتك كنسب من كل بند، وإجابتان قصيرتان، وولايتك إن ذكرتها، ونسخة الدراسة ومدّتها. لا اسم، ولا بريد إلكتروني، ولا عنوان IP، ولا تفاصيل الجهاز.',
 		who: 'من يشرف عليها',
 		whoBody: 'DeepTunisia. هذا نموذج تصميمي. لم تُعتمد الدراسة ولم تُفتح.',
 		figures: 'من أين تأتي الأرقام',
@@ -666,7 +676,10 @@ const ar: Copy = {
 		q2: 'ما مدى تأثير المواطنين اليوم في طريقة إنفاق الميزانية؟ 0 يعني لا تأثير، و10 يعني تأثيرًا كبيرًا.',
 		q2Low: 'لا تأثير',
 		q2High: 'تأثير كبير',
-		optional: 'اختياري. يمكنك تخطّي أي من السؤالين.',
+		optional: 'اختياري. يمكنك تخطّي أي سؤال.',
+		q3: 'في أيّ ولاية تقيم؟',
+		q3Pick: 'اختر، أو اتركه فارغًا',
+		q3Note: 'يُنشر فقط كواحد من سبعة أقاليم، وفقط حيث أجاب 20 شخصًا على الأقل.',
 		skip: 'أفضّل عدم الإجابة',
 		submit: 'اعرض نتيجتي',
 		back: 'رجوع'
@@ -698,7 +711,7 @@ const ar: Copy = {
 		statusPaused: 'الدراسة قيد الميدان، لكنها لا تجمع إجابات الآن.',
 		statusAccepting: 'الدراسة قيد الميدان وتجمع الإجابات.',
 		storedBody:
-			'ميزانيتك كنسب من كل بند، وإجابتان قصيرتان، ونسخة الدراسة ومدتها. لا اسم ولا بريد إلكتروني ولا عنوان IP ولا تفاصيل جهاز.',
+			'ميزانيتك كنسب من كل بند، وإجابتان قصيرتان، وولايتك إن ذكرتها، ونسخة الدراسة ومدتها. لا اسم ولا بريد إلكتروني ولا عنوان IP ولا تفاصيل جهاز.',
 		whoBody:
 			'DeepTunisia. الدراسة قيد الميدان. تصف الإجابات الأشخاص الذين شاركوا في استبيان مفتوح عبر الإنترنت يختار المشاركون أنفسهم، بين بالغين.',
 		consentWithdrawal: 'أفهم أنني سأحصل على رمز إيصال، وأنه يمكنني سحب إجاباتي به حتى إغلاق نافذة الدراسة.',

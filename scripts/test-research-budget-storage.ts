@@ -219,6 +219,27 @@ console.log('\n  ── the withdrawal deletes the row and keeps the month balan
 	ok('the month still balances: stored = received - withdrawn - replaced', (tally?.received ?? 0) - (tally?.withdrawn ?? 0) - (tally?.replaced ?? 0) === rows.length);
 }
 
+console.log('\n  ── a budget with no allocation is refused and writes nothing ──\n');
+
+{
+	const e = await env();
+	const without = submitPayload();
+	delete (without.answers as Record<string, unknown>).alloc_budget;
+	const missing = await post(e, `/api/studies/${SLUG}/submit`, without);
+	ok(
+		'a response that leaves out the allocation is refused 400',
+		missing.status === 400 && /required allocation item "alloc_budget"/.test(missing.body.error ?? ''),
+		`${missing.status} ${missing.body.error ?? ''}`
+	);
+	const skipped = submitPayload();
+	(skipped.answers as Record<string, unknown>).alloc_budget = null;
+	const nulled = await post(e, `/api/studies/${SLUG}/submit`, skipped);
+	ok('a response that skips the allocation with null is refused 400', nulled.status === 400, `${nulled.status} ${nulled.body.error ?? ''}`);
+	const rows = await responseRows(e.RESEARCH_DB!);
+	const tallies = await tallyRows(e.RESEARCH_DB!);
+	ok('the refusals wrote no response row and no period row', rows.length === 0 && tallies.length === 0, `${rows.length} rows, ${tallies.length} periods`);
+}
+
 console.log('\n  ── a gate that does not name the study writes nothing ──\n');
 
 {

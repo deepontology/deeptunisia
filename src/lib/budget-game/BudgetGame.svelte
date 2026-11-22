@@ -65,6 +65,7 @@
 	let q1 = $state<'lower' | 'same' | 'higher' | 'skip' | null>(null);
 	let q2 = $state<number | null>(null);
 	let q2Skipped = $state(false);
+	let region = $state<string>('');
 	let showUnchanged = $state(false);
 	let headingEl = $state<HTMLElement | undefined>(undefined);
 	let openedAt = $state(Date.now());
@@ -116,6 +117,13 @@
 		start === 'empty' || design ? c.items.submit : sending ? c.study.sending : c.study.submit
 	);
 	const answeredThisMonth = $derived(answeredMonth !== null && answeredMonth === tunisiaMonth());
+
+	/** The governorate options and their labels, read from the instrument so the stored ids are its ids. */
+	const regionItem = $derived(currentInstrument?.items.find((item) => item.id === 'demo_governorate'));
+	const regionLabel = (id: string): string =>
+		regionItem?.optionLabels?.[app.locale === 'fr' || app.locale === 'ar' ? app.locale : 'en']?.[id] ??
+		regionItem?.optionLabels?.en?.[id] ??
+		id;
 
 	const stepIndex = $derived(step === 'out' ? -1 : STEPS.indexOf(step));
 
@@ -219,7 +227,7 @@
 				channel: channelFromLocation(window.location.search),
 				startedAt: openedAt,
 				completionMs: Date.now() - openedAt,
-				answers: budgetAnswers({ readInfo, withdrawal, adult, allocation, q1, q2 }),
+				answers: budgetAnswers({ readInfo, withdrawal, adult, allocation, q1, q2, region: region || null }),
 				assignment,
 				pow,
 				turnstileToken: turnstileSiteKey ? (turnstileToken ?? '') : undefined,
@@ -396,7 +404,7 @@
 	{/if}
 
 	{#if step === 'board'}
-		<BudgetBoard mode={start} {rule} resume={result} {onfinish} />
+		<BudgetBoard mode={start} {rule} resume={result} live={studyState} {onfinish} />
 	{/if}
 
 	{#if step === 'items'}
@@ -421,6 +429,18 @@
 				</div>
 				<p class="note scale-ends"><span>{c.items.q2Low}</span><span>{c.items.q2High}</span></p>
 			</fieldset>
+			{#if regionItem?.options?.length}
+				<div class="q region">
+					<label for="region">{c.items.q3}</label>
+					<select id="region" bind:value={region} aria-describedby="region-note">
+						<option value="">{c.items.q3Pick}</option>
+						{#each regionItem.options as id (id)}
+							<option value={id}>{regionLabel(id)}</option>
+						{/each}
+					</select>
+					<p class="note" id="region-note">{c.items.q3Note}</p>
+				</div>
+			{/if}
 			{#if turnstileSiteKey}
 				<div class="turnstile" bind:this={turnstileBox}></div>
 			{/if}
@@ -916,10 +936,22 @@
 		padding: 0;
 		min-inline-size: 0;
 	}
-	.q legend {
+	.q legend,
+	.region label {
+		display: block;
 		font-weight: 600;
 		margin-block-end: var(--s-3);
 		max-inline-size: var(--measure);
+	}
+	.region select {
+		min-block-size: var(--touch);
+		min-inline-size: min(100%, 20rem);
+		padding-inline: var(--s-4);
+		border: var(--rule);
+		border-radius: var(--r-md);
+		background: var(--surface-raised);
+		color: inherit;
+		font: inherit;
 	}
 	.options,
 	.scale {
