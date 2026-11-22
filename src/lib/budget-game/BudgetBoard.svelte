@@ -5,7 +5,7 @@
 	import { revenueFor } from '$lib/budget-study/revenue';
 	import { cellCheck, checkPhrase, jortLabel, singleParts } from '$lib/budget-study/verification';
 	import { copyFor } from './copy';
-	import { boardCopyFor } from './board-copy';
+	import { boardCopyFor, type BoardLive } from './board-copy';
 	import { linesFrom, type LineId } from './lines';
 	import * as B from './board';
 	import { lineDifference } from './diff';
@@ -30,12 +30,15 @@
 		mode = 'draft',
 		rule = B.DEFAULT_RULE,
 		resume = null,
+		live = 'design',
 		onfinish
 	}: {
 		mode?: B.StartMode;
 		rule?: B.MoveRule;
 		/** A board the citizen already played: coming back from the questions keeps every move. */
 		resume?: B.BoardState | null;
+		/** The live study, read by the game. Decides the header line; the board itself never sends. */
+		live?: BoardLive;
 		onfinish?: (game: B.BoardState, board: B.Board) => void;
 	} = $props();
 
@@ -432,7 +435,7 @@
 <div class="board" class:carrying={!!carrying} data-rule={rule} bind:this={rootEl}>
 	<!-- The purse, with what is spent before you start. -->
 	<section class="purse-zone" aria-label={t.purse}>
-		<p class="badge">{t.badge}<span class="rule">{t.rule[rule]}</span></p>
+		<p class="badge">{t.badge[mode === 'empty' ? 'design' : live]}{#if live === 'design'}<span class="rule">{t.rule[rule]}</span>{/if}</p>
 		<h1 class="title">{t.title}</h1>
 		<a class="study-link" href="/research/citizen-budget">{t.studyPage}</a>
 

@@ -51,7 +51,7 @@ console.log('\n  ── prerendered study pages ──\n');
 if (!existsSync(join(BUILD, 'research'))) bail(`${join(BUILD, 'research')} is missing: run \`npm run build\` first`);
 if (!existsSync(STUDIES_FILE)) bail('src/generated/studies.json is missing: run `npm run data` (or `npm run build`) first');
 
-const registry = JSON.parse(readFileSync(STUDIES_FILE, 'utf8')) as { studies: { id: string; slug: string; status: string }[] };
+const registry = JSON.parse(readFileSync(STUDIES_FILE, 'utf8')) as { studies: { id: string; slug: string; status: string; design_type: string }[] };
 const fielding = registry.studies.filter((s) => s.status === 'fielding');
 
 ok('the registry lists at least one fielding study', fielding.length > 0, fielding.map((s) => s.slug).join(', '));
@@ -63,6 +63,15 @@ for (const study of fielding) {
 		continue;
 	}
 	const text = visibleText(readFileSync(file, 'utf8'));
+	if (study.design_type.includes('allocation')) {
+		// The budget landing has its own wording: a status chip, a record section
+		// and a take-part plate, all derived from the same page state.
+		ok(`${study.slug}: the status line says it is in the field and collecting`, /In the field · collecting/.test(text));
+		ok(`${study.slug}: the prerendered page does not say "not collecting"`, !/not collecting/i.test(text));
+		ok(`${study.slug}: the prerendered page does not say the study is in design`, !/in design|not open yet|nothing is collected/i.test(text));
+		ok(`${study.slug}: the take-part plate invites an answer`, /Open the board, divide the budget/.test(text));
+		continue;
+	}
 	ok(`${study.slug}: the status line says it is collecting`, /collecting answers/i.test(text));
 	ok(`${study.slug}: the prerendered page does not say "not collecting"`, !/not collecting/i.test(text));
 	ok(`${study.slug}: the prerendered page does not say "not collecting responses yet"`, !/not collecting responses yet/i.test(text));

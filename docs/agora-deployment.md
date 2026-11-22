@@ -20,7 +20,8 @@ no-store`, before any D1 query, signature check, nonce write, or moderation
 action. A path that does not exist and a path that does are indistinguishable
 from outside. Research routes under `/api/studies/` are a separate product and
 are not governed by this mode: they answer through their own refusal ladder,
-which is closed unless a study is fielding and `RESEARCH_OPEN` is `1`.
+which is closed unless a study is fielding, `RESEARCH_OPEN` is `1`, and (when
+`RESEARCH_ACCEPT` is set) the study is named in that per-study list.
 
 An absent or unrecognised value resolves to `off`. There is deliberately no
 ambient default anywhere: `community/mode.ts` is the only resolver, and it is
@@ -71,6 +72,19 @@ Every wrangler call the script makes carries `--keep-vars`, and it passes
 `wrangler deploy` resets the Worker's variables to `wrangler.toml` and closes a
 fielding survey without changing a line of code; this is what prevents that.
 `--research-open=0` is the deliberate close, and the plan says so in a warning.
+
+The per-study switch is a separate Worker secret, so it is never part of a deploy
+plan and a routine deploy cannot reset it:
+
+```bash
+# Only these studies may accept answers. Unset means RESEARCH_OPEN alone decides.
+printf 'police,citizen-budget' | wrangler secret put RESEARCH_ACCEPT
+```
+
+With `RESEARCH_ACCEPT` set, a fielding study not named there refuses submissions
+with the same `403` the master switch gives, and naming one study never opens or
+closes another. `wrangler secret put` replaces the secret and rolls a new version
+of the same code; it does not rebuild or re-upload the assets.
 
 After a deploy the script reads the site again: every study that was accepting
 before must still be accepting (unless `--research-open=0`), and

@@ -440,6 +440,102 @@ console.log('\n  ── the accepting flag on the study read ──\n');
 	);
 }
 
+console.log('\n  ── the per-study submission gate (RESEARCH_ACCEPT) ──\n');
+
+{
+	// Unset is the deployed state and must keep the old rule: the master alone
+	// decides. Every test above ran in this state, and this one names it.
+	const legacy = await get(researchEnv(), '/api/studies/fixture');
+	ok('with no allowlist a fielding study accepts under the master', legacy.body.study.accepting === true, String(legacy.body.study.accepting));
+
+	// Set to a study that is not this one: this study refuses, with the same 403
+	// and the same message the master switch gives. The message does not say
+	// which of the two closed it.
+	const closed = researchEnv({ RESEARCH_ACCEPT: 'fixture-presence' });
+	const closedRead = await get(closed, '/api/studies/fixture');
+	ok('an allowlist that does not name the study closes it', closedRead.body.study.accepting === false, String(closedRead.body.study.accepting));
+	const closedSubmit = await post(closed, '/api/studies/fixture/submit', submitPayload());
+	ok(
+		"and its submit is refused 403 with the master's message",
+		closedSubmit.status === 403 && closedSubmit.body.error === 'submissions are closed',
+		`${closedSubmit.status} ${closedSubmit.body.error ?? ''}`
+	);
+
+	// Named by slug and by id. Storage keys the study by id and a person writes
+	// the slug, so an operator naming it either way must get the same answer.
+	const namedBy: Array<[string, string]> = [
+		['slug', 'fixture'],
+		['id', ' dt-fixture-001 ']
+	];
+	for (const [how, value] of namedBy) {
+		const env = researchEnv({ RESEARCH_ACCEPT: value });
+		const read = await get(env, '/api/studies/fixture');
+		const sent = await submitAssigned(env, 'fixture');
+		ok(
+			`a study named by ${how} accepts`,
+			read.body.study.accepting === true && sent.status === 200,
+			`${read.body.study.accepting} ${sent.status} ${sent.body.error ?? ''}`
+		);
+	}
+
+	// Two fielding studies, one list: both accept. Then the same pair with only
+	// one named: the other closes and the first stays open. This is the whole
+	// point of the change, in one pair of reads.
+	const both = researchEnv({ RESEARCH_ACCEPT: 'fixture,fixture-presence' });
+	const fixtureBoth = await get(both, '/api/studies/fixture');
+	const presenceBoth = await get(both, '/api/studies/fixture-presence');
+	ok(
+		'a list with both studies opens both',
+		fixtureBoth.body.study.accepting === true && presenceBoth.body.study.accepting === true,
+		`${fixtureBoth.body.study.accepting} / ${presenceBoth.body.study.accepting}`
+	);
+	const one = researchEnv({ RESEARCH_ACCEPT: 'fixture' });
+	const fixtureOne = await get(one, '/api/studies/fixture');
+	const presenceOne = await get(one, '/api/studies/fixture-presence');
+	ok(
+		'naming one study leaves the other exactly where it was',
+		fixtureOne.body.study.accepting === true && presenceOne.body.study.accepting === false,
+		`${fixtureOne.body.study.accepting} / ${presenceOne.body.study.accepting}`
+	);
+	const presenceSubmit = await post(one, '/api/studies/fixture-presence/submit', submitPayload());
+	ok(
+		'the unnamed study refuses the same submit 403',
+		presenceSubmit.status === 403 && presenceSubmit.body.error === 'submissions are closed',
+		`${presenceSubmit.status} ${presenceSubmit.body.error ?? ''}`
+	);
+
+	// The master still wins: naming a study does not survive RESEARCH_OPEN=0.
+	const master = researchEnv({ RESEARCH_ACCEPT: 'fixture', RESEARCH_OPEN: '0' });
+	const masterRead = await get(master, '/api/studies/fixture');
+	const masterSubmit = await post(master, '/api/studies/fixture/submit', submitPayload());
+	ok(
+		'the master switch still closes a named study',
+		masterRead.body.study.accepting === false && masterSubmit.status === 403,
+		`${masterRead.body.study.accepting} ${masterSubmit.status}`
+	);
+
+	// A list that names nothing admits nothing; a blank list is the deployed
+	// state and must behave exactly as unset.
+	const unknown = researchEnv({ RESEARCH_ACCEPT: 'no-such-study' });
+	const unknownRead = await get(unknown, '/api/studies/fixture');
+	ok('a name that matches no study admits nothing', unknownRead.body.study.accepting === false, String(unknownRead.body.study.accepting));
+	const blank = researchEnv({ RESEARCH_ACCEPT: ' , ' });
+	const blankRead = await get(blank, '/api/studies/fixture');
+	ok('a blank list behaves as unset', blankRead.body.study.accepting === true, String(blankRead.body.study.accepting));
+
+	// The status gate comes first and the allowlist cannot make a draft study
+	// fielding. That order is the honest one: a study in design is not open for
+	// answers, whatever a list says.
+	const designNamed = researchEnv({ RESEARCH_ACCEPT: 'fixture-design' });
+	const designRead = await get(designNamed, '/api/studies/fixture-design');
+	const designSubmit = await post(designNamed, '/api/studies/fixture-design/submit', submitPayload());
+	ok(
+		'a named design study is still refused 409 at the status step',
+		designRead.body.study.accepting === false && designSubmit.status === 409,
+		`${designRead.body.study.accepting} ${designSubmit.status} ${designSubmit.body.error ?? ''}`
+	);
+}
+
 console.log('\n  ── the refusal ladder, in order ──\n');
 
 {
@@ -1529,6 +1625,68 @@ console.log('\n  ── the real registry ──\n');
 	ok('with RESEARCH_OPEN unset the fielding police index refuses a submit 403', closed.status === 403, `${closed.status} ${closed.body.error ?? ''}`);
 	const read = await get(closedEnv, '/api/studies/police');
 	ok('and reads as not accepting', read.body.study?.accepting === false && read.body.study?.status === 'fielding');
+}
+
+console.log('\n  ── the police study is byte-identical under the new gate ──\n');
+
+{
+	// Captured from the base commit before the gate change, with RESEARCH_OPEN=1,
+	// storage present and no RESEARCH_ACCEPT. The study object is deterministic;
+	// the assignment is not, so it is not in the capture and is not compared.
+	//
+	// This is the promise ticket 0029 makes: the police study's JSON does not
+	// move when the per-study list is absent (the deployed state) or when the
+	// police study is the one named.
+	const REGISTRY = join(HERE, '..', 'src', 'generated', 'studies.json');
+	const GOLDEN = join(HERE, 'fixtures', 'police-study-2026-11-17.json');
+	if (!existsSync(REGISTRY)) bail('src/generated/studies.json is missing — run `npm run data` (or `npm run build`) first');
+	if (!existsSync(GOLDEN)) bail('scripts/fixtures/police-study-2026-11-17.json is missing');
+	const real = JSON.parse(readFileSync(REGISTRY, 'utf8')) as StudiesRegistry;
+	const golden = readFileSync(GOLDEN, 'utf8').trim();
+
+	const policeRead = async (over: Partial<Env>) => {
+		const env = researchEnv({ STUDIES: real, TURNSTILE_VERIFY: async () => true, ...over });
+		return get(env, '/api/studies/police');
+	};
+	const policeSubmit = async (over: Partial<Env>) => {
+		const env = researchEnv({ STUDIES: real, TURNSTILE_VERIFY: async () => true, ...over });
+		return post(env, '/api/studies/police/submit', submitPayload());
+	};
+
+	const before = await policeRead({});
+	ok(
+		'the police study object is byte-identical with no allowlist',
+		JSON.stringify(before.body.study) === golden,
+		`${JSON.stringify(before.body.study).length} bytes`
+	);
+
+	const listed = await policeRead({ RESEARCH_ACCEPT: 'police' });
+	ok('and byte-identical when the police study is the allowlist', JSON.stringify(listed.body.study) === golden);
+
+	const omitted = await policeRead({ RESEARCH_ACCEPT: 'citizen-budget' });
+	const closedGolden = golden.replace(/"accepting":true}$/, '"accepting":false}');
+	ok(
+		'an allowlist that omits the police study changes only the accepting flag',
+		JSON.stringify(omitted.body.study) === closedGolden,
+		String(omitted.body.study.accepting)
+	);
+	ok('and the declared status is still fielding', omitted.body.study.status === 'fielding', omitted.body.study.status);
+
+	// The gate, not the status, is what a submit meets. With the police study
+	// named the plain fixture payload passes the gate and stops later (400, no
+	// assignment); with it omitted the gate answers first with 403.
+	const named = await policeSubmit({ RESEARCH_ACCEPT: 'police' });
+	const gateClosed = await policeSubmit({ RESEARCH_ACCEPT: 'citizen-budget' });
+	ok(
+		'a submit to the named police study passes the gate and fails later',
+		named.status === 400 && named.body.error !== 'submissions are closed',
+		`${named.status} ${named.body.error ?? ''}`
+	);
+	ok(
+		'a submit to the omitted police study stops at the gate',
+		gateClosed.status === 403 && gateClosed.body.error === 'submissions are closed',
+		`${gateClosed.status} ${gateClosed.body.error ?? ''}`
+	);
 }
 
 console.log('\n  ── the first-party proof of work ──\n');

@@ -29,10 +29,16 @@ export interface LandingCopy {
 	cover: string;
 	status: string;
 	notCollecting: string;
+	statusLive: string;
+	statusPaused: string;
+	countNote: (n: number) => string;
+	countUnknown: string;
+	pausedNote: string;
+	ctaNoteLive: string;
 	ctaBoard: string;
 	ctaNote: string;
 	unit: string;
-	tally: { total: string; locked: string; movable: string; systems: string; answers: string };
+	tally: { total: string; locked: string; movable: string; systems: string; answers: string; answer: string };
 	field: {
 		caption: (perDot: string) => string;
 		idle: string;
@@ -62,6 +68,7 @@ export interface LandingCopy {
 		system: string;
 		draft: string;
 		status: string;
+		auditLegend: string;
 		madeOf: string;
 		madeOfNote: string;
 		less: string;
@@ -102,6 +109,19 @@ export interface LandingCopy {
 	optional: string;
 	/** Shown when the instrument has no reviewed translation for this language yet. */
 	questionsPending: string;
+	/**
+	 * What replaces the design wording once the registry or the live read says
+	 * the study is fielding. Which one shows is decided by the page state, never
+	 * by the branch: the take-part text has one version for accepting and one
+	 * for paused.
+	 */
+	live: {
+		sections: Partial<Record<LandingSection['id'], { heading?: string; body: string[] }>>;
+		takePaused: { heading: string; body: string[] };
+		recordFacts: { label: string; value: string }[];
+		withdrawal: string;
+		share: string;
+	};
 }
 
 export const landingCopy: Record<Locale, LandingCopy> = {
@@ -112,6 +132,12 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		cover: 'Divide the 2027 state budget yourself, on one board, with the draft figures. Every dinar you give one system, you take from another.',
 		status: 'In design · not collecting',
 		notCollecting: 'Not collecting answers yet. The question, the figures and the rules are published here first, so they can be checked before anyone answers.',
+		statusLive: 'In the field · collecting',
+		statusPaused: 'In the field · not collecting right now',
+		countNote: (n) => `${n} ${n === 1 ? 'answer' : 'answers'} stored so far.`,
+		countUnknown: 'The count could not be read.',
+		pausedNote: 'The study is in the field but is not collecting answers right now. Nothing is stored.',
+		ctaNoteLive: 'About five minutes. Draft figures are labelled. A receipt is shown at the end.',
 		ctaBoard: 'Try the board',
 		ctaNote: 'Prototype. Draft figures. Nothing is sent or stored.',
 		unit: 'MD',
@@ -120,7 +146,8 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			locked: 'Owed before any choice',
 			movable: 'Yours to divide',
 			systems: 'systems on the board',
-			answers: 'answers collected'
+			answers: 'answers collected',
+			answer: 'answer collected'
 		},
 		field: {
 			caption: (perDot) => `The 2027 draft, one dot for every ${perDot} MD. Touch a block to read it.`,
@@ -158,11 +185,12 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		figures: {
 			system: 'Board line',
 			draft: 'Draft, MD',
-			status: 'Status',
+			status: '2027 draft',
 			madeOf: 'Made of',
 			madeOfNote: 'The composition notes are in English until the translation pass.',
 			less: 'less',
-			chip: { 'draft-press': 'Press, not verified', 'draft-derived': 'Derived, not verified', 'draft-plf': 'Draft law', 'adopted-lf': 'Adopted law' },
+			chip: { 'draft-press': '2027 draft: press, not verified', 'draft-derived': '2027 draft: derived, not verified', 'draft-plf': '2027 draft: draft law, not verified', 'adopted-lf': 'Adopted: verified' },
+			auditLegend: 'Adopted years are verified against the Journal Officiel; hover a figure for its page. d = derived from verified rows; 1 = read once, not counted as verified.',
 			sources: 'Every row of the figures file, with its source',
 			locked: 'Owed, does not move',
 			total: 'Total',
@@ -218,7 +246,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				label: 'The figures',
 				heading: 'Draft figures, each with its status',
 				body: [
-					'Every amount here is a draft reported by the press during the budget hearings. None has been checked against the official document yet. The study will not open on a figure until it has a page reference in the adopted law.',
+					'Every amount here is a draft reported by the press during the budget hearings. None has been checked against the official document yet. When the 2027 finance law is adopted, a new version of the study takes the adopted figures, each with its page.',
 					'Some lines on the board join several ministries, and the two subsidy lines are cut out of two of them. The table says what each board line is made of, and each line can be opened for its 2026 programme detail.'
 				]
 			},
@@ -229,7 +257,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				heading: 'How the answers will be read',
 				body: [
 					'For each line: the share of respondents who would give it more, the same, or less than its plan, and the median change with its interquartile range. The average budget submitted, with a bootstrap interval. A consensus measure. A result without the largest link channel.',
-					'Results are shown only above 300 valid answers, and no cell under 20 is shown. The 300 floor is a proposed amendment, dated 16 November 2026, pending the owner\'s confirmation; it was raised from 100 before any data exist. The number of valid answers and the fielding dates lead the results page, not a footnote. Population: among respondents to an open, self-selected online survey of adults. Results describe the people who took part, not the country as a whole.'
+					'Results are shown only above 300 valid answers, and no cell under 20 is shown. The number of valid answers and the fielding dates lead the results page, not a footnote. Population: among respondents to an open, self-selected online survey of adults. Results describe the people who took part, not the country as a whole.'
 				]
 			},
 			{
@@ -298,6 +326,38 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		closing: ['The total does not move.', 'Only where it goes does.'],
 		answerKinds: { consent: 'Required tick', allocation: 'On the board', single_choice: 'One choice', scale_0_10: 'From 0 to 10' },
 		optional: 'optional',
+		live: {
+			sections: {
+				questions: { body: ['The whole instrument, in order. Nothing else is asked. This is version 1.0.0, frozen before the first answer.'] },
+				stored: {
+					body: [
+						'Stored per response: your budget as a share of each line, two short answers, optional region, the study version and locale, the channel that brought you, timings, and a random receipt code.',
+						'Never stored: your name, email, IP address, device details, location beyond the optional region, or free text.'
+					]
+				},
+				record: { body: ['The study is in the field, on the 2027 draft figures, with the adopted budgets of past years beside them. The line at the top of this page says whether answers are being collected right now. No external review has cleared it.'] },
+				take: {
+					heading: 'Take part',
+					body: ['Open the board, divide the budget, answer three short questions and send it. About six minutes. You get a receipt code: keep it to withdraw your answer while the study is open.']
+				}
+			},
+			takePaused: {
+				heading: 'Not collecting right now',
+				body: ['The study is in the field, but it is not taking answers at the moment. The board still works, and it says so before anything would be sent.']
+			},
+			recordFacts: [
+				{ label: 'Stage', value: 'In the field. Version 1.0.0, frozen before the first answer.' },
+				{ label: 'Ethics review', value: 'None has taken place.' },
+				{ label: 'Data-protection review', value: 'None has taken place.' },
+				{ label: 'Preregistration', value: 'Fixed before the first answer, with the instrument hash, in the public repository.' },
+				{ label: 'Principal investigator', value: 'Not named.' },
+				{ label: 'Figures', value: '2027: the draft, press-reported. Past years: the adopted laws, with their pages.' },
+				{ label: 'Translation', value: 'English is the source. French and Arabic are interim project translations, not yet reviewed.' }
+			],
+			withdrawal:
+				'Sending a budget produces a random receipt code. That code is the only handle on your answer: enter it on the withdrawal page to delete your response while the study window is open. Once the window closes and the data are frozen, deletion is no longer possible.',
+			share: 'In the field. The link opens the study page.'
+		},
 		questionsPending: 'Shown in English until the translation is reviewed.',
 		share: {
 			button: 'Copy link',
@@ -313,6 +373,12 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		cover: 'Répartissez vous-même le budget de l’État 2027, sur un seul plateau, avec les chiffres du projet. Chaque dinar donné à un poste est pris à un autre.',
 		status: 'En conception · pas de collecte',
 		notCollecting: 'Aucune réponse n’est collectée. La question, les chiffres et les règles sont publiés ici d’abord, pour être vérifiés avant que quiconque réponde.',
+		statusLive: 'Sur le terrain · collecte en cours',
+		statusPaused: 'Sur le terrain · pas de collecte pour le moment',
+		countNote: (n) => `${n} ${n === 1 ? 'réponse enregistrée' : 'réponses enregistrées'} à ce jour.`,
+		countUnknown: 'Le décompte n’a pas pu être lu.',
+		pausedNote: 'L’étude est sur le terrain mais ne collecte pas de réponses pour le moment. Rien n’est conservé.',
+		ctaNoteLive: 'Environ cinq minutes. Les chiffres du projet sont étiquetés. Un reçu s’affiche à la fin.',
 		ctaBoard: 'Essayer le plateau',
 		ctaNote: 'Prototype. Chiffres du projet. Rien n’est envoyé ni conservé.',
 		unit: 'MD',
@@ -321,7 +387,8 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			locked: 'Dû avant tout choix',
 			movable: 'À vous de répartir',
 			systems: 'postes sur le plateau',
-			answers: 'réponses collectées'
+			answers: 'réponses collectées',
+			answer: 'réponse collectée'
 		},
 		field: {
 			caption: (perDot) => `Le projet 2027, un point pour ${perDot} MD. Touchez un bloc pour le lire.`,
@@ -359,11 +426,12 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		figures: {
 			system: 'Ligne du plateau',
 			draft: 'Projet, MD',
-			status: 'Statut',
+			status: 'Projet 2027',
 			madeOf: 'Composée de',
 			madeOfNote: "Les notes de composition sont en anglais jusqu'à la passe de traduction.",
 			less: 'moins',
-			chip: { 'draft-press': 'Presse, non vérifié', 'draft-derived': 'Calculé, non vérifié', 'draft-plf': 'Projet de loi', 'adopted-lf': 'Loi adoptée' },
+			chip: { 'draft-press': 'Projet 2027 : presse, non vérifié', 'draft-derived': 'Projet 2027 : calculé, non vérifié', 'draft-plf': 'Projet 2027 : projet de loi, non vérifié', 'adopted-lf': 'Loi adoptée : vérifiée' },
+			auditLegend: 'Les années adoptées sont vérifiées au Journal officiel ; survolez un chiffre pour voir sa page. d = calculé à partir de lignes vérifiées ; 1 = lu une seule fois, non compté comme vérifié.',
 			sources: 'Chaque ligne du fichier des chiffres, avec sa source',
 			locked: 'Dû, ne bouge pas',
 			total: 'Total',
@@ -419,7 +487,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				label: 'Les chiffres',
 				heading: 'Chiffres du projet, chacun avec son statut',
 				body: [
-					'Chaque montant ici est un chiffre du projet rapporté par la presse pendant les auditions budgétaires. Aucun n’a encore été vérifié sur le document officiel. L’étude n’ouvrira pas sur un chiffre sans référence de page dans la loi adoptée.',
+					'Chaque montant ici est un chiffre du projet rapporté par la presse pendant les auditions budgétaires. Aucun n’a encore été vérifié sur le document officiel. Quand la loi de finances 2027 sera adoptée, une nouvelle version de l’étude prendra les chiffres adoptés, chacun avec sa page.',
 					'Certaines lignes du plateau réunissent plusieurs ministères, et la ligne des subventions est découpée dans deux d’entre eux. Le tableau dit de quoi chaque ligne est faite.'
 				]
 			},
@@ -430,7 +498,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				heading: 'Comment les réponses seront lues',
 				body: [
 					'Pour chaque ligne : la part des répondants qui lui donneraient plus, autant ou moins que son projet, et l’écart médian avec son intervalle interquartile. Le budget moyen soumis, avec un intervalle bootstrap. Une mesure de consensus. Un résultat sans le plus grand canal de lien.',
-					'Les résultats ne sont affichés qu’au-dessus de 300 réponses valides, et aucune cellule de moins de 20 n’est montrée. Le seuil de 300 est un amendement proposé, daté du 16 novembre 2026, en attente de la confirmation du commanditaire ; il a été relevé de 100 avant que des données existent. Le nombre de réponses valides et les dates de terrain ouvrent la page de résultats, pas une note de bas de page. Population : parmi les répondants à une enquête en ligne ouverte et auto-sélectionnée auprès d’adultes. Les résultats décrivent les personnes qui ont participé, pas le pays dans son ensemble.'
+					'Les résultats ne sont affichés qu’au-dessus de 300 réponses valides, et aucune cellule de moins de 20 n’est montrée. Le nombre de réponses valides et les dates de terrain ouvrent la page de résultats, pas une note de bas de page. Population : parmi les répondants à une enquête en ligne ouverte et auto-sélectionnée auprès d’adultes. Les résultats décrivent les personnes qui ont participé, pas le pays dans son ensemble.'
 				]
 			},
 			{
@@ -499,6 +567,38 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		closing: ['Le total ne bouge pas.', 'Seule sa répartition change.'],
 		answerKinds: { consent: 'Case obligatoire', allocation: 'Sur le plateau', single_choice: 'Un seul choix', scale_0_10: 'De 0 à 10' },
 		optional: 'facultatif',
+		live: {
+			sections: {
+				questions: { body: ['Tout le questionnaire, dans l’ordre. Rien d’autre n’est demandé. C’est la version 1.0.0, figée avant la première réponse.'] },
+				stored: {
+					body: [
+						'Conservé pour chaque réponse : votre budget en parts de chaque ligne, deux réponses courtes, la région si vous la donnez, la version de l’étude et la langue, le canal qui vous a amené, les durées et un code de reçu aléatoire.',
+						'Jamais conservé : votre nom, votre courriel, votre adresse IP, les détails de votre appareil, un lieu plus précis que la région facultative, ni aucun texte libre.'
+					]
+				},
+				record: { body: ['L’étude est sur le terrain, avec les chiffres du projet 2027 et, à côté, les budgets adoptés des années passées. La ligne en haut de cette page dit si des réponses sont collectées en ce moment. Aucun examen externe ne l’a validée.'] },
+				take: {
+					heading: 'Participer',
+					body: ['Ouvrez le plateau, répartissez le budget, répondez à trois courtes questions et envoyez. Environ six minutes. Vous recevez un code de reçu : gardez-le pour retirer votre réponse tant que l’étude est ouverte.']
+				}
+			},
+			takePaused: {
+				heading: 'Pas de collecte pour le moment',
+				body: ['L’étude est sur le terrain, mais elle ne prend pas de réponses en ce moment. Le plateau fonctionne toujours, et il le dit avant que quoi que ce soit ne soit envoyé.']
+			},
+			recordFacts: [
+				{ label: 'Étape', value: 'Sur le terrain. Version 1.0.0, figée avant la première réponse.' },
+				{ label: 'Examen éthique', value: 'Aucun n’a eu lieu.' },
+				{ label: 'Examen de protection des données', value: 'Aucun n’a eu lieu.' },
+				{ label: 'Préenregistrement', value: 'Figé avant la première réponse, avec l’empreinte du questionnaire, dans le dépôt public.' },
+				{ label: 'Chercheur principal', value: 'Non nommé.' },
+				{ label: 'Chiffres', value: '2027 : le projet, rapporté par la presse. Années passées : les lois adoptées, avec leurs pages.' },
+				{ label: 'Traduction', value: 'L’anglais est la source. Le français et l’arabe sont des traductions provisoires du projet, pas encore relues.' }
+			],
+			withdrawal:
+				"L'envoi d'un budget produit un code de reçu aléatoire. Ce code est le seul lien avec votre réponse : saisissez-le sur la page de retrait pour supprimer votre réponse tant que la période de l'étude est ouverte. Une fois la période close et les données figées, la suppression n'est plus possible.",
+			share: 'Sur le terrain. Le lien ouvre la page de l’étude.'
+		},
 		questionsPending: 'Affichées en anglais jusqu’à la relecture de la traduction.',
 		share: {
 			button: 'Copier le lien',
@@ -514,6 +614,12 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		cover: 'وزّع بنفسك ميزانية الدولة لسنة 2027، على لوحة واحدة، بأرقام المشروع. كلّ دينار تعطيه لقطاع تأخذه من قطاع آخر.',
 		status: 'قيد التصميم · لا جمع للردود',
 		notCollecting: 'لا تُجمع أيّ إجابة بعد. نُشرت السؤال والأرقام والقواعد هنا أوّلًا، ليمكن التحقّق منها قبل أن يجيب أحد.',
+		statusLive: 'قيد الميدان · جمع الإجابات',
+		statusPaused: 'قيد الميدان · لا جمع للردود الآن',
+		countNote: (n) => `${n} ${n === 1 ? 'إجابة مخزّنة' : 'إجابات مخزّنة'} حتى الآن.`,
+		countUnknown: 'تعذّرت قراءة العدد.',
+		pausedNote: 'الدراسة قيد الميدان لكنها لا تجمع إجابات الآن. لا يُخزَّن شيء.',
+		ctaNoteLive: 'نحو خمس دقائق. أرقام المشروع موسومة. يظهر إيصال في النهاية.',
 		ctaBoard: 'جرّب اللوحة',
 		ctaNote: 'نموذج أوّلي. أرقام المشروع. لا يُرسل شيء ولا يُحفظ.',
 		unit: 'م.د',
@@ -522,7 +628,8 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			locked: 'واجب الدفع قبل أيّ اختيار',
 			movable: 'لك أن توزّعه',
 			systems: 'قطاعًا على اللوحة',
-			answers: 'إجابة مجمّعة'
+			answers: 'إجابة مجمّعة',
+			answer: 'إجابة مجمّعة'
 		},
 		field: {
 			caption: (perDot) => `مشروع 2027، نقطة لكلّ ${perDot} م.د. المس كتلة لتقرأها.`,
@@ -560,11 +667,12 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		figures: {
 			system: 'بند اللوحة',
 			draft: 'المشروع، م.د',
-			status: 'الوضع',
+			status: 'مشروع 2027',
 			madeOf: 'يتكوّن من',
 			madeOfNote: 'ملاحظات التكوين بالإنجليزية إلى حين مراجعة الترجمة.',
 			less: 'ناقص',
-			chip: { 'draft-press': 'الصحافة، غير متحقّق', 'draft-derived': 'محسوب، غير متحقّق', 'draft-plf': 'مشروع القانون', 'adopted-lf': 'القانون المصادق عليه' },
+			chip: { 'draft-press': 'مشروع 2027: الصحافة، غير متحقّق', 'draft-derived': 'مشروع 2027: محسوب، غير متحقّق', 'draft-plf': 'مشروع 2027: مشروع القانون، غير متحقّق', 'adopted-lf': 'القانون المصادق عليه: متحقّق منه' },
+			auditLegend: 'السنوات المعتمدة متحقَّق منها في الرائد الرسمي؛ مرّر المؤشر على رقم لترى صفحته. d = محسوب من بنود متحقَّق منها؛ 1 = قُرئ مرة واحدة ولا يُحتسب متحقَّقًا منه.',
 			sources: 'كلّ صفّ في ملفّ الأرقام، مع مصدره',
 			locked: 'واجب، لا يتحرّك',
 			total: 'المجموع',
@@ -620,7 +728,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				label: 'الأرقام',
 				heading: 'أرقام المشروع، كلّ منها بوضعه',
 				body: [
-					'كلّ مبلغ هنا رقم من المشروع نقلته الصحافة خلال جلسات الميزانية. لم يُتحقَّق من أيّ منها بعد في الوثيقة الرسمية. لن تُفتح الدراسة على رقم ليس له مرجع صفحة في القانون المصادق عليه.',
+					'كلّ مبلغ هنا رقم من المشروع نقلته الصحافة خلال جلسات الميزانية. لم يُتحقَّق من أيّ منها بعد في الوثيقة الرسمية. عند المصادقة على قانون المالية لسنة 2027، تأخذ نسخة جديدة من الدراسة الأرقام المصادق عليها، كلّ رقم مع صفحته.',
 					'تجمع بعض بنود اللوحة عدّة وزارات، وبند الدعم مقتطع من اثنتين منها. يبيّن الجدول ممّا يتكوّن كلّ بند.'
 				]
 			},
@@ -631,7 +739,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				heading: 'كيف ستُقرأ الإجابات',
 				body: [
 					'لكلّ بند: نسبة المستجيبين الذين سيعطونه أكثر أو مثله أو أقلّ من مشروعه، والتغيّر الوسيط مع مداه الربيعي. والميزانية المتوسّطة المقدَّمة، مع مجال ثقة بطريقة bootstrap. ومقياس توافق. ونتيجة دون أكبر قناة ربط.',
-					'لا تُعرض النتائج إلّا فوق 300 إجابة صالحة، ولا تُعرض أيّ خليّة أقلّ من 20. والحدّ الأدنى البالغ 300 إجابة هو تعديل مقترح، بتاريخ 16 نوفمبر 2026، بانتظار تأكيد صاحب الدراسة؛ وقد رُفع من 100 قبل وجود أي بيانات. وعدد الإجابات الصالحة وتواريخ العمل الميداني تتصدّر صفحة النتائج، لا هامشها. المجتمع: بين المستجيبين لاستبيان إلكتروني مفتوح وقائم على الانتقاء الذاتي للبالغين. تصف النتائج الأشخاص الذين شاركوا، لا البلد في مجموعه.'
+					'لا تُعرض النتائج إلّا فوق 300 إجابة صالحة، ولا تُعرض أيّ خليّة أقلّ من 20. وعدد الإجابات الصالحة وتواريخ العمل الميداني تتصدّر صفحة النتائج، لا هامشها. المجتمع: بين المستجيبين لاستبيان إلكتروني مفتوح وقائم على الانتقاء الذاتي للبالغين. تصف النتائج الأشخاص الذين شاركوا، لا البلد في مجموعه.'
 				]
 			},
 			{
@@ -700,6 +808,38 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		closing: ['المجموع لا يتغيّر.', 'وحده توزيعه يتغيّر.'],
 		answerKinds: { consent: 'خانة إلزامية', allocation: 'على اللوحة', single_choice: 'اختيار واحد', scale_0_10: 'من 0 إلى 10' },
 		optional: 'اختياري',
+		live: {
+			sections: {
+				questions: { body: ['الاستبيان كاملًا، بالترتيب. لا يُسأل أيّ شيء آخر. هذه النسخة 1.0.0، ثُبّتت قبل أوّل إجابة.'] },
+				stored: {
+					body: [
+						'يُحفظ لكل إجابة: ميزانيتك كنسبة من كل بند، وإجابتان قصيرتان، والإقليم إن ذكرته، ونسخة الدراسة واللغة، والقناة التي أوصلتك، والتوقيتات، ورمز إيصال عشوائي.',
+						'لا يُحفظ أبدًا: اسمك، ولا بريدك الإلكتروني، ولا عنوان IP، ولا تفاصيل جهازك، ولا مكان أدقّ من الإقليم الاختياري، ولا أيّ نصّ حرّ.'
+					]
+				},
+				record: { body: ['الدراسة في الميدان، بأرقام مشروع 2027 وبجانبها الميزانيات المصادق عليها في السنوات الماضية. السطر أعلى هذه الصفحة يقول إن كانت الإجابات تُجمع الآن. لم تُقرّها أيّ مراجعة خارجية.'] },
+				take: {
+					heading: 'شارك',
+					body: ['افتح اللوحة، ووزّع الميزانية، وأجب عن ثلاثة أسئلة قصيرة، ثم أرسل. نحو ست دقائق. تحصل على رمز إيصال: احتفظ به لسحب إجابتك ما دامت الدراسة مفتوحة.']
+				}
+			},
+			takePaused: {
+				heading: 'لا تُجمع الإجابات الآن',
+				body: ['الدراسة في الميدان، لكنها لا تستقبل إجابات في الوقت الحالي. اللوحة ما زالت تعمل، وتقول ذلك قبل أن يُرسل أيّ شيء.']
+			},
+			recordFacts: [
+				{ label: 'المرحلة', value: 'في الميدان. النسخة 1.0.0، ثُبّتت قبل أوّل إجابة.' },
+				{ label: 'المراجعة الأخلاقية', value: 'لم تجرِ أيّ مراجعة.' },
+				{ label: 'مراجعة حماية البيانات', value: 'لم تجرِ أيّ مراجعة.' },
+				{ label: 'التسجيل المسبق', value: 'ثُبّت قبل أوّل إجابة، مع بصمة الاستبيان، في المستودع العامّ.' },
+				{ label: 'الباحث الرئيسي', value: 'غير مسمّى.' },
+				{ label: 'الأرقام', value: '2027: المشروع، كما نقلته الصحافة. السنوات الماضية: القوانين المصادق عليها، مع صفحاتها.' },
+				{ label: 'الترجمة', value: 'الإنجليزية هي المصدر. الفرنسية والعربية ترجمتان مؤقّتتان من المشروع، لم تُراجعا بعد.' }
+			],
+			withdrawal:
+				'يُنتج إرسال الميزانية رمز إيصال عشوائيًا. هذا الرمز هو الرابط الوحيد بإجابتك: أدخله في صفحة السحب لحذف إجابتك ما دامت فترة الدراسة مفتوحة. وبعد إغلاق الفترة وتثبيت البيانات، لا يعود الحذف ممكنًا.',
+			share: 'في الميدان. الرابط يفتح صفحة الدراسة.'
+		},
 		questionsPending: 'تُعرض بالإنجليزية إلى أن تُراجَع الترجمة.',
 		share: {
 			button: 'انسخ الرابط',

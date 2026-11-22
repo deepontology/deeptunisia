@@ -97,8 +97,14 @@ if (existsSync(PEPPER_PATH)) {
  * The research gate. '1' opens submissions; anything else — including an unset
  * variable — is closed. Fail closed, and say so at startup so an operator who
  * meant to open the study notices before respondents do.
+ *
+ * RESEARCH_ACCEPT is the per-study allowlist: comma-separated slugs or ids. It
+ * is unset in the deployed state, where RESEARCH_OPEN alone decides. Locally it
+ * is how the two-study gate is proved: name one study, and the other stays
+ * exactly as it was.
  */
 const RESEARCH_OPEN = process.env.RESEARCH_OPEN === '1' ? '1' : '0';
+const RESEARCH_ACCEPT = process.env.RESEARCH_ACCEPT?.trim() || undefined;
 
 /*
  * LOCAL DEVELOPMENT ONLY: the dev fielding override.
@@ -131,6 +137,7 @@ const env: Env = {
 	// except for the one study RESEARCH_DEV_STUDY names.
 	RESEARCH_DB: researchDb,
 	RESEARCH_OPEN,
+	RESEARCH_ACCEPT,
 	RESEARCH_DEV_STUDY,
 	// The live results' shared store. The Worker has the platform's edge cache
 	// for this (worker.ts); Node has no Cache API, so a Map with an expiry
@@ -216,6 +223,11 @@ server.listen(PORT, '127.0.0.1', () => {
 		RESEARCH_OPEN === '1'
 			? '  research: submissions OPEN (RESEARCH_OPEN=1)'
 			: '  research: submissions closed (RESEARCH_OPEN=0)'
+	);
+	console.log(
+		RESEARCH_ACCEPT
+			? `  research: per-study allowlist RESEARCH_ACCEPT=${RESEARCH_ACCEPT}`
+			: '  research: no per-study allowlist (every fielding study follows RESEARCH_OPEN)'
 	);
 	if (RESEARCH_DEV_STUDY) {
 		console.log('');

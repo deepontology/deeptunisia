@@ -111,6 +111,10 @@ export interface Copy {
 		q2Low: string;
 		q2High: string;
 		optional: string;
+		/** The optional governorate question; its options come from the instrument. */
+		q3: string;
+		q3Pick: string;
+		q3Note: string;
 		skip: string;
 		submit: string;
 		back: string;
@@ -138,12 +142,39 @@ export interface Copy {
 		receiptNote: string;
 		receiptLink: string;
 	};
+	/**
+	 * The live state of the study and the submission it can take. The design
+	 * strings above stay the prototype's; these are used once the registry says
+	 * the study is fielding, and the page says which of the two it is.
+	 */
+	study: {
+		chip: string;
+		statusPaused: string;
+		statusAccepting: string;
+		storedBody: string;
+		whoBody: string;
+		consentWithdrawal: string;
+		consentNote: string;
+		submit: string;
+		sending: string;
+		sent: string;
+		refused: string;
+		notOpen: string;
+		failed: string;
+		tooFast: string;
+		sendAgain: string;
+		prototypeView: string;
+		cardNote: string;
+		receiptTitle: string;
+		receiptNote: string;
+		receiptLink: string;
+	};
 	unit: string;
 	lines: Record<LineId, LineCopy>;
 }
 
 const en: Copy = {
-	prototype: 'Prototype · draft figures, not verified',
+	prototype: 'Prototype · 2027 draft figures, not verified',
 	unreviewed: null,
 	title: 'Citizen budget board',
 	status: 'Design prototype. Not fielded. Not collecting.',
@@ -154,12 +185,12 @@ const en: Copy = {
 			'How you would move money between the lines of the 2027 state budget, as a citizen. About five minutes. There is no right answer and no score.',
 		stored: 'What is stored',
 		storedBody:
-			'In this prototype, nothing. In the real study: your budget as shares of each line, two short answers, the version of the study and how long it took. No name, email, IP address or device details.',
+			'In this prototype, nothing. In the real study: your budget as shares of each line, two short answers, your governorate if you give it, the version of the study and how long it took. No name, email, IP address or device details.',
 		who: 'Who runs it',
 		whoBody: 'DeepTunisia. This is a design prototype. The study has not been approved and has not opened.',
 		figures: 'Where the figures come from',
 		figuresBody:
-			'Every 2027 figure on these screens is a draft figure reported by the press from the 2027 draft budget. None is checked against the official document. The real study will give the source and page for each line before it opens. The past years are the budgets as voted, read from the finance laws in the Journal Officiel.',
+			'Every 2027 figure on these screens is a draft figure reported by the press from the 2027 draft budget. None is checked against the official document. When the 2027 finance law is adopted, a new version of the study takes the adopted figures, each with its page. The past years are the budgets as voted, read from the finance laws in the Journal Officiel.',
 		sample: 'What the answers can and cannot say',
 		sampleBody:
 			'They describe the people who take part in an open, self-selected online survey of adults. They do not describe Tunisians as a whole.',
@@ -236,7 +267,7 @@ const en: Copy = {
 		coinLabel: 'Coins: one coin is 100 MD'
 	},
 	items: {
-		title: 'Two short questions',
+		title: 'Three short questions',
 		q1: 'Knowing that the gap is borrowed, should total spending be lower, the same, or higher?',
 		q1Lower: 'Lower',
 		q1Same: 'The same',
@@ -244,7 +275,10 @@ const en: Copy = {
 		q2: 'How much say do citizens have today over how the budget is spent? 0 means none, 10 means a lot.',
 		q2Low: 'None',
 		q2High: 'A lot',
-		optional: 'Optional. You can skip either question.',
+		optional: 'Optional. You can skip any question.',
+		q3: 'Which governorate do you live in?',
+		q3Pick: 'Choose, or leave it',
+		q3Note: 'Published only as one of seven regions, and only where at least 20 people answered.',
 		skip: 'Prefer not to say',
 		submit: 'See my result',
 		back: 'Back'
@@ -270,6 +304,31 @@ const en: Copy = {
 		receiptNote:
 			'In the real study this code would be your receipt and the only way to withdraw. Nothing was sent, so this code does nothing.',
 		receiptLink: 'What withdrawal would look like'
+	},
+	study: {
+		chip: 'Study · fielding',
+		statusPaused: 'The study is fielding, but it is not collecting answers right now.',
+		statusAccepting: 'The study is fielding and collecting answers.',
+		storedBody:
+			'Your budget as shares of each line, two short answers, your governorate if you give it, the version of the study and how long it took. No name, email, IP address or device details.',
+		whoBody:
+			'DeepTunisia. The study is fielding. The answers describe the people who take part in an open, self-selected online survey of adults.',
+		consentWithdrawal:
+			'I understand that I will receive a receipt code, and that I can withdraw my answers with it until the study window closes.',
+		consentNote: 'A receipt is shown at the end. Keep it: it is the only way to withdraw your answer while the study is open.',
+		submit: 'Send my answer',
+		sending: 'Sending your answer.',
+		sent: 'Your answer was stored.',
+		refused: 'The study is not collecting answers right now. Nothing was sent.',
+		notOpen: 'This study is not open for answers yet. Nothing was sent.',
+		failed: 'The answer could not be sent. Nothing was stored.',
+		tooFast: "You finished faster than the study's minimum time. Nothing was stored. Wait a moment and send again.",
+		sendAgain: 'Send again',
+		prototypeView: 'This empty-start view is a prototype. The study starts from the draft. Nothing was sent.',
+		cardNote: 'Draft figures, not verified.',
+		receiptTitle: 'Your receipt',
+		receiptNote: 'Keep this code. It is the only way to withdraw your answer while the study is open.',
+		receiptLink: 'Withdraw this answer'
 	},
 	unit: 'MD',
 	lines: {
@@ -307,7 +366,7 @@ const en: Copy = {
 
 const fr: Copy = {
 	...en,
-	prototype: 'Prototype · chiffres du projet, non vérifiés',
+	prototype: 'Prototype · chiffres du projet 2027, non vérifiés',
 	unreviewed: 'Traduction française provisoire, pas encore relue. Les nouveaux textes (groupes, aide, note de poste, plus grand écart) sont des brouillons intermédiaires.',
 	title: 'Plateau budgétaire du citoyen',
 	status: 'Prototype de conception. Non lancé. Aucune collecte.',
@@ -318,13 +377,13 @@ const fr: Copy = {
 			"Comment vous déplaceriez l'argent entre les lignes du budget de l'État 2027, en tant que citoyen. Environ cinq minutes. Il n'y a pas de bonne réponse et pas de score.",
 		stored: 'Ce qui est conservé',
 		storedBody:
-			"Dans ce prototype, rien. Dans l'étude réelle : votre budget en parts de chaque ligne, deux courtes réponses, la version de l'étude et sa durée. Ni nom, ni e-mail, ni adresse IP, ni détails de l'appareil.",
+			"Dans ce prototype, rien. Dans l'étude réelle : votre budget en parts de chaque ligne, deux courtes réponses, votre gouvernorat si vous le donnez, la version de l'étude et sa durée. Ni nom, ni e-mail, ni adresse IP, ni détails de l'appareil.",
 		who: 'Qui la mène',
 		whoBody:
 			"DeepTunisia. Il s'agit d'un prototype de conception. L'étude n'a pas été approuvée et n'est pas ouverte.",
 		figures: "D'où viennent les chiffres",
 		figuresBody:
-			"Chaque chiffre 2027 de ces écrans est un chiffre du projet rapporté par la presse pour le budget 2027. Aucun n'est vérifié sur le document officiel. L'étude réelle donnera la source et la page de chaque ligne avant son ouverture. Les années passées sont les budgets votés, lus dans les lois de finances au Journal officiel.",
+			"Chaque chiffre 2027 de ces écrans est un chiffre du projet rapporté par la presse pour le budget 2027. Aucun n'est vérifié sur le document officiel. Quand la loi de finances 2027 sera adoptée, une nouvelle version de l'étude prendra les chiffres adoptés, chacun avec sa page. Les années passées sont les budgets votés, lus dans les lois de finances au Journal officiel.",
 		sample: 'Ce que les réponses peuvent dire et ne peuvent pas dire',
 		sampleBody:
 			"Elles décrivent les personnes qui participent à une enquête en ligne ouverte et auto-sélectionnée auprès d'adultes. Elles ne décrivent pas les Tunisiens dans leur ensemble.",
@@ -409,7 +468,7 @@ const fr: Copy = {
 	},
 	items: {
 		...en.items,
-		title: 'Deux courtes questions',
+		title: 'Trois courtes questions',
 		q1: 'Sachant que le déficit est emprunté, la dépense totale devrait-elle être plus basse, identique ou plus haute ?',
 		q1Lower: 'Plus basse',
 		q1Same: 'Identique',
@@ -417,7 +476,10 @@ const fr: Copy = {
 		q2: "Quelle influence les citoyens ont-ils aujourd'hui sur la façon dont le budget est dépensé ? 0 signifie aucune, 10 signifie beaucoup.",
 		q2Low: 'Aucune',
 		q2High: 'Beaucoup',
-		optional: 'Facultatif. Vous pouvez sauter l’une ou l’autre question.',
+		optional: 'Facultatif. Vous pouvez sauter n’importe quelle question.',
+		q3: 'Dans quel gouvernorat vivez-vous ?',
+		q3Pick: 'Choisir, ou laisser vide',
+		q3Note: 'Publié seulement comme l’une de sept régions, et seulement là où au moins 20 personnes ont répondu.',
 		skip: 'Préfère ne pas répondre',
 		submit: 'Voir mon résultat',
 		back: 'Retour'
@@ -444,6 +506,32 @@ const fr: Copy = {
 		receiptNote:
 			"Dans l'étude réelle, ce code serait votre reçu et le seul moyen de retirer vos réponses. Rien n'a été envoyé, donc ce code ne fait rien.",
 		receiptLink: 'À quoi ressemblerait le retrait'
+	},
+	study: {
+		chip: 'Étude · en cours',
+		statusPaused: "L'étude est en cours, mais elle ne collecte pas de réponses pour le moment.",
+		statusAccepting: "L'étude est en cours et collecte des réponses.",
+		storedBody:
+			'Votre budget en parts de chaque ligne, deux réponses courtes, votre gouvernorat si vous le donnez, la version de l’étude et sa durée. Aucun nom, courriel, adresse IP ni détail d’appareil.',
+		whoBody:
+			'DeepTunisia. L’étude est en cours. Les réponses décrivent les personnes qui participent à une enquête en ligne ouverte et auto-sélectionnée auprès d’adultes.',
+		consentWithdrawal:
+			'Je comprends que je recevrai un code de reçu et que je pourrai retirer mes réponses avec ce code jusqu’à la clôture de l’étude.',
+		consentNote:
+			'Un reçu s’affiche à la fin. Conservez-le : c’est le seul moyen de retirer votre réponse pendant que l’étude est ouverte.',
+		submit: 'Envoyer ma réponse',
+		sending: 'Envoi de votre réponse.',
+		sent: 'Votre réponse a été enregistrée.',
+		refused: "L'étude ne collecte pas de réponses pour le moment. Rien n'a été envoyé.",
+		notOpen: "Cette étude n'est pas encore ouverte aux réponses. Rien n'a été envoyé.",
+		failed: "La réponse n'a pas pu être envoyée. Rien n'a été enregistré.",
+		tooFast: "Vous avez terminé plus vite que le temps minimum de l'étude. Rien n'a été conservé. Attendez un instant et renvoyez.",
+		sendAgain: 'Renvoyer',
+		prototypeView: "Cette vue avec une bourse vide est un prototype. L'étude part du projet. Rien n'a été envoyé.",
+		cardNote: 'Chiffres du projet, non vérifiés.',
+		receiptTitle: 'Votre reçu',
+		receiptNote: 'Conservez ce code. C’est le seul moyen de retirer votre réponse pendant que l’étude est ouverte.',
+		receiptLink: 'Retirer cette réponse'
 	},
 	unit: 'MD',
 	lines: {
@@ -481,7 +569,7 @@ const fr: Copy = {
 
 const ar: Copy = {
 	...en,
-	prototype: 'نموذج أولي · أرقام المشروع، لم يُتحقق منها',
+	prototype: 'نموذج أولي · أرقام مشروع 2027، لم يُتحقق منها',
 	unreviewed: 'ترجمة عربية مبدئية، لم يراجعها بعد متحدث أصلي. والنصوص الجديدة (المجموعات، والمساعدة، وملاحظة البند، وأكبر تغيير) مسودّات مبدئية.',
 	title: 'لوحة الخزينة للمواطن',
 	status: 'نموذج تصميمي. لم يُطلق. لا يجمع أي بيانات.',
@@ -492,12 +580,12 @@ const ar: Copy = {
 			'كيف ستنقل المال بين بنود ميزانية الدولة لسنة 2027، كمواطن. نحو خمس دقائق. لا توجد إجابة صحيحة ولا نقاط.',
 		stored: 'ما يُحفظ',
 		storedBody:
-			'في هذا النموذج الأوّلي، لا شيء. في الدراسة الحقيقية: ميزانيتك كنسب من كل بند، وإجابتان قصيرتان، ونسخة الدراسة ومدّتها. لا اسم، ولا بريد إلكتروني، ولا عنوان IP، ولا تفاصيل الجهاز.',
+			'في هذا النموذج الأوّلي، لا شيء. في الدراسة الحقيقية: ميزانيتك كنسب من كل بند، وإجابتان قصيرتان، وولايتك إن ذكرتها، ونسخة الدراسة ومدّتها. لا اسم، ولا بريد إلكتروني، ولا عنوان IP، ولا تفاصيل الجهاز.',
 		who: 'من يشرف عليها',
 		whoBody: 'DeepTunisia. هذا نموذج تصميمي. لم تُعتمد الدراسة ولم تُفتح.',
 		figures: 'من أين تأتي الأرقام',
 		figuresBody:
-			'كل رقم لسنة 2027 في هذه الشاشات رقم مؤقّت نقلته الصحافة عن مشروع ميزانية 2027. ولم يُتحقّق من أي منها في الوثيقة الرسمية. وستعطي الدراسة الحقيقية المصدر والصفحة لكل بند قبل فتحها. أمّا السنوات الماضية فهي الميزانيات كما صودق عليها، مأخوذة من قوانين المالية في الرائد الرسمي.',
+			'كل رقم لسنة 2027 في هذه الشاشات رقم مؤقّت نقلته الصحافة عن مشروع ميزانية 2027. ولم يُتحقّق من أي منها في الوثيقة الرسمية. وعند المصادقة على قانون المالية لسنة 2027، تأخذ نسخة جديدة من الدراسة الأرقام المصادق عليها، كلّ رقم مع صفحته. أمّا السنوات الماضية فهي الميزانيات كما صودق عليها، مأخوذة من قوانين المالية في الرائد الرسمي.',
 		sample: 'ما يمكن أن تقوله الإجابات وما لا يمكنها قوله',
 		sampleBody:
 			'تصف الأشخاص الذين يشاركون في استبيان إلكتروني مفتوح وقائم على الانتقاء الذاتي للبالغين. ولا تصف التونسيين في مجموعهم.',
@@ -580,7 +668,7 @@ const ar: Copy = {
 	},
 	items: {
 		...en.items,
-		title: 'سؤالان قصيران',
+		title: 'ثلاثة أسئلة قصيرة',
 		q1: 'مع العلم أن الفجوة تُقترض، هل ينبغي أن تكون النفقات الإجمالية أقل أم نفسها أم أعلى؟',
 		q1Lower: 'أقل',
 		q1Same: 'نفسها',
@@ -588,7 +676,10 @@ const ar: Copy = {
 		q2: 'ما مدى تأثير المواطنين اليوم في طريقة إنفاق الميزانية؟ 0 يعني لا تأثير، و10 يعني تأثيرًا كبيرًا.',
 		q2Low: 'لا تأثير',
 		q2High: 'تأثير كبير',
-		optional: 'اختياري. يمكنك تخطّي أي من السؤالين.',
+		optional: 'اختياري. يمكنك تخطّي أي سؤال.',
+		q3: 'في أيّ ولاية تقيم؟',
+		q3Pick: 'اختر، أو اتركه فارغًا',
+		q3Note: 'يُنشر فقط كواحد من سبعة أقاليم، وفقط حيث أجاب 20 شخصًا على الأقل.',
 		skip: 'أفضّل عدم الإجابة',
 		submit: 'اعرض نتيجتي',
 		back: 'رجوع'
@@ -614,6 +705,30 @@ const ar: Copy = {
 		receiptTitle: 'إيصال النموذج الأوّلي',
 		receiptNote: 'في الدراسة الحقيقية سيكون هذا الرمز إيصالك والطريق الوحيد لسحب إجاباتك. لم يُرسل شيء، فهذا الرمز لا يفعل شيئًا.',
 		receiptLink: 'كيف سيكون السحب'
+	},
+	study: {
+		chip: 'دراسة · قيد الميدان',
+		statusPaused: 'الدراسة قيد الميدان، لكنها لا تجمع إجابات الآن.',
+		statusAccepting: 'الدراسة قيد الميدان وتجمع الإجابات.',
+		storedBody:
+			'ميزانيتك كنسب من كل بند، وإجابتان قصيرتان، وولايتك إن ذكرتها، ونسخة الدراسة ومدتها. لا اسم ولا بريد إلكتروني ولا عنوان IP ولا تفاصيل جهاز.',
+		whoBody:
+			'DeepTunisia. الدراسة قيد الميدان. تصف الإجابات الأشخاص الذين شاركوا في استبيان مفتوح عبر الإنترنت يختار المشاركون أنفسهم، بين بالغين.',
+		consentWithdrawal: 'أفهم أنني سأحصل على رمز إيصال، وأنه يمكنني سحب إجاباتي به حتى إغلاق نافذة الدراسة.',
+		consentNote: 'يظهر الإيصال في النهاية. احتفظ به: إنه الطريقة الوحيدة لسحب إجابتك أثناء بقاء الدراسة مفتوحة.',
+		submit: 'أرسل إجابتي',
+		sending: 'جارٍ إرسال إجابتك.',
+		sent: 'تم تخزين إجابتك.',
+		refused: 'الدراسة لا تجمع إجابات الآن. لم يُرسل شيء.',
+		notOpen: 'هذه الدراسة ليست مفتوحة للإجابات بعد. لم يُرسل شيء.',
+		failed: 'تعذّر إرسال الإجابة. لم يُخزَّن شيء.',
+		tooFast: 'أنهيت أسرع من الحدّ الأدنى لوقت الدراسة. لم يُخزَّن شيء. انتظر قليلًا ثم أرسل مرة أخرى.',
+		sendAgain: 'أرسل مرة أخرى',
+		prototypeView: 'هذا العرض ببداية فارغة نموذج أوّلي. تبدأ الدراسة من المشروع. لم يُرسل شيء.',
+		cardNote: 'أرقام المشروع، لم يُتحقق منها.',
+		receiptTitle: 'إيصالك',
+		receiptNote: 'احتفظ بهذا الرمز. إنه الطريقة الوحيدة لسحب إجابتك أثناء بقاء الدراسة مفتوحة.',
+		receiptLink: 'اسحب هذه الإجابة'
 	},
 	unit: 'م.د',
 	lines: {

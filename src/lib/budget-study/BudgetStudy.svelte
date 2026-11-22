@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { app } from '$lib/state.svelte';
 	import Ruler from '$lib/index-study/Ruler.svelte';
 	import { FIGURES, HISTORY, type FigureRow } from './figures';
@@ -46,7 +47,6 @@
 	const LANDING_URL = 'https://deeptunisia.org/research/citizen-budget';
 	const BOARD_URL = '/research/citizen-budget/prototype';
 
-	const sec = $derived(Object.fromEntries(copy.sections.map((s) => [s.id, s])) as Record<LandingSection['id'], LandingSection>);
 	const sections = $derived(copy.sections.map((s) => ({ id: `sec-${s.id}`, num: s.num, label: s.label })));
 	let currentId = $state('sec-question');
 	const current = $derived(sections.find((s) => s.id === currentId) ?? sections[0]);
@@ -148,6 +148,64 @@
 
 	/** The preview card built by scripts/build-og-images.ts, like the police index's. */
 	const OG_IMAGE = 'https://deeptunisia.org/og/citizen-budget.png';
+
+	/**
+	 * The live state of the study. The page is prerendered with the registry, so
+	 * it can say "in design" with no API; the server's answer replaces that when
+	 * it arrives, and the count is the one figure the page takes from the server.
+	 * The count is a public read and names nobody.
+	 */
+	let liveStatus = $state<string | null>(null);
+	let liveAccepting = $state<boolean | null>(null);
+	let count = $state<number | null>(null);
+	const pageStatus = $derived(liveStatus ?? study.status);
+	const accepting = $derived(liveAccepting ?? pageStatus === 'fielding');
+	const pageState = $derived<'design' | 'paused' | 'accepting'>(
+		pageStatus === 'fielding' ? (accepting ? 'accepting' : 'paused') : 'design'
+	);
+	const sec = $derived(
+		Object.fromEntries(
+			copy.sections.map((s) => {
+				if (pageState === 'design') return [s.id, s];
+				const over = s.id === 'take' && pageState === 'paused' ? copy.live.takePaused : copy.live.sections[s.id];
+				return [s.id, over ? { ...s, ...over } : s];
+			})
+		) as Record<LandingSection['id'], LandingSection>
+	);
+	const recordFacts = $derived(pageState === 'design' ? copy.recordFacts : copy.live.recordFacts);
+	const withdrawalBody = $derived(pageState === 'design' ? copy.withdrawal.body : copy.live.withdrawal);
+	const shareText = $derived(pageState === 'design' ? copy.share.text : copy.live.share);
+	const statusLabel = $derived(
+		pageState === 'accepting' ? copy.statusLive : pageState === 'paused' ? copy.statusPaused : copy.status
+	);
+	const countLabel = $derived(pageState === 'design' ? '0' : count === null ? '?' : String(count));
+	const countNoun = $derived(count === 1 ? copy.tally.answer : copy.tally.answers);
+	const stripNote = $derived(
+		pageState === 'accepting'
+			? count === null
+				? copy.countUnknown
+				: copy.countNote(count)
+			: pageState === 'paused'
+				? copy.pausedNote
+				: copy.notCollecting
+	);
+	const ctaNote = $derived(pageState === 'design' ? copy.ctaNote : copy.ctaNoteLive);
+
+	onMount(() => {
+		void fetch('/api/studies/citizen-budget')
+			.then((r) => (r.ok ? r.json() : null))
+			.then((body) => {
+				if (body?.study?.status) liveStatus = body.study.status;
+				if (typeof body?.study?.accepting === 'boolean') liveAccepting = body.study.accepting;
+			})
+			.catch(() => {});
+		void fetch('/api/studies/citizen-budget/count')
+			.then((r) => (r.ok ? r.json() : null))
+			.then((body) => {
+				if (typeof body?.count === 'number') count = body.count;
+			})
+			.catch(() => {});
+	});
 </script>
 
 <svelte:head>
@@ -178,9 +236,9 @@
 				<span class="sec-num">{current?.num}</span><span class="sec-slash">/</span>{current?.label}
 			</span>
 			<span class="secbar-end">
-				<span class="secbar-status">CB · {copy.status}</span>
+				<span class="secbar-status">CB · {statusLabel}</span>
 				<!-- Share the page, never the current location, as on the police index. -->
-				<ShareMenu url={LANDING_URL} title={copy.title} text={copy.share.text} heading={copy.share.heading} label={copy.share.heading} />
+				<ShareMenu url={LANDING_URL} title={copy.title} text={shareText} heading={copy.share.heading} label={copy.share.heading} />
 			</span>
 		</div>
 
@@ -194,7 +252,7 @@
 						<p class="hook">{copy.hook}</p>
 						<p class="cover-line">{copy.cover}</p>
 						<p class="meta">
-							<span class="tag mono"><span class="dot" aria-hidden="true"></span>{copy.status}</span>
+							<span class="tag mono"><span class="dot" aria-hidden="true"></span>{statusLabel}</span>
 							<a class="cta" href={BOARD_URL}>{copy.ctaBoard}</a>
 						</p>
 					</div>
@@ -210,7 +268,7 @@
 			</header>
 
 			<!-- The count strip. -->
-			<section class="strip" aria-label={copy.status}>
+			<section class="strip" aria-label={statusLabel}>
 				<dl class="tally">
 					{#each tally as item (item.label)}
 						<div>
@@ -219,7 +277,7 @@
 						</div>
 					{/each}
 				</dl>
-				<p class="strip-note"><span class="mono zero">0 {copy.tally.answers}</span> {copy.notCollecting}</p>
+				<p class="strip-note"><span class="mono zero">{countLabel} {countNoun}</span> {stripNote}</p>
 			</section>
 
 			<div class="body">
@@ -255,7 +313,7 @@
 							names={Object.fromEntries(demoLines.map((l) => [l.id, names.lines[l.id].name]))}
 							words={{ ...copy.demo, plan: bc.plan, yours: bc.yours, more: bc.more, less: bc.less, same: bc.same, legendPlan: bc.legendPlan, legendYours: bc.legendYours, unit: copy.unit, took: bc.took, gave: bc.gave, moved: bc.moved }}
 						/>
-						<p><a class="cta" href={BOARD_URL}>{copy.demo.fullBoard}</a> <span class="note">{copy.ctaNote}</span></p>
+						<p><a class="cta" href={BOARD_URL}>{copy.demo.fullBoard}</a> <span class="note">{ctaNote}</span></p>
 					</div>
 
 					<div class="example">
@@ -294,6 +352,7 @@
 					<p class="sec-kicker mono">{sec.figures.num} / {sec.figures.label}</p>
 					<h2>{sec.figures.heading}</h2>
 					{#each sec.figures.body as p, i (i)}<p>{p}</p>{/each}
+					<p class="note figures-legend">{copy.figures.auditLegend}</p>
 					<div class="table-scroll wide">
 						<table class="figures">
 							<caption>{copy.figures.pastHeading}</caption>
@@ -308,7 +367,7 @@
 									<th scope="col">{copy.figures.system}</th>
 									{#each HISTORY as h (h.year)}<th scope="col" class="past">{copy.figures.adopted(String(h.year))}</th>{/each}
 									<th scope="col">{copy.figures.draft}</th>
-									<th scope="col" class="status-col">{copy.figures.status}</th>
+									<th scope="col" class="status-col past">{copy.figures.status}</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -454,7 +513,7 @@
 					<h2>{sec.stored.heading}</h2>
 					{#each sec.stored.body as p, i (i)}<p>{p}</p>{/each}
 					<h3 id="withdrawal">{copy.withdrawal.heading}</h3>
-					<p>{copy.withdrawal.body}</p>
+					<p>{withdrawalBody}</p>
 				</section>
 
 				<!-- 07 -->
@@ -473,7 +532,7 @@
 					<h2>{sec.record.heading}</h2>
 					{#each sec.record.body as p, i (i)}<p>{p}</p>{/each}
 					<dl class="record">
-						{#each copy.recordFacts as fact (fact.label)}
+						{#each recordFacts as fact (fact.label)}
 							<div><dt class="mono">{fact.label}</dt><dd>{fact.value}</dd></div>
 						{/each}
 					</dl>
@@ -489,7 +548,7 @@
 					<h2>{sec.take.heading}</h2>
 					{#each sec.take.body as p, i (i)}<p>{p}</p>{/each}
 					<p><a class="cta" href={BOARD_URL}>{copy.ctaBoard}</a></p>
-					<p class="mono small">{copy.ctaNote}</p>
+					<p class="mono small">{ctaNote}</p>
 				</div>
 			</section>
 		</article>
@@ -781,6 +840,11 @@
 		font-size: var(--t-base);
 		color: var(--text-muted);
 	}
+	.figures-legend {
+		margin-block: var(--s-4) var(--s-2);
+		font-size: var(--t-sm);
+		line-height: 1.5;
+	}
 	/* The revenue block sits inside the figures section: same subject, second table. */
 	.revenue {
 		display: grid;
@@ -1022,6 +1086,13 @@
 		font-size: var(--t-xs);
 		white-space: nowrap;
 		color: var(--text-secondary);
+	}
+	/* The draft status is a sentence now, not a two-word tag: let it wrap in the
+	   narrow status column and in the phone row header instead of overflowing. */
+	.status-col .chip,
+	.chip.status-mobile {
+		white-space: normal;
+		line-height: 1.25;
 	}
 	.example {
 		margin-block-start: var(--s-9);

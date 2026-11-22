@@ -40,6 +40,7 @@ PORT=5311 RESEARCH_OPEN=1 RESEARCH_DEV_STUDY=democracy npx tsx community/server.
 ```
 
 - `RESEARCH_OPEN=1` opens writes (without it, submit returns 403).
+- `RESEARCH_ACCEPT=<slug or id,...>` is the per-study allowlist. Unset (the deployed state) leaves `RESEARCH_OPEN` alone to decide; set, it admits only the studies it names. Locally, run the server twice with two values to see one study open and the other untouched.
 - `RESEARCH_DEV_STUDY=<slug or id>` makes that one study behave as `fielding` for reads of its own endpoint and for submit and withdraw. The list endpoint still reports the declared status, and the registry is never rewritten.
 - The bot challenge is skipped for that study, because no Turnstile secret exists locally.
 - The MaxDiff requirement is waived for that study, because the forced-choice design is not generated yet.
@@ -101,7 +102,7 @@ The community store's `rate_buckets` table is shared for rate limiting across bo
 | 1 | Body parses, capped at 20,000 bytes | 400 |
 | 2 | Study exists in the compiled registry | 404 |
 | 3 | Effective status is `fielding` (or dev override) | 409 |
-| 4 | `RESEARCH_OPEN === '1'` | 403 |
+| 4 | `RESEARCH_OPEN === '1'`, and the study is named by `RESEARCH_ACCEPT` when that list is set | 403 |
 | 5 | Research store is bound | 503 |
 | 6 | Honeypot fields empty | 400 |
 | 7 | Bot challenge: the first-party proof of work by default, or the Cloudflare human check when both its keys are set (skipped only under dev override) | 403 / 503 |
@@ -140,7 +141,7 @@ To put research in production, four changes, each mechanical:
 
 1. Create the research D1 database and add the `RESEARCH_DB` binding (a commented example sits in `wrangler.toml`).
 2. Apply `community/research-schema.sql` to it (`wrangler d1 execute`).
-3. Set `RESEARCH_OPEN=1` for the fielding window and remove it at close.
+3. Set `RESEARCH_OPEN=1` for the fielding window and remove it at close. To open one study without touching another, set the per-study list instead: `printf 'police,citizen-budget' | wrangler secret put RESEARCH_ACCEPT`. Unset means `RESEARCH_OPEN` alone decides, as before.
 4. The human-check switch is off by default; run on the first-party proof of work by leaving both Turnstile variables unset, and switch it on for an attack as described below.
 
 **The human-check switch (Cloudflare Turnstile).** Off by default; the default is the first-party proof-of-work puzzle, with no request to any other company. The switch opens only when BOTH a secret and a public site key are set, and it is meant for the duration of an attack, off again afterwards.

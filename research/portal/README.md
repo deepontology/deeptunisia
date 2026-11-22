@@ -116,7 +116,7 @@ The submit API is a new module beside `community/`, sharing its constraints but 
 
 Constraints:
 
-- A `RESEARCH_OPEN` flag gates writes, separate from `AGORA_OPEN`. No public surface may describe a study as open while the flag is off.
+- A `RESEARCH_OPEN` flag gates writes, separate from `AGORA_OPEN`, and `RESEARCH_ACCEPT` narrows it per study when set. No public surface may describe a study as open while its gate is off.
 - The server validates every submitted item id against the frozen instrument hash, so a response against a changed instrument is rejected.
 - Turnstile (or the chosen CAPTCHA) and edge rate limiting run before a row is written; a honeypot field and a minimum completion time are checked at write time.
 - Stored payload: the fields listed at the end of `instrument-v0.yaml`. Nothing else. No free-text field other than `open_definition`, length-capped and purged after coding.
