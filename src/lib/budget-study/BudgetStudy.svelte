@@ -359,7 +359,7 @@
 								<li lang="fr" dir="ltr">
 									<span class="src-name">{h.year}</span>
 									<span class="mono">{fmtMd(h.total_md)} {copy.unit}</span>
-									<span class="src"><a href={h.url} rel="noopener noreferrer">{h.document}</a>. {h.source}, pages {Math.min(...Object.values(h.missions).map((m) => m.page))} to {Math.max(...Object.values(h.missions).map((m) => m.page))}.</span>
+									<span class="src"><a href={h.url} rel="noopener noreferrer">{h.document}</a>. {h.source}, pages {Math.min(...Object.values(h.missions).map((m) => m.page))} à {Math.max(...Object.values(h.missions).map((m) => m.page))}.</span>
 								</li>
 							{/each}
 						</ul>
@@ -415,7 +415,7 @@
 									<li lang="fr" dir="ltr">
 										<span class="src-name">{r.year}</span>
 										<span class="mono">{fmtMd(r.tax_md)} / {fmtMd(r.own_md)} {copy.unit}</span>
-										<span class="src"><a href={r.url} rel="noopener noreferrer">{r.document}</a>. {r.source}. Tableau A, page {r.tableau_a_page}. Crop: {r.crop}; tableau A crop: {r.tableau_a_crop}.</span>
+										<span class="src"><a href={r.url} rel="noopener noreferrer">{r.document}</a>. {r.source}. Tableau A, page {r.tableau_a_page}. Recadrage : {r.crop} ; recadrage du tableau A : {r.tableau_a_crop}.</span>
 									</li>
 								{/each}
 							</ul>
