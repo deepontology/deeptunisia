@@ -3,6 +3,15 @@
 **Status:** frozen 2026-09-14, for the build now in progress. Workshop document.
 **Scope:** runtime instrument contract, submission API, storage, and the route/i18n surface. This narrows the route list in `README.md` §8 for the first slice: methodology, data, results and paper render as sections on the study page until they have content worth a route.
 
+**Amendment 2026-11-17: per-study acceptance.** Step 4 of the submit ladder is
+now "the submission gate is open for this study": `RESEARCH_OPEN === '1'`, and,
+when `RESEARCH_ACCEPT` is set, the study is named in that comma-separated list of
+slugs or ids. With `RESEARCH_ACCEPT` unset the gate is exactly the old
+`RESEARCH_OPEN === '1'`, so a deploy that does not set the list changes no
+study's answer. The `accepting` flag on the study read uses the same predicate.
+Nothing else in this contract changed; the refusal is still `403` with
+`submissions are closed`, and the order of the ladder is unchanged.
+
 ---
 
 ## 1. Why a shared contract module

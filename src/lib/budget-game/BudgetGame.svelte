@@ -8,23 +8,45 @@
 	import BudgetBoard from './BudgetBoard.svelte';
 	import { fmtMd, signed } from './SystemRow.svelte';
 	import { boardCopyFor } from './board-copy';
+	import { startProofOfWork, type BotCheck } from '$lib/pow';
+	import {
+		budgetAnswers,
+		channelFromLocation,
+		readLiveStudy,
+		submissionPayload,
+		submitResponse,
+		tunisiaMonth,
+		type Assignment
+	} from '$lib/research-submit';
+	import type { RuntimeInstrument, StudyRecord } from '$lib/research';
 
 	/**
-	 * The citizen budget prototype: consent, framing, the Treasury board, two
-	 * questions, and a result card. Nothing is sent or stored. The submit step
-	 * shows the result and stops.
+	 * The citizen budget board: consent, framing, the Treasury board, two
+	 * questions, and the result card.
+	 *
+	 * The result card is the submission step. On a draft start it posts the
+	 * board's answers to the study's submit route and shows what the server
+	 * said: a real receipt when the study is accepting, or one honest line when
+	 * it is in design or the gate is closed. The empty-purse view is a prototype
+	 * only and posts nothing. The build-time study renders the page with no API;
+	 * the live read decides which state the page is in.
 	 */
 	let {
 		start = 'draft',
 		rule = DEFAULT_RULE,
+		study,
+		instrument,
 		onstep
 	}: {
 		start?: StartMode;
 		rule?: MoveRule;
+		study: StudyRecord;
+		instrument: RuntimeInstrument | null;
 		onstep?: (step: string) => void;
 	} = $props();
 
 	type Step = 'intro' | 'frame' | 'board' | 'items' | 'card' | 'out';
+	type Phase = 'idle' | 'sending' | 'sent' | 'refused' | 'not-open' | 'too-fast' | 'failed';
 	const STEPS: Exclude<Step, 'out'>[] = ['intro', 'frame', 'board', 'items', 'card'];
 
 	const c = $derived(copyFor(app.locale));
@@ -43,9 +65,65 @@
 	let q1 = $state<'lower' | 'same' | 'higher' | 'skip' | null>(null);
 	let q2 = $state<number | null>(null);
 	let q2Skipped = $state(false);
+	let region = $state<string>('');
 	let showUnchanged = $state(false);
-	let receipt = $state<string | null>(null);
 	let headingEl = $state<HTMLElement | undefined>(undefined);
+	let openedAt = $state(Date.now());
+
+	// The live study and the submission.
+	let liveStudy = $state<StudyRecord | null>(null);
+	let liveInstrument = $state<RuntimeInstrument | null>(null);
+	let assignment = $state<Assignment | null>(null);
+	let check: Promise<BotCheck> | null = null;
+	let phase = $state<Phase>('idle');
+	let receipt = $state<string | null>(null);
+	let sending = $state(false);
+	const answeredKey = 'deeptunisia:research:citizen-budget:answered';
+	let answeredMonth = $state<string | null>(null);
+
+	// The optional human check. Off by default; the challenge carries its public
+	// site key only when the operator has switched it on.
+	interface Turnstile {
+		render(container: HTMLElement, options: { sitekey: string; callback?: (token: string) => void }): string;
+		reset(widgetId?: string): void;
+	}
+	const turnstileApi = (): Turnstile | undefined => (window as Window & { turnstile?: Turnstile }).turnstile;
+	let turnstileSiteKey = $state<string | null>(null);
+	let turnstileToken = $state<string | null>(null);
+	let turnstileBox = $state<HTMLDivElement | null>(null);
+	let widgetId = $state<string | null>(null);
+	let widgetInto = $state<HTMLDivElement | null>(null);
+	let turnstileLoaded = $state(false);
+	let tokenReady: (() => void) | null = null;
+
+	const currentStudy = $derived(liveStudy ?? study);
+	const currentInstrument = $derived(liveInstrument ?? instrument);
+	const studyStatus = $derived(currentStudy?.status ?? 'design');
+	const accepting = $derived(currentStudy?.accepting ?? (studyStatus === 'fielding'));
+	const studyState = $derived<'design' | 'paused' | 'accepting'>(
+		studyStatus === 'fielding' ? (accepting ? 'accepting' : 'paused') : 'design'
+	);
+	const design = $derived(studyState === 'design');
+	const stateChip = $derived(design ? c.prototype : c.study.chip);
+	const stateStatus = $derived(
+		studyState === 'accepting' ? c.study.statusAccepting : studyState === 'paused' ? c.study.statusPaused : c.status
+	);
+	const storedBody = $derived(design ? c.intro.storedBody : c.study.storedBody);
+	const whoBody = $derived(design ? c.intro.whoBody : c.study.whoBody);
+	const consentWithdrawal = $derived(design ? c.intro.consentWithdrawal : c.study.consentWithdrawal);
+	const consentNote = $derived(design ? c.intro.consentNote : c.study.consentNote);
+	const cardNote = $derived(design ? c.card.note : c.study.cardNote);
+	const itemsSubmitLabel = $derived(
+		start === 'empty' || design ? c.items.submit : sending ? c.study.sending : c.study.submit
+	);
+	const answeredThisMonth = $derived(answeredMonth !== null && answeredMonth === tunisiaMonth());
+
+	/** The governorate options and their labels, read from the instrument so the stored ids are its ids. */
+	const regionItem = $derived(currentInstrument?.items.find((item) => item.id === 'demo_governorate'));
+	const regionLabel = (id: string): string =>
+		regionItem?.optionLabels?.[app.locale === 'fr' || app.locale === 'ar' ? app.locale : 'en']?.[id] ??
+		regionItem?.optionLabels?.en?.[id] ??
+		id;
 
 	const stepIndex = $derived(step === 'out' ? -1 : STEPS.indexOf(step));
 
@@ -90,6 +168,101 @@
 	const cut = $derived(changed.length && changed[changed.length - 1].delta < 0 ? changed[changed.length - 1] : null);
 	const totalSame = $derived(Math.abs(spentTotal - draftTotal) < 0.5);
 
+	function startCheck() {
+		const pending = startProofOfWork('citizen-budget');
+		check = pending;
+		void pending.then((bot) => {
+			if (turnstileSiteKey === null) turnstileSiteKey = bot.turnstileSiteKey;
+		});
+	}
+
+	function markAnswered() {
+		answeredMonth = tunisiaMonth();
+		try {
+			localStorage.setItem(answeredKey, answeredMonth);
+		} catch {
+			/* Private mode: the notice simply never appears. */
+		}
+	}
+
+	async function send() {
+		if (sending) return;
+		if (start !== 'draft') {
+			go('card');
+			return;
+		}
+		// A design study stores nothing, and the consent text a design reader sees
+		// says so. Sending the answers anyway would make that text false and would
+		// open a race with the freeze deploy: a page loaded in design could store
+		// under design consent if the switch came up before the button. So a
+		// design state never reaches the network, and the card says the honest
+		// thing. The empty-purse view above is the same rule for the other
+		// prototype view.
+		if (design) {
+			phase = 'not-open';
+			go('card');
+			return;
+		}
+		const allocation = result ? toAllocation(board, result) : null;
+		const current = currentInstrument;
+		if (!allocation || !current) {
+			phase = 'failed';
+			go('card');
+			return;
+		}
+		sending = true;
+		phase = 'sending';
+		try {
+			const bot = check ? await check : null;
+			const pow = bot?.proof ?? null;
+			if (turnstileSiteKey && widgetId !== null && turnstileToken === null) {
+				await new Promise<void>((resolve) => {
+					tokenReady = resolve;
+					setTimeout(resolve, 5000);
+				});
+			}
+			const payload = submissionPayload({
+				instrument: current,
+				locale: app.locale === 'fr' || app.locale === 'ar' ? app.locale : 'en',
+				channel: channelFromLocation(window.location.search),
+				startedAt: openedAt,
+				completionMs: Date.now() - openedAt,
+				answers: budgetAnswers({ readInfo, withdrawal, adult, allocation, q1, q2, region: region || null }),
+				assignment,
+				pow,
+				turnstileToken: turnstileSiteKey ? (turnstileToken ?? '') : undefined,
+				revision: answeredThisMonth ? 'same-device' : undefined
+			});
+			const res = await submitResponse('citizen-budget', payload);
+			if (res.ok) {
+				receipt = res.receipt;
+				phase = 'sent';
+				markAnswered();
+			} else if (res.status === 400 && res.error === 'the completion time is below the study minimum') {
+				// The floor is a data-quality rule, not a network failure. Keep the
+				// answer on screen, say what happened, and leave the send button so a
+				// reader who waited the floor out can send the same answer again.
+				phase = 'too-fast';
+			} else if (res.status === 403 && res.error === 'submissions are closed') {
+				phase = 'refused';
+			} else if (res.status === 409) {
+				phase = 'not-open';
+			} else {
+				phase = 'failed';
+			}
+		} catch {
+			phase = 'failed';
+		} finally {
+			sending = false;
+			if (!receipt && accepting) startCheck();
+			if (turnstileSiteKey && widgetId !== null) {
+				turnstileApi()?.reset(widgetId);
+				turnstileToken = null;
+			}
+			go('card');
+		}
+	}
+
 	function restart() {
 		result = null;
 		q1 = null;
@@ -98,23 +271,72 @@
 		adult = false;
 		readInfo = false;
 		withdrawal = false;
+		receipt = null;
+		phase = 'idle';
+		openedAt = Date.now();
 		go('intro');
 	}
 
 	onMount(() => {
-		const bytes = new Uint8Array(4);
-		if (globalThis.crypto?.getRandomValues) globalThis.crypto.getRandomValues(bytes);
-		else for (let i = 0; i < bytes.length; i++) bytes[i] = Math.floor(Math.random() * 256);
-		receipt = 'CB-PROTO-' + Array.from(bytes, (b) => b.toString(16).padStart(2, '0')).join('').toUpperCase().slice(0, 6);
+		openedAt = Date.now();
+		try {
+			answeredMonth = localStorage.getItem(answeredKey);
+		} catch {
+			answeredMonth = null;
+		}
+		void (async () => {
+			const live = await readLiveStudy('citizen-budget');
+			if (live) {
+				liveStudy = live.study;
+				liveInstrument = live.instrument;
+				assignment = live.assignment;
+			}
+			const takes = live?.study.accepting ?? live?.study.status === 'fielding';
+			if (takes) startCheck();
+		})();
+	});
+
+	// Load the human-check script quietly, and only when the challenge carried a
+	// site key. With the check off this loads nothing and contacts no other origin.
+	$effect(() => {
+		if (!turnstileSiteKey) return;
+		if (turnstileApi()) {
+			turnstileLoaded = true;
+			return;
+		}
+		const existing = document.querySelector<HTMLScriptElement>('script[data-turnstile]');
+		if (existing) {
+			existing.addEventListener('load', () => (turnstileLoaded = true));
+			return;
+		}
+		const script = document.createElement('script');
+		script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+		script.dataset.turnstile = '';
+		script.async = true;
+		script.addEventListener('load', () => (turnstileLoaded = true));
+		document.head.append(script);
+	});
+
+	$effect(() => {
+		if (!turnstileLoaded || !turnstileSiteKey || !turnstileBox || widgetInto === turnstileBox) return;
+		widgetId = turnstileApi()!.render(turnstileBox, {
+			sitekey: turnstileSiteKey,
+			callback: (token) => {
+				turnstileToken = token;
+				tokenReady?.();
+				tokenReady = null;
+			}
+		});
+		widgetInto = turnstileBox;
 	});
 </script>
 
 <div class="game research-type" class:playing={step === 'board'} {dir} lang={app.locale}>
 	{#if step !== 'board'}
 		<header class="hero">
-			<p class="chip">{c.prototype}</p>
+			<p class="chip">{stateChip}</p>
 			<h1>{c.title}</h1>
-			<p class="status">{c.status}</p>
+			<p class="status">{stateStatus}</p>
 			{#if c.unreviewed}
 				<p class="unreviewed">{c.unreviewed}</p>
 			{/if}
@@ -134,9 +356,9 @@
 			<h2 id="h-about">{c.intro.whatWeAsk}</h2>
 			<p>{c.intro.whatWeAskBody}</p>
 			<h3>{c.intro.stored}</h3>
-			<p>{c.intro.storedBody}</p>
+			<p>{storedBody}</p>
 			<h3>{c.intro.who}</h3>
-			<p>{c.intro.whoBody}</p>
+			<p>{whoBody}</p>
 			<h3>{c.intro.figures}</h3>
 			<p>{c.intro.figuresBody}</p>
 			<h3>{c.intro.sample}</h3>
@@ -150,9 +372,9 @@
 			}}
 		>
 			<label class="check"><input type="checkbox" bind:checked={readInfo} /><span>{c.intro.consentRead}</span></label>
-			<label class="check"><input type="checkbox" bind:checked={withdrawal} /><span>{c.intro.consentWithdrawal}</span></label>
+			<label class="check"><input type="checkbox" bind:checked={withdrawal} /><span>{consentWithdrawal}</span></label>
 			<label class="check"><input type="checkbox" bind:checked={adult} /><span>{c.intro.consentAge}</span></label>
-			<p class="consent-note">{c.intro.consentNote}</p>
+			<p class="consent-note">{consentNote}</p>
 			<div class="actions">
 				<button class="cta" type="submit" disabled={!readInfo || !withdrawal}>{c.intro.start}</button>
 			</div>
@@ -182,7 +404,7 @@
 	{/if}
 
 	{#if step === 'board'}
-		<BudgetBoard mode={start} {rule} resume={result} {onfinish} />
+		<BudgetBoard mode={start} {rule} resume={result} live={studyState} {onfinish} />
 	{/if}
 
 	{#if step === 'items'}
@@ -207,9 +429,24 @@
 				</div>
 				<p class="note scale-ends"><span>{c.items.q2Low}</span><span>{c.items.q2High}</span></p>
 			</fieldset>
+			{#if regionItem?.options?.length}
+				<div class="q region">
+					<label for="region">{c.items.q3}</label>
+					<select id="region" bind:value={region} aria-describedby="region-note">
+						<option value="">{c.items.q3Pick}</option>
+						{#each regionItem.options as id (id)}
+							<option value={id}>{regionLabel(id)}</option>
+						{/each}
+					</select>
+					<p class="note" id="region-note">{c.items.q3Note}</p>
+				</div>
+			{/if}
+			{#if turnstileSiteKey}
+				<div class="turnstile" bind:this={turnstileBox}></div>
+			{/if}
 			<div class="actions">
 				<button class="quiet" type="button" onclick={() => go('board')}>{c.items.back}</button>
-				<button class="cta" type="button" onclick={() => go('card')}>{c.items.submit}</button>
+				<button class="cta" type="button" onclick={() => void send()} disabled={sending}>{itemsSubmitLabel}</button>
 			</div>
 		</section>
 	{/if}
@@ -217,7 +454,7 @@
 	{#if step === 'card'}
 		<section class="block">
 			<h2 bind:this={headingEl} tabindex="-1">{c.card.title}</h2>
-			<p class="note">{c.card.note}</p>
+			<p class="note">{cardNote}</p>
 			{#if kept || changed.length === 0}
 				<p>{c.card.keptDraft}</p>
 			{:else}
@@ -300,13 +537,32 @@
 					</table>
 				</div>
 			</details>
-			<div class="receipt">
-				<p class="receipt-title">{c.card.receiptTitle}</p>
-				<p class="receipt-code num">{receipt ?? 'CB-PROTO-········'}</p>
-				<p class="receipt-note">{c.card.receiptNote}</p>
-				<a class="receipt-link" href="/research/citizen-budget#withdrawal">{c.card.receiptLink}</a>
-			</div>
-			<p class="note">{c.card.stop}</p>
+			{#if start === 'empty'}
+				<p class="note" role="status">{c.study.prototypeView}</p>
+			{:else if design}
+				<p class="note" role="status">{c.study.notOpen}</p>
+			{:else if phase === 'sending'}
+				<p class="note" role="status">{c.study.sending}</p>
+			{:else if phase === 'sent' && receipt}
+				<p class="note" role="status">{c.study.sent}</p>
+				<div class="receipt">
+					<p class="receipt-title">{c.study.receiptTitle}</p>
+					<p class="receipt-code num">{receipt}</p>
+					<p class="receipt-note">{c.study.receiptNote}</p>
+					<a class="receipt-link" href="/research/citizen-budget/withdraw">{c.study.receiptLink}</a>
+				</div>
+			{:else if phase === 'refused'}
+				<p class="note" role="status">{c.study.refused}</p>
+			{:else if phase === 'not-open'}
+				<p class="note" role="status">{c.study.notOpen}</p>
+			{:else if phase === 'too-fast'}
+				<p class="note" role="status">{c.study.tooFast}</p>
+				<div class="actions">
+					<button class="cta" type="button" data-send-again onclick={() => void send()} disabled={sending}>{c.study.sendAgain}</button>
+				</div>
+			{:else}
+				<p class="note" role="status">{c.study.failed}</p>
+			{/if}
 			<div class="actions">
 				<button class="quiet" type="button" onclick={() => go('board')}>{c.card.back}</button>
 				<button class="cta" type="button" onclick={restart}>{c.card.restart}</button>
@@ -680,10 +936,22 @@
 		padding: 0;
 		min-inline-size: 0;
 	}
-	.q legend {
+	.q legend,
+	.region label {
+		display: block;
 		font-weight: 600;
 		margin-block-end: var(--s-3);
 		max-inline-size: var(--measure);
+	}
+	.region select {
+		min-block-size: var(--touch);
+		min-inline-size: min(100%, 20rem);
+		padding-inline: var(--s-4);
+		border: var(--rule);
+		border-radius: var(--r-md);
+		background: var(--surface-raised);
+		color: inherit;
+		font: inherit;
 	}
 	.options,
 	.scale {

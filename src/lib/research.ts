@@ -68,6 +68,16 @@ export function studyBySlug(slug: string): StudyRecord | undefined {
 	return studies.find((s) => s.slug === slug);
 }
 
+/**
+ * Where an allocation study is answered. Its answer is a whole budget, which
+ * only the board collects, so the generic question runner must never take one:
+ * it would store the short questions with no allocation. Null for every other
+ * study.
+ */
+export function boardPathFor(study: Pick<StudyRecord, 'slug' | 'design_type'>): string | null {
+	return study.design_type.includes('allocation') ? `/research/${study.slug}/prototype` : null;
+}
+
 /** The first declared instrument version, compiled. A study has one while in flight. */
 export function instrumentFor(study: StudyRecord): RuntimeInstrument | undefined {
 	const version = study.instrument_versions[0];

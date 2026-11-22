@@ -8,10 +8,14 @@
 import type { Locale } from '$lib/i18n';
 import type { Refusal, MoveRule } from './board';
 
+/** The study's live state as the board sees it. The empty-start view is always 'design': it posts nothing. */
+export type BoardLive = 'design' | 'paused' | 'accepting';
+
 export interface BoardCopy {
 	interim: string | null;
 	title: string;
-	badge: string;
+	/** The header line. It follows the live study: only the design prototype says nothing is sent. */
+	badge: Record<BoardLive, string>;
 	rule: Record<MoveRule, string>;
 	purse: string;
 	purseEmpty: string;
@@ -151,7 +155,11 @@ export interface TourCopy {
 const en: BoardCopy = {
 	interim: null,
 	title: 'Your 2027 budget',
-	badge: 'Prototype · draft figures · nothing is sent',
+	badge: {
+		design: 'Prototype · draft figures · nothing is sent',
+		paused: 'Study · draft figures · not collecting right now',
+		accepting: 'Study · draft figures · your answer is sent when you press Send my answer'
+	},
 	rule: { coin: 'Rule A: coins of 100 MD (default)', step: 'Rule B: steps of 5% (owner test)' },
 	purse: 'Purse',
 	purseEmpty: 'Empty. Nothing is waiting.',
@@ -299,7 +307,11 @@ const en: BoardCopy = {
 const fr: BoardCopy = {
 	interim: 'Traduction provisoire, non relue.',
 	title: 'Votre budget 2027',
-	badge: 'Prototype · chiffres provisoires · rien n’est envoyé',
+	badge: {
+		design: 'Prototype · chiffres provisoires · rien n’est envoyé',
+		paused: 'Étude · chiffres provisoires · pas de collecte pour le moment',
+		accepting: 'Étude · chiffres provisoires · votre réponse est envoyée quand vous appuyez sur Envoyer ma réponse'
+	},
 	rule: { coin: 'Règle A : pièces de 100 MD (par défaut)', step: 'Règle B : pas de 5 % (essai)' },
 	purse: 'Bourse',
 	purseEmpty: 'Vide. Rien n’attend.',
@@ -447,7 +459,11 @@ const fr: BoardCopy = {
 const ar: BoardCopy = {
 	interim: 'ترجمة مؤقتة، لم تُراجع بعد.',
 	title: 'ميزانيتك لسنة 2027',
-	badge: 'نموذج أولي · أرقام مؤقتة · لا يُرسل شيء',
+	badge: {
+		design: 'نموذج أولي · أرقام مؤقتة · لا يُرسل شيء',
+		paused: 'دراسة · أرقام مؤقتة · لا تُجمع الإجابات الآن',
+		accepting: 'دراسة · أرقام مؤقتة · تُرسل إجابتك عندما تضغط «أرسل إجابتي»'
+	},
 	rule: { coin: 'القاعدة أ: قطع من 100 مليون دينار (الافتراضية)', step: 'القاعدة ب: خطوات من 5% (تجربة)' },
 	purse: 'المحفظة',
 	purseEmpty: 'فارغة. لا شيء ينتظر.',

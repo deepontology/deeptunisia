@@ -1,18 +1,17 @@
 # -----------------------------------------------------------------------------
-# DT Research 003: citizen budget instrument v0.1.0-draft
+# DT Research 003: citizen budget instrument (workshop copy)
 #
 # "Citizen Budget 2027" (slug citizen-budget). Spec: specs/budget-game/SPEC.md.
 #
-# Status: draft. Not frozen. Not fielded. The English column is the source.
-# French and Arabic are null on purpose: the project rule is human translation
-# with reconciliation and back-translation. The interim UI copy lives in the
-# prototype (src/lib/budget-game/copy.ts) and is marked unreviewed there; it is
-# not the instrument text.
+# The English column is the source. French and Arabic are interim project
+# translations, the same strings the board shows (see translation below).
 #
-# Every figure in the allocation block is a DRAFT figure from
-# data/studies/dt-research-003/figures-2027.yaml, labelled draft, not verified.
-# The frozen instrument takes figures only from rows with status adopted-lf,
-# each with a page reference.
+# The allocation block carries the 2027 draft figures from
+# data/studies/dt-research-003/figures-2027.yaml, labelled draft. Version 1.0.0
+# fields on the draft: the adopted 2020 to 2026 budgets on the board are the
+# main reference and the draft is an extra one (preregistration, amendment of
+# 22 November 2026). When the 2027 finance law is adopted, a new version takes
+# the adopted figures and its answers are reported separately.
 # -----------------------------------------------------------------------------
 
 instrument:
@@ -39,25 +38,22 @@ instrument:
 
 translation:
   policy: >-
-    Human translation only, with two independent translators per locale,
-    reconciliation, back-translation and cognitive interviews, before freeze.
-    No machine text in this file.
+    Interim: French and Arabic are the project's own drafts, the same strings the
+    board shows, published as interim translations and marked so on screen. Not
+    yet reviewed by an independent person who reads the language. Target: two
+    independent human translators per locale, reconciliation, back-translation
+    and cognitive interviews before a later version freezes.
   report: null
   locales:
     en:
       status: source
     fr:
-      status: pending-human-translation
-      translator_a: null
-      translator_b: null
-      back_translator: null
-      cognitive_interviews: 0
+      status: interim-project-translation
+      reviewer: null
     ar:
-      status: pending-human-translation
-      translator_a: null
-      translator_b: null
-      back_translator: null
-      cognitive_interviews: 0
+      status: interim-project-translation
+      reviewer: null
+      register: Modern Standard Arabic, plain
 
 response_types:
   consent: boolean required, recorded with consent version
@@ -87,8 +83,8 @@ items:
     construct: consent
     provenance: project
     text_en: "I have read the study information and what happens to my answers."
-    text_fr: null
-    text_ar: null
+    text_fr: "J'ai lu les informations de l'étude et ce qu'il advient de mes réponses."
+    text_ar: "قرأت معلومات الدراسة وما يحدث بإجاباتي."
     response: consent
     required: true
 
@@ -98,8 +94,8 @@ items:
     construct: consent
     provenance: project
     text_en: "I understand that I will receive a receipt code, and that I can withdraw my answers with it until the study window closes."
-    text_fr: null
-    text_ar: null
+    text_fr: "Je comprends que je recevrai un code de reçu et que je pourrai retirer mes réponses avec ce code jusqu’à la clôture de l’étude."
+    text_ar: "أفهم أنني سأحصل على رمز إيصال، وأنه يمكنني سحب إجاباتي به حتى إغلاق نافذة الدراسة."
     response: consent
     required: true
 
@@ -109,8 +105,8 @@ items:
     construct: consent
     provenance: project
     text_en: "I confirm that I am 18 years old or older."
-    text_fr: null
-    text_ar: null
+    text_fr: "Je confirme avoir 18 ans ou plus."
+    text_ar: "أؤكّد أن عمري 18 سنة أو أكثر."
     response: consent
     required: true
     routing: if false, end the session and store nothing
@@ -121,8 +117,8 @@ items:
     construct: budget allocation
     provenance: project (SPEC section 2, the game screen)
     text_en: "Use the Treasury board: move money between the lines of the 2027 state budget, as a citizen. Start from the draft. Every move carries one coin of 100 MD. Finish when the purse is empty and either you have made a move or you tick that you would keep the draft exactly as it is. Keeping the draft is a valid answer, not a skip."
-    text_fr: null
-    text_ar: null
+    text_fr: "Utilisez le tableau du Trésor : déplacez l'argent entre les lignes du budget de l'État 2027, en tant que citoyen. Partez du projet. Chaque mouvement porte une pièce de 100 MD. Terminez quand la bourse est vide et que vous avez fait au moins un mouvement ou coché que vous garderiez le projet exactement tel quel. Garder le projet est une réponse valable, pas un saut."
+    text_ar: "استعمل لوحة الخزينة: انقل المال بين بنود ميزانية الدولة لسنة 2027، كمواطن. ابدأ من المشروع. كل نقلة تحمل قطعة واحدة من 100 مليون دينار. أنهِ عندما تكون المحفظة فارغة وتكون قد قمت بنقلة واحدة على الأقل أو أشرت إلى أنك تُبقي على المشروع كما هو تمامًا. الإبقاء على المشروع إجابة صحيحة، وليس تخطّيًا."
     response: allocation
     required: true
     notes: "Amounts are the draft figures from figures-2027.yaml, labelled draft, not verified. Freeze only on adopted-law rows with page references. The subsidy memo is split into fuel and electricity versus basic food; the 2027 split by type is derived from the two containing lines and is labelled as such on screen."
@@ -171,11 +167,15 @@ items:
     construct: total spending direction
     provenance: project (SPEC section 1, secondary question 1)
     text_en: "Knowing that the gap is borrowed, should total spending be lower, the same, or higher?"
-    text_fr: null
-    text_ar: null
+    text_fr: "Sachant que le déficit est emprunté, la dépense totale devrait-elle être plus basse, identique ou plus haute ?"
+    text_ar: "مع العلم أن الفجوة تُقترض، هل ينبغي أن تكون النفقات الإجمالية أقل أم نفسها أم أعلى؟"
     response: single_choice
     required: false
     options: [lower, same, higher]
+    option_labels:
+      en: { lower: "Lower", same: "The same", higher: "Higher" }
+      fr: { lower: "Plus basse", same: "Identique", higher: "Plus haute" }
+      ar: { lower: "أقل", same: "نفسها", higher: "أعلى" }
 
   - id: q_say
     module: questions
@@ -183,8 +183,8 @@ items:
     construct: citizen say over the budget
     provenance: project (SPEC section 1, secondary question 2)
     text_en: "How much say do citizens have today over how the budget is spent? 0 means none, 10 means a lot."
-    text_fr: null
-    text_ar: null
+    text_fr: "Quelle influence les citoyens ont-ils aujourd'hui sur la façon dont le budget est dépensé ? 0 signifie aucune, 10 signifie beaucoup."
+    text_ar: "ما مدى تأثير المواطنين اليوم في طريقة إنفاق الميزانية؟ 0 يعني لا تأثير، و10 يعني تأثيرًا كبيرًا."
     response: scale_0_10
     required: false
 
@@ -192,11 +192,15 @@ items:
     module: about
     tier: optional
     construct: demographics
-    provenance: reused from study 001 (demo_governorate)
+    provenance: reused from study 002 (demo_governorate), the re-cut list with its labels
     text_en: "Which governorate do you live in?"
-    text_fr: null
-    text_ar: null
+    text_fr: "Dans quel gouvernorat vivez-vous ?"
+    text_ar: "في أيّ ولاية تقيم؟"
     response: single_choice
     required: false
-    notes: "Published only as the seven INS regions, under the cell floor of 20 (SPEC section 5). Options below are the study 001 list, to be re-cut before fielding."
-    options: [ariana, beja, ben_arous, bizerte, gabes, gafsa, jendouba, kairouan, kasserine, kebili, kef, mahdia, manouba, medenine, monastir, nabeul, sfax, sidi_bouzid, siliana, sousse, tataouine, tozeur, tunis, zaghouan, prefer_not_to_say]
+    notes: "Optional. Published only as the seven INS regions (scoring.regions), each under the cell floor."
+    options: [tunis, ariana, ben_arous, manouba, nabeul, zaghouan, bizerte, beja, jendouba, kef, siliana, sousse, monastir, mahdia, sfax, kairouan, kasserine, sidi_bouzid, gabes, medenine, tataouine, gafsa, tozeur, kebili, outside_tunisia, prefer_not_to_say]
+    option_labels:
+      en: { tunis: "Tunis", ariana: "Ariana", ben_arous: "Ben Arous", manouba: "Manouba", nabeul: "Nabeul", zaghouan: "Zaghouan", bizerte: "Bizerte", beja: "Béja", jendouba: "Jendouba", kef: "Le Kef", siliana: "Siliana", sousse: "Sousse", monastir: "Monastir", mahdia: "Mahdia", sfax: "Sfax", kairouan: "Kairouan", kasserine: "Kasserine", sidi_bouzid: "Sidi Bouzid", gabes: "Gabès", medenine: "Médenine", tataouine: "Tataouine", gafsa: "Gafsa", tozeur: "Tozeur", kebili: "Kébili", outside_tunisia: "I live outside Tunisia", prefer_not_to_say: "Prefer not to answer" }
+      fr: { tunis: "Tunis", ariana: "Ariana", ben_arous: "Ben Arous", manouba: "La Manouba", nabeul: "Nabeul", zaghouan: "Zaghouan", bizerte: "Bizerte", beja: "Béja", jendouba: "Jendouba", kef: "Le Kef", siliana: "Siliana", sousse: "Sousse", monastir: "Monastir", mahdia: "Mahdia", sfax: "Sfax", kairouan: "Kairouan", kasserine: "Kasserine", sidi_bouzid: "Sidi Bouzid", gabes: "Gabès", medenine: "Médenine", tataouine: "Tataouine", gafsa: "Gafsa", tozeur: "Tozeur", kebili: "Kébili", outside_tunisia: "Je vis hors de Tunisie", prefer_not_to_say: "Je préfère ne pas répondre" }
+      ar: { tunis: "تونس", ariana: "أريانة", ben_arous: "بن عروس", manouba: "منوبة", nabeul: "نابل", zaghouan: "زغوان", bizerte: "بنزرت", beja: "باجة", jendouba: "جندوبة", kef: "الكاف", siliana: "سليانة", sousse: "سوسة", monastir: "المنستير", mahdia: "المهدية", sfax: "صفاقس", kairouan: "القيروان", kasserine: "القصرين", sidi_bouzid: "سيدي بوزيد", gabes: "قابس", medenine: "مدنين", tataouine: "تطاوين", gafsa: "قفصة", tozeur: "توزر", kebili: "قبلي", outside_tunisia: "أقيم خارج تونس", prefer_not_to_say: "أفضّل عدم الإجابة" }

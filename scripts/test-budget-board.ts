@@ -292,10 +292,10 @@ ok('the instrument names the move-or-tick rule', /you have made a move or you ti
 // fail if the copy drifts back to a decided floor, a change-of-basket claim, or a
 // 2024 set presented as part of the study task.
 const boardCopySource = readFileSync(join(ROOT, 'src/lib/budget-game/board-copy.ts'), 'utf8');
-ok('the floor is a proposed amendment pending the owner', /proposed amendment/.test(preregText) && /pending the owner's confirmation/.test(preregText) && /proposed amendment/.test(protocolText) && /pending the owner's confirmation/.test(protocolText));
+ok('the floor is confirmed, in the preregistration and the protocol', /\*\*A2\. Reporting floor\.\*\* The floor of 300 valid responses/.test(preregText) && /confirmed in preregistration amendment A2/.test(protocolText) && !/pending the owner's confirmation/.test(preregText + protocolText));
 const landingSource = readFileSync(join(ROOT, 'src/lib/budget-study/landing-copy.ts'), 'utf8');
-ok('the landing says the floor is pending, not decided', /proposed amendment/.test(landingSource));
-ok('the Arabic floor is a minimum, not a ceiling', /الحدّ الأدنى/.test(landingSource) && !/سقف 300/.test(landingSource));
+ok('the landing no longer says the floor is pending', !/proposed amendment|amendement proposé|تعديل مقترح/.test(landingSource));
+ok('the Arabic floor is a minimum, not a ceiling', /إلّا فوق 300 إجابة/.test(landingSource) && !/سقف 300/.test(landingSource));
 ok('the board no longer claims a change of basket', !/change of basket|changement de panier|تغيّر السلة/i.test(boardCopySource));
 ok('the board states the containment bound', /7,617\.4/.test(boardCopySource) && /7,890\.2/.test(boardCopySource) && /177\.6 MD|177,6 MD|177\.6 م\.د/.test(boardCopySource));
 ok('the containment is worded as an assumption', /as assumed here/.test(boardCopySource) && /comme on le suppose ici/.test(boardCopySource) && /كما يُفترض هنا/.test(boardCopySource));
