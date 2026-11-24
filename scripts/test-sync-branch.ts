@@ -193,7 +193,7 @@ rmSync(DIR, { recursive: true, force: true });
 {
 	const text = readFileSync(join(ROOT, '.github', 'workflows', 'sync.yml'), 'utf8');
 	const code = text.split('\n').filter((line) => !line.trimStart().startsWith('#')).join('\n');
-	ok('it runs on a nightly schedule', /schedule:\s*\n\s*- cron: '\d+ \d+ \* \* \*'/.test(code));
+	ok('nightly schedule is paused until a release branch is active', !/schedule:/.test(code));
 	ok('it can be started by hand', code.includes('workflow_dispatch:'));
 	ok('two runs cannot overlap', /concurrency:\s*\n\s*group: sync-main-into-release\s*\n\s*cancel-in-progress: false/.test(code));
 	ok('it checks out release/1.0 with the feed token and full history', /ref: release\/1\.0/.test(code) && code.includes('token: ${{ secrets.FEED_PAT }}') && code.includes('fetch-depth: 0'));
