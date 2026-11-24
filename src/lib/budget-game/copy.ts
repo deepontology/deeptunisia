@@ -291,14 +291,14 @@ const en: Copy = {
 		restart: 'Start again',
 		back: 'Change my budget',
 		stop: 'In the prototype, this is where the real study would submit. Nothing is sent or stored.',
-		summary: (moved, moves, gaining) => `You moved ${moved} MD into ${gaining} ${gaining === 1 ? 'system' : 'systems'}, in ${moves} moves.`,
+		summary: (moved, moves, gaining) => `You moved ${moved} MD into ${gaining} ${gaining === 1 ? 'system' : 'systems'}, in ${moves} ${moves === 1 ? 'move' : 'moves'}.`,
 		totalSame: 'The total is the same as the draft: what one system gains, another gives.',
 		rise: 'Biggest rise',
 		cut: 'Biggest cut',
 		chartTitle: 'What you changed',
 		chartNote: 'Each bar is your change from the draft, in MD. Bars to the right are more money, bars to the left are less.',
 		unchanged: (names) => `Not changed: ${names}.`,
-		unchangedCount: (n) => `${n} systems not changed`,
+		unchangedCount: (n) => `${n} ${n === 1 ? 'system' : 'systems'} not changed`,
 		tableToggle: 'Every system, as a table',
 		receiptTitle: 'Prototype receipt',
 		receiptNote:
@@ -367,7 +367,7 @@ const en: Copy = {
 const fr: Copy = {
 	...en,
 	prototype: 'Prototype · chiffres du projet 2027, non vérifiés',
-	unreviewed: 'Traduction française provisoire, pas encore relue. Les nouveaux textes (groupes, aide, note de poste, plus grand écart) sont des brouillons intermédiaires.',
+	unreviewed: 'Traduction française provisoire, pas encore relue par un relecteur indépendant.',
 	title: 'Plateau budgétaire du citoyen',
 	status: 'Prototype de conception. Non lancé. Aucune collecte.',
 	stepLabels: { intro: 'Présentation', frame: 'Cadre', board: 'Plateau', items: 'Questions', card: 'Résultat' },
@@ -393,7 +393,7 @@ const fr: Copy = {
 			"J'ai lu les informations de l'étude et ce qu'il advient de mes réponses.",
 		consentWithdrawal:
 			"Je comprends que je recevrai un code de reçu et que je pourrai retirer mes réponses avec ce code jusqu'à la fermeture de l'étude. Dans ce prototype, rien n'est conservé et aucun code n'est délivré.",
-		consentNote: 'Ce sont les vrais items de consentement. L’étape du reçu et du retrait est répétée à la fin.',
+		consentNote: 'Ce sont les vrais items de consentement. L’étape du reçu et du retrait est simulée à la fin.',
 		start: 'Commencer',
 		under18:
 			"Cette étude est réservée aux adultes. Rien de ce que vous avez saisi n'est conservé. Vous pouvez fermer cette page."
@@ -433,7 +433,7 @@ const fr: Copy = {
 		take: (amount) => `Retirer ${amount} MD`,
 		give: (amount) => `Verser ${amount} MD`,
 		atZero: 'Ce poste est à zéro. Rien à retirer.',
-		atMax: 'Ce poste est à 200 % de son projet. Retirez ailleurs d’abord.',
+		atMax: 'Ce poste est à 200 % de son projet. Versez ailleurs d’abord.',
 		notEnough: (purse, step) => `Votre bourse contient ${purse} MD. Un pas ici coûte ${step} MD. Retirez d'abord d'un autre poste.`,
 		leftover: (amount) => `${amount} MD non placés. Vous pouvez terminer ou les placer.`,
 		balanced: "La bourse est dans la marge de fin. Vous pouvez terminer.",
@@ -493,14 +493,14 @@ const fr: Copy = {
 		restart: 'Recommencer',
 		back: 'Modifier mon budget',
 		stop: "Dans le prototype, c'est ici que la vraie étude enverrait. Rien n'est envoyé ni conservé.",
-		summary: (moved, moves, gaining) => `Vous avez déplacé ${moved} MD vers ${gaining} ${gaining === 1 ? 'poste' : 'postes'}, en ${moves} mouvements.`,
+		summary: (moved, moves, gaining) => `Vous avez déplacé ${moved} MD vers ${gaining} ${gaining === 1 ? 'poste' : 'postes'}, en ${moves} ${moves === 1 ? 'mouvement' : 'mouvements'}.`,
 		totalSame: "Le total est celui du projet : ce qu'un poste gagne, un autre le cède.",
 		rise: 'Plus forte hausse',
 		cut: 'Plus forte baisse',
 		chartTitle: 'Ce que vous avez changé',
 		chartNote: "Chaque barre est votre écart avec le projet, en MD. Vers la droite, plus d'argent ; vers la gauche, moins.",
 		unchanged: (names) => `Inchangés : ${names}.`,
-		unchangedCount: (n) => `${n} postes inchangés`,
+		unchangedCount: (n) => `${n} ${n === 1 ? 'poste inchangé' : 'postes inchangés'}`,
 		tableToggle: 'Tous les postes, en tableau',
 		receiptTitle: 'Reçu du prototype',
 		receiptNote:
@@ -512,7 +512,7 @@ const fr: Copy = {
 		statusPaused: "L'étude est en cours, mais elle ne collecte pas de réponses pour le moment.",
 		statusAccepting: "L'étude est en cours et collecte des réponses.",
 		storedBody:
-			'Votre budget en parts de chaque ligne, deux réponses courtes, votre gouvernorat si vous le donnez, la version de l’étude et sa durée. Aucun nom, courriel, adresse IP ni détail d’appareil.',
+			'Votre budget en parts de chaque ligne, deux réponses courtes, votre gouvernorat si vous le donnez, la version de l’étude et sa durée. Aucun nom, adresse e-mail, adresse IP ni détail d’appareil.',
 		whoBody:
 			'DeepTunisia. L’étude est en cours. Les réponses décrivent les personnes qui participent à une enquête en ligne ouverte et auto-sélectionnée auprès d’adultes.',
 		consentWithdrawal:
@@ -570,7 +570,7 @@ const fr: Copy = {
 const ar: Copy = {
 	...en,
 	prototype: 'نموذج أولي · أرقام مشروع 2027، لم يُتحقق منها',
-	unreviewed: 'ترجمة عربية مبدئية، لم يراجعها بعد متحدث أصلي. والنصوص الجديدة (المجموعات، والمساعدة، وملاحظة البند، وأكبر تغيير) مسودّات مبدئية.',
+	unreviewed: 'ترجمة عربية مؤقّتة، لم يراجعها بعد مراجع مستقلّ.',
 	title: 'لوحة الخزينة للمواطن',
 	status: 'نموذج تصميمي. لم يُطلق. لا يجمع أي بيانات.',
 	stepLabels: { intro: 'تعريف', frame: 'الإطار', board: 'اللوحة', items: 'أسئلة', card: 'النتيجة' },
@@ -594,7 +594,7 @@ const ar: Copy = {
 		consentRead: 'قرأت معلومات الدراسة وما يحدث بإجاباتي.',
 		consentWithdrawal:
 			'أفهم أنني سأحصل على رمز إيصال، وأنه يمكنني سحب إجاباتي به حتى إغلاق الدراسة. في هذا النموذج الأوّلي لا يُحفظ شيء ولا يُسلَّم أي رمز.',
-		consentNote: 'هذه هي بنود الموافقة الحقيقية. وتُعاد خطوة الإيصال والسحب في النهاية.',
+		consentNote: 'هذه هي بنود الموافقة الحقيقية. وتُجرَّب خطوة الإيصال والسحب في النهاية.',
 		start: 'ابدأ',
 		under18:
 			'هذه الدراسة للبالغين فقط. لا يُحفظ شيء مما أدخلته. يمكنك إغلاق هذه الصفحة.'
@@ -603,7 +603,7 @@ const ar: Copy = {
 		...en.frame,
 		title: 'أجب بصفتك مواطنًا',
 		body: 'لا بصفتك وزيرًا أو خبيرًا اقتصاديًا أو عضوًا في حزب. لا توجد إجابة صحيحة ولا نقاط.',
-		factsHeading: 'ثلاثة حقائق، كلها أرقام مؤقّتة',
+		factsHeading: 'ثلاث حقائق، كلها أرقام مؤقّتة',
 		fact1: (total) =>
 			`يخطط المشروع لإنفاق نحو ${total} م.د في 2027، دون أصل الدين (غير متحقّق منه).`,
 		fact2:
@@ -616,8 +616,8 @@ const ar: Copy = {
 	board: {
 		...en.board,
 		title: 'لوحة الخزينة',
-		hint: 'أخرج المال من بند فيذهب إلى الخزانة. ومن الخزانة ادفع إلى بند. أنهِ عندما تكون الخزانة داخل 0.5% من الغلاف. لا يمكنك أن تعطي ما لا تملك.',
-		purse: 'الخزانة',
+		hint: 'أخرج المال من بند فيذهب إلى المحفظة. ومن المحفظة أعطِ لبند آخر. أنهِ عندما تكون المحفظة داخل 0.5% من الغلاف. لا يمكنك أن تعطي ما لا تملك.',
+		purse: 'المحفظة',
 		purseHint: 'المال الذي بيدك. يجب أن يكون داخل 0.5% من الغلاف لتُنهي.',
 		systems: 'البنود',
 		locked: 'مُنفق بالفعل قبل البداية',
@@ -630,26 +630,26 @@ const ar: Copy = {
 		moreThanPlan: 'أكثر من المشروع',
 		lessThanPlan: 'أقل من المشروع',
 		sameAsPlan: 'مثل المشروع',
-		take: (amount) => `اسحب ${amount} م.د`,
-		give: (amount) => `ادفع ${amount} م.د`,
-		atZero: 'هذا البند صفر. لا شيء لسحبه.',
-		atMax: 'هذا البند عند 200% من مشروعه. ادفع من بند آخر أولًا.',
-		notEnough: (purse, step) => `تحتوي الخزانة على ${purse} م.د. خطوة هنا تكلف ${step} م.د. اسحب من بند آخر أولًا.`,
+		take: (amount) => `خذ ${amount} م.د`,
+		give: (amount) => `أعطِ ${amount} م.د`,
+		atZero: 'هذا البند عند الصفر. لا شيء لتأخذه.',
+		atMax: 'هذا البند عند 200% من مشروعه. أعطِ لبند آخر أولًا.',
+		notEnough: (purse, step) => `تحتوي المحفظة على ${purse} م.د. خطوة هنا تكلف ${step} م.د. خذ من بند آخر أولًا.`,
 		leftover: (amount) => `${amount} م.د لم توضع بعد. يمكنك الإنهاء أو وضعها.`,
-		balanced: 'الخزانة داخل هامش الإنهاء. يمكنك الإنهاء.',
+		balanced: 'المحفظة داخل هامش الإنهاء. يمكنك الإنهاء.',
 		ledger: 'آخر الحركات',
-		tookFrom: (amount, line) => `سُحب ${amount} م.د من ${line}.`,
-		gaveTo: (amount, line) => `دُفع ${amount} م.د إلى ${line}.`,
+		tookFrom: (amount, line) => `أُخذ ${amount} م.د من ${line}.`,
+		gaveTo: (amount, line) => `أُعطي ${amount} م.د إلى ${line}.`,
 		kept: 'أُبقي على المشروع.',
 		keep: 'أبقي على المشروع',
 		undo: 'تراجع',
 		reset: 'إعادة ضبط',
 		startDraft: 'ابدأ من المشروع',
-		startEmpty: 'ابدأ بخزانة فارغة',
-		startNote: 'البداية من المشروع: كل بند على مشروعه والخزانة صفر.',
+		startEmpty: 'ابدأ بمحفظة فارغة',
+		startNote: 'البداية من المشروع: كل بند على مشروعه والمحفظة فارغة.',
 		tableView: 'اعرض كجدول',
 		finish: 'أنهِ',
-		meter: 'الخزانة',
+		meter: 'المحفظة',
 		draftMark: 'المشروع',
 		groups: {
 			people: 'الأشخاص والخدمات',
@@ -659,7 +659,7 @@ const ar: Copy = {
 		purseProgress: (placed, total) => `وُضع ${placed} من ${total} م.د`,
 		reasonAtZero: 'هذا البند صفر.',
 		reasonAtMax: 'هذا البند عند سقف 200%.',
-		reasonNoPurse: (purse) => `تحتوي خزانتك على ${purse} م.د.`,
+		reasonNoPurse: (purse) => `تحتوي محفظتك على ${purse} م.د.`,
 		hintToggle: 'القواعد',
 		hintClose: 'إغلاق',
 		noteTitle: 'ملاحظة عن هذا البند',
@@ -693,14 +693,39 @@ const ar: Copy = {
 		restart: 'ابدأ من جديد',
 		back: 'تعديل ميزانيتي',
 		stop: 'في النموذج الأوّلي، هنا تُرسل الدراسة الحقيقية. لا يُرسَل شيء ولا يُحفظ.',
-		summary: (moved, moves, gaining) => `نقلت ${moved} م.د إلى ${gaining === 1 ? 'بند واحد' : `${gaining} من البنود`}، في ${moves} حركات.`,
+		summary: (moved, moves, gaining) => {
+			const g =
+				gaining === 1
+					? 'بند واحد'
+					: gaining === 2
+						? 'بندين'
+						: gaining % 100 >= 3 && gaining % 100 <= 10
+							? `${gaining} بنود`
+							: `${gaining} بندًا`;
+			const m =
+				moves === 1
+					? 'حركة واحدة'
+					: moves === 2
+						? 'حركتين'
+						: moves % 100 >= 3 && moves % 100 <= 10
+							? `${moves} حركات`
+							: `${moves} حركة`;
+			return `نقلت ${moved} م.د إلى ${g}، في ${m}.`;
+		},
 		totalSame: 'المجموع هو مجموع المشروع نفسه: ما يكسبه بند يتنازل عنه بند آخر.',
 		rise: 'أكبر زيادة',
 		cut: 'أكبر تخفيض',
 		chartTitle: 'ما غيّرته',
 		chartNote: 'كل شريط هو الفرق بين ميزانيتك والمشروع، بالمليون دينار. نحو اليسار مال أكثر، ونحو اليمين مال أقل.',
 		unchanged: (names) => `لم تتغيّر: ${names}.`,
-		unchangedCount: (n) => `${n} بنود لم تتغيّر`,
+		unchangedCount: (n) =>
+			n === 1
+				? 'بند واحد لم يتغيّر'
+				: n === 2
+					? 'بندان لم يتغيّرا'
+					: n % 100 >= 3 && n % 100 <= 10
+						? `${n} بنود لم تتغيّر`
+						: `${n} بندًا لم يتغيّر`,
 		tableToggle: 'كل البنود في جدول',
 		receiptTitle: 'إيصال النموذج الأوّلي',
 		receiptNote: 'في الدراسة الحقيقية سيكون هذا الرمز إيصالك والطريق الوحيد لسحب إجاباتك. لم يُرسل شيء، فهذا الرمز لا يفعل شيئًا.',
@@ -713,16 +738,16 @@ const ar: Copy = {
 		storedBody:
 			'ميزانيتك كنسب من كل بند، وإجابتان قصيرتان، وولايتك إن ذكرتها، ونسخة الدراسة ومدتها. لا اسم ولا بريد إلكتروني ولا عنوان IP ولا تفاصيل جهاز.',
 		whoBody:
-			'DeepTunisia. الدراسة قيد الميدان. تصف الإجابات الأشخاص الذين شاركوا في استبيان مفتوح عبر الإنترنت يختار المشاركون أنفسهم، بين بالغين.',
+			'DeepTunisia. الدراسة قيد الميدان. تصف الإجابات الأشخاص الذين شاركوا في استبيان إلكتروني مفتوح للبالغين قائم على الانتقاء الذاتي.',
 		consentWithdrawal: 'أفهم أنني سأحصل على رمز إيصال، وأنه يمكنني سحب إجاباتي به حتى إغلاق نافذة الدراسة.',
 		consentNote: 'يظهر الإيصال في النهاية. احتفظ به: إنه الطريقة الوحيدة لسحب إجابتك أثناء بقاء الدراسة مفتوحة.',
 		submit: 'أرسل إجابتي',
 		sending: 'جارٍ إرسال إجابتك.',
-		sent: 'تم تخزين إجابتك.',
+		sent: 'حُفظت إجابتك.',
 		refused: 'الدراسة لا تجمع إجابات الآن. لم يُرسل شيء.',
 		notOpen: 'هذه الدراسة ليست مفتوحة للإجابات بعد. لم يُرسل شيء.',
-		failed: 'تعذّر إرسال الإجابة. لم يُخزَّن شيء.',
-		tooFast: 'أنهيت أسرع من الحدّ الأدنى لوقت الدراسة. لم يُخزَّن شيء. انتظر قليلًا ثم أرسل مرة أخرى.',
+		failed: 'تعذّر إرسال الإجابة. لم يُحفظ شيء.',
+		tooFast: 'أنهيت في وقت أسرع من الحدّ الأدنى المحدّد للدراسة. لم يُحفظ شيء. انتظر قليلًا ثم أرسل مرة أخرى.',
 		sendAgain: 'أرسل مرة أخرى',
 		prototypeView: 'هذا العرض ببداية فارغة نموذج أوّلي. تبدأ الدراسة من المشروع. لم يُرسل شيء.',
 		cardNote: 'أرقام المشروع، لم يُتحقق منها.',

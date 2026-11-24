@@ -382,7 +382,16 @@
 	);
 </script>
 
-<svelte:window onpointerup={stopHold} onblur={stopHold} onkeydown={(e) => e.key === 'Escape' && (chartOpen = false)} />
+<svelte:window
+	onpointerup={stopHold}
+	onblur={stopHold}
+	onkeydown={(e) => {
+		if (e.key === 'Escape') {
+			chartOpen = false;
+			detailOpen = false;
+		}
+	}}
+/>
 
 {#snippet detailPanel()}
 	{#if activeRow}
@@ -604,7 +613,7 @@
 						type="button"
 						class="move take"
 						disabled={takeMd === 0}
-						aria-label={t.takeAria(fmtMd(takeMd || B.COIN_MD), c.lines[activeRow.id].name)}
+						aria-label={t.takeAria(fmtMd(takeMd || (rule === 'coin' ? B.COIN_MD : B.stepMd(B.findLine(board, activeRow.id)))), c.lines[activeRow.id].name)}
 						onpointerdown={(e) => hold(e, activeRow.id, 'purse')}
 						onclick={(e) => press(e, activeRow.id, 'purse')}
 					>
@@ -615,7 +624,7 @@
 						class="move give"
 						disabled={giveMd === 0}
 						aria-disabled={giveMd === 0}
-						aria-label={t.giveAria(fmtMd(giveMd || B.COIN_MD), c.lines[activeRow.id].name)}
+						aria-label={t.giveAria(fmtMd(giveMd || (rule === 'coin' ? B.COIN_MD : B.stepMd(B.findLine(board, activeRow.id)))), c.lines[activeRow.id].name)}
 						onpointerdown={(e) => hold(e, 'purse', activeRow.id)}
 						onclick={(e) => press(e, 'purse', activeRow.id)}
 					>
@@ -710,7 +719,17 @@
 	{/if}
 
 	{#if chartOpen && activeRow}
-		<div class="detail-overlay chart-overlay" role="dialog" aria-modal="true" aria-label={`${c.lines[activeRow.id].name}. ${t.chartHeading}`}>
+		<!-- svelte-ignore a11y_click_events_have_key_events -->
+		<div
+			class="detail-overlay chart-overlay"
+			role="dialog"
+			aria-modal="true"
+			tabindex="-1"
+			aria-label={`${c.lines[activeRow.id].name}. ${t.chartHeading}`}
+			onclick={(e) => {
+				if (e.target === e.currentTarget) chartOpen = false;
+			}}
+		>
 			<div class="detail-sheet">
 				<button type="button" class="detail-close" onclick={() => (chartOpen = false)}>{t.detailsClose}</button>
 				<TrendChart
@@ -737,7 +756,17 @@
 	{/if}
 
 	{#if detailOpen && !narrow && activeRow}
-		<div class="detail-overlay" role="dialog" aria-modal="true" aria-label={c.lines[activeRow.id].name}>
+		<!-- svelte-ignore a11y_click_events_have_key_events -->
+		<div
+			class="detail-overlay"
+			role="dialog"
+			aria-modal="true"
+			tabindex="-1"
+			aria-label={c.lines[activeRow.id].name}
+			onclick={(e) => {
+				if (e.target === e.currentTarget) detailOpen = false;
+			}}
+		>
 			<div class="detail-sheet">
 				<button type="button" class="detail-close" onclick={() => (detailOpen = false)}>{t.detailsClose}</button>
 				{@render detailPanel()}
