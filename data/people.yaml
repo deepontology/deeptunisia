@@ -9153,7 +9153,7 @@
   aliases: [سدرين]
   birth: "~1950"
   layers: [media, civil, judicial]
-  tagline: Journalist, human rights activist, president of IVD; sentenced to 25 years June 2026
+  tagline: Journalist, human rights activist, president of IVD; sentenced to 25 years in June 2026 and five more in November 2026
   tagline_fr: >-
     Journaliste, militante des droits humains, présidente de l'IVD ;
     condamnée à 25 ans de prison en juin 2026
@@ -9174,7 +9174,10 @@
     Her tenure at IVD was marked by controversy, particularly surrounding the
     commission's final report and accusations of politicisation. Sentenced to
     25 years in prison in June 2026, one of the heaviest sentences handed down
-    to opposition figures under Saied.
+    to opposition figures under Saied. On 19 November 2026 the criminal chamber
+    for financial-corruption cases at the Tunis Court of First Instance
+    sentenced her to five more years and a 115 million dinar money judgment in
+    the IVD-Sta conciliation case, a distinct first-instance file.
   summary_fr: >-
     Journaliste et militante des droits humains devenue présidente de l'Instance Vérité et
     Dignité (IVD). Sa carrière journalistique a inclus la fondation du journal Le Maghreb et
@@ -9190,7 +9193,7 @@
     أثقل الأحكام الصادرة ضد شخصيات معارضة في عهد سعيّد.
   summary_ar_by: model-reviewed
   confidence: B
-  sources: [wikipedia-sihem-bensedrine, mondafrique-chebbi-hammami-2026]
+  sources: [wikipedia-sihem-bensedrine, mondafrique-chebbi-hammami-2026, bn-bensedrine-verdict-2026-11-20, kapitalis-crldht-bensedrine-verdict-2026-11-21]
 
 - id: walid-zarrouk
   attributed_to: Wikipedia (FR)
@@ -10632,7 +10635,11 @@
   summary: >-
     Tunisian activist and political figure arrested in 2023 for statements
     critical of the government. Her trial and imprisonment drew international
-    attention to the repression of dissent under Kais Saied.
+    attention to the repression of dissent under Kais Saied. On 27 November
+    2025 the Tunis appeal court raised her sentence to twenty years in the
+    conspiracy case; she was arrested on 29 November 2025 during a feminist
+    march in central Tunis, and has observed an unlimited hunger strike since
+    16 November 2026.
   summary_fr: >-
     Militante et figure politique tunisienne arrêtée en 2023 pour des déclarations critiques
     envers le gouvernement. Son procès et son emprisonnement ont attiré l'attention
@@ -10643,7 +10650,7 @@
     وسجنها الأنظار الدولية إلى قمع المعارضة في عهد قيس سعيّد.
   summary_ar_by: model-reviewed
   confidence: B
-  sources: [wikipedia-chaima-issa]
+  sources: [wikipedia-chaima-issa, alaraby-issa-hunger-strike-2026-11-18, businessnews-issa-asf-2026-11-19]
 
 - id: jabeur-mejri
   attributed_to: Wikipedia (FR)
@@ -16154,7 +16161,7 @@
 - id: mohamed-yousfi
   name_en: Mohamed Yousfi
   name_fr: Mohamed Yousfi
-  aliases: [Mohamed El Yousfi]
+  aliases: [Mohamed El Yousfi, Youssfi]
   layers: [media]
   tagline: "Investigative journalist; editor-in-chief of Al Qatiba"
   summary: >-
@@ -26354,14 +26361,27 @@
   name_fr: Mabrouk Korchid
   layers:
   - political
+  tagline: Former minister of state domains and land affairs; sentenced in the IVD reconciliation cases of 2026
+  summary: >-
+    Minister of state domains and land affairs in the Chahed government. In
+    June 2026 the criminal chamber for financial-corruption cases at the Tunis
+    Court of First Instance sentenced him to six years in the IVD-Chiboub
+    settlement case; on 19 November 2026 the same chamber sentenced him to six
+    years with immediate execution in the IVD-Sta conciliation case. He was not
+    present at the November trial, and outlets describe him as a fugitive or
+    tried in absentia. No source read states what act he is alleged to have
+    committed in either file.
   confidence: C
-  attributed_to: Wikipédia (fr), government composition pages
+  attributed_to: Wikipédia (fr) and government composition pages; TAP, Kapitalis and Webdo (November 2026)
   notes:
   - Minister identified from a government composition table; person record created for the position.
   - Possibly the same person as mabrouk-korchid-2; the records give no matching Arabic name, so they are
     kept apart.
   sources:
   - frwiki-gov-chahed
+  - tap-fr-bensedrine-verdict-2026-11-20
+  - kapitalis-crldht-bensedrine-verdict-2026-11-21
+  - webdo-ivd-chiboub-verdict-2026-06-26
 - id: maher-ben-dhia
   name_en: Maher Ben Dhia
   name_fr: Maher Ben Dhia
@@ -28564,8 +28584,19 @@
   name_fr: Khaled Krichi
   layers:
   - political
+  tagline: Lawyer; former IVD member and chair of its arbitration and reconciliation committee
+  summary: >-
+    Lawyer; former member of the Truth and Dignity Commission and president of
+    its arbitration and reconciliation committee. Held in detention in 2026
+    while prosecuted over the commission's reconciliation decisions. Sentenced
+    on 19 November 2026 to four years in the IVD-Sta conciliation case, in
+    addition to a first-instance total of ten years in two other IVD cases,
+    under appeal.
   sources:
   - frwiki-arp-2019-members
+  - bn-bensedrine-verdict-2026-11-20
+  - ultra-bensedrine-verdict-2026-11-20
+  - crldht-bensedrine-verdict-2026-11-20
 - id: khaoula-ben-aicha
   name_en: Khaoula Ben Aïcha
   name_fr: Khaoula Ben Aïcha
