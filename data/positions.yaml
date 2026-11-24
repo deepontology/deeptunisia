@@ -243,8 +243,14 @@
   holder: hedi-baccouche
   start: "1987-11-07"
   end: "1989-09-27"
-  confidence: B
-  sources: [habib-bourguiba-net-1987]
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
+  notes:
+    - "Décret n° 87-1282 du 1987-11-07 (JORT n° 80 du 1987-11-10, p. 1422) : « Monsieur Hédi Baccouche est nommé Premier ministre. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1987/080.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1987/080/decret-87-1282; PDF at https://lake.jort.tn/journal-officiel/fr/1987/080.pdf."
+    - "Individual decree appointing Hedi Baccouche as Prime Minister."
+  sources: [habib-bourguiba-net-1987, jort-1987-1282]
 
 - id: p-pm-karoui
   role: prime-minister
@@ -543,16 +549,29 @@
   holder: habib-ammar
   start: "1987-11-07"
   end: "1988-04-01"
-  confidence: B
-  sources: [habib-bourguiba-net-1987, lemonde-1987-coup]
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
+  notes:
+    - "Décret n° 87-1283 du 1987-11-07 (JORT n° 80 du 1987-11-10, p. 1423) : « Ministre de l'intérieur ... Habib Ammar. Ministre délégué auprès du Premier ministre ... Hamed Karoui. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1987/080.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1987/080/decret-87-1283; PDF at https://lake.jort.tn/journal-officiel/fr/1987/080.pdf."
+    - "Whole-government decree; this row is named as Minister of State for the Interior."
+    - "A later decree, 88-1392 of 27 July 1988 (https://www.jort.tn/view/journal-officiel/fr/1988/051/decret-88-1392), still names Habib Ammar as Minister of State for the Interior, which conflicts with the canonical end of 1988-04-01; the end needs review."
+  sources: [habib-bourguiba-net-1987, lemonde-1987-coup, jort-1987-1283]
 
 - id: p-int-escheikh
   role: interior-minister
   holder: abdelhamid-escheikh
   start: "1990-03-03"
   end: "1991-02-17"
-  confidence: B
-  notes: ["Left office the same year as the Barraket Essahel affair."]
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
+  notes:
+    - "Left office the same year as the Barraket Essahel affair."
+    - "Décret n° 90-483 du 1990-03-03 (JORT n° 17 du 1990-03-06, p. 323) : « Ministre de l'intérieur ... Monsieur Abdelhamid Escheikh. Ministre de la défense nationale ... Monsieur Abdallah Kallel. Ministre des affaires étrangères ... Monsieur Ismail Khelil. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1990/017.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1990/017/decret-90-483; PDF at https://lake.jort.tn/journal-officiel/fr/1990/017.pdf."
+    - "Whole-government decree; this row is named as interior minister."
   notes_fr:
     - >-
       A quitté ses fonctions la même année que l'affaire Barraket Essahel.
@@ -561,56 +580,35 @@
     - >-
       غادر منصبه في السنة نفسها التي وقعت فيها قضية براكة الساحل.
   notes_ar_by: model-reviewed
-  sources: [wikipedia-escheikh]
+  sources: [wikipedia-escheikh, jort-1990-483]
 
 - id: p-int-essid
   role: interior-minister
   holder: habib-essid
   start: "2011-03-28"
   end: "2011-12-24"
-  confidence: B
-  verification: needs-primary-source
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-    - >-
-      Dates corrected 2026-08-08 from 2011-01-27 → 2011-03-07: the French and
-      Arabic Wikipedia dated lists both place Essid 28 March - 24 December 2011,
-      between Rajhi and Laarayedh. The earlier span conflated him with Rajhi's
-      window (see triage entry).
-    - >-
-      Research pass 2026-08-11: the fr.wikipedia Gouvernement Caid Essebsi page
-      corroborates the corrected start from a third independent account — "Le 28
-      mars 2011, sur proposition du Premier ministre, le président par intérim
-      Fouad Mebazaa nomme Habib Essid comme ministre de l'Intérieur en
-      remplacement de Farhat Rajhi". Corroboration only; the 7 March 2011
-      composition decree and the 28 March 2011 reshuffle decree remain unlocated.
+    - "Start corrected 2026-08-08 to 2011-03-28: the French and Arabic Wikipedia dated lists both place Essid 28 March - 24 December 2011, between Rajhi and Laarayedh."
+    - "Research pass 2026-08-11: the fr.wikipedia Gouvernement Caid Essebsi page corroborates the corrected start from a third independent account: \"Le 28 mars 2011, sur proposition du Premier ministre, le président par intérim Fouad Mebazaa nomme Habib Essid comme ministre de l'Intérieur en remplacement de Farhat Rajhi\"."
+    - "Décret n° 2011-374 du 2011-03-28 (JORT n° 24 du 2011-04-08, p. 450) : « Monsieur Habib Essid est nommé ministre de l'intérieur. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2011/024.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/2011/024/decret-2011-374; PDF at https://lake.jort.tn/journal-officiel/fr/2011/024.pdf."
+    - "Individual decree appointing Habib Essid as interior minister."
   notes_fr:
-    - >-
-      Dates corrigées le 2026-08-08 de 2011-01-27 → 2011-03-07 : les listes datées de
-      Wikipédia en français et en arabe placent toutes deux Essid du 28 mars au 24 décembre
-      2011, entre Rajhi et Laarayedh. La durée antérieure le confondait avec la fenêtre de
-      Rajhi (voir l'entrée de triage).
-    - >-
-      Passe de recherche 2026-08-11 : la page Gouvernement Caid Essebsi de Wikipédia en
-      français corrobore le début corrigé par un troisième récit indépendant — « Le 28 mars
-      2011, sur proposition du Premier ministre, le président par intérim Fouad Mebazaa
-      nomme Habib Essid comme ministre de l'Intérieur en remplacement de Farhat Rajhi ».
-      Corroboration seulement ; le décret de composition du 7 mars 2011 et le décret de
-      remaniement du 28 mars 2011 restent introuvables.
+    - "Début corrigé le 2026-08-08 au 2011-03-28 : les listes datées de Wikipédia en français et en arabe placent toutes deux Essid du 28 mars au 24 décembre 2011, entre Rajhi et Laarayedh."
+    - "Passe de recherche 2026-08-11 : la page Gouvernement Caid Essebsi de Wikipédia en français corrobore le début corrigé par un troisième récit indépendant : « Le 28 mars 2011, sur proposition du Premier ministre, le président par intérim Fouad Mebazaa nomme Habib Essid comme ministre de l'Intérieur en remplacement de Farhat Rajhi »."
+    - "Décret n° 2011-374 du 2011-03-28 (JORT n° 24 du 2011-04-08, p. 450) : « Monsieur Habib Essid est nommé ministre de l'intérieur. » Texte lu dans la couche OCR du JORT à https://ocr.jort.tn/journal-officiel/fr/2011/024.md et sur la page du décret à https://www.jort.tn/view/journal-officiel/fr/2011/024/decret-2011-374 ; PDF à https://lake.jort.tn/journal-officiel/fr/2011/024.pdf."
+    - "Décret individuel nommant Habib Essid ministre de l'intérieur."
   notes_fr_by: model-reviewed
   notes_ar:
-    - >-
-      صُحّحت التواريخ يوم 2026-08-08 من 2011-01-27 ← 2011-03-07: تضع القائمتان المؤرّختان في
-      ويكيبيديا الفرنسية والعربية الصيد معًا من 28 مارس إلى 24 ديسمبر 2011، بين
-      الالالالالراجحي والعريّض. كانت المدة السابقة تخلط بينه وبين فترة الالالالالراجحي (انظر
-      مدخل الفرز).
-    - >-
-      جولة بحث 2026-08-11: تؤكد صفحة حكومة قائد السبسي في ويكيبيديا الفرنسية البداية
-      المصححة برواية ثالثة مستقلة — « وفي 28 مارس 2011، وبناء على اقتراح رئيس الحكومة، عيّن
-      الرئيس المؤقت فؤاد المبزع الحبيب الصيد وزيرًا للداخلية خلفًا لفارح الراجحي ».
-      تأكيد فقط؛ ويبقى مرسوم التشكيل الصادر في 7 مارس 2011 ومرسوم التعديل الصادر في 28
-      مارس 2011 غير محددين.
+    - "صُحّحت البداية يوم 2026-08-08 إلى 2011-03-28: تضع القائمتان المؤرّختان في ويكيبيديا الفرنسية والعربية الصيد من 28 مارس إلى 24 ديسمبر 2011، بين الراجحي والعريّض."
+    - "جولة بحث 2026-08-11: تؤكد صفحة حكومة قائد السبسي في ويكيبيديا الفرنسية البداية المصححة برواية ثالثة مستقلة: « وفي 28 مارس 2011، وبناء على اقتراح رئيس الحكومة، عيّن الرئيس المؤقت فؤاد المبزع الحبيب الصيد وزيرًا للداخلية خلفًا لفارح الراجحي »."
+    - "مرسوم عدد 2011-374 المؤرخ في 2011-03-28 (الرائد الرسمي عدد 24 بتاريخ 2011-04-08، ص 450): « Monsieur Habib Essid est nommé ministre de l'intérieur. » نُقل النص من طبقة التعرف الضوئي للرائد الرسمي على https://ocr.jort.tn/journal-officiel/fr/2011/024.md ومن صفحة المرسوم على https://www.jort.tn/view/journal-officiel/fr/2011/024/decret-2011-374؛ والنسخة PDF على https://lake.jort.tn/journal-officiel/fr/2011/024.pdf."
+    - "مرسوم فردي يعيّن الحبيب الصيد وزيرًا للداخلية."
   notes_ar_by: model-reviewed
-  sources: [pm-gov-former, wikipedia-interior-ministers, wikipedia-ministry-of-interior-ar]
+  sources: [pm-gov-former, wikipedia-interior-ministers, wikipedia-ministry-of-interior-ar, jort-2011-374]
 
 - id: p-int-laarayedh
   role: interior-minister
@@ -948,11 +946,14 @@
   holder: ali-chebbi
   start: "1992-03-09"
   end: "1999-11-17"
-  confidence: B
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-    - >-
-      First holder of the portfolio, appointed at the ministry's creation in
-      1992. Dates per the ministry's official listing.
+    - "First holder of the portfolio, appointed at the ministry's creation in 1992. Dates per the ministry's official listing."
+    - "Décret n° 92-527 du 1992-03-09 (JORT n° 18 du 1992-03-24, p. 355) : « Monsieur Ali Chebbi, est nommé ministre des affaires religieuses. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1992/018.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1992/018/decret-92-527; PDF at https://lake.jort.tn/journal-officiel/fr/1992/018.pdf."
+    - "Individual decree appointing Ali Chebbi as minister of religious affairs."
   notes_fr:
     - >-
       Premier titulaire du portefeuille, nommé à la création du ministère en 1992. Dates
@@ -970,17 +971,21 @@
   falsifiable_by_ar: >-
     مرسوم في الرائد الرسمي يعيّن أو ينهي الولاية.
   falsifiable_by_ar_by: model-reviewed
-  sources: [affaires-religieuses-bouhali, wikipedia-fr-affaires-religieuses]
+  sources: [affaires-religieuses-bouhali, wikipedia-fr-affaires-religieuses, jort-1992-527]
 
 - id: p-relaff-jribi-jalloul
   role: religious-affairs-minister
   holder: jalloul-jeribi
   start: "1999-11-17"
   end: "2004-11-10"
-  confidence: B
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-    - >-
-      Dates per the ministry's official listing.
+    - "Dates per the ministry's official listing."
+    - "Décret n° 99-2558 du 1999-11-17 (JORT n° 94 du 1999-11-23, p. 2463) : « Ministre de la Justice ... Monsieur Béchir Takkari. Ministre des Affaires Religieuses ... Monsieur Jalloul Jeribi. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1999/094.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1999/094/decret-99-2558; PDF at https://lake.jort.tn/journal-officiel/fr/1999/094.pdf."
+    - "Whole-government decree; this row is named as minister of religious affairs."
   notes_fr:
     - >-
       Dates selon la liste officielle du ministère.
@@ -996,7 +1001,7 @@
   falsifiable_by_ar: >-
     مرسوم في الرائد الرسمي يعيّن أو ينهي الولاية.
   falsifiable_by_ar_by: model-reviewed
-  sources: [affaires-religieuses-bouhali, wikipedia-fr-affaires-religieuses]
+  sources: [affaires-religieuses-bouhali, wikipedia-fr-affaires-religieuses, jort-1999-2558]
 
 - id: p-relaff-akhzouri
   role: religious-affairs-minister
@@ -4309,28 +4314,32 @@
 - id: p-int-kallel
   role: interior-minister
   holder: abdallah-kallel
-  start: "1991-02-17"
+  start: "1991-02-20"
   end: "1995-01-24"
-  confidence: B
-  review:
-    by: JORT verification pass
-    date: "2026-07-28"
-    method: source-check
-    note: Checked against French Wikipedia list of interior ministers, which provides precise dates
-  sources: [wikipedia-interior-ministers, wikipedia-ministry-of-interior-ar]
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
+  notes:
+    - "Décret n° 91-276 du 1991-02-20 (JORT n° 15 du 1991-02-22, p. 327) : « Ministre de la justice ... Abderrahim ZOUARI. Ministre de l'intérieur ... Abdallah KALLEL. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1991/015.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1991/015/decret-91-276; PDF at https://lake.jort.tn/journal-officiel/fr/1991/015.pdf."
+    - "Gazette decree is dated 20 February 1991; the canonical start was 17 February 1991. Start moved to the gazette date."
+    - "Previous recorded start: 1991-02-17."
+  sources: [wikipedia-interior-ministers, wikipedia-ministry-of-interior-ar, jort-1991-276]
 
 - id: p-int-jegham
   role: interior-minister
   holder: mohamed-jegham
-  start: "1995-01-24"
+  start: "1995-01-25"
   end: "1997-01-22"
-  confidence: B
-  review:
-    by: JORT verification pass
-    date: "2026-07-28"
-    method: source-check
-    note: Checked against French Wikipedia list of interior ministers, which provides precise dates
-  sources: [wikipedia-interior-ministers, wikipedia-ministry-of-interior-ar]
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
+  notes:
+    - "Décret n° 95-142 du 1995-01-25 (JORT n° 8 du 1995-01-27, p. 247) : « Monsieur Mohamed Jegham est nommé ministre de l'intérieur. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1995/008.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1995/008/decret-95-142; PDF at https://lake.jort.tn/journal-officiel/fr/1995/008.pdf."
+    - "Gazette decree is dated 25 January 1995; the canonical start was 24 January 1995. Start moved to the gazette date."
+    - "Previous recorded start: 1995-01-24."
+  sources: [wikipedia-interior-ministers, wikipedia-ministry-of-interior-ar, jort-1995-142]
 
 - id: p-int-belhaj-kacem
   role: interior-minister
@@ -4772,12 +4781,14 @@
   holder: abdallah-kallel
   start: "1990-03-03"
   end: "1991-02-20"
-  confidence: B
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-    - >-
-      End corrected 2026-08-08 from year-level "1991": the handover is the day
-      Boularès was appointed, 20 February 1991 (frwiki-defence-ministers; see
-      triage entry).
+    - "End corrected 2026-08-08 from year-level \"1991\": the handover is the day Boularès was appointed, 20 February 1991 (frwiki-defence-ministers; see triage entry)."
+    - "Décret n° 90-483 du 1990-03-03 (JORT n° 17 du 1990-03-06, p. 323) : « Ministre de l'intérieur ... Monsieur Abdelhamid Escheikh. Ministre de la défense nationale ... Monsieur Abdallah Kallel. Ministre des affaires étrangères ... Monsieur Ismail Khelil. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1990/017.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1990/017/decret-90-483; PDF at https://lake.jort.tn/journal-officiel/fr/1990/017.pdf."
+    - "Whole-government decree; this row is named as defence minister."
   notes_fr:
     - >-
       Fin corrigée le 2026-08-08 du niveau année « 1991 » : la passation est le jour de la
@@ -4789,7 +4800,7 @@
       صُحّحت النهاية يوم 2026-08-08 من مستوى السنة « 1991 »: التسليم هو يوم تعيين بولعراس،
       20 فيفري 1991 (frwiki-defence-ministers؛ انظر مدخل الفرز).
   notes_ar_by: model-reviewed
-  sources: [wikipedia-defence-ministers, wikipedia-ministry-of-defence-ar]
+  sources: [wikipedia-defence-ministers, wikipedia-ministry-of-defence-ar, jort-1990-483]
 
 - id: p-def-morjane
   role: defence-minister
@@ -5222,37 +5233,23 @@
   holder: ismail-khelil
   start: "1990-03-03"
   end: "1990-08-28"
-  confidence: B
-  verification: needs-primary-source
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
     - "Missing from the dataset until the 2026-08-04 research pass; five-month caretaker tenure between Escheikh and Boularès, per the French Wikipedia FM list."
-    - >-
-      Corroborated 2026-08-08: the fr.wikipedia Gouvernement Karoui page lists
-      "Ministre des Affaires étrangères: Ismaïl Khelil" under "Remaniement du
-      3 mars 1990", and the Ismaïl Khelil bio page dates the tenure
-      "3 mars – 28 août 1990". No decree number located for the 3 March 1990
-      reshuffle — no tier-1 upgrade possible.
+    - "Décret n° 90-483 du 1990-03-03 (JORT n° 17 du 1990-03-06, p. 323) : « Ministre de l'intérieur ... Monsieur Abdelhamid Escheikh. Ministre de la défense nationale ... Monsieur Abdallah Kallel. Ministre des affaires étrangères ... Monsieur Ismail Khelil. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1990/017.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1990/017/decret-90-483; PDF at https://lake.jort.tn/journal-officiel/fr/1990/017.pdf."
+    - "Whole-government decree; this row is named as foreign minister."
   notes_fr:
-    - >-
-      « Absent des données jusqu'à la passe de recherche du 2026-08-04 ; mandat de
-      transition de cinq mois entre Escheikh et Boularès, selon la liste des MAE de
-      Wikipédia en français. »
-    - >-
-      Corroboré le 2026-08-08 : la page Gouvernement Karoui de Wikipédia en français liste «
-      Ministre des Affaires étrangères : Ismaïl Khelil » sous « Remaniement du 3 mars 1990
-      », et la page bio d'Ismaïl Khelil date le mandat « 3 mars – 28 août 1990 ». Aucun
-      numéro de décret trouvé pour le remaniement du 3 mars 1990 — aucune amélioration de
-      niveau 1 possible.
+    - "Absent des données jusqu'à la passe de recherche du 2026-08-04 ; mandat de transition de cinq mois entre Escheikh et Boularès, selon la liste des MAE de Wikipédia en français."
+    - "Décret n° 90-483 du 1990-03-03 (JORT n° 17 du 1990-03-06, p. 323) : « Ministre de l'intérieur ... Monsieur Abdelhamid Escheikh. Ministre de la défense nationale ... Monsieur Abdallah Kallel. Ministre des affaires étrangères ... Monsieur Ismail Khelil. » Texte lu dans la couche OCR du JORT à https://ocr.jort.tn/journal-officiel/fr/1990/017.md et sur la page du décret à https://www.jort.tn/view/journal-officiel/fr/1990/017/decret-90-483 ; PDF à https://lake.jort.tn/journal-officiel/fr/1990/017.pdf."
+    - "Décret de gouvernement ; cette ligne y figure comme ministre des affaires étrangères."
   notes_fr_by: model-reviewed
   notes_ar:
-    - >-
-      « كان غائبًا عن البيانات إلى جولة البحث ليوم 2026-08-04؛ ولاية انتقالية من خمسة أشهر
-      بين الشيخ وبولعراس، وفق قائمة وزراء الخارجية في ويكيبيديا الفرنسية. »
-    - >-
-      مؤكَّد يوم 2026-08-08: تدرج صفحة حكومة القروي في ويكيبيديا الفرنسية « وزير الشؤون
-      الخارجية: إسماعيل خليل » تحت « تعديل 3 مارس 1990 »، وتؤرخ صفحة سيرة إسماعيل خليل
-      الولاية « 3 مارس – 28 أوت 1990 ». لم يُعثر على رقم مرسوم لتعديل 3 مارس 1990 — لا ترقية
-      من الدرجة الأولى ممكنة.
+    - "كان غائبًا عن البيانات إلى جولة البحث ليوم 2026-08-04؛ ولاية انتقالية من خمسة أشهر بين الشيخ وبولعراس، وفق قائمة وزراء الخارجية في ويكيبيديا الفرنسية."
+    - "مرسوم عدد 90-483 المؤرخ في 1990-03-03 (الرائد الرسمي عدد 17 بتاريخ 1990-03-06، ص 323): « Ministre de l'intérieur ... Monsieur Abdelhamid Escheikh. Ministre de la défense nationale ... Monsieur Abdallah Kallel. Ministre des affaires étrangères ... Monsieur Ismail Khelil. » نُقل النص من طبقة التعرف الضوئي للرائد الرسمي على https://ocr.jort.tn/journal-officiel/fr/1990/017.md ومن صفحة المرسوم على https://www.jort.tn/view/journal-officiel/fr/1990/017/decret-90-483؛ والنسخة PDF على https://lake.jort.tn/journal-officiel/fr/1990/017.pdf."
+    - "مرسوم حكومي؛ وتُدرج هذه السطر بصفته وزيرًا للشؤون الخارجية."
   notes_ar_by: model-reviewed
   reasoning: >-
     French Wikipedia FM list dates the tenure 3 March – 28 August 1990; the
@@ -5281,7 +5278,7 @@
     مرسوم في الرائد الرسمي من أوائل مارس 1990 يعيّن إسماعيل خليل وزيرًا للشؤون الخارجية
     (مرسوم تشكيل حكومة القروي).
   falsifiable_by_ar_by: model-reviewed
-  sources: [frwiki-gouvernement-karoui, frwiki-ismail-khelil, frwiki-mae-list, espacemanager-ministres-list]
+  sources: [frwiki-gouvernement-karoui, frwiki-ismail-khelil, frwiki-mae-list, espacemanager-ministres-list, jort-1990-483]
 
 # --- Bourguiba-era foreign ministers done above ---
 
@@ -5290,37 +5287,25 @@
   holder: habib-boulares
   start: "1990-08-28"
   end: "1991-02-17"
-  confidence: B
-  verification: needs-primary-source
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
     - "Start corrected 2026-08-04: succeeded Ismaïl Khelil on 28 August 1990, not 3 March 1990."
-    - >-
-      Corroborated 2026-08-08: the fr.wikipedia Gouvernement Karoui page
-      ("Remaniement du 28 août 1990") and the Habib Boularès bio page
-      ("28 août 1990 – 20 février 1991") corroborate both ends with independent
-      references. No decree number located for the 28 August 1990 reshuffle —
-      no tier-1 upgrade possible.
+    - "Décret n° 90-1323 du 1990-08-28 (JORT n° 57 du 1990-09-11, p. 1206) : « Monsieur Habib Boularès est nommé ministre des affaires étrangères. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1990/057.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1990/057/decret-90-1323; PDF at https://lake.jort.tn/journal-officiel/fr/1990/057.pdf."
+    - "Individual decree appointing Boularès as foreign minister."
   notes_fr:
-    - >-
-      « Début corrigé le 2026-08-04 : a succédé à Ismaïl Khelil le 28 août 1990, non le 3
-      mars 1990. »
-    - >-
-      Corroboré le 2026-08-08 : la page Gouvernement Karoui de Wikipédia en français («
-      Remaniement du 28 août 1990 ») et la page bio d'Habib Boularès (« 28 août 1990 – 20
-      février 1991 ») corroborent les deux extrémités avec des références indépendantes.
-      Aucun numéro de décret trouvé pour le remaniement du 28 août 1990 — aucune
-      amélioration de niveau 1 possible.
+    - "« Début corrigé le 2026-08-04 : a succédé à Ismaïl Khelil le 28 août 1990, non le 3 mars 1990. »"
+    - "Décret n° 90-1323 du 1990-08-28 (JORT n° 57 du 1990-09-11, p. 1206) : « Monsieur Habib Boularès est nommé ministre des affaires étrangères. » Texte lu dans la couche OCR du JORT à https://ocr.jort.tn/journal-officiel/fr/1990/057.md et sur la page du décret à https://www.jort.tn/view/journal-officiel/fr/1990/057/decret-90-1323 ; PDF à https://lake.jort.tn/journal-officiel/fr/1990/057.pdf."
+    - "Décret individuel nommant Boularès ministre des affaires étrangères."
   notes_fr_by: model-reviewed
   notes_ar:
-    - >-
-      « صُحّحت البداية يوم 2026-08-04: خلف إسماعيل خليل يوم 28 أوت 1990، لا يوم 3 مارس 1990.
-      »
-    - >-
-      مؤكَّد يوم 2026-08-08: صفحة حكومة القروي في ويكيبيديا الفرنسية (« تعديل 28 أوت 1990 »)
-      وصفحة سيرة الحبيب بولعراس (« 28 أوت 1990 – 20 فيفري 1991 ») تؤكدان الطرفين بمراجع
-      مستقلة. لم يُعثر على رقم مرسوم لتعديل 28 أوت 1990 — لا ترقية من الدرجة الأولى ممكنة.
+    - "« صُحّحت البداية يوم 2026-08-04: خلف إسماعيل خليل يوم 28 أوت 1990، لا يوم 3 مارس 1990. »"
+    - "مرسوم عدد 90-1323 المؤرخ في 1990-08-28 (الرائد الرسمي عدد 57 بتاريخ 1990-09-11، ص 1206): « Monsieur Habib Boularès est nommé ministre des affaires étrangères. » نُقل النص من طبقة التعرف الضوئي للرائد الرسمي على https://ocr.jort.tn/journal-officiel/fr/1990/057.md ومن صفحة المرسوم على https://www.jort.tn/view/journal-officiel/fr/1990/057/decret-90-1323؛ والنسخة PDF على https://lake.jort.tn/journal-officiel/fr/1990/057.pdf."
+    - "مرسوم فردي يعيّن بولعراس وزيرًا للشؤون الخارجية."
   notes_ar_by: model-reviewed
-  sources: [wikipedia-habib-boulares, frwiki-gouvernement-karoui, frwiki-habib-boulares, frwiki-mae-list]
+  sources: [wikipedia-habib-boulares, frwiki-gouvernement-karoui, frwiki-habib-boulares, frwiki-mae-list, jort-1990-1323]
 
 - id: p-foreign-ben-yahia-1
   role: foreign-minister
@@ -5474,8 +5459,14 @@
   holder: kamel-morjane
   start: "2010-01-14"
   end: "2011-01-27"
-  confidence: B
-  notes: ["Stayed in post through Ben Ali's fall, serving in the transitional Ghannouchi government."]
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
+  notes:
+    - "Stayed in post through Ben Ali's fall, serving in the transitional Ghannouchi government."
+    - "Décret n° 2010-72 du 2010-01-14 (JORT n° 7 du 2010-01-22, p. 224) : « Ministre des affaires étrangères ... Monsieur Kamel Morjane » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2010/007.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/2010/007/decret-2010-72; PDF at https://lake.jort.tn/journal-officiel/fr/2010/007.pdf."
+    - "Partial-government decree; this row is named as foreign minister."
   notes_fr:
     - >-
       Resté en poste à travers la chute de Ben Ali, servant dans le gouvernement de
@@ -5485,7 +5476,7 @@
     - >-
       بقي في المنصب عبر سقوط بن علي، خادمًا في حكومة الغنوشي الانتقالية.
   notes_ar_by: model-reviewed
-  sources: [wikipedia-foreign-ministers]
+  sources: [wikipedia-foreign-ministers, jort-2010-72]
 
 - id: p-foreign-ounaies
   role: foreign-minister
@@ -6184,8 +6175,14 @@
   holder: hamed-karoui
   start: "1988-07-27"
   end: "1989-09-27"
-  confidence: B
-  notes: ["Later prime minister."]
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
+  notes:
+    - "Later prime minister."
+    - "Décret n° 88-1392 du 1988-07-27 (JORT n° 51 du 1988-07-29, p. 1075) : « Ministre de la justice ... Hamed Karoui. Ministre de l'industrie et du commerce ... Moncef Belaid. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1988/051.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1988/051/decret-88-1392; PDF at https://lake.jort.tn/journal-officiel/fr/1988/051.pdf."
+    - "Whole-government decree; this row is named as justice minister."
   notes_fr:
     - >-
       Plus tard chef du gouvernement.
@@ -6215,7 +6212,7 @@
   falsifiable_by_ar: >-
     مرسوم في الرائد الرسمي يعيّن حامد القروي وزيرًا للعدل بتواريخ مختلفة.
   falsifiable_by_ar_by: model-reviewed
-  sources: [wikipedia-justice-ministers-tunisia-fr]
+  sources: [wikipedia-justice-ministers-tunisia-fr, jort-1988-1392-pdf]
 
 - id: p-justice-bouaziz
   role: justice-minister
@@ -6316,113 +6313,24 @@
   holder: abderrahim-zouari
   start: "1991-02-20"
   end: "1992-06-09"
-  confidence: B
-  verification: needs-primary-source
-  basis: reported
-  attributed_to: Wikipedia (French)
-  reasoning: >-
-    French Wikipedia's dated justice list records Zouari 20 February 1991 to
-    9 June 1992, after Chédli Neffati and before Sadok Chaabane; corroborated
-    by Gouvernement Karoui section "En vertu des décrets n°91-275 et 91-276 du
-    20 février 1991, une nouvelle composition du gouvernement est annoncée" with
-    table Justice: Abderrahim Zouari, and the dedicated Abderrahim Zouari bio
-    (Justice 20 Feb 1991–09 Jun 1992) plus remaniement 09 Jun 1992 successor
-    Sadok Chaabane. Tier-3 corroboration only — decree numbers 91-275/91-276 are
-    Wikipedia's transcription of the JORT, not a primary fetch. Hunt 2026-08-28:
-    9anoun.tn browse (https://9anoun.tn/kb/jorts) returns only recent JORTs, no
-    1991-1992 index surfaced; direct 9anoun guesses and KB search for Zouari/
-    Justice 1991-1992 returned no hits; legislation-securite.tn and juridoc.tn
-    not indexed for 1991 decrees; justice.gov.tn has no historical minister list.
-    Still needs primary source for A; transcription of decree numbers is the
-    disputed point until JORT page image is pulled.
-  reasoning_fr: >-
-    La liste datée de Wikipédia en français consigne Zouari du 20 février 1991 au 9 juin
-    1992, après Chédli Neffati et avant Sadok Chaâbane ; corroboré par la section
-    Gouvernement Karoui "En vertu des décrets n°91-275 et 91-276 du 20 février 1991, une
-    nouvelle composition du gouvernement est annoncée" avec tableau Justice : Abderrahim Zouari,
-    et la bio dédiée Abderrahim Zouari (Justice 20 fév. 1991–09 juin 1992) plus remaniement
-    09 juin 1992 successeur Sadok Chaâbane. Corroboration de niveau 3 seulement — les numéros
-    91-275/91-276 sont la transcription Wikipédia du JORT, non une récupération primaire.
-    Chasse 2026-08-28 : navigation 9anoun.tn (https://9anoun.tn/kb/jorts) ne renvoie que les JORT
-    récents, aucun index 1991-1992 surfacé ; tentatives directes 9anoun et recherche KB
-    Zouari/Justice 1991-1992 sans résultat ; legislation-securite.tn et juridoc.tn non indexés
-    pour décrets 1991 ; justice.gov.tn sans liste historique. Reste en attente de source primaire
-    pour A ; la transcription des numéros est le point contesté jusqu'à récupération d'image JORT.
-  reasoning_fr_by: model-reviewed
-  reasoning_ar: >-
-    القائمة المؤرّخة في ويكيبيديا الفرنسية تسجّل الزواري من 20 فيفري 1991 إلى 9 جوان 1992، بعد
-    الشاذلي النفطي وقبل الصادق شعبان؛ ويؤيده قسم حكومة القروي "بمقتضى المرسومين عدد 91-275
-    و91-276 المؤرخين في 20 فيفري 1991، أُعلنت تشكيلة جديدة للحكومة" مع جدول العدل: عبد الرحيم
-    الزواري، والسيرة المخصصة لعبد الرحيم الزواري (العدل 20 فيفري 1991–09 جوان 1992) plus تعديل 9
-    جوان 1992 الخلف الصادق شعبان. تأييد من المستوى 3 فقط — رقما المرسومين 91-275/91-276 هما نسخ
-    ويكيبيديا للرائد الرسمي، ليس سحبًا أوليًا. بحث 2026-08-28: تصفح 9anoun.tn
-    (https://9anoun.tn/kb/jorts) يعرض فقط الأعداد الحديثة، دون فهرس 1991-1992؛ محاولات 9anoun
-    المباشرة وبحث القاعدة المعرفية عن Zouari/Justice 1991-1992 دون نتيجة؛ legislation-securite.tn
-    وjuridoc.tn غير مفهرسين لمراسيم 1991؛ justice.gov.tn بلا قائمة تاريخية. لا يزال بحاجة إلى مصدر
-    أولي للدرجة أ؛ نسخ رقمي المرسومين هو النقطة المتنازع عليها حتى سحب صورة الرائد الرسمي.
-  reasoning_ar_by: model-reviewed
-  falsifiable_by: >-
-    JORT issue containing decrees n°91-275/91-276 of 20 Feb 1991
-    (https://lake.jort.tn/journal-officiel/fr/1991/ — issue around 20 Feb 1991)
-    naming Abderrahim Zouari as Minister of Justice with different dates, or
-    showing a different holder/CIN/birth mismatching 18 Apr 1944 Dahmani, or
-    giving different decree numbers than Wikipedia's 91-275/91-276 transcription;
-    or JORT 09 Jun 1992 issue for the succession to Sadok Chaabane. Would upgrade
-    to documented/A and disambiguate homonym.
-  falsifiable_by_fr: >-
-    Numéro du JORT contenant décrets n°91-275/91-276 du 20 fév. 1991
-    (https://lake.jort.tn/journal-officiel/fr/1991/ — numéro autour du 20 fév. 1991)
-    nommant Abderrahim Zouari ministre de la Justice avec des dates différentes, ou
-    montrant un titulaire/CIN/naissance différent ne correspondant pas au 18 avr. 1944
-    Dahmani, ou donnant des numéros différents de la transcription Wikipédia 91-275/91-276 ;
-    ou numéro JORT 09 juin 1992 pour succession à Sadok Chaâbane. Permettrait un passage à
-    documenté/A et lèverait l'homonymie.
-  falsifiable_by_fr_by: model-reviewed
-  falsifiable_by_ar: >-
-    عدد الرائد الرسمي الحاوي للمرسومين عدد 91-275/91-276 المؤرخين في 20 فيفري 1991
-    (https://lake.jort.tn/journal-officiel/fr/1991/ — عدد حوالي 20 فيفري 1991) الذي يعيّن عبد
-    الرحيم الزواري وزيرًا للعدل بتواريخ مختلفة، أو يعرض صاحب منصب/رقم بطاقة تعريف/تاريخ ولادة
-    مختلفًا لا يطابق 18 أفريل 1944 بدهماني، أو يعطي رقمين مختلفين عن نسخ ويكيبيديا 91-275/91-276؛
-    أو عدد الرائد الرسمي 9 جوان 1992 لخلافة الصادق شعبان. من شأنه الترقية إلى موثّق/أ وتمييز
-    التشابه الاسمي.
-  falsifiable_by_ar_by: model-reviewed
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-    - >-
-      Hunt 2026-08-28: JORT 20 Feb 1991 (91-275/91-276) and 09 Jun 1992 via 9anoun.tn —
-      not open in this session; decree numbers known only from Wikipedia transcription.
-      Corroborated at tier-3 by frwiki-gouvernement-karoui + frwiki-abderrahim-zouari +
-      dated justice list. Falsifiable by lake.jort.tn 1991 issue page image.
-  notes_fr:
-    - >-
-      Recherche 2026-08-28 : JORT 20 fév. 1991 (91-275/91-276) et 09 juin 1992 via 9anoun.tn —
-      non ouverts lors de cette session ; numéros connus seulement par transcription Wikipédia.
-      Corroboré en niveau 3 par frwiki-gouvernement-karoui + frwiki-abderrahim-zouari +
-      liste datée Justice. Réfutable par image de page lake.jort.tn 1991.
-  notes_fr_by: model-reviewed
-  notes_ar:
-    - >-
-      بحث 2026-08-28: الرائد الرسمي 20 فيفري 1991 (91-275/91-276) و9 جوان 1992 عبر 9anoun.tn —
-      غير متاحين في هذه الجلسة؛ الرقمان معروفان فقط عبر نسخ ويكيبيديا. مؤيد في المستوى 3 عبر
-      frwiki-gouvernement-karoui + frwiki-abderrahim-zouari + القائمة المؤرخة للعدل. قابل للدحض
-      بصورة صفحة lake.jort.tn 1991.
-  notes_ar_by: model-reviewed
-  disputes:
-    - claim: "Decree numbers n°91-275 and 91-276 of 20 Feb 1991 for the Zouari appointment"
-      held_by: Wikipedia (French) — Gouvernement Karoui transcription
-      assessment: >-
-        Transcription only; Wikipedia cites the decrees by number but the JORT page image
-        was not fetched in this session. The numbers are carried as reported, not as
-        verified gazette fact, and a different numbering on the actual JORT page would
-        supersede them.
-      status: open
-  sources: [wikipedia-justice-ministers-tunisia-fr, frwiki-gouvernement-karoui, frwiki-abderrahim-zouari]
+    - "Décret n° 91-276 du 1991-02-20 (JORT n° 15 du 1991-02-22, p. 327) : « Ministre de la justice ... Abderrahim ZOUARI. Ministre de l'intérieur ... Abdallah KALLEL. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1991/015.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1991/015/decret-91-276; PDF at https://lake.jort.tn/journal-officiel/fr/1991/015.pdf."
+    - "Whole-government decree; this row is named as justice minister."
+  sources: [wikipedia-justice-ministers-tunisia-fr, frwiki-gouvernement-karoui, frwiki-abderrahim-zouari, jort-1991-276]
 
 - id: p-justice-chaabane
   role: justice-minister
   holder: sadok-chaabane
   start: "1992-06-09"
   end: "1997-01-22"
-  confidence: B
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   reasoning: >-
     French Wikipedia's dated justice list records Chaabane 9 June 1992 to
     22 January 1997, preceding Abdallah Kallel.
@@ -6443,14 +6351,20 @@
   falsifiable_by_ar: >-
     مرسوم في الرائد الرسمي يعيّن الصادق شعبان وزيرًا للعدل بتواريخ مختلفة.
   falsifiable_by_ar_by: model-reviewed
-  sources: [wikipedia-justice-ministers-tunisia-fr]
+  notes:
+    - "Décret n° 92-1094 du 1992-06-09 (JORT n° 38 du 1992-06-16, p. 770) : « Monsieur Sadok Chaâbane est nommé Ministre de la Justice. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1992/038.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1992/038/decret-92-1094; PDF at https://lake.jort.tn/journal-officiel/fr/1992/038.pdf."
+    - "Individual decree appointing Sadok Chaabane as justice minister."
+  sources: [wikipedia-justice-ministers-tunisia-fr, jort-1992-1094]
 
 - id: p-justice-tekkari
   role: justice-minister
   holder: bechir-tekkari
   start: "1999-11-17"
   end: "2010-01-15"
-  confidence: B
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   reasoning: >-
     French Wikipedia's dated justice list records Tekkari 17 November 1999 to
     15 January 2010, in the Ghannouchi I government, succeeding Abdallah Kallel.
@@ -6474,7 +6388,10 @@
   falsifiable_by_ar: >-
     مرسوم في الرائد الرسمي يعيّن بشير التكاري وزيرًا للعدل بتواريخ مختلفة.
   falsifiable_by_ar_by: model-reviewed
-  sources: [wikipedia-justice-ministers-tunisia-fr, frwiki-bechir-tekkari]
+  notes:
+    - "Décret n° 99-2558 du 1999-11-17 (JORT n° 94 du 1999-11-23, p. 2463) : « Ministre de la Justice ... Monsieur Béchir Takkari. Ministre des Affaires Religieuses ... Monsieur Jalloul Jeribi. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1999/094.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1999/094/decret-99-2558; PDF at https://lake.jort.tn/journal-officiel/fr/1999/094.pdf."
+    - "Whole-government decree; this row is named as justice minister."
+  sources: [wikipedia-justice-ministers-tunisia-fr, frwiki-bechir-tekkari, jort-1999-2558]
 
 - id: p-justice-bououni
   role: justice-minister
@@ -40443,12 +40360,17 @@
   holder: hamed-karoui
   start: '1987-11-07'
   end: '1988-07-27'
-  confidence: C
-  attributed_to: Wikipédia (fr), Premier gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre délégué auprès du Premier ministre, directeur du PSD.'
+    - "Portfolio in the source: Ministre délégué auprès du Premier ministre, directeur du PSD."
+    - "Décret n° 87-1283 du 1987-11-07 (JORT n° 80 du 1987-11-10, p. 1423) : « Ministre de l'intérieur ... Habib Ammar. Ministre délégué auprès du Premier ministre ... Hamed Karoui. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1987/080.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1987/080/decret-87-1283; PDF at https://lake.jort.tn/journal-officiel/fr/1987/080.pdf."
+    - "Whole-government decree; this row is named as minister delegate to the Prime Minister."
   sources:
-  - fr-wiki-baccouche-i
+    - fr-wiki-baccouche-i
+    - jort-1987-1283
 - id: p-gov-mohamed-ghannouchi-minister-delegate
   role: minister-delegate
   holder: mohamed-ghannouchi
@@ -41130,12 +41052,17 @@
   holder: mohamed-ben-rejeb
   start: '1993-06-15'
   end: '1997-01-22'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Agriculture.'
+    - "Portfolio in the source: Ministre de l'Agriculture."
+    - "Décret n° 93-1304 du 1993-06-15 (JORT n° 45 du 1993-06-18, p. 844) : « Monsieur Mohamed Ben Rejeb est nommé ministre de l'agriculture. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1993/045.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1993/045/decret-93-1304; PDF at https://lake.jort.tn/journal-officiel/fr/1993/045.pdf."
+    - "Individual decree appointing Mohamed Ben Rejeb as agriculture minister."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1993-1304
 - id: p-gov-ali-chaouch-equipment
   role: equipment-minister
   holder: ali-chaouch
@@ -41457,16 +41384,21 @@
 - id: p-gov-ali-chaouch-interior
   role: interior-minister
   holder: ali-chaouch
-  start: '1997-10-09'
+  start: '1997-10-11'
   end: ~1999
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Intérieur.'
-  - The source does not date the end of this tenure; the year of the end of the government is used as an approximate
-    bound.
+    - "Portfolio in the source: Ministre de l'Intérieur."
+    - "The source does not date the end of this tenure; the year of the end of the government is used as an approximate bound."
+    - "Décret n° 97-1962 du 1997-10-11 (JORT n° 82 du 1997-10-14, p. 1887) : « Monsieur Ali Chaouch, est nommé ministre de l'intérieur. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1997/082.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1997/082/decret-97-1962; PDF at https://lake.jort.tn/journal-officiel/fr/1997/082.pdf."
+    - "Gazette decree is dated 11 October 1997; the canonical start was 9 October 1997. Start moved to the gazette date."
+    - "Previous recorded start: 1997-10-09."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1997-1962
 - id: p-gov-houcine-chouk-transport
   role: transport-minister
   holder: houcine-chouk
@@ -41664,24 +41596,34 @@
   holder: dali-jazi
   start: '2001-01-23'
   end: '2004-11-11'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de la Défense.'
-  - The page lists him among the ten ministers who left at the remaniement of 11 November 2004.
+    - "Portfolio in the source: Ministre de la Défense."
+    - "The page lists him among the ten ministers who left at the remaniement of 11 November 2004."
+    - "Décret n° 2001-291 du 2001-01-23 (JORT n° 9 du 2001-01-30, p. 180) : « ministre de l'intérieur ... Monsieur Abdallah Kaâbi. ministre de la défense nationale ... Monsieur Dali Jazi. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2001/009.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/2001/009/decret-2001-291; PDF at https://lake.jort.tn/journal-officiel/fr/2001/009.pdf."
+    - "Whole-government decree; this row is named as defence minister."
   sources:
-  - fr-wiki-ghannouchi-i
+    - fr-wiki-ghannouchi-i
+    - jort-2001-291
 - id: p-gov-abdallah-kaabi-interior
   role: interior-minister
   holder: abdallah-kaabi
   start: '2001-01-23'
   end: '2002-04-27'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Intérieur.'
+    - "Portfolio in the source: Ministre de l'Intérieur."
+    - "Décret n° 2001-291 du 2001-01-23 (JORT n° 9 du 2001-01-30, p. 180) : « ministre de l'intérieur ... Monsieur Abdallah Kaâbi. ministre de la défense nationale ... Monsieur Dali Jazi. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2001/009.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/2001/009/decret-2001-291; PDF at https://lake.jort.tn/journal-officiel/fr/2001/009.pdf."
+    - "Whole-government decree; this row is named as interior minister."
   sources:
-  - fr-wiki-ghannouchi-i
+    - fr-wiki-ghannouchi-i
+    - jort-2001-291
 - id: p-gov-hedi-mhenni-social-affairs
   role: social-affairs-minister
   holder: hedi-mhenni
@@ -41927,13 +41869,18 @@
   holder: habib-haddad
   start: '2002-09-05'
   end: '2008-08-29'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Agriculture, de l''Environnement et des Ressources hydrauliques.'
-  - The page lists him among those who left at the remaniement of 29 August 2008.
+    - "Portfolio in the source: Ministre de l'Agriculture, de l'Environnement et des Ressources hydrauliques."
+    - "The page lists him among those who left at the remaniement of 29 August 2008."
+    - "Décret n° 2002-2011 du 2002-09-05 (JORT n° 74 du 2002-09-10, p. 2105) : « ministre de l'agriculture, de l'environnement et des ressources hydrauliques ... Habib Haddad » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2002/074.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/2002/074/decret-2002-2011; PDF at https://lake.jort.tn/journal-officiel/fr/2002/074.pdf."
+    - "Whole-government decree; this row is named as agriculture, environment and water minister."
   sources:
-  - fr-wiki-ghannouchi-i
+    - fr-wiki-ghannouchi-i
+    - jort-2002-2011
 - id: p-gov-mohamed-raouf-najar-education
   role: education-minister
   holder: mohamed-raouf-najar
@@ -42099,15 +42046,21 @@
 - id: p-gov-tijani-haddad-tourism
   role: tourism-minister
   holder: tijani-haddad
-  start: '2004-11-11'
+  start: '2004-11-10'
   end: '2007-09-04'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre du Tourisme.'
-  - The page lists him among those who left at the remaniement of 4 September 2007.
+    - "Portfolio in the source: Ministre du Tourisme."
+    - "The page lists him among those who left at the remaniement of 4 September 2007."
+    - "Décret n° 2004-2644 du 2004-11-10 (JORT n° 94 du 2004-11-23, p. 3283) : « Ministre du tourisme ... Monsieur Tijani Haddad » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2004/094.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/2004/094/decret-2004-2644; PDF at https://lake.jort.tn/journal-officiel/fr/2004/094.pdf."
+    - "Gazette decree is dated 10 November 2004; the canonical start was 11 November 2004. Start moved to the gazette date."
+    - "Previous recorded start: 2004-11-11."
   sources:
-  - fr-wiki-ghannouchi-i
+    - fr-wiki-ghannouchi-i
+    - jort-2004-2644
 - id: p-gov-montasser-ouaili-ict
   role: ict-minister
   holder: montasser-ouaili
@@ -42233,13 +42186,18 @@
   holder: sarra-kanoun-jarraya
   start: '2007-09-04'
   end: '2011-01-17'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de la Femme, de la Famille, de l''Enfance et des Personnes âgées.'
-  - Listed in the composition of 4 January 2011; the page does not date the end of this tenure.
+    - "Portfolio in the source: Ministre de la Femme, de la Famille, de l'Enfance et des Personnes âgées."
+    - "Listed in the composition of 4 January 2011; the page does not date the end of this tenure."
+    - "Décret n° 2007-2278 du 2007-09-04 (JORT n° 74 du 2007-09-14, p. 3259) : « Madame Sarra Kanoun Jarraya est nommée ministre des affaires de la femme, de la famille, de l'enfance et des personnes âgées. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2007/074.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/2007/074/decret-2007-2278; PDF at https://lake.jort.tn/journal-officiel/fr/2007/074.pdf."
+    - "Individual decree appointing Sarra Kanoun Jarraya as family, women, childhood and elderly affairs minister."
   sources:
-  - fr-wiki-ghannouchi-i
+    - fr-wiki-ghannouchi-i
+    - jort-2007-2278
 - id: p-gov-ridha-touiti-commerce
   role: commerce-minister
   holder: ridha-touiti
@@ -42257,14 +42215,18 @@
   holder: hatem-ben-salem
   start: '2008-08-29'
   end: '2011-01-17'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Éducation et de la Formation.'
-  - Listed in the composition of 4 January 2011 as 'Ministre de l'Éducation'; the page does not date the end of
-    this tenure.
+    - "Portfolio in the source: Ministre de l'Éducation et de la Formation."
+    - "Listed in the composition of 4 January 2011 as 'Ministre de l'Éducation'; the page does not date the end of this tenure."
+    - "Décret n° 2008-2956 du 2008-08-29 (JORT n° 73 du 2008-09-09, p. 2954) : « Monsieur Hatem Ben Salem est nommé ministre de l'éducation et de la formation. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2008/073.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/2008/073/decret-2008-2956; PDF at https://lake.jort.tn/journal-officiel/fr/2008/073.pdf."
+    - "Individual decree appointing Hatem Ben Salem as education minister."
   sources:
-  - fr-wiki-ghannouchi-i
+    - fr-wiki-ghannouchi-i
+    - jort-2008-2956
 - id: p-gov-abderraouf-el-basti-culture
   role: culture-minister
   holder: abderraouf-el-basti
@@ -49153,14 +49115,19 @@
   holder: moncef-belaid
   start: '1988-07-27'
   end: '1990-03-03'
-  confidence: B
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Industrie et Commerce puis Économie.'
-  - Printed between Slaheddine Ben Mbarek and Mohamed Ghannouchi; the Arabic edition prints the annotation '(التجارة
-    والصناعة)'.
+    - "Portfolio in the source: Industrie et Commerce puis Économie."
+    - "Printed between Slaheddine Ben Mbarek and Mohamed Ghannouchi; the Arabic edition prints the annotation '(التجارة والصناعة)'."
+    - "Décret n° 88-1392 du 1988-07-27 (JORT n° 51 du 1988-07-29, p. 1075) : « Ministre de la justice ... Hamed Karoui. Ministre de l'industrie et du commerce ... Moncef Belaid. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1988/051.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1988/051/decret-88-1392; PDF at https://lake.jort.tn/journal-officiel/fr/1988/051.pdf."
+    - "Decree names him as minister of industry and commerce; the canonical role is commerce-minister."
   sources:
-  - fr-wp-commerce
-  - ar-wp-commerce
+    - fr-wp-commerce
+    - ar-wp-commerce
+    - jort-1988-1392-pdf
 - id: p-gov-mohamed-ghannouchi-commerce
   role: commerce-minister
   holder: mohamed-ghannouchi
@@ -49769,16 +49736,21 @@
 - id: p-gov-ridha-ferchiou-education
   role: education-minister
   holder: ridha-ferchiou
-  start: '1997-10-09'
+  start: '1997-10-11'
   end: '1999-02-15'
-  confidence: C
-  attributed_to: Wikipédia (fr or ar), ministry list
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Éducation.'
-  - Listed between Hatem Ben Othman (ends 9 octobre 1997) and Ahmed Iyadh Ouederni (from 17 novembre 1999), inside
-    the record's hole.
+    - "Portfolio in the source: Éducation."
+    - "Listed between Hatem Ben Othman (ends 9 octobre 1997) and Ahmed Iyadh Ouederni (from 17 novembre 1999), inside the record's hole."
+    - "Décret n° 97-1963 du 1997-10-11 (JORT n° 82 du 1997-10-14, p. 1887) : « Monsieur Ridha Ferchiou, est nommé ministre de l'éducation. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1997/082.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1997/082/decret-97-1963; PDF at https://lake.jort.tn/journal-officiel/fr/1997/082.pdf."
+    - "Gazette decree is dated 11 October 1997; the canonical start was 9 October 1997. Start moved to the gazette date."
+    - "Previous recorded start: 1997-10-09."
   sources:
-  - fr-wp-education
+    - fr-wp-education
+    - jort-1997-1963
 - id: p-gov-abderrahim-zouari-education
   role: education-minister
   holder: abderrahim-zouari
@@ -50053,19 +50025,19 @@
   holder: neziha-mezhoud
   start: '1993-08-06'
   end: '1995-03-27'
-  confidence: B
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Affaires de la femme et de la Famille.'
-  - 'Input entry: Fethia Mzali ends, 14.9-year gap, Néziha Zarrouk starts. Mezhoud''s term falls inside that window:
-    the women and family list gives her from 6 August 1993 to 27 March 1995, and the Karoui cabinet shows her as
-    "Ministre déléguée auprès du Premier ministre chargée des Affaires de la femme et de la Famille" from the remaniement
-    of 6 August 1993, and Zarrouk taking the same portfolio on 27 March 1995. Two residual problems: the page names
-    nobody between 23 June 1986 (the end of Mzali on that page) and 6 August 1993, and the record''s implied end
-    date for Mzali does not match the page. The Karoui cabinet also lists a secretary of state for the women and
-    family portfolio from 1992 to 1995, Nebiha Gueddana.'
+    - "Portfolio in the source: Affaires de la femme et de la Famille."
+    - "Input entry: Fethia Mzali ends, 14.9-year gap, Néziha Zarrouk starts. Mezhoud's term falls inside that window: the women and family list gives her from 6 August 1993 to 27 March 1995, and the Karoui cabinet shows her as \"Ministre déléguée auprès du Premier ministre chargée des Affaires de la femme et de la Famille\" from the remaniement of 6 August 1993, and Zarrouk taking the same portfolio on 27 March 1995. Two residual problems: the page names nobody between 23 June 1986 (the end of Mzali on that page) and 6 August 1993, and the record's implied end date for Mzali does not match the page. The Karoui cabinet also lists a secretary of state for the women and family portfolio from 1992 to 1995, Nebiha Gueddana."
+    - "Décret n° 93-1639 du 1993-08-06 (JORT n° 62 du 1993-08-20, p. 1291) : « Madame Néziha Mezhoud, est nommée en qualité de ministre délégué auprès du Premier ministre chargée des affaires de la femme et de la famille. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1993/062.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1993/062/decret-93-1639; PDF at https://lake.jort.tn/journal-officiel/fr/1993/062.pdf."
+    - "Decree names her as minister delegate to the Prime Minister for women and family affairs; the canonical role is family-women-minister."
   sources:
-  - frwiki-famille-femme
-  - frwiki-gvt-karoui
+    - frwiki-famille-femme
+    - frwiki-gvt-karoui
+    - jort-1993-1639
 - id: p-gov-noureddine-zekri-development
   role: development-minister
   holder: noureddine-zekri
