@@ -45,7 +45,7 @@ function bail(message: string): never {
 // ── Load ──────────────────────────────────────────────────────────────────────
 
 const FEED_FILE = join(ROOT, 'feed', 'feed.json');
-if (!existsSync(FEED_FILE)) bail('feed/feed.json is missing — run `npx tsx scripts/fetch-feed.ts`');
+if (!existsSync(FEED_FILE)) bail('feed/feed.json is missing: run `npm run feed:load` (or `npm run feed` for a fresh archive)');
 
 let feed: { notice?: unknown; cap?: unknown; items?: unknown };
 try {
