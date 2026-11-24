@@ -57,6 +57,18 @@
 #   merge must advance the cutoff to 2026-11-24 and move the pinned defaults in
 #   scripts/parameters.ts and scripts/test-parameters.ts in the same edit, or V31
 #   fails the build.
+# SECOND ASSESSMENT 2026-11-24 (owner-approved): five of the seven event
+#   proposals are merged into canonical data:
+#     ev-bensedrine-krichi-korchid-verdict-2026-11-19
+#     ev-chaima-issa-hunger-strike-2026-11-16
+#     ev-zouari-phosphate-emergency-plan-2026-11-22
+#     ev-zouari-hydrocarbons-acceleration-2026-11-22
+#     ev-germany-tunisia-75m-commitment-2026-11-18 (the agreement proposal
+#     below, reclassified as an event: a commitment, not an instrument)
+#   Held, not merged: ev-state-farms-community-companies-2026-11-20,
+#     ev-rached-corruption-trial-postponed-2026-11-23,
+#     ev-elheni-hunger-strike-announcement-2026-11-23.
+#   All eight flags are applied; the notes remain research backlog.
 # CANDIDATES ARE PROPOSALS, NOT GRAPH DATA.
 
 sources:
