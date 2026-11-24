@@ -294,6 +294,7 @@
     Mohamed Bouazizi s'immole par le feu à Sidi Bouzid
   title_ar: محمد البوعزيزي يحرق نفسه
   category: protest
+  actors: [mohamed-bouazizi]
   summary: The act that catalysed nationwide unrest.
   summary_fr: >-
     L'acte qui a catalysé les troubles dans tout le pays.
@@ -4067,6 +4068,7 @@
   title_ar: "احتجاجات بنقردان بعد الغرق"
   category: protest
   subcategory: migration
+  institutions: [crldht]
   location: [gov-medenine]
   causes: []
   summary: >-
@@ -4292,6 +4294,7 @@
   title_fr: "Fitch confirme la note de la Tunisie à « B- », perspective stable"
   category: economic
   subcategory: sovereign-rating
+  institutions: [fitch-ratings]
   summary: "Fitch Ratings affirmed Tunisia's long-term issuer rating at B- with a stable outlook, as reported 9 September 2026 by African Manager (the agency action itself is dated here ~8 September; confirm against Fitch's rating-action page before import). Figures below are Fitch's projections as relayed by that outlet on that date, not graph facts: 2026 budget deficit 6.4% of GDP, public debt ~85% of GDP through 2028, current account deficit 3.9% in 2026, reserves 3.3 months of external payments, and full repayment of the EUR 700m eurobond maturing July 2026 via central-bank loans. No prior rating-action event exists in the graph. Kapitalis reported on 12 September 2026 that S&P also maintained Tunisia at B- with a stable outlook, and relayed a Fitch-sourced figure that central-bank loans should reach 11 bn TND in 2026 against 7 bn in 2024."
   confidence: C
   basis: reported
@@ -4475,6 +4478,7 @@
   title_fr: "≈56 députés exigent une plénière extraordinaire de l'ARP"
   category: political
   subcategory: parliamentary-petition
+  institutions: [arp-2023]
   summary: >-
     On 29 August 2026 about 56 deputies signed a demand, relayed via TAP and
     deputy Mohamed Ali, for an extraordinary ARP plenary during recess on
@@ -4705,6 +4709,7 @@
   title_fr: La Tunisie reçoit le certificat UNESCO d'inscription du village de Sidi Bou Saïd
   category: political
   subcategory: diplomacy
+  institutions: [unesco]
   summary: "The Village of Sidi Bou Saïd was inscribed on the UNESCO World Heritage List by a unanimous World Heritage Committee decision on 25 July 2026 at its 48th session in Busan, South Korea, as reported by Kapitalis and African Manager (both 24 September 2026, relaying the Tunisian permanent delegation's communiqué). The official certificate was handed over on 24 September 2026 at UNESCO headquarters in Paris to ambassador Dhia Khaled, Tunisia's permanent delegate to UNESCO, by Lazare Eloundou Assomo, director of the UNESCO World Heritage Centre. With this listing, the relays say Tunisia has ten World Heritage properties (nine cultural, one natural); the Dahar Geopark's entry into the UNESCO Global Geoparks Network in April 2026 is reported as Tunisia's other 2026 listing. The article also lists Tunisia's intangible-heritage files, Memory of the World entries and UNESCO chairs as context."
   confidence: B
   basis: reported
@@ -4759,6 +4764,7 @@
   title_fr: La turque Aksa Composites signe son bail industriel à Borj Cédria
   category: economic
   subcategory: investment
+  institutions: [aksa-composites]
   summary: "Aksa Composites, a Turkish company and subsidiary of the Akkök group, signed its industrial lease at the Borj Cédria technopole south of Tunis on Thursday 24 September 2026 — its first site in Africa — with an announced initial investment of USD 5m for composite components and materials, notably for aeronautics. The Gitas industry association, whose president Stefania Sonia Dallali is credited with the contact work begun at the Hamburg Aviation Forum 2025, announced the signing; FIPA-Tunisia accompanied the project (a 19 May 2026 FIPA meeting confirmed it). Sector sources cited by Kapitalis expect operations around 2028 and several dozen direct jobs. Single-outlet, association-sourced account — treated as a reported claim, not a registered investment."
   confidence: C
   basis: inferred
@@ -4909,7 +4915,7 @@
   title_ar: "غرق قارب مهاجرين قرب منصة الحصدرﱡبال: إنقاذ 28 ووفاة اثنين وفقدان ستة"
   category: security
   subcategory: migration
-  institutions: []
+  institutions: [sea-watch]
   location: []
   summary: "On 30 September 2026 Kapitalis relayed Ansa and Sea Watch: the NGO ship Aurora found a nearly deflated dinghy — signalled by Alarm Phone in the Libyan SAR zone — carrying five people and two bodies, one of a child according to witnesses; about 25 people had clung to the Hasdrubal offshore gas platform to escape the sinking, and two women said they lost their children in the waves; the dinghy was at the boundary of the Libyan and Tunisian SAR zones, and survivors told Sea Watch that others reached the platform after the sinking. After recovering the five survivors and the two bodies, the Aurora — authorised by the Tunisian authorities — transferred people from the platform and disembarked 28 people (five women and a young child among them) at Lampedusa, Italy; six people are missing, three of them children. The account rests on Sea Watch and Alarm Phone statements relayed by one outlet; no Tunisian authority statement was cited."
   confidence: C
@@ -5604,10 +5610,10 @@
   location:
     - gov-sfax
   actors: []
-  institutions: []
+  institutions: [uget]
   causes: []
   consequences: []
-  summary: The Union générale des étudiants de Tunisie (UGET) called a general strike for Friday 23 October 2026 in all faculties and higher institutes of the Sfax governorate, after the death of the student Rahma Dziri at the Sidi Mansour university residence, per Kapitalis on 22 October 2026 relaying the union's communiqué. Dziri was enrolled at the Institut supérieur des études technologiques (ISET) of Sfax and fell ill in the night of Wednesday 21 October 2026; according to her classmates' testimony, as the piece reports it, the ambulance reached the residence more than an hour after the first emergency call. The UGET communiqué demands permanent medical structures inside university residences and urgent measures from the supervisory authorities to guarantee immediate access to care. Al Jazeera's wire account of 23 October reports the same death and the call for a strike in Sfax University's faculties without naming the UGET, attributing the ambulance-delay account to the student's colleagues and their complaint to "a lack of medical facilities". Neither source gives a cause of death, and no emergency-service, hospital or university record was retrieved. The UGET has no institution record, so the record cites no institution and names the union in the summary only.
+  summary: The Union générale des étudiants de Tunisie (UGET) called a general strike for Friday 23 October 2026 in all faculties and higher institutes of the Sfax governorate, after the death of the student Rahma Dziri at the Sidi Mansour university residence, per Kapitalis on 22 October 2026 relaying the union's communiqué. Dziri was enrolled at the Institut supérieur des études technologiques (ISET) of Sfax and fell ill in the night of Wednesday 21 October 2026; according to her classmates' testimony, as the piece reports it, the ambulance reached the residence more than an hour after the first emergency call. The UGET communiqué demands permanent medical structures inside university residences and urgent measures from the supervisory authorities to guarantee immediate access to care. Al Jazeera's wire account of 23 October reports the same death and the call for a strike in Sfax University's faculties without naming the UGET, attributing the ambulance-delay account to the student's colleagues and their complaint to "a lack of medical facilities". Neither source gives a cause of death, and no emergency-service, hospital or university record was retrieved. The union is recorded as the institution `uget`; the death and the strike call rest on Kapitalis relaying the union's communiqué, and Al Jazeera's account, which does not name the union, corroborates the death and a strike call in Sfax's faculties.
   confidence: B
   basis: reported
   verification: needs-primary-source
@@ -6242,6 +6248,10 @@
   title_fr: Gouvernement beylical et organisation provisoire des pouvoirs publics
   category: constitutional
   subcategory: executive-regime
+  actors: [lamine-bey]
+  institutions: [anc-1956]
+  documents:
+    - "Décret beylical du 3 août 1956, JORT n° 62 du 3 août 1956"
   summary: 'Who heads the government: The head of government is the first minister, president of the council. The
     decree of 3 August 1956, made by the Bey on the proposal of "notre premier ministre, président du conseil",
     transferred the signing of regulatory and ordinary decrees to that office: "Tout décret à caractère réglementaire
@@ -6291,6 +6301,10 @@
   title_fr: Constitution du 1er juin 1959, version initiale
   category: constitutional
   subcategory: executive-regime
+  actors: [bourguiba]
+  institutions: [anc-1956, presidency]
+  documents:
+    - "Loi n° 59-57 du 1er juin 1959, JORT n° 3 du 1er juin 1959"
   summary: 'Who heads the government: The President of the Republic heads the government himself. The executive
     power is his: "Le Président de la République exerce le pouvoir exécutif conformément à la Constitution. Il veille
     au respect de la Constitution." He sets the general policy of the government and watches its application: "Le
@@ -6338,6 +6352,8 @@
   title_fr: Révision constitutionnelle du 31 décembre 1969 (loi constitutionnelle n° 69-63)
   category: constitutional
   subcategory: executive-regime
+  documents:
+    - "Loi constitutionnelle n° 69-63 du 31 décembre 1969, JORT n° 57 des 30 et 31 décembre 1969, p. 1500"
   summary: 'Who heads the government: The 1969 revision did not change who heads the government: the President of
     the Republic still does, by the operation of art. 43, which the revision did not touch. What the revision changed
     is the constitutional standing of the premier ministre, who appears in the amended art. 51: the President may
@@ -6382,6 +6398,8 @@
   title_fr: 'Révision générale du 8 avril 1976 (loi constitutionnelle n° 76-37) : réécriture du chapitre exécutif'
   category: constitutional
   subcategory: executive-regime
+  documents:
+    - "Loi constitutionnelle n° 76-37 du 8 avril 1976, JORT n° 26 des 9 et 13 avril 1976, p. 858"
   summary: 'Who heads the government: "Le pouvoir exécutif est exercé par le Président de la République assisté
     d''un gouvernement dirigé par un Premier ministre" (art. 37). The Prime Minister directs and coordinates the
     action of the government (art. 60 as worded after the revision of 25 July 1988), and the President presides
@@ -6428,6 +6446,8 @@
   title_fr: Révision du 25 juillet 1988 (loi n° 88-88)
   category: constitutional
   subcategory: executive-regime
+  documents:
+    - "Loi constitutionnelle n° 88-88 du 25 juillet 1988, JORT n° 50 du 26 juillet 1988, p. 1066"
   summary: 'Who heads the government: Unchanged in structure: "Le pouvoir exécutif est exercé par le Président de
     la République assisté d''un gouvernement dirigé par un Premier ministre" (art. 37). The 1988 revision sharpened
     the role of the Prime Minister: "Le Premier ministre dirige et coordonne l''action du Gouvernement. Il supplée,
@@ -6474,6 +6494,7 @@
   title_fr: Révision du 1er juin 2002 (loi constitutionnelle n° 2002-51)
   category: constitutional
   subcategory: executive-regime
+  institutions: [cdd-x]
   summary: 'Who heads the government: Unchanged in structure: "Le pouvoir exécutif est exercé par le Président de
     la République assisté d''un gouvernement dirigé par un Premier ministre" (art. 37). The Prime Minister directs
     and coordinates the action of the government (art. 60) and the government watches the implementation of the
@@ -6521,6 +6542,7 @@
   title_fr: Loi constituante n° 2011-6 du 16 décembre 2011 portant organisation provisoire des pouvoirs publics
   category: constitutional
   subcategory: executive-regime
+  institutions: [nca-2011]
   summary: 'Who heads the government: The government exercises the executive power, save for the attributions conferred
     on the President of the Republic: "Le Gouvernement exerce le pouvoir exécutif, à l''exception des attributions
     conférées au président de la République" (art. 17). The Head of the Government, styled "Président du Gouvernement"
@@ -6576,6 +6598,7 @@
   title_fr: 'Constitution du 27 janvier 2014 (exécutif double : le Président de la République et le Chef du Gouvernement)'
   category: constitutional
   subcategory: executive-regime
+  institutions: [nca-2011]
   summary: 'Who heads the government: Two powers. "Executive authority is exercised by the President of the Republic
     and by a government which is presided over by the head of the government" (art. 71). The Head of Government
     determines the state''s general policy, taking into account art. 77, and ensures its execution (art. 91), and
@@ -6628,6 +6651,10 @@
   title_fr: Décret présidentiel n° 2021-117 du 22 septembre 2021 relatif aux mesures exceptionnelles
   category: constitutional
   subcategory: executive-regime
+  actors: [kais-saied]
+  institutions: [presidency]
+  documents:
+    - "Décret présidentiel n° 2021-117 du 22 septembre 2021, JORT n° 86 du 22 septembre 2021, p. 2196"
   summary: 'Who heads the government: "Le pouvoir exécutif est exercé par le Président de la République assisté
     d''un Gouvernement dirigé par un Chef du Gouvernement" (art. 8). The President presides the Council of Ministers
     and may delegate its presidency to the Head of Government (art. 10); the Head of Government directs and coordinates
@@ -6675,6 +6702,10 @@
   title_fr: Constitution du 25 juillet 2022 (promulguée le 17 août 2022, publiée le 18 août 2022)
   category: constitutional
   subcategory: executive-regime
+  actors: [kais-saied]
+  institutions: [presidency]
+  documents:
+    - "Décret présidentiel n° 2022-691 du 17 août 2022 portant promulgation de la Constitution de la République tunisienne, JORT édition spéciale du 18 août 2022"
   summary: 'Who heads the government: "The President of the Republic exercises executive function with the assistance
     of a government headed by a head of government" (art. 87). The Head of Government leads the government, coordinates
     its work and manages the administration, and may delegate to the President the presidency of the Council of

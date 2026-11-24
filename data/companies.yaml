@@ -914,3 +914,39 @@
   attributed_to: "Kapitalis and African Manager, reporting the 14 September 2026 inauguration"
   notes: ["Tunisian subsidiary of the French Eurostat Group (Toulouse), inaugurated at Tunis on 14 September 2026 in the presence of French ambassador Anne Guéguen and Slim Ferchichi of the Industry, Mines and Energy ministry. Site 1,500 m²; 28 employees; two thermoforming lines, two machining centres and an assembly workshop; the group states the site should eventually generate 20% of its value and lead MEA sales (Kapitalis; African Manager).", "Group figures as printed by Kapitalis: 50 years of experience, more than EUR 10m invested to date, three plants (France, Poland, Tunisia), 150 employees and EUR 35m revenue, 80% export. African Manager relays the French embassy's frame of 1,700 French-participation firms employing over 170,000 people in Tunisia. No RCC/CIN, legal form or capital found this run — omitted."]
   sources: [kapitalis-eurostat-tunisie-2026-09-15, african-manager-eurostat-tunisie-2026-09-16]
+
+- id: aksa-composites
+  legal_name_en: "Aksa Composites"
+  legal_name_fr: "Aksa Composites"
+  status: active
+  state_owned: false
+  activities: ["composite components and materials", "aeronautics"]
+  notes:
+    - >-
+      Turkish company and subsidiary of the Akkök group. It signed its
+      industrial lease at the Borj Cédria technopole on 24 September 2026, with
+      an announced initial investment of USD 5m, per the Gitas industry
+      association's account relayed by Kapitalis. No RCC/CIN number, legal form
+      or capital figure was found in the sources read, so none is stated: the
+      USD 5m is an announced investment, not a capital amount at a balance-sheet
+      date, and the `capital` field is left empty.
+    - >-
+      No incorporation date, RCC/CIN number, legal form or capital figure was
+      found in the sources read, so none is stated: the USD 5m is an announced
+      investment, not a capital amount at a balance-sheet date, and the
+      `capital` field is left empty. The record is single-outlet and
+      association-sourced, so it is graded C.
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "Gitas (Groupement des industries tunisiennes aéronautiques et spatiales), via Kapitalis"
+  reasoning: >-
+    The lease signature, the USD 5m and the sector rest on one industry
+    association's communiqué relayed by one outlet; no FIPA-Tunisia, technopole
+    or company record was retrieved. The corporate record states a reasoned
+    reading of that account.
+  falsifiable_by: >-
+    A FIPA-Tunisia or Borj Cédria technopole record of the lease, or an
+    Aksa/Akkök corporate statement, would confirm or correct the record; a
+    record showing no lease or a different investor would refute it.
+  sources: [kapitalis-aksa-composites-2026-09-25]
