@@ -5355,8 +5355,12 @@
     with works under way to rehabilitate production sites; and that Tunisia
     will bet on gas over 2026-2030, strengthening partnerships with foreign
     investors, with a new hydrocarbons code about to be promulgated to set a
-    legal framework for public-private investment and partnership. These are
-    stated targets and intentions, not achieved output or enacted law.
+    legal framework for public-private investment and partnership. No deadline
+    was attached to the ten million tonnes; the ministry's roadmap target
+    stated at the ARP committee on 6 November 2026 is 4.3 Mt in 2027 and 9.4 Mt
+    in 2035, and the 4.3 Mt was restated in the joint ARP-CNRD plenary on 22
+    November 2026. These are stated targets and intentions, not achieved output
+    or enacted law.
   confidence: C
   basis: inferred
   verification: needs-primary-source
@@ -5373,6 +5377,8 @@
   sources:
     - am-phosphates-10mt-2026-10-12
     - am-hydrocarbures-code-2026-10-13
+    - am-phosphate-plan-affaires-2026-11-06
+    - webdo-phosphate-500-md-2026-11-23
 
 - id: ev-turki-appeal-convictions-2026-10-17
   date: "2026-10-17"
@@ -7276,20 +7282,26 @@
     reconciliation committee, the lawyer Khaled Krichi, per Business News on 6 November. The case concerns
     the arbitration and reconciliation decision the IVD made for the businessman Lazhar Sta, who died
     on 8 September 2026 in detention. Ben Sedrine appears free; Krichi remains in detention. Earlier hearings
-    were 21 September, then 1 October, then 22 October; no reason is given for this adjournment. The outlet
+    were 21 September, then 1 October, then 22 October; Business News and a
+    TAP-derived account later reported that the 5 November adjournment was
+    caused by the absence of the court formation's legal quorum. The outlet
     says that in June 2026 Ben Sedrine received a first-instance total of 25 years and Krichi ten, under
     appeal, and that the association Intersection called for Krichi’s release after more than four months
     of detention. No court communiqué was retrieved.
   confidence: C
   verification: needs-primary-source
-  attributed_to: Business News (6 November 2026)
+  attributed_to: Business News (6 and 20 November 2026); Ultra Tunisia (20 November 2026)
   reasoning: 'One outlet, no court communiqué: the adjournment date and the earlier hearing dates are
-    as it states them. Grade C. The June 2026 totals and the Intersection position are its account and
-    are attributed; the record does not add them to any sentence figure elsewhere.'
-  falsifiable_by: A court communiqué, a defence statement or a second outlet would confirm the date and
-    the reasons; a different next hearing date would correct the record.
+    as it states them. Grade C. The reason for the adjournment is a retrospective report from the next
+    sitting, by Business News and a TAP-derived account, not a 5 November court record. The June 2026
+    totals and the Intersection position are its account and are attributed; the record does not add
+    them to any sentence figure elsewhere.'
+  falsifiable_by: A court communiqué or the minute of the 5 November sitting would confirm the date and
+    the reason; a different next hearing date would correct the record.
   sources:
   - bn-bensedrine-krichi-report-2026-11-06
+  - bn-bensedrine-verdict-2026-11-20
+  - ultra-bensedrine-verdict-2026-11-20
 - id: ev-rnta-former-pdg-sentence-2026-11-05
   date: ~2026-11-05
   title_en: Former head of the national tobacco régie sentenced in absentia to 18 years
@@ -8739,3 +8751,477 @@
     - lapresse-arp-water-bills-2026-11-19
     - managers-arp-water-bills-2026-11-19
     - espacemanager-arp-bureau-nine-bills-2026-11-02
+
+- id: ev-bensedrine-krichi-korchid-verdict-2026-11-19
+  date: "2026-11-19"
+  title_en: "Ben Sedrine, Krichi and Korchid sentenced in the IVD-Sta conciliation case"
+  title_fr: "Ben Sedrine, Krichi et Korchid condamnés dans l'affaire de la conciliation IVD-Sta"
+  category: legal
+  subcategory: corruption-verdict
+  location: [gov-tunis]
+  actors: [sihem-bensedrine, khaled-krichi, mabrouk-korchid, lazhar-sta]
+  institutions: [judiciary, ivd]
+  causes:
+    - ev-bensedrine-krichi-adjournment-2026-11-05
+  consequences: []
+  summary: >-
+    The criminal chamber for financial-corruption cases of the economic and
+    financial judicial pole at the Tunis Court of First Instance pronounced its
+    ruling on the evening of Thursday 19 November 2026, late into the night, in
+    the file of the arbitration and conciliation agreement the Truth and
+    Dignity Commission (IVD) concluded with the businessman Lazhar Sta, who
+    died in detention on 8 September 2026. It sentenced the former IVD
+    president Sihem Ben Sedrine, who appeared free, to five years'
+    imprisonment, and the lawyer Khaled Krichi, a former IVD member and
+    president of its arbitration and reconciliation committee, who is in
+    detention, to four years, per TAP's judicial source, Business News, Webdo,
+    Kapitalis, African Manager, Assabah News and Le Quotidien on 20 and 21
+    November 2026. The same ruling sentenced Mabrouk Korchid, minister of state
+    domains and land affairs at the time of the facts, to six years with
+    immediate execution; he was not present, and Kapitalis and Le Quotidien
+    describe the conviction as in absentia (par contumace) while the other
+    outlets call him a fugitive. The court also imposed a 115 million dinar
+    money judgment: TAP's judicial source, as relayed by Nessma and Ultra
+    Tunisia, says each defendant was fined 115 million dinars and jointly
+    ordered to return the same sum, while the CRLDHT communique of 20 November
+    describes a single joint 115 million dinar restitution of the value of the
+    state's interest. This is a first-instance judgment in a distinct file,
+    not an appeal or a revision: in June 2026 the same chamber gave Ben Sedrine
+    a first-instance total of 25 years and Krichi ten in two other cases tied
+    to the commission's work, both under appeal, and gave Korchid six years in
+    the Chiboub settlement case. The offence, as the judicial source described it to TAP,
+    is a public official deliberately exploiting his position to cause material
+    harm to the administration for an unjustified advantage; the CRLDHT says
+    the June IVD cases were charged under Article 96 of the Penal Code. No
+    judgment text, court communique or case number was retrieved, no source
+    describes this verdict as final, and no appeal against it is reported.
+  confidence: B
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: "TAP's judicial source (20 November 2026), Business News, Webdo, Kapitalis relaying and adding to the CRLDHT communique of 20 November 2026, African Manager, Assabah News, Le Quotidien, and the TAP relays in Nessma and Ultra Tunisia"
+  reasoning: >-
+    The three sentences, Korchid's portfolio and immediate execution, the Sta
+    file, the first-instance character and the June relationship are carried by
+    several editorial operations that did not all copy one another: the state
+    wire's judicial source, Business News, Webdo, Kapitalis (which adds Korchid
+    in its own voice, outside the communique it relays), African Manager, Le
+    Quotidien and Assabah. That is what lifts the record to B rather than C. It
+    does not reach A: no judgment text and no court communique exist in hand,
+    the case has no number in any account, and the fullest accounts outside the
+    agency's own page are the ones that credit it (Nessma, Ultra Tunisia), so
+    part of the agreement is one witness repeated; Assabah credits nobody but
+    its short item is of a piece with the same dispatch.
+    The date is taken as 19 November because the TAP-derived
+    account states the evening of Thursday 19 November for the ruling and
+    Friday 20 November for the agency's disclosure, and because African
+    Manager, published on the 20th, says "late in the night of yesterday"; the
+    outlets that print Friday are read as dating the announcement. That reading
+    is an inference and is filed as an open dispute, not asserted as fact. The
+    115 million is recorded as a money judgment of that size with two
+    incompatible descriptions of its structure, because TAP's source and the
+    CRLDHT disagree and neither is a court record. The June figures are carried
+    only to show that this is a separate first-instance file; nothing is summed,
+    and the record does not describe the verdict as final or the sentences as
+    cumulative. Korchid's role is documented as his portfolio at the time of
+    the facts by every outlet that names him, but no retrieved source says what
+    act he is alleged to have committed in an IVD arbitration file, which is a
+    gap rather than a finding.
+  falsifiable_by: >-
+    The judgment text, the case number, a court communique or a hearing minute
+    from the Tunis Court of First Instance would settle the date of
+    pronouncement, the structure of the 115 million dinar award, whether
+    Korchid was tried by contumace and on what charge article, and whether an
+    appeal was lodged. A dated court or lawyers' notice placing the reading
+    after midnight would move the event to 20 November. A defence or court
+    document describing Korchid's alleged act would fill the gap in his role.
+    A published appeal, or a cassation ruling, would change the record's
+    statement that the verdict is first instance and that no appeal is
+    reported.
+  disputes:
+    - claim: >-
+        The verdict was pronounced on Friday 20 November 2026, not on the
+        evening of Thursday 19 November.
+      held_by: >-
+        Business News ("condamné, vendredi 20 novembre 2026"), Webdo ("a
+        prononcé, vendredi 20 novembre"; "le jugement a été rendu au lendemain
+        de cette audience"), the ASF statements relayed by Kapitalis and
+        Business News on 20 November, and TAP's own 20 November datelines.
+      source: bn-bensedrine-verdict-2026-11-20
+      assessment: >-
+        Kept open. The record is dated 19 November because one TAP-derived
+        account separates the two moments explicitly ("مساء أمس الخميس 19
+        نوفمبر/تشرين الثاني 2026" for the ruling, "يوم الجمعة 20 نوفمبر 2026"
+        for what the judicial source told the agency), and African Manager,
+        published on the 20th, says the sentence came "tard dans la nuit
+        d'hier". The most likely reconciliation is a sitting that ran late and
+        a ruling read near or after midnight, which is how this court's June
+        ruling is described too: the CRLDHT says it was handed down "on the
+        night of June 25-26, 2026" while it is dated 25 June here. That
+        reconciliation is an inference, not a sourced fact, and a reader who
+        prefers 20 November is not contradicted by any court record in hand.
+        Falsifiable by the judgment text or a hearing minute.
+      status: open
+    - claim: >-
+        The 115 million dinars is a joint restitution of the value of the
+        state's interest, and nothing else.
+      held_by: >-
+        CRLDHT communique of 20 November, relayed by Kapitalis; the same
+        framing in the English-language aggregation read this run.
+      source: crldht-bensedrine-verdict-2026-11-20
+      assessment: >-
+        Kept open against the TAP formulation, which is two-part: "chacun des
+        accusés à une amende de 115 millions de dinars, tout en les obligeant
+        solidairement à restituer la même somme". The two agree that 115
+        million dinars is the headline sum and disagree on whether it is a
+        per-defendant fine plus a joint restitution of the same amount, or a
+        single joint restitution. The June rulings used the two-part structure
+        (CRLDHT's own July account: each fined 1,776,170,000 dinars and ordered
+        to pay the same amount jointly), which makes the TAP wording the more
+        consistent with this court's practice, but that is an analogy from a
+        different file, not evidence about this one. The record therefore says
+        "a 115 million dinar money judgment" and gives both descriptions. It
+        never multiplies by three. Falsifiable by the judgment text.
+      status: open
+    - claim: >-
+        Mabrouk Korchid was convicted in absentia (par contumace).
+      held_by: >-
+        Kapitalis and Le Quotidien, which use the strict procedural term;
+        Business News, Webdo, African Manager, Assabah and the TAP relays
+        instead describe him as "en état de fuite" or "المحال بحالة فرار" (a
+        fugitive).
+      source: kapitalis-crldht-bensedrine-verdict-2026-11-21
+      assessment: >-
+        Recorded as a vocabulary split rather than a factual conflict: every
+        account says he was not present and was referred as a fugitive, and two
+        add the procedural name for the resulting trial. The record states the
+        fact all of them carry ("he was not present") and attributes the strict
+        term to the two outlets that use it. Falsifiable by the judgment text,
+        which would say whether the trial was by contumace or by default after
+        a fugitive referral.
+      status: open
+  sources:
+    - tap-fr-bensedrine-verdict-2026-11-20
+    - tap-en-bensedrine-verdict-2026-11-20
+    - bn-bensedrine-verdict-2026-11-20
+    - webdo-bensedrine-verdict-2026-11-20
+    - kapitalis-crldht-bensedrine-verdict-2026-11-21
+    - crldht-bensedrine-verdict-2026-11-20
+    - am-bensedrine-verdict-2026-11-20
+    - assabah-bensedrine-verdict-2026-11-20
+    - nessma-bensedrine-verdict-2026-11-20
+    - ultra-bensedrine-verdict-2026-11-20
+    - lequotidien-bensedrine-verdict-2026-11-20
+    - webdo-ivd-chiboub-verdict-2026-06-26
+    - crldht-ivd-25-ans-2026-07-01
+
+- id: ev-chaima-issa-hunger-strike-2026-11-16
+  date: "2026-11-16"
+  title_en: "Chaima Issa begins an unlimited hunger strike in prison"
+  title_fr: "Chaima Issa entame une greve de la faim illimitee en prison"
+  category: legal
+  subcategory: detention-protest
+  actors: [chaima-issa]
+  institutions: [judiciary]
+  causes: [conspiracy-appeal-2025]
+  consequences: []
+  summary: >-
+    Chaima Issa, held since 29 November 2025 in the case known as "conspiracy
+    against state security", began an unlimited hunger strike on 16 November
+    2026, her family announced in a communique dated 17 November. The
+    communique says she is protesting the continuation of what it calls her
+    unjust detention and trials it describes as lacking the most basic
+    guarantees of justice, alongside the other defendants, a year after her
+    arrest during a feminist march in central Tunis. Her defence lawyer Dalila
+    Ben Mbarek Msaddek announced the same action, saying she was denouncing
+    injustice, oppression and what she called an iniquitous judgment. On 19
+    November Avocats sans frontieres (ASF) published a statement on its
+    Facebook page calling for her immediate release and that of all political
+    prisoners and asking the penitentiary and judicial authorities to guarantee
+    her physical integrity and continuous access to care and medical
+    supervision throughout the protest; Kapitalis and Business News report the
+    statement the same day. Al Jazeera Arabic reported on 18 November, from her
+    sister, that the family had known in advance and tried during its 17
+    November visit to dissuade her, and that she refused. No report of the
+    strike ending or being suspended was found up to 24 November, and no
+    prison-administration or medical statement was retrieved. The family says
+    the administration is following the strike and has provided appropriate
+    conditions; that is the family's account, not a confirmed administrative
+    one. Her term is twenty years on appeal (conspiracy-appeal-2025, 27
+    November 2025, raised from eighteen).
+  confidence: B
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: >-
+    The family of Chaima Issa (communique of 17 November 2026), her defence
+    lawyer Dalila Ben Mbarek Msaddek, and Avocats sans frontieres (statement of
+    19 November 2026), as reported by Kapitalis, Business News, Al Jazeera,
+    Al-Arabi, JINHA and Le Courrier de l'Atlas.
+  reasoning: >-
+    The fact that an unlimited strike began on 16 November 2026 is carried by
+    several credible outlets in French and Arabic, but they rest on three
+    speakers: the family, the defence lawyer and ASF. The family and the lawyer
+    are one circle and are the origin of the date; ASF is a third party
+    asserting the same start date, which is why the grade is B rather than C.
+    It is not A: no prison-administration record, medical note or
+    administrative document is in hand, and at least two Arabic outlets
+    reproduce the family text rather than reporting independently. The record
+    is kept separate from conspiracy-appeal-2025, which fixes the sentence, and
+    from the earlier periodic solidarity strike of 4 November: this is a new
+    unlimited action, not the continuation of that one.
+  falsifiable_by: >-
+    A prison-administration or medical statement showing she was not on strike
+    from 16 November, a family or lawyer announcement of suspension or end
+    before 24 November, or a dated source showing the unlimited strike began on
+    another date (for instance that the 4 November action continued without a
+    break) would correct or refute the record.
+  sources:
+    - kapitalis-issa-hunger-strike-2026-11-17
+    - businessnews-issa-hunger-strike-2026-11-17
+    - aljazeera-issa-hunger-strike-2026-11-18
+    - jinha-issa-hunger-strike-2026-11-18
+    - alaraby-issa-hunger-strike-2026-11-18
+    - courrier-atlas-issa-hunger-strike-2026-11-19
+    - kapitalis-issa-asf-2026-11-19
+    - businessnews-issa-asf-2026-11-19
+
+- id: ev-zouari-phosphate-emergency-plan-2026-11-22
+  date: "2026-11-22"
+  title_en: "Zouari unveils a three-month phosphate emergency plan and a 4.3 Mt target for 2027"
+  title_fr: "Zouari devoile un plan d'urgence de trois mois pour le phosphate et un objectif de 4,3 Mt en 2027"
+  category: economic
+  subcategory: mining-energy
+  location: [gov-tunis]
+  actors: [salah-zouari]
+  institutions: [cpg, gct, arp-2023, cnrd, ministry-equipment-housing]
+  causes: []
+  consequences: []
+  summary: >-
+    At the joint plenary of the Assembly of the Representatives of the People
+    and the National Council of Regions and Districts on Sunday 22 November
+    2026 at the Palais du Bardo, held on the 2027 budget of the industry, mines
+    and energy ministry, Salah Zouari, the minister managing that ministry,
+    announced a three-month emergency plan running to January 2027 to finance
+    the Compagnie des phosphates de Gafsa (CPG) and the Groupe chimique
+    tunisien (GCT), per African Manager, La Presse de Tunisie, Mosaique FM
+    (crediting TAP), L'Economiste Maghrebin and Webdo on 22-23 November 2026.
+    He said the plan has drawn about 500 million dinars of state-guaranteed
+    credits, which the two companies are already using to settle what they owe
+    supplier firms, and that 240 million dinars of investment has been
+    inscribed in the programme and its implementation begun. The stated target
+    is 4.3 million tonnes of commercial phosphate in 2027 against 2.8 million
+    tonnes expected for 2026, which requires what he called adequate financial
+    and logistical conditions across extraction, transport, processing and the
+    settlement of the companies' arrears. He said the M'dhilla 2 unit, called
+    "Tifart" by African Manager and Mosaique FM and "Tifert" or "TIFERT" by the
+    other three, enters service in 2027 at about 700,000 tonnes; that the
+    recovery programme runs to 2035 and covers rehabilitation of production and
+    processing units, completion of stalled projects, new equipment, hydraulic
+    transport and restructuring of the Societe tunisienne de transport des
+    produits miniers; that some units ready to 90 percent stay idle for lack of
+    completion credits; and that implementation is monitored at two levels,
+    fortnightly meetings at the head of government and daily follow-up by the
+    minister, his team and CPG and GCT representatives. These are the
+    minister's figures and targets, not published production outturns, and no
+    ministry, CPG or GCT statistical release was retrieved.
+  confidence: B
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: "Salah Zouari, minister charged with managing the industry, mines and energy ministry, speaking in the joint ARP-CNRD plenary of 22 November 2026, as reported by African Manager, La Presse de Tunisie, Mosaique FM (Avec TAP), L'Economiste Maghrebin and Webdo on 22-23 November 2026"
+  reasoning: >-
+    The sitting, the occasion and the figures are carried by five outlets
+    across three editorial operations on the day and the morning after, and
+    the venue and the two chambers are independently fixed by La Presse's
+    budget piece. That is what lifts the record above a single outlet. It does
+    not reach A: Mosaique FM credits TAP, and the near-identical wording across
+    the other pieces is consistent with one wire or one ministry briefing, so
+    the outlets are not demonstrably independent witnesses. Every number is
+    the minister's own statement in a budget debate, at least one of them (the
+    240 MD) is described as launched by one outlet and merely inscribed by
+    another, and the 2026 comparator he used differs from the 3.4 Mt his head
+    of government gave the same chambers on 9 November. The record therefore
+    reports the announcement and attributes the figures rather than asserting
+    them. The 4.3 Mt for 2027 is not a new target: Zouari gave the same figure
+    at the ARP committee on 6 November, inside a 2027-2035 business plan
+    running to 9.4 Mt in 2035. The industry ministry has no institution record,
+    so the record cites ministry-equipment-housing, whose minister holds the
+    industry portfolio in interim, and names the ministry in the summary.
+  falsifiable_by: >-
+    The ARP or CNRD verbatim record, agenda or communique for the 22 November
+    sitting; a ministry communique or the 2027 budget report of the two
+    chambers' committees; CPG, GCT or ministry production statistics for 2026
+    and 2027; or the financing agreements behind the 500 million dinars of
+    guaranteed credits would confirm or correct the figures. A correction
+    showing the 4.3 Mt was first set on 22 November rather than at the 6
+    November committee would change the reasoning on novelty.
+  sources:
+    - am-phosphate-zouari-plan-urgence-2026-11-23
+    - lapresse-phosphates-500-md-cpg-2026-11-22
+    - mosaique-phosphate-43-mt-2027-2026-11-22
+    - leconomiste-phosphate-500-md-2026-11-23
+    - webdo-phosphate-500-md-2026-11-23
+    - webdo-phosphate-42-mt-2026-11-09
+    - am-phosphate-plan-affaires-2026-11-06
+
+- id: ev-zouari-hydrocarbons-acceleration-2026-11-22
+  date: "2026-11-22"
+  title_en: "Zouari tells the joint plenary hydrocarbon permits will be accelerated, with oil output down to 20,000 b/d"
+  title_fr: "Zouari annonce devant la pleniere conjointe l'acceleration des permis d'hydrocarbures, la production petroliere tombee a 20 000 barils par jour"
+  category: economic
+  subcategory: oil-and-gas
+  location: [gov-tunis]
+  actors: [salah-zouari]
+  institutions: [etap, steg, arp-2023, cnrd, ministry-equipment-housing]
+  causes: []
+  consequences: []
+  summary: >-
+    At the same joint ARP-CNRD plenary on the 2027 budget of the industry,
+    mines and energy ministry, on Sunday 22 November 2026 at the Palais du
+    Bardo, Salah Zouari said his department is working to accelerate the
+    procedures for exploiting already-authorised hydrocarbon fields and
+    concessions in order to bring additional natural gas and oil into
+    production during 2027, cut the energy deficit and limit imports paid in
+    foreign currency, per African Manager, Webdo and L'Economiste Maghrebin on
+    23 November 2026. He said all the natural gas currently extracted from
+    Tunisian wells and concessions goes directly to the Societe tunisienne de
+    l'electricite et du gaz (STEG) and none is sold abroad, while the country
+    must import additional gas paid in foreign currency; and that national oil
+    output has fallen from about 80,000 barrels a day to about 20,000. He said
+    decisions on oil files must rest on a case-by-case technical, legal and
+    economic study, that several decisions remain pending including on the
+    Ashtart field, and that when means allow, investment priority will go to
+    ETAP, "whose participation stands at 50 percent", without excluding
+    national private investment. The fall in oil output and the STEG-only
+    destination of domestic gas are carried by at least two outlets; the
+    Ashtart file and the 50 percent figure appear in African Manager's account
+    alone, and what the 50 percent refers to is not stated in the source and is
+    not inferred here.
+  confidence: B
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: "Salah Zouari, minister charged with managing the industry, mines and energy ministry, answering deputies in the joint ARP-CNRD plenary of 22 November 2026, as reported by African Manager, Webdo and L'Economiste Maghrebin on 23 November 2026"
+  reasoning: >-
+    Two independent outlets give the 80,000 to 20,000 barrels a day fall and
+    the STEG-only destination of domestic gas, and a third carries the 20,000
+    current figure, which supports B for the core of the record. It is a report
+    of what a minister told deputies, not an output series: no ETAP, STEG or
+    ministry production or export figure was retrieved, and the speech itself
+    gives no date for the 80,000 baseline. Two elements drop to single-outlet
+    and are flagged in the summary rather than smoothed: the Ashtart file and
+    the ETAP "50 percent". The record does not treat the acceleration of
+    procedures as a decision taken; the source reports an intention and pending
+    decisions, so nothing here asserts that any permit was granted.
+  falsifiable_by: >-
+    The ARP or CNRD verbatim record of the sitting; ETAP or ministry monthly
+    production and export statistics; the Ashtart concession documents or a
+    decision on them; or JORT acts granting, renewing or converting the
+    concessions named would confirm or correct the record. A statement that
+    domestic gas is in fact exported, or that the 80,000 baseline is wrong,
+    would correct the two headline claims.
+  sources:
+    - am-hydrocarbures-acceleration-2026-11-23
+    - webdo-hydrocarbures-zouari-2026-11-23
+    - leconomiste-corruption-petrole-2026-11-23
+- id: ev-germany-tunisia-75m-commitment-2026-11-18
+  date: "2026-11-18"
+  title_en: "Germany announces EUR 75 million for Tunisia at the close of the intergovernmental negotiations"
+  title_fr: "L'Allemagne annonce 75 millions d'euros pour la Tunisie a la cloture des negociations intergouvernementales"
+  category: economic
+  subcategory: development-cooperation
+  location: [gov-tunis]
+  actors: []
+  institutions: [germany, etat-tunisien]
+  causes: []
+  consequences: []
+  summary: >-
+    At the close of the Tunisian-German intergovernmental negotiations held in
+    Tunis on 17 and 18 November 2026, the German government announced EUR 75
+    million (about 254 million dinars per African Manager, at no cited rate) for
+    new cooperation projects with Tunisia. The 18 November date in this record is
+    the date the pledge was announced, at the end of the session; no financing
+    agreement for the 75 million is described by any source read, no signatory is
+    named, and nothing was signed for it. The German embassy in Tunis, in the
+    release the French and Italian coverage relays, puts the money on three
+    headings (energy grid infrastructure, drinking water supply, and economic
+    development) and names three projects: the extension of the Djerba seawater
+    desalination plant, the modernisation of the electricity networks, and better
+    access to finance for small and medium enterprises, with growth and jobs as
+    the stated aim. The Tunisian foreign ministry's communique of 19 November
+    2026, relayed by the TAP wire, gives the same 75 million with a different
+    sector list: employment and vocational training, digitisation of the public
+    administration, optimal management of water resources, and acceleration of the
+    transition to clean and renewable energy, framed against the 2026-2030
+    five-year development plan. The negotiations are numbered the twentieth
+    session by the Tunisian side and are called "cooperation au developpement" in
+    the German version and "cooperation financiere et technique" in the Tunisian
+    one. The two co-chairs are named: for Tunisia, the foreign ministry official
+    in charge of relations with the northern European countries (Somia Zarray
+    Chaabani in the TAP French text, Soumaya Zorai Chaabani in Mosaique FM's); for
+    Germany, the director of the North Africa department at the federal ministry
+    for economic cooperation and development (Annette von Edig in TAP, Annette van
+    Edig in Mosaique FM). African Manager states explicitly what the announcement
+    does not say, and no other source read supplies it: no split of the 75 million
+    between the projects, no statement whether the money is grants or loans, no
+    terms, no timetable, and no period covered. The 75 million is described as new
+    by the German release ("nouveaux financements", "nouvelle enveloppe",
+    "supplementaires", "new cooperation projects"), which is the release's own
+    characterisation and not an independent finding. It is a separate commitment
+    from the more than EUR 100 million of accords signed on 31 August 2026, and
+    separate from the EUR 20 million KfW grant for the Chotrana 1 plant signed on
+    18 November 2026 during the same negotiations
+    (agr-tunisia-germany-onas-choutrana-grant-2026-11-18); see the notes for why
+    the Chotrana grant is treated as outside this envelope rather than inside it,
+    and for what would settle the question.
+  confidence: B
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: >-
+    The German embassy in Tunis, in a release of 19 November 2026 relayed by
+    African Manager, IlBoursa, L'Economiste Maghrebin, Managers and ITALPRESS, for
+    the EUR 75 million, the three headings and the three named projects; the
+    Tunisian foreign ministry, in a communique of 19 November 2026 relayed by TAP
+    through Nessma TV and Mosaique FM, for the same EUR 75 million, the twentieth
+    session, the venue, the two co-chairs and the alternative sector list.
+  reasoning: >-
+    The figure is carried by two governments' communications and by at least seven
+    separately written news accounts in three languages, which is what lifts the
+    record to B rather than C. It does not reach A. Neither communique was read at
+    source: the German one sits on the embassy's Facebook page behind a login
+    wall, the Tunisian one on a ministry platform that returned transport errors,
+    and no BMZ, KfW, GIZ, Auswaertiges Amt or JORT document was located. What was
+    read is relay upon relay, and the relays are not independent witnesses: five
+    French accounts descend from the German release, TAP is the state agency
+    reproducing the ministry, and the two Arabic accounts are one text on two
+    mastheads. The agreement is therefore evidence that both governments put 75
+    million into circulation, not that any instrument exists. The sector lists
+    diverge and the divergence is left standing rather than reconciled, because
+    reconciling it would mean inventing a fourth list. The record is dated 18
+    November because that is the day the session ended and the pledge was
+    announced, and the summary says so in its first sentence so that no reader
+    takes the field for a signature date. "New" is attributed rather than
+    asserted: it is the German release's adjective. No split, instrument, term,
+    timetable or period is supplied, because none was found, and African Manager's
+    own statement that the announcement omits them is quoted in the sources rather
+    than paraphrased away.
+  falsifiable_by: >-
+    The German embassy release and the Tunisian foreign ministry communique read
+    at source; a BMZ press release, a KfW press release, the German budget line
+    for the 2026-2027 government negotiations, or a Tunisian finance ministry or
+    JORT notice would confirm or correct the amount, the period and the
+    instrument, and would settle whether the 75 million is grants, loans or a mix.
+    A published project list with amounts would supply or contradict the split. A
+    statement that the EUR 20 million Chotrana grant is counted inside the 75
+    million would correct this record's treatment of the two as separate, and a
+    statement that it is not would close the question the notes leave open. A
+    figure other than 75 million in either government's own text would correct the
+    headline claim.
+  sources:
+    - am-germany-75m-djerba-2026-11-19
+    - ilboursa-germany-75m-2026-11-19
+    - leconomiste-germany-75m-2026-11-19
+    - managers-germany-75m-2026-11-19
+    - italpress-mna-germany-75m-2026-11-19
+    - tap-nessma-germany-75m-2026-11-19
+    - mosaiqe-germany-75m-2026-11-19
+    - nessma-en-tap-choutrana-20m-2026-11-19
+    - alchourouk-germany-75m-2026-11-19
+    - diwanfm-germany-75m-2026-11-19

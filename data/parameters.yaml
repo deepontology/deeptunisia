@@ -115,9 +115,20 @@ time:
   #   instrument (9 October) and was already inside the horizon. The sweep read the feed
   #   through 2026-11-19, so the cutoff takes the coverage date rather than the latest
   #   record date.
+  # Advanced again 2026-11-24 when the Nov-19 to Nov-24 sweep merged five events and
+  #   eight corrections. Three of the new records are dated past the previous horizon:
+  #   the state-farms announcement (20 November), the phosphate emergency plan and the
+  #   hydrocarbons acceleration (both 22 November). The IVD-Sta verdict is dated
+  #   19 November, the previous cutoff date, and is allowed by it; the German EUR 75
+  #   million commitment (18 November) and the Chaima Issa hunger strike (16 November)
+  #   are already inside the horizon. Three further candidates were held out of the
+  #   graph: the state-farms record, the Taieb Rached postponement and the Zied El Heni
+  #   announcement, each resting on one agency dispatch or one outlet. The sweep read
+  #   the feed through 2026-11-23 and covers through 2026-11-24, so the cutoff takes
+  #   the coverage date rather than the latest record date.
   # V31 now fails the build on any record interval dated past the cutoff.
   floor: "1956-03-20"
-  cutoff: "2026-11-19"
+  cutoff: "2026-11-24"
   # How far back an open-ended "in post by X" bound may reach. A plausible
   # ceiling for a senior command tenure; the longest documented run in the
   # dataset is about seven and a half years.

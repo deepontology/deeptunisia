@@ -1025,8 +1025,13 @@
     description to an ONAS social-media post; the Spanish Council of Ministers decision of 28 July 2026 on
     the same project gives EUR 118 million total cost and 900,000 people directly served in the capital,
     with KfW leading the financing and a EUR 25 million AECID loan to ONAS under Tunisian sovereign
-    guarantee. 355 MDT against EUR 118m is consistent at roughly 3.0 dinars to the euro, a conversion
-    derived here at no cited rate. The graph has no Chotrana record; ONAS and Germany do, KfW and BMZ do not.
+    guarantee. TAP and the Arabic relays give the consortium as a EUR 20 million KfW grant, a EUR 35
+    million AFD loan and a EUR 25 million AECID loan, and put the grant at about 66 million dinars (about
+    3.3 dinars to the euro); at that rate 355 MDT is about EUR 108 million, not the EUR 118m of the Spanish
+    decision, so the two totals may describe different scopes and the record no longer derives a rate. The
+    EUR 20 million is recorded separately from the EUR 75 million commitment announced at the same
+    negotiations (ev-germany-tunisia-75m-commitment-2026-11-18); no source establishes whether it is
+    counted inside that envelope. The graph has no Chotrana record; ONAS and Germany do, KfW and BMZ do not.
   confidence: B
   verification: needs-primary-source
   attributed_to: "African Manager and La Presse de Tunisie (19 November 2026, one shared text) for the amount, the date, the 355 MDT total and the beneficiary count; Plumes Economiques (19 November 2026) relaying the KfW/BMZ release for the signing institutions and the programme; La Moncloa and Europa Press (28 July 2026) for the EUR 118m total, the JEFIC co-financing and the Spanish share."
@@ -1053,3 +1058,7 @@
     - plumes-kfw-choutrana-don-2026-11-19
     - moncloa-consejo-ministros-choutrana-2026-07-28
     - europapress-choutrana-25m-2026-07-28
+    - nessma-en-tap-choutrana-20m-2026-11-19
+    - tap-nessma-germany-75m-2026-11-19
+    - mosaiqe-germany-75m-2026-11-19
+    - alchourouk-germany-75m-2026-11-19
