@@ -8,10 +8,11 @@
  * may stand above its ceiling, for a stated reason, a counted amount of debt and
  * a date.
  *
- * `/methodology` lists the roles of the graph. 75 of its 198 roles have no
- * `title_ar` in `data/roles.yaml`, so the Arabic page shows their English
- * titles: 66 English function words against the ceiling of 37. The 75 is the
- * work: each role needs its Arabic title.
+ * `/methodology` lists the roles of the graph. All 198 roles carry a `title_ar`
+ * in `data/roles.yaml`, so the Arabic page shows no English role titles and
+ * stands at its ordinary ceiling of 37. The exception stays as the register
+ * `scripts/build-data.ts` checks: a role added without a title, or a title that
+ * goes missing, fails the build against the stated count.
  *
  * `scripts/build-data.ts` fails when the date passes with a role still
  * untranslated, and when the number below no longer matches the data (a new role
@@ -23,11 +24,11 @@ export const ARABIC_TITLE_EXCEPTION = {
 	locale: 'ar',
 	expires: '2026-12-31',
 	reason: 'roles whose title_ar is not yet in data/roles.yaml',
-	/** Roles with no `title_ar` today, of `rolesTotal`. Lower it as titles land; it may not rise. */
-	rolesWithoutTitleAr: 75,
+	/** Roles with no `title_ar` today, of `rolesTotal`. Zero: every title is in. */
+	rolesWithoutTitleAr: 0,
 	rolesTotal: 198,
-	/** English function words measured on the Arabic page with those titles missing. */
-	ceiling: 66,
+	/** The route's ceiling; with no titles missing it is the ordinary one. */
+	ceiling: 37,
 	/** The route's ordinary ceiling once the titles are in. */
 	baseCeiling: 37
 };
