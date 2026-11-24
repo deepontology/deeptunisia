@@ -515,33 +515,30 @@
   category: constitutional
   rupture: true
   summary: >-
-    A mixed parliamentary-presidential settlement dividing authority between president,
-    head of government and parliament.
+    The Constituent Assembly adopts the 2014 constitution. A mixed
+    parliamentary-presidential settlement dividing authority between president, head of
+    government and parliament; it guarantees fundamental rights, creates independent
+    constitutional bodies, and is widely described as one of the most progressive in the
+    Arab world.
   summary_fr: >-
-    Un compromis mixte parlementaire-présidentiel répartissant l'autorité entre le
-    président, le chef du gouvernement et le Parlement.
+    L'Assemblée constituante adopte la constitution de 2014. Un compromis mixte
+    parlementaire-présidentiel répartissant l'autorité entre le président, le chef du
+    gouvernement et le Parlement ; elle garantit les droits fondamentaux, crée des
+    instances constitutionnelles indépendantes et est largement décrite comme l'une des
+    plus progressistes du monde arabe.
   summary_fr_by: model-reviewed
   summary_ar: >-
-    تسوية مختلطة بين النظامين البرلماني والرئاسي توزّع السلطة بين رئيس الجمهورية ورئيس
-    الحكومة والبرلمان.
+    يعتمد المجلس التأسيسي دستور 2014. تسوية مختلطة بين النظامين البرلماني والرئاسي توزّع
+    السلطة بين رئيس الجمهورية ورئيس الحكومة والبرلمان؛ ويضمن الحقوق الأساسية، ويُنشئ هيئات
+    دستورية مستقلة، ويُعد من أكثر الدساتير تقدمًا في العالم العربي.
   summary_ar_by: model-reviewed
+  actors: [moncef-marzouki, beji-caid-essebsi]
   institutions: [presidency, head-of-government, legislature]
   location: [gov-tunis]
   confidence: A
+  source_relation: direct-record
+  independence: 2
   causes: [revolution-2011, national-dialogue-quartet-formed]
-  disputes:
-    - claim: >-
-        constitution-2014 and 2014-constitution-adopted appear to be two ids for
-        the same event (both dated 2014-01-26, both the adoption of the 2014
-        constitution).
-      held_by: The event-causality research pass (2026-08-08), flag duplicate-2014-constitution
-      source: al-jazeera-constitution-2014
-      assessment: >-
-        Recorded as a note per the merge instruction: the ids are NOT merged. The
-        causal links attach to this id (revolution-2011 → constitution-2014,
-        national-dialogue-quartet-formed → constitution-2014), and the duplicate
-        concern stays visible on both records for a future dedup pass.
-      status: open
   sources: [pm-gov-former, al-jazeera-constitution-2014, nobelprize-quartet, enwiki-constituent-assembly]
 
 - id: nsc-created
@@ -659,7 +656,7 @@
   location: [gov-tunis]
   confidence: A
   causes: [election-2019]
-  consequences: [2022-constitutional-referendum, constitution-2022, csm-dissolved, security-reshuffle-2021, isie-decree-2022, nsf-founded-2022, inlucc-dissolved]
+  consequences: [constitution-2022, csm-dissolved, security-reshuffle-2021, isie-decree-2022, nsf-founded-2022, inlucc-dissolved]
   contested:
     - framing: Constitutional emergency action under Article 80
       held_by: The president's own justification
@@ -708,50 +705,44 @@
   rupture: true
   summary: >-
     The 2014 settlement is replaced with a strongly presidential system, completing the
-    formal re-centralisation begun a year earlier.
+    formal re-centralisation begun a year earlier. Voters approve the text at a
+    referendum on 25 July 2022 with turnout of 30.5 percent; it concentrates power in
+    the presidency, drops the requirement for a constitutional court and downgrades the
+    role of parliament and the prime minister. Low turnout raised questions about the
+    referendum's legitimacy.
   summary_fr: >-
     Le compromis de 2014 est remplacé par un système fortement présidentiel, achevant la
-    recentralisation formelle engagée un an plus tôt.
+    recentralisation formelle engagée un an plus tôt. Les électeurs approuvent le texte
+    lors du référendum du 25 juillet 2022 avec une participation de 30,5 % ; il concentre
+    le pouvoir dans la présidence, supprime l'exigence d'une cour constitutionnelle et
+    réduit le rôle du Parlement et du Premier ministre. La faible participation a soulevé
+    des questions sur la légitimité du référendum.
   summary_fr_by: model-reviewed
   summary_ar: >-
     تُستبدل تسوية 2014 بنظام رئاسي طاغٍ، مكملًا إعادة المركزة الرسمية التي بدأت قبل عام.
+    يُقرّ الناخبون النص في استفتاء 25 جويلية 2022 بمشاركة 30.5%؛ يركّز السلطة في الرئاسة،
+    ويلغي اشتراط المحكمة الدستورية، ويخفض دور البرلمان ورئيس الحكومة. أثار ضعف المشاركة
+    تساؤلات حول شرعية الاستفتاء.
   summary_ar_by: model-reviewed
   actors: [kais-saied]
-  institutions: [presidency, legislature]
+  institutions: [presidency, head-of-government, legislature]
   location: [region-tunisia]
   confidence: A
   causes: [july-25-2021]
-  consequences: [election-2024, legislatives-2022]
+  consequences: [election-2024, legislatives-2022, saied-absence-july-2026]
   disputes:
     - claim: >-
         The event's place is recorded as region-tunisia (the whole-country
-        anchor), a modeling choice rather than a single located venue —
-        mirror of the imported location on the duplicate id
-        2022-constitutional-referendum.
+        anchor), a modeling choice rather than a single located venue.
       held_by: The event-locations research pass (2026-08-11)
       source: bbc-referendum-2022
       assessment: >-
         The 25 July 2022 referendum was held at polling stations across all 24
         governorates. Falsifiable by an official ISIE or JORT record pinning
         the referendum's location to a single place, or by a decision that
-        nationwide events remain unattached. Only one of the two duplicate
-        ids' locations survives the duplicate merge (flag
-        duplicate-2022-constitution).
+        nationwide events remain unattached.
       status: open
-    - claim: >-
-        constitution-2022 and 2022-constitutional-referendum appear to be two ids
-        for the same event (both dated 2022-07-25, both the referendum adopting
-        the new constitution).
-      held_by: The event-causality research pass (2026-08-08), flag duplicate-2022-constitution
-      source: al-jazeera-2022-referendum
-      assessment: >-
-        Recorded as a note per the merge instruction: the ids are NOT merged. The
-        causal links treat them as distinct acts — the referendum precedes the
-        constitution — and each id keeps exactly one of the two july-25-2021 →
-        links. The duplicate concern stays visible on both records for a future
-        dedup pass.
-      status: open
-  sources: [reuters-election-2024, bbc-referendum-2022, hrw-world-report-2023]
+  sources: [reuters-election-2024, al-jazeera-2022-referendum, bbc-referendum-2022, hrw-world-report-2023]
 
 - id: arrests-feb-2023
   date: "2023-02-11"
@@ -1016,7 +1007,7 @@
   institutions: [presidency]
   location: [region-tunisia]
   confidence: A
-  causes: [2022-constitutional-referendum, isie-decree-2022, constitution-2022, election-law-amendment-2024, isie-ordinance-544-2024]
+  causes: [constitution-2022, isie-decree-2022, election-law-amendment-2024, isie-ordinance-544-2024]
   disputes:
     - claim: >-
         The event's place is recorded as region-tunisia (the whole-country
@@ -1453,111 +1444,6 @@
   confidence: A
   sources: [nobelprize-quartet]
 
-- id: 2014-constitution-adopted
-  date: "2014-01-26"
-  title_en: Tunisia adopts new constitution
-  title_fr: Adoption de la nouvelle constitution
-  title_ar: اعتماد الدستور الجديد
-  category: legal
-  rupture: true
-  summary: >-
-    The Constituent Assembly adopts the 2014 Tunisian constitution, considered
-    one of the most progressive in the Arab world. It establishes a semi-
-    presidential system, guarantees fundamental rights, and creates independent
-    constitutional bodies.
-  summary_fr: >-
-    L'Assemblée constituante adopte la constitution tunisienne de 2014, considérée comme
-    l'une des plus progressistes du monde arabe. Elle instaure un régime semi-présidentiel,
-    garantit les droits fondamentaux et crée des instances constitutionnelles indépendantes.
-  summary_fr_by: model-reviewed
-  summary_ar: >-
-    يعتمد المجلس التأسيسي دستور 2014 التونسي، الذي يُعد من أكثر الدساتير تقدمًا في العالم
-    العربي. يُرسي نظامًا شبه رئاسي، ويضمن الحقوق الأساسية، ويُنشئ هيئات دستورية مستقلة.
-  summary_ar_by: model-reviewed
-  actors: [moncef-marzouki, beji-caid-essebsi]
-  institutions: [legislature, presidency]
-  location: [gov-tunis]
-  confidence: A
-  source_relation: direct-record
-  independence: 2
-  causes: [revolution-2011, national-dialogue-quartet-formed]
-  disputes:
-    - claim: >-
-        2014-constitution-adopted and constitution-2014 appear to be two ids for
-        the same event (both dated 2014-01-26, both the adoption of the 2014
-        constitution).
-      held_by: The event-causality research pass (2026-08-08), flag duplicate-2014-constitution
-      source: al-jazeera-constitution-2014
-      assessment: >-
-        Recorded as a note per the merge instruction: the ids are NOT merged.
-        Both ids now carry the same causal links (revolution-2011 and
-        national-dialogue-quartet-formed → 2014 constitution) so the V17
-        rupture-unlinked warning is resolved while the duplicate concern stays
-        visible for a future dedup pass. The 2014-constitution-adopted causes
-        mirror constitution-2014's, sourced to al-jazeera-constitution-2014
-        (adoption context) and nobelprize-quartet (quartet mediation → constitution).
-      status: open
-  sources: [al-jazeera-constitution-2014, nobelprize-quartet]
-
-- id: 2022-constitutional-referendum
-  date: "2022-07-25"
-  title_en: Tunisian constitutional referendum
-  title_fr: Référendum constitutionnel tunisien
-  title_ar: الاستفتاء الدستوري التونسي
-  category: political
-  rupture: true
-  summary: >-
-    Voters approve a new constitution proposed by Kais Saied, replacing the
-    2014 constitution. The new text concentrates power in the presidency,
-    eliminates the constitutional court requirement, and downgrades the
-    role of parliament and the prime minister. Low turnout (30.5%) raised
-    questions about the referendum's legitimacy.
-  summary_fr: >-
-    Les électeurs approuvent une nouvelle constitution proposée par Kais Saied, remplaçant
-    celle de 2014. Le nouveau texte concentre le pouvoir dans la présidence, supprime
-    l'exigence d'une cour constitutionnelle et réduit le rôle du Parlement et du Premier
-    ministre. La faible participation (30,5 %) a soulevé des questions sur la légitimité du
-    référendum.
-  summary_fr_by: model-reviewed
-  summary_ar: >-
-    يُقرّ الناخبون دستورًا جديدًا اقترحه قيس سعيد، يحل محل دستور 2014. يركّز النص الجديد
-    السلطة في الرئاسة، ويلغي اشتراط المحكمة الدستورية، ويخفض دور البرلمان ورئيس الحكومة.
-    أثار ضعف المشاركة (30.5%) تساؤلات حول شرعية الاستفتاء.
-  summary_ar_by: model-reviewed
-  actors: [kais-saied]
-  institutions: [presidency]
-  location: [region-tunisia]
-  confidence: A
-  causes: [july-25-2021]
-  consequences: [election-2024, legislatives-2022, saied-absence-july-2026]
-  disputes:
-    - claim: >-
-        2022-constitutional-referendum and constitution-2022 appear to be two ids
-        for the same event (both dated 2022-07-25, both the referendum adopting
-        the new constitution).
-      held_by: The event-causality research pass (2026-08-08), flag duplicate-2022-constitution
-      source: al-jazeera-2022-referendum
-      assessment: >-
-        Recorded as a note per the merge instruction: the ids are NOT merged. The
-        causal links treat them as distinct acts — the referendum precedes the
-        constitution — and each id keeps exactly one of the two july-25-2021 →
-        links. The duplicate concern stays visible on both records for a future
-        dedup pass.
-      status: open
-    - claim: >-
-        The referendum's place is recorded as region-tunisia (the whole-country
-        anchor), a modeling choice rather than a single located venue.
-      held_by: The event-locations research pass (2026-08-08)
-      source: al-jazeera-2022-referendum
-      assessment: >-
-        The 25 July 2022 referendum was held at polling stations across all 24
-        governorates, so no single town or governorate contains it; region-tunisia
-        is proposed as the whole-country anchor. Falsifiable by an official ISIE
-        or JORT record pinning the referendum's location to a single place, or by
-        a decision that nationwide events remain unattached.
-      status: open
-  sources: [al-jazeera-2022-referendum, bbc-referendum-2022, hrw-world-report-2023]
-
 - id: legislatives-2022
   date: "2022-12-17"
   date_end: "2023-01-29"
@@ -1602,7 +1488,7 @@
         single place, or by a decision that nationwide events remain
         unattached.
       status: open
-  causes: [2022-constitutional-referendum, isie-decree-2022, constitution-2022]
+  causes: [constitution-2022, isie-decree-2022]
   reasoning: >-
     Dates and turnout from the BBC's 18 December 2022 report (8.8% per the electoral
     commission, "fiasco" response from the opposition) and the Al Jazeera runoff
@@ -3002,7 +2888,7 @@
   confidence: B
   basis: reported
   verification: needs-primary-source
-  causes: [2022-constitutional-referendum]
+  causes: [constitution-2022]
   disputes:
     - claim: >-
         The event's place is attached as gov-tunis (the presidency at

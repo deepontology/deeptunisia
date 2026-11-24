@@ -46,9 +46,9 @@ halves of the dev loop as `beta` so the Agora tab is reachable during
 development; a reader on deeptunisia.org never touches it. The mode contract is
 `docs/agora-deployment.md`.
 
-The complete graph is <!--stat:graphKB-->15070<!--/stat--> KB as the internal
+The complete graph is <!--stat:graphKB-->15060<!--/stat--> KB as the internal
 bundle, and the public exports (dataset, CSVs, geographic layers, changelog)
-ship at <!--stat:shippedKB-->21390<!--/stat--> KB — both are computed by the
+ship at <!--stat:shippedKB-->21380<!--/stat--> KB — both are computed by the
 build, and `npm run test` fails if the README ever disagrees with them.
 
 ## Reproducibility
@@ -146,7 +146,7 @@ Six decisions carry most of the weight:
 
 **Change is a record too.** The dataset is plain text under version control, so every factual change is a dated, attributable diff. `/corrections` publishes that history — generated, not curated, so nobody decides which changes are flattering enough to appear.
 
-**Disagreement is a record, not a problem to resolve.** When sources conflict, both are stored with who holds each and whether it was adopted. Currently **<!--stat:contradictions-->79<!--/stat--> recorded contradictions**, including one where five different sentence lengths circulated across outlets for overlapping proceedings and the dataset declines to guess how many cases there were.
+**Disagreement is a record, not a problem to resolve.** When sources conflict, both are stored with who holds each and whether it was adopted. Currently **<!--stat:contradictions-->76<!--/stat--> recorded contradictions**, including one where five different sentence lengths circulated across outlets for overlapping proceedings and the dataset declines to guess how many cases there were.
 
 ## The news feed is not the dataset
 
@@ -191,7 +191,7 @@ This is not neutrality for its own sake — it is the project's only real protec
 
 ## Known limits
 
-- **<!--stat:reviewedHuman-->0<!--/stat--> of <!--stat:reviewable-->8855<!--/stat--> records have been checked by a person and <!--stat:reviewedAgent-->0<!--/stat--> by an agent; <!--stat:reviewedUnstated-->52<!--/stat--> carry a review note that does not say who read it, and independent human verification is <!--stat:independent-->0<!--/stat-->.** The stated architecture is that machines propose and humans verify; almost nothing has been through a second pair of eyes. The real numbers are published on `/about` because that is the only way the commitment means anything.
+- **<!--stat:reviewedHuman-->0<!--/stat--> of <!--stat:reviewable-->8853<!--/stat--> records have been checked by a person and <!--stat:reviewedAgent-->0<!--/stat--> by an agent; <!--stat:reviewedUnstated-->52<!--/stat--> carry a review note that does not say who read it, and independent human verification is <!--stat:independent-->0<!--/stat-->.** The stated architecture is that machines propose and humans verify; almost nothing has been through a second pair of eyes. The real numbers are published on `/about` because that is the only way the commitment means anything.
 - **Defence intelligence (ANRSD) has no primary sourcing at all** — statute, appointment date, current status all unestablished. Largest hole in the security map.
 - **Pre-2011 police chronology is the weakest area**, resting largely on secondary sources.
 - **The 2014–2019 police succession does not fit its endpoints.** Three reported tenures cannot fit between two firmly dated ones; recorded as an unresolved contradiction rather than smoothed over.
