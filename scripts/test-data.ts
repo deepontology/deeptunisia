@@ -1495,13 +1495,13 @@ const KIND_TO_DATASET: Record<string, string> = {
 	// hashes, and a reading that still holds passes under a later hash and says
 	// so. Moving a reading is a ledgered change to the published counts and the
 	// hash, and the paper's section on what the succession counts count follows it.
-	const AUDITED_HASH = '89e17f830c91591b41e40f673f3f5814e9a9534a72f8fafcadbc1354c9eecde2';
+	const AUDITED_HASH = '469172c4c71d548bbdc283c23eca61f24f510fd19646ef7e2e63a9b33b156d9a';
 	const audited = {
 		chainOverlaps: 49,
 		overlappingPairs: 67,
 		overlapIncidents: 43,
-		chainGaps: 126,
-		coverageHoles: 121,
+		chainGaps: 127,
+		coverageHoles: 122,
 		chainGapsAnotherHolderCovers: 5
 	};
 	type Readings = typeof audited;

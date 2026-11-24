@@ -542,9 +542,18 @@
   role: interior-minister
   holder: habib-ammar
   start: "1987-11-07"
-  end: "1988-04-01"
-  confidence: B
-  sources: [habib-bourguiba-net-1987, lemonde-1987-coup]
+  end: "1988-11-01"
+  confidence: A
+  notes:
+    - >-
+      Decree 87-1283 of 7 November 1987 (JORT 80 of 10 November 1987, p. 1423)
+      names him Minister of the Interior. Decree 88-1392 of 27 July 1988 keeps
+      him at the Interior with the title Minister of State for the Interior.
+      Decree 88-1863 of 1 November 1988 appoints Chédy Naffati to the Interior,
+      and decree 88-1862 of the same date makes Habib Ammar Minister of State,
+      special adviser to the President. The end is the day the successor was
+      gazetted. Previous recorded end: 1988-04-01.
+  sources: [habib-bourguiba-net-1987, lemonde-1987-coup, jort-1987-1283, jort-1988-1863]
 
 - id: p-int-escheikh
   role: interior-minister
@@ -42413,18 +42422,19 @@
   - Listed in the composition of 4 January 2011 with the portfolio as printed there.
   sources:
   - fr-wiki-ghannouchi-i
-- id: p-gov-mohamed-ennaceur-ict
+- id: p-gov-mohamed-naceur-ammar-ict
   role: ict-minister
-  holder: mohamed-ennaceur
+  holder: mohamed-naceur-ammar
   start: '2010-01-14'
   end: '2011-01-17'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
   notes:
   - 'Portfolio in the source: Ministre des Technologies de la communication.'
-  - Listed in the composition of 4 January 2011; the page does not date the end of this tenure.
+  - 'Decree 2010-72 of 14 January 2010 names Mohamed Naceur Ammar as minister of communication technologies; the Arabic edition of the same decree prints محمد ناصر عمار. The holder recorded here previously was Mohamed Ennaceur, who is a different person.'
+  - The end date is the cabinet change of 17 January 2011 carried by the composition table, not a date stated in decree 2010-72.
   - Listed in the composition of 4 January 2011 with the portfolio as printed there.
   sources:
+  - jort-2010-72
   - fr-wiki-ghannouchi-i
 - id: p-gov-mohamed-agrebi-employment
   role: employment-minister
@@ -49425,18 +49435,6 @@
   - Printed without a portfolio annotation in the Industrie ministry list.
   sources:
   - fr-wp-industrie
-- id: p-gov-fethi-merdassi-economy
-  role: economy-minister
-  holder: fethi-merdassi
-  start: '2003-08-25'
-  end: '2004-11-10'
-  confidence: C
-  attributed_to: Wikipédia (fr or ar), ministry list
-  notes:
-  - 'Portfolio in the source: Ministre de l''Industrie.'
-  - Printed without a portfolio annotation in the Industrie ministry list.
-  sources:
-  - fr-wp-industrie
 - id: p-gov-afif-chelbi-economy
   role: economy-minister
   holder: afif-chelbi
@@ -49564,24 +49562,28 @@
   role: social-affairs-minister
   holder: abdelaziz-ben-dhia
   start: '1986-07-30'
-  end: '1987-04-04'
+  end: '1987-04-15'
   confidence: B
   notes:
   - 'Portfolio in the source: Ministre des Affaires sociales.'
+  - 'Decree 87-622 of 15 April 1987 appoints him minister delegate to the Prime Minister, the same day decree 87-623 gives the Social Affairs portfolio to Hédi Baccouche. Previous recorded end: 1987-04-04.'
   - Printed holder between Noureddine Hached and Hédi Baccouche.
   sources:
+  - jort-1987-622
   - fr-wp-affaires-sociales
   - ar-wp-affaires-sociales
 - id: p-gov-hedi-baccouche-social-affairs
   role: social-affairs-minister
   holder: hedi-baccouche
-  start: '1987-04-04'
+  start: '1987-04-15'
   end: '1987-11-07'
-  confidence: B
+  confidence: A
   notes:
   - 'Portfolio in the source: Ministre des Affaires sociales.'
+  - 'Decree 87-623 of 15 April 1987 appoints him Minister of Social Affairs, published in JORT 28 of 17 April 1987, p. 531. Previous recorded start: 1987-04-04.'
   - Printed holder up to the day Taoufik Cheikhrouhou starts, closing the tail of the Ridha Hamza gap.
   sources:
+  - jort-1987-623
   - fr-wp-affaires-sociales
   - ar-wp-affaires-sociales
 - id: p-gov-abdelaziz-lasram-industry

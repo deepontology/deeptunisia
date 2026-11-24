@@ -31474,6 +31474,23 @@
   - Minister identified from a government composition table; person record created for the position.
   sources:
   - fr-wiki-ghannouchi-i
+- id: mohamed-naceur-ammar
+  name_en: Mohamed Naceur Ammar
+  name_fr: Mohamed Naceur Ammar
+  name_ar: محمد ناصر عمار
+  layers: [political, economic]
+  tagline: Communication technologies minister appointed in January 2010
+  summary: >-
+    Gazetted on 14 January 2010 as Minister of Communication Technologies in the
+    government named by decree 2010-72, the portfolio recorded in JORT 7 of
+    22 January 2010, which also prints the Arabic form of his name. That decree
+    is the only appointment held here; no earlier or later office is asserted.
+  confidence: A
+  falsifiable_by: >-
+    A JORT decree of 14 January 2010 naming another holder of the communication
+    technologies portfolio, or an appointment decree placing Mohamed Naceur
+    Ammar in a different office on that date.
+  sources: [jort-2010-72]
 - id: ridha-chalghoum-2
   name_en: Ridha Chalghoum
   name_fr: Ridha Chalghoum
