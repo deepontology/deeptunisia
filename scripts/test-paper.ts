@@ -527,7 +527,13 @@ const papers = new Map<string, string>();
 // the release, carry the correction that moved the availability section, and
 // carry neither of the sentences that section replaced. pdftotext is required;
 // a check that skips when the tool is missing would be absent when it matters.
+//
+// The site file is the PDF attached to the v1.0.0 GitHub Release byte for byte,
+// so its reproducibility block names the tagged commit, not a build behind it.
+// The paper is frozen: its availability paragraph still describes the two copies
+// as they were at the tag, and the next paper revision drops that sentence.
 {
+	const RELEASE_COMMIT = 'aca70ba6b23ad72f7f70649fdccedfc233238ae6';
 	const pdfPath = join(HERE, '..', 'static', 'deeptunisia-release-paper-v1.0.0.pdf');
 	ok('the site serves the release paper PDF at static/deeptunisia-release-paper-v1.0.0.pdf', existsSync(pdfPath));
 	if (existsSync(pdfPath)) {
@@ -559,6 +565,11 @@ const papers = new Map<string, string>();
 		const source = readFileSync(join(HERE, '..', 'output', 'deeptunisia-release-paper-v1.0.0.md'), 'utf8');
 		const pdfCommit = text.match(/Built from commit ([0-9a-f]{40})/)?.[1] ?? '';
 		ok('the release paper PDF names the commit it was built from', /^[0-9a-f]{40}$/.test(pdfCommit), pdfCommit || 'no "Built from commit" line');
+		ok(
+			'the release paper PDF is built from the v1.0.0 tagged commit',
+			pdfCommit === RELEASE_COMMIT,
+			`${pdfCommit || 'no commit'} vs ${RELEASE_COMMIT}`
+		);
 		ok(
 			'the paper source describes the site copy and the Release copy',
 			source.includes('/deeptunisia-release-paper-v1.0.0.pdf') && source.includes('the copy bound to that commit')

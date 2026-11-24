@@ -78,7 +78,7 @@ import { loadParameters, type Parameters } from './parameters.ts';
 import { engine } from './engine.ts';
 import { countOrigins, restsOn, type EvidenceLike } from './origins.ts';
 import { deskStatsText, newestPrecheck, precheckStats, EMPTY_PRECHECK_STATS } from './desk.ts';
-import { VERIFIED_EXCEPTIONS } from './verified-exceptions.ts';
+import { VERIFIED_EXCEPTIONS, verifiedExceptionsExpired } from './verified-exceptions.ts';
 import { ARABIC_TITLE_EXCEPTION } from './prose-exceptions.ts';
 import { buildCoverage, coverageCsv, coverageMarkdown } from './coverage.ts';
 import { checkNarrative, type NarrativeClaim } from './consistency.ts';
@@ -1762,13 +1762,14 @@ for (const issue of narrative.warnings) warn(issue.where, issue.message);
 // sits before the error report so a V33 failure is reported in the same pass as
 // every other validation error.
 //
-// The 82 values written before the rule are the only exception, listed with an
-// expiry in scripts/verified-exceptions.ts. The build fails when the date
-// passes, because a dated exception is a research task, not a permission.
+// Values written before the rule could be listed with an expiry in
+// scripts/verified-exceptions.ts. The list is empty; a line that returns fails
+// the build once its date passes, because a dated exception is a research task,
+// not a permission. An empty list expires nothing.
 // ---------------------------------------------------------------------------
 {
 	const today = new Date().toISOString().slice(0, 10);
-	if (VERIFIED_EXCEPTIONS.expires < today) {
+	if (verifiedExceptionsExpired(today)) {
 		fail(
 			'verified-exceptions.ts',
 			`the "${VERIFIED_EXCEPTIONS.reason}" exception expired on ${VERIFIED_EXCEPTIONS.expires} (V33): the list must be empty before release`
