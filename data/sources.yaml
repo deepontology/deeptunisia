@@ -247,7 +247,8 @@
   title_gloss_ar_by: model-reviewed
   publisher: U.S. Army Southern European Task Force, Africa
   date: 2025-04-30
-  url: https://www.army.mil/setaf-africa
+  url: https://www.setaf-africa.army.mil/article/32049/
+  archive_url: https://web.archive.org/web/20250504132134/https://www.setaf-africa.army.mil/article/32049/
   tier: 1
   lang: en
   excerpt: Photo caption dated 29 April 2025 identifying El Ghoul as Army Chief of Staff during exercise African Lion.
@@ -11713,9 +11714,9 @@
   lang: it
   excerpt: "\"Entrata in vigore dell'accordo tra la Repubblica italiana e la Repubblica tunisina per la promozione e la protezione reciproca degli investimenti, con scambi di lettere, firmato a Roma il 17 ottobre 1985.\""
 - id: mimit-italy-tunisia-bit-law
-  title: Legge 2 gennaio 1989 — ratifica ed esecuzione dell'accordo Italia–Tunisia del 17 ottobre 1985
-  publisher: Ministero delle Imprese e del Made in Italy (Italia)
-  url: https://www.mimit.gov.it/images/stories/recuperi/Impresa_internazionalizzazione/Legge2gennaio1989.pdf
+  title: "Legge 2 gennaio 1989, n. 16: ratifica ed esecuzione dell'accordo Italia-Tunisia del 17 ottobre 1985"
+  publisher: Normattiva, Presidenza del Consiglio dei Ministri (Italia)
+  url: https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:legge:1989-01-02;16
   tier: 1
   lang: it
   excerpt: "\"Ratifica ed esecuzione dell'accordo tra la Repubblica italiana e la Repubblica tunisina per la promozione e la protezione reciproca degli investimenti, con scambi di lettere, firmato a Roma il 17 ottobre 1985.\""
@@ -12795,13 +12796,13 @@
   title: Décret n° 2023-112 du 7 février 2023, portant nomination d'un membre du Gouvernement
   title_gloss_ar: أمر عدد 2023-112 بتاريخ 7 فيفري 2023 يتعلق بتسمية عضو بالحكومة
   title_gloss_ar_by: machine
-  publisher: Journal Officiel de la République Tunisienne (via 9anoun)
+  publisher: Journal Officiel de la République Tunisienne (archive officielle lake.jort.tn)
   date: 2023-02-07
-  url: https://9anoun.tn/fr/kb/jorts/jort-2023-045-889b6/arrete-du-ministre-des-affaires-etrangeres-de-la-migration-et-des-tunisiens-a-l-etranger-du-5-mai-2023-portant-delegation-de-signature-6
+  url: https://lake.jort.tn/journal-officiel/fr/2023/014.pdf
   tier: 1
   lang: fr
-  excerpt: Visa cites "Vu le décret n° 2023-112 du 7 février 2023, portant nomination d'un membre du Gouvernement" — arrêté of 5 May 2023 signed by Foreign Minister Nabil Ammar, effective 10 February 2023. Direct JORT issue for decree 2023-112 still to be fetched; source is the official JORT cross-citation, tier-1 via 9anoun.
-  excerpt_fr: Visa cite « Vu le décret n° 2023-112 du 7 février 2023, portant nomination d'un membre du Gouvernement » — arrêté du 5 mai 2023 signé par le ministre Nabil Ammar, exécutoire à compter du 10 février 2023. Le numéro du JORT du décret reste à pinner.
+  excerpt: JORT n° 14 du 9 février 2023, p. 266, publishes the decree in full. It names Nabil Ammar minister of foreign affairs, of migration and of Tunisians abroad. The decree is also cited in the visa of the arrêté of 5 May 2023 delegating signature, effective 10 February 2023.
+  excerpt_fr: Le JORT n° 14 du 9 février 2023, p. 266, publie le décret in extenso. Il nomme Nabil Ammar ministre des affaires étrangères, de la migration et des Tunisiens à l'étranger. Le décret est aussi cité dans le visa de l'arrêté du 5 mai 2023 portant délégation de signature, exécutoire à compter du 10 février 2023.
   excerpt_fr_by: machine
   excerpt_ar: يشير التأشير إلى « أمر عدد 2023-112 بتاريخ 7 فيفري 2023 يتعلق بتسمية عضو بالحكومة » — قرار 5 ماي 2023 ممضى من الوزير نبيل عمار ونافذ من 10 فيفري 2023.
   excerpt_ar_by: machine
