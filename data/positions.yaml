@@ -287,25 +287,33 @@
 - id: p-pm-ghannouchi
   role: prime-minister
   holder: mohamed-ghannouchi
-  start: "1999-11-17"
-  end: "2011-01-27"
-  confidence: B
-  notes: ["Served 11 years. Stayed in post through the 14 January 2011 revolution as part of the transitional Ghannouchi government."]
+  start: '1999-11-17'
+  end: '2011-01-27'
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
+  notes:
+  - Served 11 years. Stayed in post through the 14 January 2011 revolution as part of the transitional Ghannouchi
+    government.
+  - Décret n° 99-2557 du 1999-11-17 (JORT n° 94 du 23 novembre 1999, p. 2463). Individual decree appointing the
+    holder as Premier Ministre. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1999/094.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/1999/094.pdf.
   notes_fr:
-    - >-
-      A servi 11 ans. Resté en poste à travers la révolution du 14 janvier 2011 dans le
-      cadre du gouvernement de transition de Ghannouchi.
+  - A servi 11 ans. Resté en poste à travers la révolution du 14 janvier 2011 dans le cadre du gouvernement de transition
+    de Ghannouchi.
   notes_fr_by: model-reviewed
   notes_ar:
-    - >-
-      خدم 11 سنة. بقي في المنصب عبر ثورة 14 جانفي 2011 ضمن حكومة الغنوشي الانتقالية.
+  - خدم 11 سنة. بقي في المنصب عبر ثورة 14 جانفي 2011 ضمن حكومة الغنوشي الانتقالية.
   notes_ar_by: model-reviewed
   review:
     by: JORT verification pass
-    date: "2026-07-28"
+    date: '2026-07-28'
     method: source-check
     note: Checked against French Wikipedia sources
-  sources: [wikipedia-mohamed-ghannouchi-pm]
+  sources:
+  - wikipedia-mohamed-ghannouchi-pm
+  - jort-1999-2557
 
 - id: p-pm-essebsi
   role: prime-minister
@@ -1022,55 +1030,63 @@
 - id: p-relaff-akhzouri
   role: religious-affairs-minister
   holder: boubaker-el-akhzouri
-  start: "2004-11-10"
-  end: "2010-12-31"
-  confidence: B
+  start: '2004-11-10'
+  end: '2010-12-31'
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-    - >-
-      Dates per the ministry's official listing.
+  - Dates per the ministry's official listing.
+  - Décret n° 2004-2644 du 2004-11-10 (JORT n° 94 du 23 novembre 2004, p. 3283). Whole-government decree; this row
+    is named as Ministre des affaires religieuses. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2004/094.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2004/094.pdf.
   notes_fr:
-    - >-
-      Dates selon la liste officielle du ministère.
+  - Dates selon la liste officielle du ministère.
   notes_fr_by: model-reviewed
   notes_ar:
-    - >-
-      التواريخ وفق القائمة الرسمية للوزارة.
+  - التواريخ وفق القائمة الرسمية للوزارة.
   notes_ar_by: model-reviewed
   falsifiable_by: JORT decree appointing or ending the tenure.
-  falsifiable_by_fr: >-
-    Un décret au JORT nommant ou mettant fin au mandat.
+  falsifiable_by_fr: Un décret au JORT nommant ou mettant fin au mandat.
   falsifiable_by_fr_by: model-reviewed
-  falsifiable_by_ar: >-
-    مرسوم في الرائد الرسمي يعيّن أو ينهي الولاية.
+  falsifiable_by_ar: مرسوم في الرائد الرسمي يعيّن أو ينهي الولاية.
   falsifiable_by_ar_by: model-reviewed
-  sources: [affaires-religieuses-bouhali, wikipedia-fr-affaires-religieuses]
+  sources:
+  - affaires-religieuses-bouhali
+  - wikipedia-fr-affaires-religieuses
+  - jort-2004-2644
 
 - id: p-relaff-omrane
   role: religious-affairs-minister
   holder: kamel-omrane
-  start: "2010-12-31"
-  end: "2011-01-17"
-  confidence: B
+  start: '2010-12-29'
+  end: '2011-01-17'
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-    - >-
-      Dates per the ministry's official listing; ended the week of the
-      revolution.
+  - Dates per the ministry's official listing; ended the week of the revolution.
+  - Décret n° 2010-3464 du 2010-12-29 (JORT n° 1 du 4 janvier 2011, p. 8). Whole-government decree; this row is
+    named as ministre des affaires religieuses. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2011/001.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2011/001.pdf.
+  - 'Previous recorded start: 2010-12-31.'
   notes_fr:
-    - >-
-      Dates selon la liste officielle du ministère ; finie la semaine de la révolution.
+  - Dates selon la liste officielle du ministère ; finie la semaine de la révolution.
   notes_fr_by: model-reviewed
   notes_ar:
-    - >-
-      التواريخ وفق القائمة الرسمية للوزارة؛ انتهت في أسبوع الثورة.
+  - التواريخ وفق القائمة الرسمية للوزارة؛ انتهت في أسبوع الثورة.
   notes_ar_by: model-reviewed
   falsifiable_by: JORT decree appointing or ending the tenure.
-  falsifiable_by_fr: >-
-    Un décret au JORT nommant ou mettant fin au mandat.
+  falsifiable_by_fr: Un décret au JORT nommant ou mettant fin au mandat.
   falsifiable_by_fr_by: model-reviewed
-  falsifiable_by_ar: >-
-    مرسوم في الرائد الرسمي يعيّن أو ينهي الولاية.
+  falsifiable_by_ar: مرسوم في الرائد الرسمي يعيّن أو ينهي الولاية.
   falsifiable_by_ar_by: model-reviewed
-  sources: [affaires-religieuses-bouhali, wikipedia-fr-affaires-religieuses]
+  sources:
+  - affaires-religieuses-bouhali
+  - wikipedia-fr-affaires-religieuses
+  - jort-2010-3464
 
 - id: p-relaff-mizouri
   role: religious-affairs-minister
@@ -6369,30 +6385,33 @@
 - id: p-justice-bououni
   role: justice-minister
   holder: lazhar-bououni
-  start: "2010-01-15"
-  end: "2011-01-17"
-  confidence: B
-  reasoning: >-
-    French Wikipedia's dated justice list records Bououni 15 January 2010 to
-    17 January 2011, spanning the fall of Ben Ali's regime.
-  reasoning_fr: >-
-    La liste datée de Wikipédia en français consigne Bououni du 15 janvier 2010 au 17
-    janvier 2011, couvrant la chute du régime de Ben Ali.
+  start: '2010-01-14'
+  end: '2011-01-17'
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
+  reasoning: French Wikipedia's dated justice list records Bououni 15 January 2010 to 17 January 2011, spanning
+    the fall of Ben Ali's regime.
+  reasoning_fr: La liste datée de Wikipédia en français consigne Bououni du 15 janvier 2010 au 17 janvier 2011,
+    couvrant la chute du régime de Ben Ali.
   reasoning_fr_by: model-reviewed
-  reasoning_ar: >-
-    القائمة المؤرّخة في ويكيبيديا الفرنسية تسجّل بوعوني من 15 جانفي 2010 إلى 17 جانفي 2011،
-    شاملة سقوط نظام بن علي.
+  reasoning_ar: القائمة المؤرّخة في ويكيبيديا الفرنسية تسجّل بوعوني من 15 جانفي 2010 إلى 17 جانفي 2011، شاملة سقوط
+    نظام بن علي.
   reasoning_ar_by: model-reviewed
-  falsifiable_by: >-
-    JORT decree appointing Lazhar Bououni as Minister of Justice with different dates.
-  falsifiable_by_fr: >-
-    Un décret au JORT nommant Lazhar Bououni ministre de la Justice avec des dates
-    différentes.
+  falsifiable_by: JORT decree appointing Lazhar Bououni as Minister of Justice with different dates.
+  falsifiable_by_fr: Un décret au JORT nommant Lazhar Bououni ministre de la Justice avec des dates différentes.
   falsifiable_by_fr_by: model-reviewed
-  falsifiable_by_ar: >-
-    مرسوم في الرائد الرسمي يعيّن الأزهر بوعوني وزيرًا للعدل بتواريخ مختلفة.
+  falsifiable_by_ar: مرسوم في الرائد الرسمي يعيّن الأزهر بوعوني وزيرًا للعدل بتواريخ مختلفة.
   falsifiable_by_ar_by: model-reviewed
-  sources: [wikipedia-justice-ministers-tunisia-fr]
+  sources:
+  - wikipedia-justice-ministers-tunisia-fr
+  - jort-2010-72
+  notes:
+  - Décret n° 2010-72 du 2010-01-14 (JORT n° 7 du 22 janvier 2010, p. 224). Whole-government decree; this row is
+    named as Ministre de la justice et des droits de l'Homme. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2010/007.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2010/007.pdf.
+  - 'Previous recorded start: 2010-01-15.'
 
 - id: p-justice-karoui-chebbi
   role: justice-minister
@@ -7070,36 +7089,36 @@
 - id: p-finance-chalghoum-1
   role: finance-minister
   holder: ridha-chalghoum
-  start: "2010-01-14"
-  end: "2011-01-27"
-  confidence: B
-  verification: needs-primary-source
-  notes: ["Finance minister at the end of the Ben Ali period."]
+  start: '2010-01-14'
+  end: '2011-01-27'
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
+  notes:
+  - Finance minister at the end of the Ben Ali period.
+  - Décret n° 2010-72 du 2010-01-14 (JORT n° 7 du 22 janvier 2010, p. 224). Whole-government decree; this row is
+    named as Ministre des finances. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2010/007.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2010/007.pdf.
   notes_fr:
-    - >-
-      Ministre des Finances à la fin de la période Ben Ali.
+  - Ministre des Finances à la fin de la période Ben Ali.
   notes_fr_by: model-reviewed
   notes_ar:
-    - >-
-      وزير المالية في نهاية فترة بن علي.
+  - وزير المالية في نهاية فترة بن علي.
   notes_ar_by: model-reviewed
-  reasoning: >-
-    Served in the final months of the Ben Ali government.
-  reasoning_fr: >-
-    A servi dans les derniers mois du gouvernement Ben Ali.
+  reasoning: Served in the final months of the Ben Ali government.
+  reasoning_fr: A servi dans les derniers mois du gouvernement Ben Ali.
   reasoning_fr_by: model-reviewed
-  reasoning_ar: >-
-    خدم في الأشهر الأخيرة من حكومة بن علي.
+  reasoning_ar: خدم في الأشهر الأخيرة من حكومة بن علي.
   reasoning_ar_by: model-reviewed
-  falsifiable_by: >-
-    JORT decree appointing Ridha Chalghoum as Minister of Finance.
-  falsifiable_by_fr: >-
-    Un décret au JORT nommant Ridha Chalghoum ministre des Finances.
+  falsifiable_by: JORT decree appointing Ridha Chalghoum as Minister of Finance.
+  falsifiable_by_fr: Un décret au JORT nommant Ridha Chalghoum ministre des Finances.
   falsifiable_by_fr_by: model-reviewed
-  falsifiable_by_ar: >-
-    مرسوم في الرائد الرسمي يعيّن رضا شلغوم وزيرًا للمالية.
+  falsifiable_by_ar: مرسوم في الرائد الرسمي يعيّن رضا شلغوم وزيرًا للمالية.
   falsifiable_by_ar_by: model-reviewed
-  sources: [wikipedia-finance-ministers]
+  sources:
+  - wikipedia-finance-ministers
+  - jort-2010-72
 
 - id: p-finance-ayed
   role: finance-minister
@@ -7443,52 +7462,50 @@
 - id: p-commerce-ben-mosbah
   role: commerce-minister
   holder: ridha-ben-mosbah
-  start: "2009-06-10"
-  end: "2010-12-29"
-  confidence: B
-  notes: ["Commerce and Handicrafts minister in the Ghannouchi I government; left in the 29 December 2010 reshuffle."]
+  start: '2009-06-10'
+  end: '2010-12-29'
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
+  notes:
+  - Commerce and Handicrafts minister in the Ghannouchi I government; left in the 29 December 2010 reshuffle.
+  - Décret n° 2009-1942 du 2009-06-10 (JORT n° 50 du 23 juin 2009, p. 1628). Individual decree appointing the holder
+    as ministre du commerce et de l'artisanat. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2009/050.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2009/050.pdf.
   notes_fr:
-    - >-
-      Ministre du Commerce et de l'Artisanat dans le gouvernement Ghannouchi I ; parti dans
-      le remaniement du 29 décembre 2010.
+  - Ministre du Commerce et de l'Artisanat dans le gouvernement Ghannouchi I ; parti dans le remaniement du 29 décembre
+    2010.
   notes_fr_by: model-reviewed
   notes_ar:
-    - >-
-      وزير التجارة والصناعات التقليدية في حكومة الغنوشي الأولى؛ وغادر في تعديل 29 ديسمبر
-      2010.
+  - وزير التجارة والصناعات التقليدية في حكومة الغنوشي الأولى؛ وغادر في تعديل 29 ديسمبر 2010.
   notes_ar_by: model-reviewed
-  reasoning: >-
-    Appointed by Ben Ali on 10 June 2009, succeeding Ridha Touiti, and served
-    until the 29 December 2010 reshuffle. French Wikipedia's biography, Leaders
-    and Webmanagercenter all agree. The earlier record claiming he was finance
-    minister in the 2020 Mechichi government is false: decree 2020-84 names Ali
-    Kooli for Economy, Finance and Investment Support, and Ben Mosbah's actual
-    2021 role was proposed Industry and SMEs minister.
-  reasoning_fr: >-
-    Nommé par Ben Ali le 10 juin 2009, succédant à Ridha Touiti, et en poste jusqu'au
-    remaniement du 29 décembre 2010. La biographie de Wikipédia en français, Leaders et
-    Webmanagercenter s'accordent. L'ancien enregistrement prétendant qu'il était ministre
-    des Finances dans le gouvernement Mechichi de 2020 est faux : le décret 2020-84 nomme
-    Ali Kooli à l'Économie, aux Finances et au Soutien à l'investissement, et le rôle réel
-    de Ben Mosbah en 2021 était ministre proposé de l'Industrie et des PME.
+  reasoning: 'Appointed by Ben Ali on 10 June 2009, succeeding Ridha Touiti, and served until the 29 December 2010
+    reshuffle. French Wikipedia''s biography, Leaders and Webmanagercenter all agree. The earlier record claiming
+    he was finance minister in the 2020 Mechichi government is false: decree 2020-84 names Ali Kooli for Economy,
+    Finance and Investment Support, and Ben Mosbah''s actual 2021 role was proposed Industry and SMEs minister.'
+  reasoning_fr: 'Nommé par Ben Ali le 10 juin 2009, succédant à Ridha Touiti, et en poste jusqu''au remaniement
+    du 29 décembre 2010. La biographie de Wikipédia en français, Leaders et Webmanagercenter s''accordent. L''ancien
+    enregistrement prétendant qu''il était ministre des Finances dans le gouvernement Mechichi de 2020 est faux
+    : le décret 2020-84 nomme Ali Kooli à l''Économie, aux Finances et au Soutien à l''investissement, et le rôle
+    réel de Ben Mosbah en 2021 était ministre proposé de l''Industrie et des PME.'
   reasoning_fr_by: model-reviewed
-  reasoning_ar: >-
-    عُيّن من طرف بن علي يوم 10 جوان 2009، خلفًا لرضا التويتي، وبقي في المنصب إلى تعديل 29
-    ديسمبر 2010. تتفق السيرة في ويكيبيديا الفرنسية وLeaders وWebmanagercenter. والادعاء
-    السابق بأنه كان وزير المالية في حكومة المشيشي سنة 2020 خاطئ: المرسوم 2020-84 يعيّن علي
-    الكعلي للاقتصاد والمالية ودعم الاستثمار، والدور الفعلي لبن مصباح سنة 2021 كان وزيرًا
-    مقترحًا للصناعة والمؤسسات الصغرى والمتوسطة.
+  reasoning_ar: 'عُيّن من طرف بن علي يوم 10 جوان 2009، خلفًا لرضا التويتي، وبقي في المنصب إلى تعديل 29 ديسمبر 2010.
+    تتفق السيرة في ويكيبيديا الفرنسية وLeaders وWebmanagercenter. والادعاء السابق بأنه كان وزير المالية في حكومة
+    المشيشي سنة 2020 خاطئ: المرسوم 2020-84 يعيّن علي الكعلي للاقتصاد والمالية ودعم الاستثمار، والدور الفعلي لبن
+    مصباح سنة 2021 كان وزيرًا مقترحًا للصناعة والمؤسسات الصغرى والمتوسطة.'
   reasoning_ar_by: model-reviewed
-  falsifiable_by: >-
-    A JORT decree appointing Ridha Ben Mosbah as Minister of Commerce with different dates.
-  falsifiable_by_fr: >-
-    Un décret au JORT nommant Ridha Ben Mosbah ministre du Commerce avec des dates
-    différentes.
+  falsifiable_by: A JORT decree appointing Ridha Ben Mosbah as Minister of Commerce with different dates.
+  falsifiable_by_fr: Un décret au JORT nommant Ridha Ben Mosbah ministre du Commerce avec des dates différentes.
   falsifiable_by_fr_by: model-reviewed
-  falsifiable_by_ar: >-
-    مرسوم في الرائد الرسمي يعيّن رضا بن مصباح وزيرًا للتجارة بتواريخ مختلفة.
+  falsifiable_by_ar: مرسوم في الرائد الرسمي يعيّن رضا بن مصباح وزيرًا للتجارة بتواريخ مختلفة.
   falsifiable_by_ar_by: model-reviewed
-  sources: [frwiki-ridha-ben-mosbah, leaders-ben-mosbah-industry-2021, wmc-ben-mosbah-2021, frwiki-finance-ministers]
+  sources:
+  - frwiki-ridha-ben-mosbah
+  - leaders-ben-mosbah-industry-2021
+  - wmc-ben-mosbah-2021
+  - frwiki-finance-ministers
+  - jort-2009-1942
 
 - id: p-finance-boughdiri
   role: finance-minister
@@ -41852,82 +41869,125 @@
   holder: abdallah-kallel
   start: '1999-11-17'
   end: '2001-01-23'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de l''Intérieur.'
   - The page says he left the government at the remaniement of 23 January 2001.
+  - Décret n° 99-2558 du 1999-11-17 (JORT n° 94 du 23 novembre 1999, p. 2463). Whole-government decree; this row
+    is named as Ministre de l'Intérieur. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1999/094.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/1999/094.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-1999-2558
 - id: p-gov-mohamed-jegham-defence
   role: defence-minister
   holder: mohamed-jegham
   start: '1999-11-17'
   end: '2001-01-23'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de la Défense.'
   - The page says he left the government at the remaniement of 23 January 2001.
+  - Décret n° 99-2558 du 1999-11-17 (JORT n° 94 du 23 novembre 1999, p. 2463). Whole-government decree; this row
+    is named as Ministre de la Défense Nationale. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1999/094.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/1999/094.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-1999-2558
 - id: p-gov-neziha-zarrouk-family-women
   role: family-women-minister
   holder: neziha-zarrouk
   start: '1999-11-17'
   end: '2001-10-08'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre des Femmes et des Affaires familiales.'
+  - Décret n° 99-2558 du 1999-11-17 (JORT n° 94 du 23 novembre 1999, p. 2463). Whole-government decree; this row
+    is named as Ministre des Affaires de la Femme et de la Famille. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1999/094.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/1999/094.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-1999-2558
 - id: p-gov-moncer-rouissi-employment-2
   role: employment-minister
   holder: moncer-rouissi
   start: '1999-11-17'
   end: '2001-01-23'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de l''Emploi et de la Formation professionnelle.'
+  - Décret n° 99-2558 du 1999-11-17 (JORT n° 94 du 23 novembre 1999, p. 2463). Whole-government decree; this row
+    is named as Ministre de la Formation Professionnelle et de l'Emploi. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1999/094.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/1999/094.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-1999-2558
 - id: p-gov-hedi-mhenni-health-2
   role: health-minister
   holder: hedi-mhenni
   start: '1999-11-17'
   end: '2001-01-23'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de la Santé.'
+  - Décret n° 99-2558 du 1999-11-17 (JORT n° 94 du 23 novembre 1999, p. 2463). Whole-government decree; this row
+    is named as Ministre de la Santé Publique. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1999/094.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/1999/094.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-1999-2558
 - id: p-gov-dali-jazi-minister-delegate
   role: minister-delegate
   holder: dali-jazi
   start: '1999-11-17'
   end: '2001-01-23'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre délégué auprès du Premier ministre, chargé des Droits de l''homme, de la
     Communication et des Relations avec la Chambre des députés.'
+  - Décret n° 99-2558 du 1999-11-17 (JORT n° 94 du 23 novembre 1999, p. 2463). Whole-government decree; this row
+    is named as Ministre délégué auprès du Premier Ministre chargé des Droits de l'Homme, de la Communication et
+    des Relations avec la Chambre des Députés. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1999/094.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/1999/094.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-1999-2558
 - id: p-gov-sadok-chaabane-higher-education
   role: higher-education-minister
   holder: sadok-chaabane
   start: '1999-11-17'
   end: '2004-11-11'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de l''Enseignement supérieur.'
   - The page lists him among the ten ministers who left at the remaniement of 11 November 2004.
+  - Décret n° 99-2558 du 1999-11-17 (JORT n° 94 du 23 novembre 1999, p. 2463). Whole-government decree; this row
+    is named as Ministre de l'Enseignement Supérieur. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1999/094.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/1999/094.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-1999-2558
 - id: p-gov-fethi-merdassi-development
   role: development-minister
   holder: fethi-merdassi
@@ -41945,35 +42005,53 @@
   holder: moncef-ben-abdallah
   start: '1999-11-17'
   end: '2003-09-01'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de l''Industrie.'
+  - Décret n° 99-2558 du 1999-11-17 (JORT n° 94 du 23 novembre 1999, p. 2463). Whole-government decree; this row
+    is named as Ministre de l'Industrie. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1999/094.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/1999/094.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-1999-2558
 - id: p-gov-slaheddine-belaid-equipment
   role: equipment-minister
   holder: slaheddine-belaid
   start: '1999-11-17'
   end: '2004-11-11'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de l''Équipement et du Logement.'
   - The page lists him among the ten ministers who left at the remaniement of 11 November 2004.
+  - Décret n° 99-2558 du 1999-11-17 (JORT n° 94 du 23 novembre 1999, p. 2463). Whole-government decree; this row
+    is named as Ministre de l'Équipement et de l'Habitat. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1999/094.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/1999/094.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-1999-2558
 - id: p-gov-ahmed-iyadh-ouederni-education
   role: education-minister
   holder: ahmed-iyadh-ouederni
   start: '1999-11-17'
   end: '2001-01-23'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de l''Éducation.'
+  - Décret n° 99-2558 du 1999-11-17 (JORT n° 94 du 23 novembre 1999, p. 2463). Whole-government decree; this row
+    is named as Ministre de l'Éducation. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1999/094.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/1999/094.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-1999-2558
 - id: p-gov-dali-jazi-defence
   role: defence-minister
   holder: dali-jazi
@@ -42012,241 +42090,364 @@
   holder: hedi-mhenni
   start: '2001-01-23'
   end: '2002-04-27'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre des Affaires sociales.'
+  - Décret n° 2001-291 du 2001-01-23 (JORT n° 9 du 30 janvier 2001, p. 180). Whole-government decree; this row is
+    named as ministre des affaires sociales. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2001/009.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2001/009.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2001-291
 - id: p-gov-moncer-rouissi-education
   role: education-minister
   holder: moncer-rouissi
   start: '2001-01-23'
   end: '2003-09-01'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de l''Éducation.'
+  - Décret n° 2001-291 du 2001-01-23 (JORT n° 9 du 30 janvier 2001, p. 180). Whole-government decree; this row is
+    named as ministre de l'éducation. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2001/009.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2001/009.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2001-291
 - id: p-gov-abdelkarim-zbidi-health
   role: health-minister
   holder: abdelkarim-zbidi
   start: '2001-01-23'
   end: '2001-10-08'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de la Santé.'
+  - Décret n° 2001-291 du 2001-01-23 (JORT n° 9 du 30 janvier 2001, p. 180). Whole-government decree; this row is
+    named as ministre de la santé publique. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2001/009.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2001/009.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2001-291
 - id: p-gov-faiza-kefi-employment
   role: employment-minister
   holder: faiza-kefi
   start: '2001-01-23'
   end: 2001-10
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de la Formation professionnelle et de l''Emploi.'
   - The page says she left the government in October 2001 to join the Cour des comptes; only the month is printed.
+  - Décret n° 2001-291 du 2001-01-23 (JORT n° 9 du 30 janvier 2001, p. 180). Whole-government decree; this row is
+    named as ministre de la formation professionnelle et de l'emploi. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2001/009.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2001/009.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2001-291
 - id: p-gov-abderrahim-zouari-youth-sports-2
   role: youth-sports-minister
   holder: abderrahim-zouari
   start: '2001-01-23'
   end: '2004-01-14'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de la Jeunesse, de l''Enfance et des Sports.'
+  - Décret n° 2001-291 du 2001-01-23 (JORT n° 9 du 30 janvier 2001, p. 180). Whole-government decree; this row is
+    named as ministre de la jeunesse, de l'enfance et des sports. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2001/009.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2001/009.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2001-291
 - id: p-gov-mondher-zenaidi-tourism
   role: tourism-minister
   holder: mondher-zenaidi
   start: '2001-01-23'
   end: '2002-09-05'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre du Tourisme, des Loisirs et de l''Artisanat.'
+  - Décret n° 2001-291 du 2001-01-23 (JORT n° 9 du 30 janvier 2001, p. 180). Whole-government decree; this row is
+    named as ministre du tourisme, des loisirs et de l'artisanat. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2001/009.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2001/009.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2001-291
 - id: p-gov-tahar-sioud-commerce
   role: commerce-minister
   holder: tahar-sioud
   start: '2001-01-23'
   end: '2002-09-05'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre du Commerce.'
   - The page lists him among the ministers who left at the remaniement of 5 September 2002.
+  - Décret n° 2001-291 du 2001-01-23 (JORT n° 9 du 30 janvier 2001, p. 180). Whole-government decree; this row is
+    named as ministre du commerce. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2001/009.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2001/009.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2001-291
 - id: p-gov-mohamed-nabli-environment
   role: environment-minister
   holder: mohamed-nabli
   start: '2001-01-23'
   end: '2002-09-05'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de l''Environnement et de l''Aménagement du territoire.'
   - The page lists him among the ministers who left at the remaniement of 5 September 2002.
+  - Décret n° 2001-291 du 2001-01-23 (JORT n° 9 du 30 janvier 2001, p. 180). Whole-government decree; this row is
+    named as ministre de l'environnement et de l'aménagement du territoire. Text read from the JORT OCR layer at
+    https://ocr.jort.tn/journal-officiel/fr/2001/009.md; official PDF at https://lake.jort.tn/journal-officiel/fr/2001/009.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2001-291
 - id: p-gov-afif-hendaoui-minister-delegate
   role: minister-delegate
   holder: afif-hendaoui
   start: '2001-01-23'
   end: '2001-02-19'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre délégué auprès du Premier ministre, chargé des Droits de l''homme, de la
     Communication et des Relations avec la Chambre des députés.'
+  - Décret n° 2001-291 du 2001-01-23 (JORT n° 9 du 30 janvier 2001, p. 180). Whole-government decree; this row is
+    named as ministre délégué auprès du Premier Ministre chargé des droits de l'Homme, de la communication et des
+    relations avec la chambre des députés. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2001/009.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2001/009.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2001-291
 - id: p-gov-slaheddine-maaoui-minister-delegate
   role: minister-delegate
   holder: slaheddine-maaoui
   start: '2001-02-19'
   end: '2002-05-14'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre délégué auprès du Premier ministre, chargé des Droits de l''homme, de la
     Communication et des Relations avec la Chambre des députés.'
+  - Décret n° 2001-590 du 2001-02-19 (JORT n° 20 du 9 mars 2001, p. 500). Individual decree appointing the holder
+    as ministre délégué auprès du Premier ministre chargé des droits de l'homme, de la communication et des relations
+    avec la chambre des députés. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2001/020.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2001/020.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2001-590
 - id: p-gov-neziha-ben-yedder-family-women
   role: family-women-minister
   holder: neziha-ben-yedder
   start: '2001-10-08'
   end: '2004-11-11'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de la Femme et de la Famille.'
   - The page lists her among the ten ministers who left at the remaniement of 11 November 2004.
+  - Décret n° 2001-2397 du 2001-10-08 (JORT n° 83 du 16 octobre 2001, p. 3676). Individual decree appointing the
+    holder as ministre des affaires de la femme et de la famille. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2001/083.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2001/083.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2001-2397
 - id: p-gov-neziha-zarrouk-employment
   role: employment-minister
   holder: neziha-zarrouk
   start: '2001-10-08'
   end: '2002-09-05'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de l''Emploi et de la Formation professionnelle.'
   - The page lists her among the ministers who left at the remaniement of 5 September 2002.
+  - Décret n° 2001-2398 du 2001-10-08 (JORT n° 83 du 16 octobre 2001, p. 3676). Individual decree appointing the
+    holder as ministre de la formation professionnelle et de l'emploi. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2001/083.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2001/083.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2001-2398
 - id: p-gov-habib-m-barek-health
   role: health-minister
   holder: habib-m-barek
   start: '2001-10-08'
   end: '2004-11-11'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de la Santé.'
   - The page lists him among the ten ministers who left at the remaniement of 11 November 2004.
+  - Décret n° 2001-2399 du 2001-10-08 (JORT n° 83 du 16 octobre 2001, p. 3677). Individual decree appointing the
+    holder as ministre de la santé publique. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2001/083.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2001/083.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2001-2399
 - id: p-gov-abdelkarim-zbidi-minister-delegate
   role: minister-delegate
   holder: abdelkarim-zbidi
   start: '2001-10-08'
   end: '2002-09-05'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre délégué auprès du Premier ministre, chargé de la Recherche scientifique et
     de la Technologie.'
   - The page says the secretariat of state for research was raised to a ministry at this remaniement; it lists him
     among the ministers who left on 5 September 2002.
+  - Décret n° 2001-2400 du 2001-10-08 (JORT n° 83 du 16 octobre 2001, p. 3677). Individual decree appointing the
+    holder as ministre délégué auprès du Premier ministre chargé de la recherche scientifique et de la technologie.
+    Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2001/083.md; official PDF at https://lake.jort.tn/journal-officiel/fr/2001/083.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2001-2400
 - id: p-gov-hedi-mhenni-interior
   role: interior-minister
   holder: hedi-mhenni
   start: '2002-04-27'
   end: '2004-11-11'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de l''Intérieur.'
   - The page lists him among the ten ministers who left at the remaniement of 11 November 2004.
+  - Décret n° 2002-912 du 2002-04-27 (JORT n° 35 du 30 avril 2002, p. 1051). Individual decree appointing the holder
+    as ministre de l'intérieur. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2002/035.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2002/035.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2002-912
 - id: p-gov-chedli-neffati-social-affairs-2
   role: social-affairs-minister
   holder: chedli-neffati
   start: '2002-04-27'
   end: '2004-11-11'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre des Affaires sociales.'
   - The page lists him among the ten ministers who left at the remaniement of 11 November 2004.
+  - Décret n° 2002-913 du 2002-04-27 (JORT n° 35 du 30 avril 2002, p. 1051). Individual decree appointing the holder
+    as ministre des affaires sociales. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2002/035.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2002/035.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2002-913
 - id: p-gov-mohamed-fethi-houidi-minister-delegate
   role: minister-delegate
   holder: mohamed-fethi-houidi
   start: '2002-05-14'
   end: '2002-09-05'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre délégué auprès du Premier ministre, chargé des Droits de l''homme, de la
     Communication et des Relations avec la Chambre des députés.'
   - The page lists him among the ministers who left at the remaniement of 5 September 2002.
+  - Décret n° 2002-1046 du 2002-05-14 (JORT n° 39 du 14 mai 2002, p. 1156). Individual decree appointing the holder
+    as ministre délégué auprès du Premier ministre, chargé des droits de l'homme, de la communication et des relations
+    avec la chambre des députés. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2002/039.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2002/039.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2002-1046
 - id: p-gov-sadok-rabah-communication-2
   role: communication-minister
   holder: sadok-rabah
   start: '2002-09-05'
   end: '2011-01-17'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de la Communication et du Transport.'
   - Listed in the composition of 4 January 2011 as 'Ministre de la Communication et porte-parole officiel du gouvernement';
     the page does not date the end of this tenure.
+  - Décret n° 2002-2011 du 2002-09-05 (JORT n° 74 du 10 septembre 2002, p. 2105). Whole-government decree; this
+    row is named as ministre des technologies de la communication et du transport. Text read from the JORT OCR layer
+    at https://ocr.jort.tn/journal-officiel/fr/2002/074.md; official PDF at https://lake.jort.tn/journal-officiel/fr/2002/074.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2002-2011
 - id: p-gov-chedly-laroussi-employment
   role: employment-minister
   holder: chedly-laroussi
   start: '2002-09-05'
   end: '2008-08-29'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de l''Emploi.'
   - The page lists him among those who left at the remaniement of 29 August 2008.
+  - Décret n° 2002-2011 du 2002-09-05 (JORT n° 74 du 10 septembre 2002, p. 2105). Whole-government decree; this
+    row is named as ministre de l'emploi. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2002/074.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2002/074.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2002-2011
 - id: p-gov-mohamed-nouri-jouini-development
   role: development-minister
   holder: mohamed-nouri-jouini
   start: '2002-09-05'
   end: '2011-01-17'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre du Développement et de la Coopération internationale.'
   - Listed in the composition of 4 January 2011; the page does not date the end of this tenure.
   - Listed in the composition of 4 January 2011 with the portfolio as printed there.
+  - Décret n° 2002-2011 du 2002-09-05 (JORT n° 74 du 10 septembre 2002, p. 2105). Whole-government decree; this
+    row is named as ministre du développement et de la coopération internationale. Text read from the JORT OCR layer
+    at https://ocr.jort.tn/journal-officiel/fr/2002/074.md; official PDF at https://lake.jort.tn/journal-officiel/fr/2002/074.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2002-2011
 - id: p-gov-habib-haddad-agriculture
   role: agriculture-minister
   holder: habib-haddad
@@ -42269,32 +42470,46 @@
   holder: mohamed-raouf-najar
   start: '2003-09-01'
   end: '2005-08-17'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de l''Éducation et de la Formation.'
   - The page lists him among the three ministers who left at the remaniement of 17 August 2005.
+  - Décret n° 2003-1835 du 2003-09-01 (JORT n° 71 du 5 septembre 2003, p. 2693). Individual decree appointing the
+    holder as ministre de l'éducation et de la formation. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2003/071.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2003/071.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2003-1835
 - id: p-gov-fethi-merdassi-industry
   role: industry-minister
   holder: fethi-merdassi
   start: '2003-09-01'
   end: '2004-11-11'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de l''Industrie et de l''Énergie.'
   - The page lists him among the ten ministers who left at the remaniement of 11 November 2004.
+  - Décret n° 2003-1836 du 2003-09-01 (JORT n° 71 du 5 septembre 2003, p. 2693). Individual decree appointing the
+    holder as ministre de l'industrie et de l'énergie. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2003/071.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2003/071.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2003-1836
 - id: p-gov-abderrahim-zouari-tourism
   role: tourism-minister
   holder: abderrahim-zouari
   start: '2004-01-14'
   end: ~2004
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre du Tourisme et de l''Artisanat.'
   - The page does not date the end of this tenure; on 14 January 2010 it says Kamel Morjane was named to Foreign
@@ -42303,105 +42518,164 @@
     the move to that portfolio.
   - The source does not date the end of this tenure; the year of the end of the government is used as an approximate
     bound.
+  - Décret n° 2004-65 du 2004-01-14 (JORT n° 6 du 20 janvier 2004, p. 117). Individual decree appointing the holder
+    as ministre du tourisme et de l'artisanat. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2004/006.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2004/006.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2004-65
 - id: p-gov-abdallah-kaabi-youth-sports
   role: youth-sports-minister
   holder: abdallah-kaabi
   start: '2004-01-14'
   end: '2008-08-29'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre des Sports.'
   - The page lists him among those who left at the remaniement of 29 August 2008.
+  - Décret n° 2004-68 du 2004-01-14 (JORT n° 6 du 20 janvier 2004, p. 117). Individual decree appointing the holder
+    as ministre des sports. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2004/006.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2004/006.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2004-68
 - id: p-gov-hedi-mhenni-defence
   role: defence-minister
   holder: hedi-mhenni
-  start: '2004-11-11'
+  start: '2004-11-10'
   end: '2005-08-17'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de la Défense.'
   - The page lists him among the three ministers who left at the remaniement of 17 August 2005.
+  - Décret n° 2004-2644 du 2004-11-10 (JORT n° 94 du 23 novembre 2004, p. 3283). Whole-government decree; this row
+    is named as Ministre de la défense nationale. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2004/094.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2004/094.pdf.
+  - 'Previous recorded start: 2004-11-11.'
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2004-2644
 - id: p-gov-mohamed-ridha-kechrid-health
   role: health-minister
   holder: mohamed-ridha-kechrid
-  start: '2004-11-11'
+  start: '2004-11-10'
   end: '2007-09-04'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de la Santé.'
   - The page lists him among those who left at the remaniement of 4 September 2007.
+  - Décret n° 2004-2644 du 2004-11-10 (JORT n° 94 du 23 novembre 2004, p. 3283). Whole-government decree; this row
+    is named as Ministre de la santé publique. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2004/094.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2004/094.pdf.
+  - 'Previous recorded start: 2004-11-11.'
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2004-2644
 - id: p-gov-lazhar-bououni-higher-education
   role: higher-education-minister
   holder: lazhar-bououni
-  start: '2004-11-11'
+  start: '2004-11-10'
   end: '2010-01-14'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de l''Enseignement supérieur.'
+  - Décret n° 2004-2644 du 2004-11-10 (JORT n° 94 du 23 novembre 2004, p. 3283). Whole-government decree; this row
+    is named as Ministre de l'enseignement supérieur. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2004/094.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2004/094.pdf.
+  - 'Previous recorded start: 2004-11-11.'
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2004-2644
 - id: p-gov-samira-khayach-belhaj-equipment
   role: equipment-minister
   holder: samira-khayach-belhaj
-  start: '2004-11-11'
+  start: '2004-11-10'
   end: '2008-08-29'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de l''Équipement.'
   - The page lists her among those who left at the remaniement of 29 August 2008.
+  - Décret n° 2004-2644 du 2004-11-10 (JORT n° 94 du 23 novembre 2004, p. 3283). Whole-government decree; this row
+    is named as Ministre de l'équipement, de l'habitat et de l'aménagement du territoire. Text read from the JORT
+    OCR layer at https://ocr.jort.tn/journal-officiel/fr/2004/094.md; official PDF at https://lake.jort.tn/journal-officiel/fr/2004/094.pdf.
+  - 'Previous recorded start: 2004-11-11.'
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2004-2644
 - id: p-gov-saloua-ayachi-labben-family-women
   role: family-women-minister
   holder: saloua-ayachi-labben
-  start: '2004-11-11'
+  start: '2004-11-10'
   end: '2007-09-04'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de la Femme, de la Famille, de l''Enfance et des Personnes âgées.'
   - The page lists her among those who left at the remaniement of 4 September 2007.
+  - Décret n° 2004-2644 du 2004-11-10 (JORT n° 94 du 23 novembre 2004, p. 3283). Whole-government decree; this row
+    is named as Ministre des affaires de la femme, de la famille, de l'enfance et des personnes âgées. Text read
+    from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2004/094.md; official PDF at https://lake.jort.tn/journal-officiel/fr/2004/094.pdf.
+  - 'Previous recorded start: 2004-11-11.'
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2004-2644
 - id: p-gov-afif-chelbi-industry
   role: industry-minister
   holder: afif-chelbi
-  start: '2004-11-11'
+  start: '2004-11-10'
   end: '2011-01-17'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de l''Industrie, de l''Énergie et des Petites et moyennes entreprises.'
   - Listed in the composition of 4 January 2011 as 'Ministre de l'Industrie et de la Technologie'; the page does
     not date the end of this tenure.
+  - Décret n° 2004-2644 du 2004-11-10 (JORT n° 94 du 23 novembre 2004, p. 3283). Whole-government decree; this row
+    is named as Ministre de l'industrie, de l'énergie et des petites et moyennes entreprises. Text read from the
+    JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2004/094.md; official PDF at https://lake.jort.tn/journal-officiel/fr/2004/094.pdf.
+  - 'Previous recorded start: 2004-11-11.'
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2004-2644
 - id: p-gov-nadhir-hamada-environment
   role: environment-minister
   holder: nadhir-hamada
-  start: '2004-11-11'
+  start: '2004-11-10'
   end: '2011-01-17'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de l''Environnement et du Développement durable.'
   - Listed in the composition of 4 January 2011; the page does not date the end of this tenure.
   - Listed in the composition of 4 January 2011 with the portfolio as printed there.
+  - Décret n° 2004-2644 du 2004-11-10 (JORT n° 94 du 23 novembre 2004, p. 3283). Whole-government decree; this row
+    is named as Ministre de l'environnement et du développement durable. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2004/094.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2004/094.pdf.
+  - 'Previous recorded start: 2004-11-11.'
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2004-2644
 - id: p-gov-sadok-korbi-higher-education
   role: higher-education-minister
   holder: sadok-korbi
@@ -42417,15 +42691,22 @@
 - id: p-gov-rafaa-dekhil-social-affairs
   role: social-affairs-minister
   holder: rafaa-dekhil
-  start: '2004-11-11'
+  start: '2004-11-10'
   end: '2005-08-17'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre des Affaires sociales, de la Solidarité et des Tunisiens à l''étranger.'
   - The remaniement of 17 August 2005 makes him Minister of Communication and Relations with Parliament.
+  - Décret n° 2004-2644 du 2004-11-10 (JORT n° 94 du 23 novembre 2004, p. 3283). Whole-government decree; this row
+    is named as Ministre des affaires sociales, de la solidarité et des Tunisiens à l'étranger. Text read from the
+    JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2004/094.md; official PDF at https://lake.jort.tn/journal-officiel/fr/2004/094.pdf.
+  - 'Previous recorded start: 2004-11-11.'
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2004-2644
 - id: p-gov-tijani-haddad-tourism
   role: tourism-minister
   holder: tijani-haddad
@@ -42447,75 +42728,114 @@
 - id: p-gov-montasser-ouaili-ict
   role: ict-minister
   holder: montasser-ouaili
-  start: '2004-11-11'
+  start: '2004-11-10'
   end: '2007-09-04'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre des Technologies de la communication.'
   - The page lists him among those who left at the remaniement of 4 September 2007.
+  - Décret n° 2004-2644 du 2004-11-10 (JORT n° 94 du 23 novembre 2004, p. 3283). Whole-government decree; this row
+    is named as Ministre des technologies de la communication. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2004/094.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2004/094.pdf.
+  - 'Previous recorded start: 2004-11-11.'
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2004-2644
 - id: p-gov-mohamed-el-aziz-ben-achour-culture
   role: culture-minister
   holder: mohamed-el-aziz-ben-achour
-  start: '2004-11-11'
+  start: '2004-11-10'
   end: '2008-08-29'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de la Culture et de la Sauvegarde du patrimoine.'
   - The page lists him among those who left at the remaniement of 29 August 2008.
+  - Décret n° 2004-2644 du 2004-11-10 (JORT n° 94 du 23 novembre 2004, p. 3283). Whole-government decree; this row
+    is named as Ministre de la culture et de la sauvegarde du patrimoine. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2004/094.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2004/094.pdf.
+  - 'Previous recorded start: 2004-11-11.'
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2004-2644
 - id: p-gov-zouheir-m-dhaffer-minister-delegate
   role: minister-delegate
   holder: zouheir-m-dhaffer
-  start: '2004-11-11'
+  start: '2004-11-10'
   end: '2010-10-12'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre délégué auprès du Premier ministre, chargé de la Fonction publique et du
     Développement administratif.'
+  - Décret n° 2004-2644 du 2004-11-10 (JORT n° 94 du 23 novembre 2004, p. 3283). Whole-government decree; this row
+    is named as Ministre délégué auprès du Premier ministre chargé de la fonction publique et du développement administratif.
+    Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2004/094.md; official PDF at https://lake.jort.tn/journal-officiel/fr/2004/094.pdf.
+  - 'Previous recorded start: 2004-11-11.'
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2004-2644
 - id: p-gov-rafaa-dekhil-communication
   role: communication-minister
   holder: rafaa-dekhil
   start: '2005-08-17'
   end: '2009-10-10'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de la Communication et des Relations avec le Parlement.'
   - The remaniement of 10 October 2009 says Oussama Romdhani replaces him as acting minister.
+  - Décret n° 2005-2219 du 2005-08-17 (JORT n° 67 du 23 août 2005, p. 2215). Individual decree appointing the holder
+    as ministre chargé de la communication et des relations avec la chambre des députés et la chambre des conseillers.
+    Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2005/067.md; official PDF at https://lake.jort.tn/journal-officiel/fr/2005/067.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2005-2219
 - id: p-gov-sadok-korbi-education
   role: education-minister
   holder: sadok-korbi
   start: '2005-08-17'
   end: '2008-08-29'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de l''Éducation.'
   - The page lists him among those who left at the remaniement of 29 August 2008.
+  - Décret n° 2005-2217 du 2005-08-17 (JORT n° 67 du 23 août 2005, p. 2215). Individual decree appointing the holder
+    as ministre de l'éducation et de la formation. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2005/067.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2005/067.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2005-2217
 - id: p-gov-ali-chaouch-social-affairs
   role: social-affairs-minister
   holder: ali-chaouch
   start: '2005-08-17'
   end: '2011-01-17'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre des Affaires sociales, de la Solidarité et des Tunisiens à l''étranger.'
   - Listed in the composition of 4 January 2011; the page does not date the end of this tenure.
+  - Décret n° 2005-2218 du 2005-08-17 (JORT n° 67 du 23 août 2005, p. 2215). Individual decree appointing the holder
+    as ministre des affaires sociales, de la solidarité et des Tunisiens à l'étranger. Text read from the JORT OCR
+    layer at https://ocr.jort.tn/journal-officiel/fr/2005/067.md; official PDF at https://lake.jort.tn/journal-officiel/fr/2005/067.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2005-2218
 - id: p-gov-taieb-hadhri-higher-education
   role: higher-education-minister
   holder: taieb-hadhri
@@ -42534,36 +42854,54 @@
   holder: mondher-zenaidi
   start: '2007-09-04'
   end: '2011-01-17'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de la Santé.'
   - Listed in the composition of 4 January 2011; the page does not date the end of this tenure.
   - Listed in the composition of 4 January 2011 with the portfolio as printed there.
+  - Décret n° 2007-2276 du 2007-09-04 (JORT n° 74 du 14 septembre 2007, p. 3259). Individual decree appointing the
+    holder as ministre de la santé publique. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2007/074.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2007/074.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2007-2276
 - id: p-gov-khalil-laajimi-tourism
   role: tourism-minister
   holder: khalil-laajimi
   start: '2007-09-04'
   end: '2010-01-14'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre du Tourisme.'
+  - Décret n° 2007-2277 du 2007-09-04 (JORT n° 74 du 14 septembre 2007, p. 3259). Individual decree appointing the
+    holder as ministre du tourisme. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2007/074.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2007/074.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2007-2277
 - id: p-gov-el-hadj-gley-ict
   role: ict-minister
   holder: el-hadj-gley
   start: '2007-09-04'
   end: '2010-01-14'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre des Technologies de la communication.'
+  - Décret n° 2007-2280 du 2007-09-04 (JORT n° 74 du 14 septembre 2007, p. 3259). Individual decree appointing the
+    holder as ministre des technologies de la communication. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2007/074.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2007/074.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2007-2280
 - id: p-gov-sarra-kanoun-jarraya-family-women
   role: family-women-minister
   holder: sarra-kanoun-jarraya
@@ -42586,13 +42924,19 @@
   holder: ridha-touiti
   start: '2007-09-04'
   end: '2009-06-10'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre du Commerce et de l''Artisanat.'
   - The remaniement of 10 June 2009 says he was given a less demanding post because of ill health.
+  - Décret n° 2007-2279 du 2007-09-04 (JORT n° 74 du 14 septembre 2007, p. 3259). Individual decree appointing the
+    holder as ministre du commerce et de l'artisanat. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2007/074.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2007/074.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2007-2279
 - id: p-gov-hatem-ben-salem-education
   role: education-minister
   holder: hatem-ben-salem
@@ -42615,149 +42959,222 @@
   holder: abderraouf-el-basti
   start: '2008-08-29'
   end: '2011-01-17'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de la Culture et de la Sauvegarde du patrimoine.'
   - Listed in the composition of 4 January 2011; the page does not date the end of this tenure.
   - Listed in the composition of 4 January 2011 with the portfolio as printed there.
+  - Décret n° 2008-2957 du 2008-08-29 (JORT n° 73 du 9 septembre 2008, p. 2954). Individual decree appointing the
+    holder as ministre de la culture et de la sauvegarde du patrimoine. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2008/073.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2008/073.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2008-2957
 - id: p-gov-samir-laabidi-youth-sports
   role: youth-sports-minister
   holder: samir-laabidi
   start: '2008-08-29'
   end: '2010-12-29'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de la Jeunesse, des Sports et de l''Éducation physique.'
+  - Décret n° 2008-2959 du 2008-08-29 (JORT n° 73 du 9 septembre 2008, p. 2954). Individual decree appointing the
+    holder as ministre de la jeunesse, des sports et de l'éducation physique. Text read from the JORT OCR layer
+    at https://ocr.jort.tn/journal-officiel/fr/2008/073.md; official PDF at https://lake.jort.tn/journal-officiel/fr/2008/073.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2008-2959
 - id: p-gov-abdessalem-mansour-agriculture
   role: agriculture-minister
   holder: abdessalem-mansour
   start: '2008-08-29'
   end: '2011-01-17'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de l''Agriculture et des Ressources hydrauliques.'
   - Listed in the composition of 4 January 2011 as 'Ministre de l'Agriculture, des Ressources en eau et de la Pêche';
     the page does not date the end of this tenure.
+  - Décret n° 2008-2960 du 2008-08-29 (JORT n° 73 du 9 septembre 2008, p. 2954). Individual decree appointing the
+    holder as ministre de l'agriculture et des ressources hydrauliques. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2008/073.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2008/073.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2008-2960
 - id: p-gov-slim-tlatli-employment
   role: employment-minister
   holder: slim-tlatli
   start: '2008-08-29'
   end: '2010-01-14'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de l''Emploi et de l''Insertion professionnelle des jeunes.'
+  - Décret n° 2008-2958 du 2008-08-29 (JORT n° 73 du 9 septembre 2008, p. 2954). Individual decree appointing the
+    holder as ministre de l'emploi et de l'insertion professionnelle des jeunes. Text read from the JORT OCR layer
+    at https://ocr.jort.tn/journal-officiel/fr/2008/073.md; official PDF at https://lake.jort.tn/journal-officiel/fr/2008/073.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2008-2958
 - id: p-gov-ridha-touiti-minister-delegate
   role: minister-delegate
   holder: ridha-touiti
   start: '2009-06-10'
   end: '2010-01-14'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre délégué auprès du Premier ministre.'
   - The page says he was given a less demanding post because of ill health and that he died a few months later.
+  - Décret n° 2009-1943 du 2009-06-10 (JORT n° 50 du 23 juin 2009, p. 1628). Individual decree appointing the holder
+    as ministre délégué auprès du Premier ministre. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2009/050.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2009/050.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2009-1943
 - id: p-gov-oussama-romdhani-communication
   role: communication-minister
   holder: oussama-romdhani
   start: '2009-10-10'
   end: '2010-01-14'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de la Communication et des Relations avec le Parlement (par intérim).'
   - The page says he was appointed acting minister in place of Rafaâ Dekhil.
+  - Décret n° 2009-2879 du 2009-10-10 (JORT n° 82 du 13 octobre 2009, p. 3061). Individual decree appointing the
+    holder as ministre chargé de la communication et des relations avec la chambre des députés et la chambre des
+    conseillers par intérim. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2009/082.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2009/082.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2009-2879
 - id: p-gov-ridha-chalghoum-2-finance
   role: finance-minister
   holder: ridha-chalghoum-2
   start: '2010-01-14'
   end: '2011-01-17'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre des Finances.'
   - Listed in the composition of 4 January 2011; the page does not date the end of this tenure.
   - Listed in the composition of 4 January 2011 with the portfolio as printed there.
+  - Décret n° 2010-72 du 2010-01-14 (JORT n° 7 du 22 janvier 2010, p. 224). Whole-government decree; this row is
+    named as Ministre des finances. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2010/007.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2010/007.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2010-72
 - id: p-gov-naceur-el-gharbi-social-affairs
   role: social-affairs-minister
   holder: naceur-el-gharbi
   start: '2010-01-14'
   end: '2011-01-17'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre des Affaires sociales, de la Solidarité et des Tunisiens à l''étranger.'
   - Listed in the composition of 4 January 2011; the page does not date the end of this tenure.
   - Listed in the composition of 4 January 2011 with the portfolio as printed there.
+  - Décret n° 2010-72 du 2010-01-14 (JORT n° 7 du 22 janvier 2010, p. 224). Whole-government decree; this row is
+    named as Ministre des affaires sociales, de la solidarité et des Tunisiens à l'étranger. Text read from the
+    JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2010/007.md; official PDF at https://lake.jort.tn/journal-officiel/fr/2010/007.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2010-72
 - id: p-gov-bechir-tekkari-higher-education
   role: higher-education-minister
   holder: bechir-tekkari
   start: '2010-01-14'
   end: '2011-01-17'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de l''Enseignement supérieur et de la Recherche scientifique.'
   - Listed in the composition of 4 January 2011; the page does not date the end of this tenure.
   - Listed in the composition of 4 January 2011 with the portfolio as printed there.
+  - Décret n° 2010-72 du 2010-01-14 (JORT n° 7 du 22 janvier 2010, p. 224). Whole-government decree; this row is
+    named as Ministre de l'enseignement supérieur et de la recherche scientifique. Text read from the JORT OCR layer
+    at https://ocr.jort.tn/journal-officiel/fr/2010/007.md; official PDF at https://lake.jort.tn/journal-officiel/fr/2010/007.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2010-72
 - id: p-gov-slim-tlatli-tourism
   role: tourism-minister
   holder: slim-tlatli
   start: '2010-01-14'
   end: '2011-01-17'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre du Tourisme.'
   - Listed in the composition of 4 January 2011; the page does not date the end of this tenure.
   - Listed in the composition of 4 January 2011 with the portfolio as printed there.
+  - Décret n° 2010-72 du 2010-01-14 (JORT n° 7 du 22 janvier 2010, p. 224). Whole-government decree; this row is
+    named as Ministre du tourisme. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2010/007.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2010/007.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2010-72
 - id: p-gov-zouheir-m-dhaffer-state-properties
   role: state-properties-minister
   holder: zouheir-m-dhaffer
   start: '2010-01-14'
   end: '2010-10-12'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre des Domaines de l''État et des Affaires foncières.'
+  - Décret n° 2010-72 du 2010-01-14 (JORT n° 7 du 22 janvier 2010, p. 224). Whole-government decree; this row is
+    named as Ministre des domaines de l'État et des affaires foncières. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2010/007.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2010/007.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2010-72
 - id: p-gov-bebia-chihi-family-women
   role: family-women-minister
   holder: bebia-chihi
   start: '2010-01-14'
   end: '2011-01-17'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre des Affaires de la femme, de la Famille, de l''Enfance et des Personnes âgées.'
   - Listed in the composition of 4 January 2011; the page does not date the end of this tenure.
   - Listed in the composition of 4 January 2011 with the portfolio as printed there.
+  - Décret n° 2010-72 du 2010-01-14 (JORT n° 7 du 22 janvier 2010, p. 224). Whole-government decree; this row is
+    named as Ministre des affaires de la femme, de la famille, de l'enfance et des personnes âgées. Text read from
+    the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2010/007.md; official PDF at https://lake.jort.tn/journal-officiel/fr/2010/007.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2010-72
 - id: p-gov-mohamed-naceur-ammar-ict
   role: ict-minister
   holder: mohamed-naceur-ammar
@@ -42777,27 +43194,39 @@
   holder: mohamed-agrebi
   start: '2010-01-14'
   end: '2011-01-17'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de la Formation professionnelle et de l''Emploi.'
   - Listed in the composition of 4 January 2011; the page does not date the end of this tenure.
   - Listed in the composition of 4 January 2011 with the portfolio as printed there.
+  - Décret n° 2010-72 du 2010-01-14 (JORT n° 7 du 22 janvier 2010, p. 224). Whole-government decree; this row is
+    named as Ministre de la formation professionnelle et de l'Emploi. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2010/007.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2010/007.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2010-72
 - id: p-gov-foued-daghfous-state-properties
   role: state-properties-minister
   holder: foued-daghfous
   start: '2010-10-12'
   end: '2011-01-17'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ghannouchi I
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre des Domaines de l''État et des Affaires foncières.'
   - Listed in the composition of 4 January 2011; the page does not date the end of this tenure.
   - Listed in the composition of 4 January 2011 with the portfolio as printed there.
+  - Décret n° 2010-2620 du 2010-10-12 (JORT n° 84 du 19 octobre 2010, p. 2867). Individual decree appointing the
+    holder as ministre des domaines de l'État et des affaires foncières. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2010/084.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2010/084.pdf.
   sources:
   - fr-wiki-ghannouchi-i
+  - jort-2010-2620
 - id: p-gov-slimane-ourak-commerce
   role: commerce-minister
   holder: slimane-ourak
@@ -49547,13 +49976,20 @@
   holder: mondher-zenaidi
   start: '2002-09-05'
   end: '2007-09-03'
-  confidence: B
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre du Commerce.'
   - Second printed tenure, the only holder printed inside the 5-year gap between Tahar Sioud and Ridha Touiti.
+  - Décret n° 2002-2011 du 2002-09-05 (JORT n° 74 du 10 septembre 2002, p. 2105). Whole-government decree; this
+    row is named as ministre du tourisme, du commerce et de l'artisanat. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2002/074.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2002/074.pdf.
   sources:
   - fr-wp-commerce
   - ar-wp-commerce
+  - jort-2002-2011
 - id: p-gov-zied-ladhari-commerce
   role: commerce-minister
   holder: zied-ladhari
@@ -49976,17 +50412,24 @@
   holder: habib-haddad
   start: '2002-09-05'
   end: '2004-11-11'
-  confidence: B
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Environnement, également chargé de l''Agriculture.'
   - The environment page lists him from the day Mohamed Nabli's term ends (5 septembre 2002) until the day Nadhir
     Hamada takes over (11 novembre 2004); the agriculture page lists him from the same date and Rabah's article
     names him as Rabah's successor in agriculture. This is the exact span of the record's hole, whose stated length
     of 2.2 years matches the two dates.
+  - Décret n° 2002-2011 du 2002-09-05 (JORT n° 74 du 10 septembre 2002, p. 2105). Whole-government decree; this
+    row is named as ministre de l'agriculture, de l'environnement et des ressources hydrauliques. Text read from
+    the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2002/074.md; official PDF at https://lake.jort.tn/journal-officiel/fr/2002/074.pdf.
   sources:
   - fr-wp-environnement
   - c26-fr-wp-agriculture
   - fr-wp-sadok-rabah
+  - jort-2002-2011
 - id: p-gov-mohamed-salmane-environment
   role: environment-minister
   holder: mohamed-salmane
@@ -50005,28 +50448,41 @@
   holder: sadok-rabah
   start: '2002-09-05'
   end: '2004-11-10'
-  confidence: B
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: regroupement des ministères du Transport et des Communications.'
   - The transport page lists him with the grouped transport and communications portfolio, and the same dates stand
     on the technology and communication page and on his own article.
+  - Décret n° 2002-2011 du 2002-09-05 (JORT n° 74 du 10 septembre 2002, p. 2105). Whole-government decree; this
+    row is named as ministre des technologies de la communication et du transport. Text read from the JORT OCR layer
+    at https://ocr.jort.tn/journal-officiel/fr/2002/074.md; official PDF at https://lake.jort.tn/journal-officiel/fr/2002/074.pdf.
   sources:
   - fr-wp-transport
   - fr-wp-sadok-rabah
   - fr-wp-tic
+  - jort-2002-2011
 - id: p-gov-abderrahim-zouari-transport
   role: transport-minister
   holder: abderrahim-zouari
   start: '2004-11-10'
   end: '2011-01-14'
-  confidence: C
-  attributed_to: Wikipédia (fr or ar), ministry list
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Transport.'
   - Listed between Sadok Rabah and the short terms of Slaheddine Malouche and Yassine Brahim, inside the record's
     hole between Houcine Chouk (ends 5 septembre 2002) and Salem Miladi (from 1 juillet 2011).
+  - Décret n° 2004-2644 du 2004-11-10 (JORT n° 94 du 23 novembre 2004, p. 3283). Whole-government decree; this row
+    is named as Ministre du transport. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2004/094.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2004/094.pdf.
   sources:
   - fr-wp-transport
+  - jort-2004-2644
 - id: p-gov-slaheddine-malouche-transport
   role: transport-minister
   holder: slaheddine-malouche
@@ -50135,16 +50591,24 @@
 - id: p-gov-abderrahim-zouari-education
   role: education-minister
   holder: abderrahim-zouari
-  start: '1999-02-15'
+  start: '1999-02-19'
   end: '1999-11-17'
-  confidence: B
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Éducation.'
   - Listed inside the record's hole between Hatem Ben Othman and Ahmed Iyadh Ouederni; the transport page lists
     him as minister of transport from 10 novembre 2004.
+  - Décret n° 99-375 du 1999-02-19 (JORT n° 17 du 26 février 1999, p. 315). Individual decree appointing the holder
+    as ministre de l'éducation. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1999/017.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/1999/017.pdf.
+  - 'Previous recorded start: 1999-02-15.'
   sources:
   - fr-wp-education
   - fr-wp-transport
+  - jort-1999-375
 - id: p-gov-mohamed-charfi-higher-education
   role: higher-education-minister
   holder: mohamed-charfi
@@ -50559,7 +51023,10 @@
   holder: dali-jazi
   start: '1999-11-17'
   end: '2000-04-05'
-  confidence: B
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre délégué auprès du Premier ministre, chargé des Droits de l''homme, de la
     Communication et des Relations avec la Chambre des députés.'
@@ -50569,15 +51036,23 @@
     gives him the minister for relations with the assembly of representatives of the people from 6 February 2015,
     a span of 35.3 years. Inside the window the Arabic communication ministry page lists the holders of the relations
     with parliament portfolio; the French Ghannouchi page prints the same portfolio strings.'
+  - Décret n° 99-2558 du 1999-11-17 (JORT n° 94 du 23 novembre 1999, p. 2463). Whole-government decree; this row
+    is named as Ministre délégué auprès du Premier Ministre chargé des Droits de l'Homme, de la Communication et
+    des Relations avec la Chambre des Députés. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1999/094.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/1999/094.pdf.
   sources:
   - frwiki-gvt-ghannouchi-i
   - arwiki-communication
+  - jort-1999-2558
 - id: p-gov-afif-hendaoui-relations-parliament
   role: relations-parliament-minister
   holder: afif-hendaoui
-  start: '2000-04-05'
+  start: '2000-04-10'
   end: '2001-02-19'
-  confidence: B
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre délégué auprès du Premier ministre, chargé des Droits de l''homme, de la
     Communication et des Relations avec la Chambre des députés.'
@@ -50585,68 +51060,105 @@
     from 5 April 2000 to 19 February 2001; the French Ghannouchi page prints the name as "Afif Hendaoui" and places
     him in the reshuffle of 23 January 2001. The two pages disagree on the start of his term; both are recorded
     here.
+  - Décret n° 2000-720 du 2000-04-10 (JORT n° 29 du 11 avril 2000, p. 815). Individual decree appointing the holder
+    as ministre délégué auprès du Premier ministre chargé des droits de l'homme, de la communication et des relations
+    avec la chambre des députés. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2000/029.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2000/029.pdf.
+  - 'Previous recorded start: 2000-04-05.'
   sources:
   - arwiki-communication
   - frwiki-gvt-ghannouchi-i
+  - jort-2000-720
 - id: p-gov-slaheddine-maaoui-relations-parliament
   role: relations-parliament-minister
   holder: slaheddine-maaoui
   start: '2001-02-19'
   end: '2002-05-14'
-  confidence: B
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre délégué auprès du Premier ministre, chargé des Droits de l''homme, de la
     Communication et des Relations avec la Chambre des députés.'
   - Same input entry as the first record of this role. The Arabic communication ministry page gives Slaheddine Maaoui
     the portfolio from 19 February 2001 to 14 May 2002; the French Ghannouchi page names him in the reshuffle of
     19 February 2001.
+  - Décret n° 2001-590 du 2001-02-19 (JORT n° 20 du 9 mars 2001, p. 500). Individual decree appointing the holder
+    as ministre délégué auprès du Premier ministre chargé des droits de l'homme, de la communication et des relations
+    avec la chambre des députés. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2001/020.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2001/020.pdf.
   sources:
   - arwiki-communication
   - frwiki-gvt-ghannouchi-i
+  - jort-2001-590
 - id: p-gov-mohamed-fethi-houidi-relations-parliament
   role: relations-parliament-minister
   holder: mohamed-fethi-houidi
   start: '2002-05-14'
   end: '2005-08-17'
-  confidence: B
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre délégué auprès du Premier ministre, chargé des Droits de l''homme, de la
     Communication et des Relations avec la Chambre des députés.'
   - Same input entry as the first record of this role. The Arabic communication ministry page gives Mohamed Fethi
     Houidi the portfolio from 14 May 2002 to 17 August 2005; the French Ghannouchi page names him in the reshuffle
     of 14 May 2002.
+  - Décret n° 2002-1046 du 2002-05-14 (JORT n° 39 du 14 mai 2002, p. 1156). Individual decree appointing the holder
+    as ministre délégué auprès du Premier ministre, chargé des droits de l'homme, de la communication et des relations
+    avec la chambre des députés. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2002/039.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2002/039.pdf.
   sources:
   - arwiki-communication
   - frwiki-gvt-ghannouchi-i
+  - jort-2002-1046
 - id: p-gov-rafaa-dekhil-relations-parliament
   role: relations-parliament-minister
   holder: rafaa-dekhil
   start: '2005-08-17'
   end: '2009-10-10'
-  confidence: B
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de la Communication et des Relations avec le Parlement.'
   - Same input entry as the first record of this role. The Arabic communication ministry page gives Rafe Dekhil
     the portfolio from 17 August 2005 to 10 October 2009; the French Ghannouchi page names him in the reshuffle
     of 17 August 2005 with the same portfolio string.
+  - Décret n° 2005-2219 du 2005-08-17 (JORT n° 67 du 23 août 2005, p. 2215). Individual decree appointing the holder
+    as ministre chargé de la communication et des relations avec la chambre des députés et la chambre des conseillers.
+    Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2005/067.md; official PDF at https://lake.jort.tn/journal-officiel/fr/2005/067.pdf.
   sources:
   - arwiki-communication
   - frwiki-gvt-ghannouchi-i
+  - jort-2005-2219
 - id: p-gov-oussama-romdhani-relations-parliament
   role: relations-parliament-minister
   holder: oussama-romdhani
   start: '2009-10-10'
   end: '2010-12-29'
-  confidence: B
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
   - 'Portfolio in the source: Ministre de la Communication et des Relations avec le Parlement (par intérim).'
   - Same input entry as the first record of this role. The Arabic communication ministry page gives Oussama Romdhani
     the portfolio as interim holder from 10 October 2009 and then as holder from 14 January 2010 to 29 December
     2010; the French Ghannouchi page records the interim appointment of 10 October 2009 and the appointment of 14
     January 2010.
+  - Décret n° 2009-2879 du 2009-10-10 (JORT n° 82 du 13 octobre 2009, p. 3061). Individual decree appointing the
+    holder as ministre chargé de la communication et des relations avec la chambre des députés et la chambre des
+    conseillers par intérim. Text read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/2009/082.md;
+    official PDF at https://lake.jort.tn/journal-officiel/fr/2009/082.pdf.
   sources:
   - arwiki-communication
   - frwiki-gvt-ghannouchi-i
+  - jort-2009-2879
 - id: p-gov-samir-laabidi-relations-parliament
   role: relations-parliament-minister
   holder: samir-laabidi
