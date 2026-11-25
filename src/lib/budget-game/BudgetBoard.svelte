@@ -18,7 +18,7 @@
 	 * The Treasury board, one screen on a desk and on a phone.
 	 *
 	 * Desk: the purse, the spent-before-you-start block, the chosen system with
-	 * Take and Give, the last moves and the actions sit in a column; the twenty-two
+	 * Take and Give, the last moves and the actions sit in a column; the thirty
 	 * systems fill two columns of rows on one scale in dinars. Phone: the purse
 	 * is a bar at the top, the systems are rows, and the chosen system's Take
 	 * and Give sit in a dock at the bottom, under the thumb.
@@ -152,7 +152,8 @@
 		if (!activeRow) return null;
 		const id = activeRow.id;
 		if ((id === 'police' || id === 'environment') && compared === 2020) return t.historyCaveat[id] ?? null;
-		if (id === 'subsidies_energy' || id === 'subsidies_food' || id === 'energy_trade' || id === 'rest') return t.historyCaveat[id] ?? null;
+		if (id === 'subsidies_energy' || id === 'subsidies_food' || id === 'energy_trade') return t.historyCaveat[id] ?? null;
+		if (id === 'parliament' || id === 'higher_education' || id === 'government_offices') return t.historyCaveat[id] ?? null;
 		return null;
 	});
 	const firstPast = $derived(pastYears[0] ?? null);
@@ -562,7 +563,7 @@
 												return check ? ` · ${checkPhrase(check, t)}` : '';
 											})()}`
 										: ''}
-									planDerived={r.id === 'subsidies_energy' || r.id === 'subsidies_food'}
+									planDerived={r.id === 'subsidies_energy' || r.id === 'subsidies_food' || r.id === 'religious_affairs' || r.id === 'communication_technologies' || r.id === 'state_domains' || r.id === 'courts_oversight'}
 								/>
 							</div>
 						{/each}
@@ -778,7 +779,7 @@
 <style>
 	/*
 	 * Layout: an instrument, dense and ruled like a ledger. Desk: a 20rem
-	 * column (purse, chosen system, actions) beside the twenty-two systems in two
+	 * column (purse, chosen system, actions) beside the thirty systems in two
 	 * columns. Phone: purse bar, systems, dock, top to bottom, one screen.
 	 */
 	.board {

@@ -17,6 +17,17 @@
 # in proportion to their 2027 draft totals. The two derived rows sum to the memo
 # to the dinar. This is an inference, not a reported 2027 figure: the rows carry
 # status draft-derived and the board says so on screen.
+#
+# The small missions whose 2027 drafts are reported only as one group are split
+# the same way. Religious Affairs, Communication Technologies, State Domains,
+# the Court of Accounts, the National Council of Regions and Districts, the
+# Higher Council of Education, the Judicial Council and the Constitutional Court
+# form one group of 532.919 MD (the total less every other non-memo row). Six
+# derived rows apportion that group by each mission's share in the 2026 adopted
+# law (565.076 MD). The six rows sum to 532.919 MD. They are inferences, not
+# reported 2027 figures: every one carries status draft-derived and says so on
+# screen. The individual 2027 press reports for these missions do not reconcile
+# with the group total, so they are not mixed in here.
 # Checked by: npx tsx scripts/check-budget-figures.ts
 
 study: dt-research-003
@@ -200,11 +211,46 @@ rows:
     source: "Tuniscope 23 Oct 2026: about 524 MD (an ARP report gives 531.241 MD including bodies under the ministry)"
     url: "https://www.tuniscope.com/article/443072/business/economie/loi-de-finance-233312"
     page: null
-  - id: all_other_missions
-    label_en: "Religious affairs, digital, state lands, and courts and councils (derived as the total minus every row above; not verified)"
-    amount_md: 532.919
+  - id: religious_affairs_2027
+    label_en: "Religious affairs (derived 2027 split, not reported)"
+    amount_md: 190.883
     status: draft-derived
-    source: "Derived in this file as 68,895 less every other non-memo row: 532.919. In the 2026 law the same missions came to 565.1 MD: Religious Affairs 202.4, Communication Technologies 197.3, State Domains 94.2, Court of Accounts 35.6, National Council of Regions and Districts 24.1, higher education council 10, judicial council 1.5."
+    source: "Derived in this file. The 2027 draft reports Religious Affairs, Communication Technologies, State Domains, the Court of Accounts, the National Council of Regions and Districts, the Higher Council of Education, the Judicial Council and the Constitutional Court as one group of 532.919 MD (68,895 less every other non-memo row). The individual 2027 drafts are not reported one by one. This row is the group apportioned by the 2026 adopted share of Religious Affairs, 202.4 of 565.076 MD. The six derived rows sum to 532.919 MD. Not a reported 2027 figure."
+    url: null
+    page: null
+  - id: communication_technologies_2027
+    label_en: "Communication technologies (derived 2027 split, not reported)"
+    amount_md: 186.105
+    status: draft-derived
+    source: "Derived in this file. The 2027 draft reports Religious Affairs, Communication Technologies, State Domains, the Court of Accounts, the National Council of Regions and Districts, the Higher Council of Education, the Judicial Council and the Constitutional Court as one group of 532.919 MD (68,895 less every other non-memo row). The individual 2027 drafts are not reported one by one. This row is the group apportioned by the 2026 adopted share of Communication Technologies, 197.335 of 565.076 MD. The six derived rows sum to 532.919 MD. Not a reported 2027 figure."
+    url: null
+    page: null
+  - id: state_domains_2027
+    label_en: "State domains and land affairs (derived 2027 split, not reported)"
+    amount_md: 88.806
+    status: draft-derived
+    source: "Derived in this file. The 2027 draft reports Religious Affairs, Communication Technologies, State Domains, the Court of Accounts, the National Council of Regions and Districts, the Higher Council of Education, the Judicial Council and the Constitutional Court as one group of 532.919 MD (68,895 less every other non-memo row). The individual 2027 drafts are not reported one by one. This row is the group apportioned by the 2026 adopted share of State Domains and Land Affairs, 94.165 of 565.076 MD. The six derived rows sum to 532.919 MD. Not a reported 2027 figure."
+    url: null
+    page: null
+  - id: courts_oversight_2027
+    label_en: "Court of Accounts and judicial councils (derived 2027 split, not reported)"
+    amount_md: 34.977
+    status: draft-derived
+    source: "Derived in this file. The 2027 draft reports Religious Affairs, Communication Technologies, State Domains, the Court of Accounts, the National Council of Regions and Districts, the Higher Council of Education, the Judicial Council and the Constitutional Court as one group of 532.919 MD (68,895 less every other non-memo row). The individual 2027 drafts are not reported one by one. This row is the group apportioned by the 2026 adopted shares of the Court of Accounts (35.563), the Judicial Council (1.525) and the Constitutional Court (0), 37.088 of 565.076 MD. The six derived rows sum to 532.919 MD. Not a reported 2027 figure."
+    url: null
+    page: null
+  - id: anrd_2027
+    label_en: "National Council of Regions and Districts (derived 2027 split, not reported)"
+    amount_md: 22.717
+    status: draft-derived
+    source: "Derived in this file. The 2027 draft reports Religious Affairs, Communication Technologies, State Domains, the Court of Accounts, the National Council of Regions and Districts, the Higher Council of Education, the Judicial Council and the Constitutional Court as one group of 532.919 MD (68,895 less every other non-memo row). The individual 2027 drafts are not reported one by one. This row is the group apportioned by the 2026 adopted share of the National Council of Regions and Districts, 24.088 of 565.076 MD. The six derived rows sum to 532.919 MD. Not a reported 2027 figure."
+    url: null
+    page: null
+  - id: higher_council_education_2027
+    label_en: "Higher Council of Education (derived 2027 split, not reported)"
+    amount_md: 9.431
+    status: draft-derived
+    source: "Derived in this file. The 2027 draft reports Religious Affairs, Communication Technologies, State Domains, the Court of Accounts, the National Council of Regions and Districts, the Higher Council of Education, the Judicial Council and the Constitutional Court as one group of 532.919 MD (68,895 less every other non-memo row). The individual 2027 drafts are not reported one by one. This row is the group apportioned by the 2026 adopted share of the Higher Council of Education, 10 of 565.076 MD. The six derived rows sum to 532.919 MD. Not a reported 2027 figure."
     url: null
     page: null
   - id: financing_costs_locked

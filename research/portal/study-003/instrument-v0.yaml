@@ -121,7 +121,7 @@ items:
     text_ar: "استعمل لوحة الخزينة: انقل المال بين بنود ميزانية الدولة لسنة 2027، كمواطن. ابدأ من المشروع. كل نقلة تحمل قطعة واحدة من 100 مليون دينار. أنهِ عندما تكون المحفظة فارغة وتكون قد قمت بنقلة واحدة على الأقل أو أشرت إلى أنك تُبقي على المشروع كما هو تمامًا. الإبقاء على المشروع إجابة صحيحة، وليس تخطّيًا."
     response: allocation
     required: true
-    notes: "Amounts are the draft figures from figures-2027.yaml, labelled draft, not verified. Freeze only on adopted-law rows with page references. The subsidy memo is split into fuel and electricity versus basic food; the 2027 split by type is derived from the two containing lines and is labelled as such on screen."
+    notes: "Amounts are the draft figures from figures-2027.yaml, labelled draft, not verified. Freeze only on adopted-law rows with page references. The subsidy memo is split into fuel and electricity versus basic food; the 2027 split by type is derived from the two containing lines and is labelled as such on screen. The small missions reported only as one group are split by their 2026 adopted shares into Religious Affairs, Communication Technologies, State Domains and Land Affairs, and Courts and Oversight; the National Council of Regions and Districts is counted with Parliament and the Higher Council of Education with Higher Education. The six derived rows sum to the group total and are labelled derived."
     allocation:
       envelope_md: 59932.000
       tolerance: 0.005
@@ -131,7 +131,7 @@ items:
       step_bp: 1
       max_bp: 20000
       categories:
-      - { id: parliament, draft_md: 48.751, locked: false }
+      - { id: parliament, draft_md: 71.468, locked: false }
       - { id: presidency, draft_md: 248.576, locked: false }
       - { id: government_offices, draft_md: 368, locked: false }
       - { id: police, draft_md: 6560, locked: false }
@@ -154,9 +154,12 @@ items:
       - { id: health, draft_md: 4741.2, locked: false }
       - { id: social_affairs, draft_md: 4215.8, locked: false }
       - { id: education, draft_md: 9184.5, locked: false }
-      - { id: higher_education, draft_md: 2484, locked: false }
+      - { id: higher_education, draft_md: 2493.431, locked: false }
       - { id: employment, draft_md: 1104, locked: false }
-      - { id: rest, draft_md: 532.919, locked: false }
+      - { id: religious_affairs, draft_md: 190.883, locked: false }
+      - { id: communication_technologies, draft_md: 186.105, locked: false }
+      - { id: state_domains, draft_md: 88.806, locked: false }
+      - { id: courts_oversight, draft_md: 34.977, locked: false }
       - { id: elections, draft_md: 57.724, locked: false }
       - { id: debt, draft_md: 7968, locked: true }
       - { id: reserve, draft_md: 995, locked: true }

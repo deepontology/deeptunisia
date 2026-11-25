@@ -106,9 +106,15 @@
   preregistration: >-
     This study's own preregistration document, fixed before the first answer
     with the instrument hash and the fielding window, including the dated
-    amendments of 22 November 2026 that open fielding on the 2027 draft.
+    amendments of 22 November 2026 that open fielding on the 2027 draft and of
+    25 November 2026 that split the residual mission group (amendment A8).
     Commit 87a104cf03644e1cef242db5eff706c393378779, 22 November 2026.
   instrument_versions:
+    - id: dt003-citizen-budget
+      version: 1.1.0
+      hash: "277583e4b4b0c6ea8582fff1ad7b155308a1e7f52647a11faddc584a0036a67f"
+      source: data/studies/dt-research-003/dt003-citizen-budget-v1.1.0.yaml
+      frozen: true
     - id: dt003-citizen-budget
       version: 1.0.0
       hash: "8a2882784a89dd69cd8c4ae9255dad0c6097360fc259d43546976cbe9e1369d7"
@@ -123,4 +129,4 @@
   pi: null
   outputs: []
   created: 2026-11-09
-  updated: 2026-11-22
+  updated: 2026-11-25

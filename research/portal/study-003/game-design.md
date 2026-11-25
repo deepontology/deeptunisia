@@ -93,12 +93,15 @@ out, on the stated assumption that the memo sits inside those two rows. It is a 
 not a ministry budget, and its label and note say so on the board. Every figure is labelled
 draft, not verified.
 
-The board has 27 movable lines. There is no catch-all "everything else" line. Social affairs and
+The board has 30 movable lines. There is no catch-all "everything else" line. Social affairs and
 family are separate; government offices, foreign affairs, parliament and elections are separate.
-The only remainder is small and named: Religious Affairs, Communication Technologies, State
-Domains, the Court of Accounts, the National Council of Regions and Districts and two councils,
-533.3 MD, derived as the total less every other line because their 2027 drafts are not yet
-reported one by one. In the 2026 law the same missions came to 565.1 MD.
+The small missions whose 2027 drafts are reported only as one group of 532.919 MD are split into
+Religious Affairs (190.883), Communication Technologies (186.105), State Domains and Land Affairs
+(88.806), and Courts and Oversight (34.977). The National Council of Regions and Districts
+(22.717) is counted with Parliament, and the Higher Council of Education (9.431) with Higher
+Education and Research. The six rows are the group apportioned by each mission's share in the
+2026 adopted law (565.076 MD), sum to 532.919 MD, carry status `draft-derived`, and are labelled
+as derived on screen. They are not reported 2027 figures.
 
 ## Past years
 The board shows the adopted budgets of 2020, 2022, 2023, 2024, 2025 and 2026 beside the 2027

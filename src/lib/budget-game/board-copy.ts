@@ -99,7 +99,7 @@ export interface BoardCopy {
 	historyNote: string;
 	historyAria: (year: string, amount: string, unit: string) => string;
 	/** Lines whose past years are built differently from 2027, and why. */
-	historyCaveat: Partial<Record<'subsidies_energy' | 'subsidies_food' | 'energy_trade' | 'rest' | 'police' | 'environment', string>>;
+	historyCaveat: Partial<Record<'subsidies_energy' | 'subsidies_food' | 'energy_trade' | 'parliament' | 'higher_education' | 'government_offices' | 'police' | 'environment', string>>;
 	/** Visible text under the legend: past years are nominal dinars and the 2027 subsidy split is derived. */
 	nominalNote: string;
 	derivedShort: string;
@@ -251,7 +251,9 @@ const en: BoardCopy = {
 		subsidies_energy: 'Past years count the energy programme of Industry, Mines and Energy, which holds most fuel and electricity subsidies. The 2027 split between fuel and food is derived, not reported.',
 		subsidies_food: 'Past years count the domestic trade programme of Commerce, which holds most basic food subsidies. The 2027 split between fuel and food is derived, not reported.',
 		energy_trade: 'Past years: the Industry and Commerce missions less their energy and domestic trade programmes.',
-		rest: 'Past years add up the same missions from each law.',
+		parliament: 'Past years add the National Council of Regions and Districts from 2023, when its line first appears.',
+		higher_education: 'Past years add the Higher Council of Education from 2026, when its line first appears.',
+		government_offices: '2020 includes the public-service and administration modernisation mission; later laws do not carry it as a separate line.',
 		police: '2020 counts local affairs here, moved from the 2020 environment mission, so the police series matches 2022 to 2026. The 2020 source is page 4445.',
 		environment: '2020 keeps only the environment programme. The 2020 law put local affairs in the same mission; it is counted under police here to match 2022 to 2026.'
 	},
@@ -403,7 +405,9 @@ const fr: BoardCopy = {
 		subsidies_energy: "Pour les années passées : le programme énergie de l'Industrie, des Mines et de l'Énergie, qui porte l'essentiel du soutien au carburant et à l'électricité. La répartition 2027 entre carburant et alimentation est dérivée, non publiée.",
 		subsidies_food: "Pour les années passées : le programme commerce intérieur du Commerce, qui porte l'essentiel du soutien alimentaire. La répartition 2027 entre carburant et alimentation est dérivée, non publiée.",
 		energy_trade: 'Pour les années passées : les missions Industrie et Commerce moins leurs programmes énergie et commerce intérieur.',
-		rest: 'Pour les années passées : la somme des mêmes missions dans chaque loi.',
+		parliament: 'Pour les années passées : le Conseil national des régions et des districts s’ajoute à partir de 2023, quand sa ligne apparaît.',
+		higher_education: 'Pour les années passées : le Conseil supérieur de l’éducation s’ajoute à partir de 2026, quand sa ligne apparaît.',
+		government_offices: '2020 comprend la mission de la fonction publique et de la modernisation de l’administration ; les lois suivantes ne la portent plus comme ligne séparée.',
 		police: '2020 compte ici les affaires locales, déplacées de la mission environnement de 2020, pour que la série police corresponde à 2022-2026. Source : page 4445.',
 		environment: '2020 ne garde que le programme environnement. La loi de 2020 mettait les affaires locales dans la même mission ; elles sont comptées sous police ici pour correspondre à 2022-2026.'
 	},
@@ -555,7 +559,9 @@ const ar: BoardCopy = {
 		subsidies_energy: 'للسنوات الماضية: برنامج الطاقة في وزارة الصناعة والمناجم والطاقة، وفيه معظم دعم المحروقات والكهرباء. تقسيم 2027 بين المحروقات والغذاء مشتقّ وغير منشور.',
 		subsidies_food: 'للسنوات الماضية: برنامج التجارة الداخلية في وزارة التجارة، وفيه معظم الدعم الغذائي. تقسيم 2027 بين المحروقات والغذاء مشتقّ وغير منشور.',
 		energy_trade: 'للسنوات الماضية: مهمّتا الصناعة والتجارة ناقص برنامجي الطاقة والتجارة الداخلية.',
-		rest: 'للسنوات الماضية: مجموع المهام نفسها في كل قانون.',
+		parliament: 'للسنوات الماضية: يُضاف المجلس الوطني للجهات والأقاليم من 2023، عندما ظهر بنده.',
+		higher_education: 'للسنوات الماضية: يُضاف المجلس الأعلى للتربية من 2026، عندما ظهر بنده.',
+		government_offices: 'تشمل 2020 مهمة الوظيفة العمومية وتحديث الإدارة؛ والقوانين اللاحقة لم تعد تحملها بندًا مستقلًا.',
 		police: 'تحسب 2020 الشؤون المحلية هنا، وقد نُقلت من مهمة البيئة لسنة 2020، لتطابق سلسلة الشرطة سنوات 2022 إلى 2026. المصدر: صفحة 4445.',
 		environment: 'تحتفظ 2020 ببرنامج البيئة فقط. قانون 2020 وضع الشؤون المحلية في المهمة نفسها؛ وتُحسب هنا تحت الشرطة لتطابق 2022 إلى 2026.'
 	},

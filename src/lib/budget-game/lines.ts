@@ -45,7 +45,10 @@ export type LineId =
 	| 'education'
 	| 'higher_education'
 	| 'employment'
-	| 'rest'
+	| 'religious_affairs'
+	| 'communication_technologies'
+	| 'state_domains'
+	| 'courts_oversight'
 	| 'elections'
 	| 'debt'
 	| 'reserve';
@@ -68,8 +71,9 @@ export const BALANCE_TOLERANCE = 0.005;
 /**
  * Movable lines in the order of the finance law's tableau C (mission 1 first),
  * so the board never ranks the lines by what the designer thinks matters. The
- * split subsidy rows sit where their containing missions sit; the one derived
- * remainder and the election authority close the list.
+ * split subsidy rows sit where their containing missions sit; the small
+ * missions whose 2027 drafts are reported only as one group follow, and the
+ * election authority closes the list.
  */
 export const MOVABLE_ORDER: LineId[] = [
 	'parliament',
@@ -97,7 +101,10 @@ export const MOVABLE_ORDER: LineId[] = [
 	'education',
 	'higher_education',
 	'employment',
-	'rest',
+	'religious_affairs',
+	'communication_technologies',
+	'state_domains',
+	'courts_oversight',
 	'elections'
 ];
 export const LOCKED_ORDER: LineId[] = ['debt', 'reserve'];
@@ -124,7 +131,7 @@ export interface Lines {
  * both subsidy rows, so it is a remainder, not a ministry budget.
  */
 export const LINE_ROWS: Record<LineId, { plus: string[]; minus?: string[] }> = {
-	parliament: { plus: ['assembly_of_representatives'] },
+	parliament: { plus: ['assembly_of_representatives', 'anrd_2027'] },
 	presidency: { plus: ['presidency'] },
 	government_offices: { plus: ['head_of_government'] },
 	police: { plus: ['interior'] },
@@ -147,10 +154,14 @@ export const LINE_ROWS: Record<LineId, { plus: string[]; minus?: string[] }> = {
 	health: { plus: ['health'] },
 	social_affairs: { plus: ['social_affairs'] },
 	education: { plus: ['education'] },
-	higher_education: { plus: ['higher_education_research'] },
+	higher_education: { plus: ['higher_education_research', 'higher_council_education_2027'] },
 	employment: { plus: ['employment_training'] },
-	// The only remainder, and a small one: named missions whose 2027 drafts are not reported one by one.
-	rest: { plus: ['all_other_missions'] },
+	// Small missions whose 2027 drafts are reported only as one group. Each row is
+	// the group apportioned by the mission's 2026 adopted share, not a reported figure.
+	religious_affairs: { plus: ['religious_affairs_2027'] },
+	communication_technologies: { plus: ['communication_technologies_2027'] },
+	state_domains: { plus: ['state_domains_2027'] },
+	courts_oversight: { plus: ['courts_oversight_2027'] },
 	elections: { plus: ['isie_elections'] },
 	debt: { plus: ['financing_costs_locked'] },
 	reserve: { plus: ['unforeseen_locked'] }
@@ -181,9 +192,9 @@ export function linesFrom(rows: FigureRowLike[]): Lines {
  * programmes. That is close to, not the same as, the 2027 memo and its derived split.
  */
 export const HISTORY_ROWS: Record<LineId, { missions?: string[]; programmes?: string[]; minusProgrammes?: string[] }> = {
-	parliament: { missions: ['arp'] },
+	parliament: { missions: ['arp', 'anrd'] },
 	presidency: { missions: ['presidency'] },
-	government_offices: { missions: ['head_of_government'] },
+	government_offices: { missions: ['head_of_government', 'other_fonction_publique'] },
 	police: { missions: ['interior'] },
 	justice: { missions: ['justice'] },
 	foreign_affairs: { missions: ['foreign_affairs'] },
@@ -204,22 +215,12 @@ export const HISTORY_ROWS: Record<LineId, { missions?: string[]; programmes?: st
 	health: { missions: ['health'] },
 	social_affairs: { missions: ['social_affairs'] },
 	education: { missions: ['education'] },
-	higher_education: { missions: ['higher_education_research'] },
+	higher_education: { missions: ['higher_education_research', 'higher_council_education'] },
 	employment: { missions: ['employment_training'] },
-	rest: {
-		missions: [
-			'religious_affairs',
-			'communication_technologies',
-			'state_domains',
-			'court_of_accounts',
-			'anrd',
-			'higher_council_education',
-			'judicial_council',
-			'constitutional_court',
-			// 2020 only: the public service and administration modernisation mission.
-			'other_fonction_publique'
-		]
-	},
+	religious_affairs: { missions: ['religious_affairs'] },
+	communication_technologies: { missions: ['communication_technologies'] },
+	state_domains: { missions: ['state_domains'] },
+	courts_oversight: { missions: ['court_of_accounts', 'judicial_council', 'constitutional_court'] },
 	elections: { missions: ['isie_elections'] },
 	debt: { missions: ['financing_costs'] },
 	reserve: { missions: ['unforeseen'] }

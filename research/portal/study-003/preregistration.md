@@ -1,12 +1,12 @@
 # Pre-registration: DT Research 003, Citizen Budget 2027
 
-**Study:** `dt-research-003` · **Instrument:** `dt003-citizen-budget` · **Version:** 1.0.0
-**Instrument hash (sha256):** `8a2882784a89dd69cd8c4ae9255dad0c6097360fc259d43546976cbe9e1369d7`
+**Study:** `dt-research-003` · **Instrument:** `dt003-citizen-budget` · **Version:** 1.1.0
+**Instrument hash (sha256):** `277583e4b4b0c6ea8582fff1ad7b155308a1e7f52647a11faddc584a0036a67f`
 **Fielding window:** 2026-11-22 (opens) to 2027-10-15 (closes)
 **Registered:** 2026-11-22
 **Companion documents:** `protocol.md`, `instrument-v0.yaml` (workshop copy), the frozen copy in `data/studies/dt-research-003/`, `legal-brief.md`, `figures-2027.yaml`.
 
-This document is fixed before the first response is collected. It is committed to the public repository next to the instrument, and the commit date is the registration date. There is no external registry entry and no DOI yet. Section 9 lists the amendments made on 22 November 2026, before the first answer; they take precedence over the earlier draft text where the two differ.
+This document is fixed before the first response is collected. It is committed to the public repository next to the instrument, and the commit date is the registration date. There is no external registry entry and no DOI yet. Section 9 lists the amendments made on 22 and 25 November 2026, before the first answer; they take precedence over the earlier draft text where the two differ.
 
 This document is the pre-registration plan for DT Research 003. It defines the research questions, estimands, exclusion rules, and analysis plan before data collection begins. No amendments will be made after the fielding window opens, except to repair technical faults that would otherwise invalidate the data, with any amendment logged and published.
 
@@ -42,7 +42,7 @@ Respondents move money between movable spending systems on a board, one coin of 
 
 The 2027 subsidy memo is 11,846 MD inside the Industry and Trade lines. It is presented as two lines, fuel and electricity versus basic food, because one line cannot distinguish a respondent who would cut fuel and protect food from one who would do the opposite. The 2027 split by type has not been reported. It is apportioned between the two ministry lines that contain the memo, in proportion to their 2027 draft totals (Industry 7,890.2, Trade 4,228.6); the two rows sum to the memo to the dinar. The apportionment is a presentation assumption, not a reported figure, and the board labels it as derived. Results for the two sub-lines are conditional on it. The combined subsidy total, which does not depend on it, is reported alongside. No official 2027 programme split exists at the freeze, so the sub-line estimands are conditional on the apportionment and the combined subsidy total is the primary subsidy estimate (amendment A4). What remains of the two ministry lines after the memo, 272.8 MD, is shown as a derived line: it is not a ministry budget, and results for it are read with that in mind. If the memo sits wholly inside those lines, as assumed here, energy can only fall between 7,617.4 and 7,890.2 MD; the apportionment is within 177.6 MD of any split that keeps both lines non-negative. The 2027 memo is a press total; past years are two programme lines.
 
-The board shows 27 movable lines; no catch-all line hides a large share of the budget. It also shows the adopted budgets of 2020, 2022, 2023, 2024, 2025 and 2026 for every line, on by default, each year switchable by the respondent (see game-design.md, "Past years"). This is part of the stimulus and is the same for every respondent at the start. 2018 is not shown because its tableau C is organised by ministry chapter, includes debt principal and has no programme split; 2015 was not sourced. Past years are on by default. Version 1.0.0 does not record which years were shown at submission (amendment A5).
+The board shows 30 movable lines; no catch-all line hides a large share of the budget. The small missions whose 2027 drafts are reported only as one group are split into Religious Affairs, Communication Technologies, State Domains and Land Affairs, and Courts and Oversight, by their shares in the 2026 adopted law (amendment A8). The National Council of Regions and Districts is counted with Parliament, and the Higher Council of Education with Higher Education and Research. It also shows the adopted budgets of 2020, 2022, 2023, 2024, 2025 and 2026 for every line, on by default, each year switchable by the respondent (see game-design.md, "Past years"). This is part of the stimulus and is the same for every respondent at the start. 2018 is not shown because its tableau C is organised by ministry chapter, includes debt principal and has no programme split; 2015 was not sourced. Past years are on by default. Version 1.1.0 does not record which years were shown at submission (amendment A5).
 
 **Presentation order:** systems are shown in official budget order for every respondent in this version. A randomised presentation order (an order arm) is not part of version 1 and is not estimated. A later version that adds it must amend this preregistration first.
 
@@ -93,7 +93,7 @@ All estimands are pre-specified:
 
 Anonymized microdata (allocation vectors, INS region, month, locale, coarsened completion time) and codebooks will be released under CC BY 4.0 with a DOI. Analysis scripts will be versioned in the project repository with an automated verification script that reproduces all published figures.
 
-## 9. Amendments before the first answer, 22 November 2026
+## 9. Amendments before the first answer, 22 and 25 November 2026
 
 These were made before the fielding window opened and before any answer existed.
 
@@ -110,3 +110,5 @@ These were made before the fielding window opened and before any answer existed.
 **A6. Optional governorate.** The board asks the optional governorate described in section 7, with the list and labels of study 002 (24 governorates, outside Tunisia, prefer not to say). It is published only as the seven INS regions, under the cell floor of 20.
 
 **A7. Reviews and translations.** No external ethics or data-protection review has taken place; the registry states this in the same terms as study 002. French and Arabic are interim project translations, marked as such on screen, not yet reviewed by an independent reader.
+
+**A8. Split of the residual mission group.** Before the first answer, the board's single residual line was split into four named movable lines. The residual line held 532.919 MD: Religious Affairs, Communication Technologies, State Domains, the Court of Accounts, the National Council of Regions and Districts, the Higher Council of Education, the Judicial Council and the Constitutional Court. Their 2027 drafts were reported only as one group, so the board could not show a separate digital or religious line. The split uses each mission's share in the 2026 adopted law (565.076 MD): Religious Affairs 190.883, Communication Technologies 186.105, State Domains and Land Affairs 88.806, and Courts and Oversight 34.977 (Court of Accounts 35.563, Judicial Council 1.525, Constitutional Court 0, scaled). The National Council of Regions and Districts (22.717) is counted with Parliament, and the Higher Council of Education (9.431) with Higher Education and Research. The six derived rows sum to the same 532.919 MD. Every reported 2027 line, the total envelope and the 2026 history are unchanged. The derived rows carry status `draft-derived` and are labelled as derived on screen; they are not reported 2027 figures. The board now shows 30 movable lines. The instrument version is 1.1.0; no answer was collected under 1.0.0.

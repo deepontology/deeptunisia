@@ -71,10 +71,20 @@ const rand = () => {
 const pick = (): LineId => ids[Math.floor(rand() * ids.length)];
 const sameHeld = (a: BoardState, b: BoardState) => JSON.stringify(a.held) === JSON.stringify(b.held);
 
-// No catch-all line: the only remainder is small and named, under 1% of the envelope.
+// No catch-all line: the former residual group is split into named lines.
 ok('there is no catch-all "other" line', !(ids as string[]).includes('other'));
-const rest = lines.movable.find((l) => l.id === 'rest');
-ok('the named remainder is under 1% of the envelope', !!rest && rest.draft / lines.envelope < 0.01, rest ? `${rest.draft} MD` : 'no rest line');
+const split = ['religious_affairs', 'communication_technologies', 'state_domains', 'courts_oversight'] as const;
+ok('the former residual group is split into named lines', split.every((id) => ids.includes(id)) && !(ids as string[]).includes('rest'));
+const splitRows = new Set([
+	'religious_affairs_2027',
+	'communication_technologies_2027',
+	'state_domains_2027',
+	'courts_oversight_2027',
+	'anrd_2027',
+	'higher_council_education_2027'
+]);
+const splitSum = figures.rows.filter((r) => splitRows.has(r.id)).reduce((s, r) => s + r.amount_md, 0);
+ok('the six derived rows sum to the former group, 532.919 MD', Math.abs(splitSum - 532.919) < 1e-6, `${splitSum}`);
 
 // Past years: every adopted law lands on the board's lines and adds up to its total.
 const history = parse(readFileSync(join(ROOT, 'data/studies/dt-research-003/history-lf-2020-2026.yaml'), 'utf8')) as {
@@ -125,7 +135,7 @@ const alloc = allocItem!.allocation!;
 	ok('the instrument locks exactly the two locked lines', alloc.categories.filter((c) => c.locked).length === 2);
 	ok('the instrument accepts any whole basis point, so both rules validate', alloc.step_bp === 1 && alloc.max_bp === 20000);
 }
-ok('the order lists match the line model', MOVABLE_ORDER.length === 27 && LOCKED_ORDER.length === 2);
+ok('the order lists match the line model', MOVABLE_ORDER.length === 30 && LOCKED_ORDER.length === 2);
 ok('the default rule is the coin (option A)', DEFAULT_RULE === 'coin' && COIN_MD === 100);
 ok('every draft splits into 20 whole-dinar steps, so rule B lands on the draft', lines.movable.every((l) => Math.round(l.draft * 1e6) % 20 === 0));
 
@@ -281,7 +291,14 @@ const protocolText = readFileSync(join(ROOT, 'research/portal/study-003/protocol
 const designText = readFileSync(join(ROOT, 'research/portal/study-003/game-design.md'), 'utf8');
 const instrumentText = readFileSync(join(ROOT, 'research/portal/study-003/instrument-v0.yaml'), 'utf8');
 ok('the instrument no longer says shilling', !/shilling/i.test(instrumentText));
-ok('the derived lines are labelled in en, fr and ar', (boardCopyText.match(/energy_trade: \{ name: '[^']*\((derived|dérivée|مشتقّ)\)'/g) ?? []).length === 3 && (boardCopyText.match(/rest: \{ name: '[^']*\((derived|dérivée|مشتقّ)\)'/g) ?? []).length === 3);
+const derivedLabelCount = (id: string) =>
+	(boardCopyText.match(new RegExp(`${id}: \\{ name: '[^']*\\((derived|dérivée|مشتقّ)\\)'`, 'g')) ?? []).length;
+ok(
+	'the derived lines are labelled in en, fr and ar',
+	derivedLabelCount('energy_trade') === 3 &&
+		['religious_affairs', 'communication_technologies', 'state_domains', 'courts_oversight'].every((id) => derivedLabelCount(id) === 3),
+	`energy_trade ${derivedLabelCount('energy_trade')}, split ${['religious_affairs', 'communication_technologies', 'state_domains', 'courts_oversight'].map(derivedLabelCount).join('/')}`
+);
 for (const [name, text] of [['preregistration', preregText], ['protocol', protocolText], ['game design', designText], ['instrument', instrumentText]] as const) {
 	ok(`the ${name} describes the 100 MD coin`, /100 MD/.test(text));
 	ok(`the ${name} does not describe 5% steps as the study rule`, !/one step at a time|in 5% steps|A step is 5%/i.test(text));
