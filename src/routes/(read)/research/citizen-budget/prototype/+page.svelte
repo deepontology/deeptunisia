@@ -3,6 +3,7 @@
 	import BudgetGame from '$lib/budget-game/BudgetGame.svelte';
 	import { app } from '$lib/state.svelte';
 	import { boardCopyFor } from '$lib/budget-game/board-copy';
+	import { copyFor } from '$lib/budget-game/copy';
 	import { DEFAULT_RULE, type MoveRule, type StartMode } from '$lib/budget-game/board';
 
 	/**
@@ -27,7 +28,7 @@
 </script>
 
 <svelte:head>
-	<title>Citizen budget board · DeepTunisia</title>
+	<title>{copyFor(app.locale).title} · DeepTunisia</title>
 	<meta name="robots" content="noindex" />
 </svelte:head>
 

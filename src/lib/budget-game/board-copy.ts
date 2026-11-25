@@ -427,7 +427,7 @@ const fr: BoardCopy = {
 	setTo2024: 'Aide au prototype : niveau 2024',
 	setToDraft: 'Revenir au projet',
 	zeroLine: 'Mettre ce poste à zéro',
-	setTo: (amount, name) => `Mettre ${name} à ${amount} MD.`,
+	setTo: (amount, name) => `${name} fixé à ${amount} MD.`,
 	setCapped: (wanted, cap) => `Ce niveau est ${wanted} MD ; le plafond de 200 % est ${cap} MD. Mis à ${cap}.`,
 	setRefused: (amount) => `La bourse contient ${amount} MD. Ce changement en demande plus.`,
 	historyNominal: (pct) => `Depuis 2024 : ${pct} % (nominal)`,
@@ -451,7 +451,7 @@ const fr: BoardCopy = {
 			undo: { t: 'Changer d’avis', b: 'Annuler reprend votre dernier mouvement. Recommencer remet chaque poste au projet.' },
 			keep: { t: 'Garder le projet', b: 'Si vous ne changeriez rien, cochez ceci. C’est une vraie réponse, pas un saut, et Terminer s’ouvre.' },
 			finish: { t: 'Terminer', b: 'Terminer s’ouvre quand chaque dinar est placé, ou quand ce qui reste dans la bourse est sous 0,5 % du budget. Suivent trois questions courtes, puis un résultat qui place votre budget à côté du projet.' },
-			done: { t: 'À vous', b: 'Les chiffres 2027 sont un projet rapporté par la presse, non vérifié ; les années passées sont vérifiées sur chaque loi. Si les réponses sont recueillies, et comment se retirer, est indiqué à l’étape Présentation, avant le plateau. Comment jouer, en haut du plateau, relance cette visite.' }
+			done: { t: 'À vous', b: 'Les chiffres 2027 sont un projet rapporté par la presse, non vérifié ; les années passées sont vérifiées sur chaque loi. L’étape Présentation, avant le plateau, indique si les réponses sont collectées et comment retirer la vôtre. Comment jouer, en haut du plateau, relance cette visite.' }
 		}
 	}
 };
@@ -579,11 +579,11 @@ const ar: BoardCopy = {
 	setTo2024: 'أداة نموذج أولي: مستوى 2024',
 	setToDraft: 'أعد إلى المشروع',
 	zeroLine: 'اجعل هذا البند صفرًا',
-	setTo: (amount, name) => `اضبط ${name} على ${amount} م.د.`,
+	setTo: (amount, name) => `ضبطت ${name} على ${amount} م.د.`,
 	setCapped: (wanted, cap) => `هذا المستوى ${wanted} م.د؛ وسقف 200% هو ${cap} م.د. ضُبط على ${cap}.`,
 	setRefused: (amount) => `في المحفظة ${amount} م.د. هذا التغيير يحتاج أكثر.`,
 	historyNominal: (pct) => `منذ 2024: ${pct}% (اسمي)`,
-	howToPhone: 'اختر بندًا، ثم اضغط مطوّلًا على «خذ». أو اسحب بندًا على آخر على الحاسوب.',
+	howToPhone: 'اختر قطاعًا، ثم اضغط مطوّلًا على «خذ». أو اسحب قطاعًا على آخر على الحاسوب.',
 	yearLegend: 'العلامة العمودية هي مستوى مشروع 2027. وكل سنة ماضية مُتحقَّق منها على قانونها.',
 	tour: {
 		open: 'طريقة اللعب',
@@ -603,7 +603,7 @@ const ar: BoardCopy = {
 			undo: { t: 'إذا غيّرت رأيك', b: '«تراجع» يلغي آخر نقلة. و«ابدأ من جديد» يعيد كل القطاعات إلى المشروع.' },
 			keep: { t: 'الإبقاء على المشروع', b: 'إذا كنت لن تغيّر شيئًا، فأشّر هنا. هذه إجابة حقيقية وليست تخطّيًا، ويُتاح «إنهاء».' },
 			finish: { t: 'الإنهاء', b: 'يُتاح «إنهاء» عندما يوضع كل دينار في مكانه، أو عندما يكون ما بقي في المحفظة أقل من 0.5% من الميزانية. ثم تأتي ثلاثة أسئلة قصيرة، ونتيجة تضع ميزانيتك بجانب المشروع.' },
-			done: { t: 'دورك الآن', b: 'أرقام 2027 مشروع نقلته الصحافة ولم يُتحقَّق منه، والسنوات الماضية مُتحقَّق منها على كل قانون. أمّا إن كانت الإجابات تُجمع، وكيف تنسحب، فمذكور في خطوة «تعريف» قبل اللوحة. ويعيد «طريقة اللعب»، أعلى اللوحة، هذه الجولة.' }
+			done: { t: 'دورك الآن', b: 'أرقام 2027 مشروع نقلته الصحافة ولم يُتحقَّق منه، والسنوات الماضية مُتحقَّق منها على كل قانون. وتوضّح خطوة «تعريف» قبل اللوحة ما إذا كانت الإجابات تُجمع حاليًا وكيفية سحب إجابتك. ويعيد «طريقة اللعب»، أعلى اللوحة، هذه الجولة.' }
 		}
 	}
 };

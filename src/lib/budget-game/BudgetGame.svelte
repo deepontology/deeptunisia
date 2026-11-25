@@ -268,6 +268,8 @@
 		q1 = null;
 		q2 = null;
 		q2Skipped = false;
+		region = '';
+		showUnchanged = false;
 		adult = false;
 		readInfo = false;
 		withdrawal = false;

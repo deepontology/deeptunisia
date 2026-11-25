@@ -137,7 +137,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		countNote: (n) => `${n} ${n === 1 ? 'answer' : 'answers'} stored so far.`,
 		countUnknown: 'The count could not be read.',
 		pausedNote: 'The study is in the field but is not collecting answers right now. Nothing is stored.',
-		ctaNoteLive: 'About five minutes. Draft figures are labelled. A receipt is shown at the end.',
+		ctaNoteLive: 'About six minutes. Draft figures are labelled. A receipt is shown at the end.',
 		ctaBoard: 'Try the board',
 		ctaNote: 'Prototype. Draft figures. Nothing is sent or stored.',
 		unit: 'MD',
@@ -378,7 +378,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		countNote: (n) => `${n} ${n === 1 ? 'réponse enregistrée' : 'réponses enregistrées'} à ce jour.`,
 		countUnknown: 'Le décompte n’a pas pu être lu.',
 		pausedNote: 'L’étude est sur le terrain mais ne collecte pas de réponses pour le moment. Rien n’est conservé.',
-		ctaNoteLive: 'Environ cinq minutes. Les chiffres du projet sont étiquetés. Un reçu s’affiche à la fin.',
+		ctaNoteLive: 'Environ six minutes. Les chiffres du projet sont étiquetés. Un reçu s’affiche à la fin.',
 		ctaBoard: 'Essayer le plateau',
 		ctaNote: 'Prototype. Chiffres du projet. Rien n’est envoyé ni conservé.',
 		unit: 'MD',
@@ -452,7 +452,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				text: "L'impôt divisé par les crédits de paiement de la même loi. Le reste est couvert par les recettes non fiscales, les dons et l'emprunt."
 			},
 			caption: "Les lois adoptées, côté recettes",
-			th: { year: 'Loi', spending: 'Dépenses, MD', tax: 'Impôt, MD', own: 'Prélevé lui-même, MD', per100: 'Impôt pour 100 prélevés', covered: 'Dépenses couvertes, %', page: 'p.' },
+			th: { year: 'Loi', spending: 'Dépenses, MD', tax: 'Impôt, MD', own: 'Recettes propres, MD', per100: 'Impôt pour 100 prélevés', covered: 'Dépenses couvertes, %', page: 'p.' },
 			note: "L'impôt, les recettes non fiscales et les dons sont lus dans l'article premier et l'article 2 de chaque loi de finances, publiés au Journal officiel. La colonne des dépenses est le tableau C de la même loi, le total que le volet dépenses de cette étude utilise déjà. Chaque chiffre a sa page imprimée et une image de page conservée dans les fichiers de l'étude.",
 			leftOut: "Aucune année adoptée entre 2020 et 2026 ne manque. 2021 n'est pas dans l'étude : son tableau de dépenses n'a pas été sourcé, donc elle n'a pas non plus de ligne de recettes. 2018 et 2019 sont écartées volontairement : ces lois impriment un seul total de recettes réparti en Titre I, Titre II et fonds spéciaux du Trésor, avec les emprunts dans le Titre II et sans ventilation impôt / non-impôt ; elles ne peuvent pas figurer sur ces deux ratios sans inventer une correspondance.",
 			sources: 'Sources, côté recettes, avec pages et images conservées'
@@ -465,7 +465,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				id: 'question',
 				num: '01',
 				label: 'La question',
-				heading: 'Si le budget était à vous de répartir',
+				heading: 'Si vous aviez à répartir le budget',
 				body: [
 					'L’étude pose une seule question : avec le budget 2027 préparé par l’État, où mettriez-vous l’argent ? Vous répondez sur un plateau qui contient les chiffres du projet, et vous terminez quand chaque dinar est placé.',
 					'Un budget n’est pas une liste de souhaits séparés. L’argent donné aux écoles n’est pas donné aux hôpitaux, à l’armée ou aux subventions. Le plateau rend cet arbitrage visible, et l’étude enregistre les choix que les gens font avec lui.'
@@ -478,7 +478,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				heading: 'Un plateau, une pièce, aucun score',
 				body: [
 					'Chaque poste montre deux barres sur une même échelle : le projet de l’État pour 2027, et le vôtre. Des barres fines au-dessus montrent les budgets adoptés des années passées, de la plus ancienne à la plus récente. Glissez un poste sur un autre et une pièce de 100 MD passe de l’un à l’autre. L’argent retiré et pas encore placé attend dans la bourse, et vous terminez quand la bourse est vide.',
-					'Rien n’est noté ni classé. Garder le projet tel quel est une réponse.'
+					'Rien n’est noté ni classé. Chaque poste peut s’ouvrir pour voir ses programmes 2026 et être mis à zéro ou ramené au projet ; une aide au prototype permet aussi de le ramener à son niveau 2024, hors tâche de l’étude. Garder le projet tel quel compte comme une réponse : cochez que vous le garderiez, et Terminer s’ouvre.'
 				]
 			},
 			{
@@ -488,7 +488,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				heading: 'Chiffres du projet, chacun avec son statut',
 				body: [
 					'Chaque montant ici est un chiffre du projet rapporté par la presse pendant les auditions budgétaires. Aucun n’a encore été vérifié sur le document officiel. Quand la loi de finances 2027 sera adoptée, une nouvelle version de l’étude prendra les chiffres adoptés, chacun avec sa page.',
-					'Certaines lignes du plateau réunissent plusieurs ministères, et la ligne des subventions est découpée dans deux d’entre eux. Le tableau dit de quoi chaque ligne est faite.'
+					'Certaines lignes du plateau réunissent plusieurs ministères, et les deux lignes de subventions sont découpées dans deux d’entre eux. Le tableau dit de quoi chaque ligne est faite, et chaque ligne peut s’ouvrir pour voir le détail de ses programmes 2026.'
 				]
 			},
 			{
@@ -546,7 +546,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		cannotSay: [
 			'Pas une image de la préférence nationale, et pas un résultat national. La participation est ouverte et auto-sélectionnée.',
 			'Pas ce que le budget devrait être.',
-			'Pas si une ligne est gaspillée.',
+			'Pas un jugement sur le gaspillage d’un poste.',
 			'Pas un classement des répondants, ni de leurs choix.'
 		],
 		recordFacts: [
@@ -573,7 +573,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				stored: {
 					body: [
 						'Conservé pour chaque réponse : votre budget en parts de chaque ligne, deux réponses courtes, la région si vous la donnez, la version de l’étude et la langue, le canal qui vous a amené, les durées et un code de reçu aléatoire.',
-						'Jamais conservé : votre nom, votre courriel, votre adresse IP, les détails de votre appareil, un lieu plus précis que la région facultative, ni aucun texte libre.'
+						'Jamais conservé : votre nom, votre adresse e-mail, votre adresse IP, les détails de votre appareil, un lieu plus précis que la région facultative, ni aucun texte libre.'
 					]
 				},
 				record: { body: ['L’étude est sur le terrain, avec les chiffres du projet 2027 et, à côté, les budgets adoptés des années passées. La ligne en haut de cette page dit si des réponses sont collectées en ce moment. Aucun examen externe ne l’a validée.'] },
@@ -591,7 +591,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				{ label: 'Examen éthique', value: 'Aucun n’a eu lieu.' },
 				{ label: 'Examen de protection des données', value: 'Aucun n’a eu lieu.' },
 				{ label: 'Préenregistrement', value: 'Figé avant la première réponse, avec l’empreinte du questionnaire, dans le dépôt public.' },
-				{ label: 'Chercheur principal', value: 'Non nommé.' },
+				{ label: 'Responsable de recherche', value: 'Non nommé.' },
 				{ label: 'Chiffres', value: '2027 : le projet, rapporté par la presse. Années passées : les lois adoptées, avec leurs pages.' },
 				{ label: 'Traduction', value: 'L’anglais est la source. Le français et l’arabe sont des traductions provisoires du projet, pas encore relues.' }
 			],
@@ -613,13 +613,22 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		hook: '91 دينارًا من كل 100 دينار تجمعها الدولة بنفسها تأتي من الضريبة. وما بقي من الميزانية مجموعة اختيارات. تسأل هذه الدراسة كيف كنت ستتّخذها.',
 		cover: 'وزّع بنفسك ميزانية الدولة لسنة 2027، على لوحة واحدة، بأرقام المشروع. كلّ دينار تعطيه لقطاع تأخذه من قطاع آخر.',
 		status: 'قيد التصميم · لا جمع للردود',
-		notCollecting: 'لا تُجمع أيّ إجابة بعد. نُشرت السؤال والأرقام والقواعد هنا أوّلًا، ليمكن التحقّق منها قبل أن يجيب أحد.',
+		notCollecting: 'لا تُجمع أيّ إجابة بعد. نُشر السؤال والأرقام والقواعد هنا أوّلًا، ليمكن التحقّق منها قبل أن يجيب أحد.',
 		statusLive: 'قيد الميدان · جمع الإجابات',
 		statusPaused: 'قيد الميدان · لا جمع للردود الآن',
-		countNote: (n) => `${n} ${n === 1 ? 'إجابة مخزّنة' : 'إجابات مخزّنة'} حتى الآن.`,
+		countNote: (n) =>
+			n === 0
+				? 'لا إجابات محفوظة حتى الآن.'
+				: n === 1
+					? 'إجابة واحدة محفوظة حتى الآن.'
+					: n === 2
+						? 'إجابتان محفوظتان حتى الآن.'
+						: n % 100 >= 3 && n % 100 <= 10
+							? `${n} إجابات محفوظة حتى الآن.`
+							: `${n} إجابة محفوظة حتى الآن.`,
 		countUnknown: 'تعذّرت قراءة العدد.',
 		pausedNote: 'الدراسة قيد الميدان لكنها لا تجمع إجابات الآن. لا يُخزَّن شيء.',
-		ctaNoteLive: 'نحو خمس دقائق. أرقام المشروع موسومة. يظهر إيصال في النهاية.',
+		ctaNoteLive: 'نحو ست دقائق. أرقام المشروع موسومة. يظهر إيصال في النهاية.',
 		ctaBoard: 'جرّب اللوحة',
 		ctaNote: 'نموذج أوّلي. أرقام المشروع. لا يُرسل شيء ولا يُحفظ.',
 		unit: 'م.د',
@@ -643,7 +652,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			heading: 'لماذا هو أصعب ممّا يبدو',
 			items: [
 				{ key: 'locked', title: 'واجب الدفع قبل أيّ اختيار', body: 'تُدفع فوائد الديون السابقة واحتياطي النفقات الطارئة أوّلًا. لا يستطيع أحد تحريكها هذه السنة، لذلك تبقى منفصلة على اللوحة.' },
-				{ key: 'subsidies', title: 'الدعم مخفيّ داخل الوزارات', body: 'يُصرف دعم المحروقات والكهرباء والمواد الأساسية عبر ميزانيتي الصناعة والتجارة. تفصله اللوحة في بند خاصّ به، ليُرى ويمكن تحريكه.' },
+				{ key: 'subsidies', title: 'الدعم مخفيّ داخل الوزارات', body: 'يُصرف دعم المحروقات والكهرباء ودعم المواد الغذائية الأساسية عبر ميزانيتي الصناعة والتجارة. تفصلهما اللوحة في بندين مستقلّين، ليتمكّن المواطن من حماية الغذاء وتقليص المحروقات، أو العكس. وتقسيم 2027 بينهما مشتقّ وموسوم بذلك.' },
 				{ key: 'largest', title: 'قطاعات قليلة تحمل معظم المال', body: 'تحمل أكبر أربعة قطاعات هذه النسبة من كلّ ما يمكن تحريكه. وعلى سلّم واحد، تبدو أصغر القطاعات خيوطًا رفيعة.' },
 				{ key: 'zero', title: 'كلّ دينار يأتي من مكان ما', body: 'المجموع لا يتغيّر. أعطِ قطاعًا 100 م.د وتكون قد أخذتها من قطاع آخر، أو من المحفظة.' }
 			]
@@ -683,7 +692,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		},
 		revenue: {
 			heading: 'من أين جاء المال',
-			intro: 'نسبتان، تُقرآن من كل قانون، تجيبان عن سؤالين مختلفين. الأولى تقول كم من أموال تجمعها الدولة بنفسها هي ضريبة. والثانية تقول كم من نفقاتها تغطيه هذه الضريبة.',
+			intro: 'نسبتان، تُقرآن من كل قانون، تجيبان عن سؤالين مختلفين. تبيّن الأولى كم من الأموال التي تجمعها الدولة بنفسها يأتي من الضريبة، وتبيّن الثانية كم من نفقاتها تغطّيه هذه الضريبة.',
 			per100: {
 				label: 'الضريبة في كل 100 دينار تجمعها الدولة بنفسها',
 				text: 'الضريبة مقسومة على الضريبة زائد الإيرادات غير الجبائية. الهبات والاقتراض ليست أموالًا تجمعها الدولة بنفسها، فهي خارج هذا المقام. وهذا هو مقام الرقم 91 في الجملة الافتتاحية.'
@@ -695,7 +704,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			caption: 'القوانين المصادق عليها، من جهة الإيرادات',
 			th: { year: 'القانون', spending: 'النفقات، م.د', tax: 'الضريبة، م.د', own: 'ما تجمعه بنفسها، م.د', per100: 'الضريبة من كل 100', covered: 'النفقات المغطاة، %', page: 'ص.' },
 			note: 'تُقرأ الضريبة والإيرادات غير الجبائية والهبات من الفصل الأول والفصل 2 من كل قانون مالية، كما نُشرت في الرائد الرسمي. وعمود النفقات هو الجدول «ج» من القانون نفسه، وهو المجموع الذي يستعمله جانب النفقات في هذه الدراسة. ولكل رقم صفحته المطبوعة وصورة الصفحة المحفوظة في ملفات الدراسة.',
-			leftOut: 'لا تنقص أي سنة مصادق عليها بين 2020 و2026. وسنة 2021 ليست في الدراسة: لم يُوثَّق جدول نفقاتها، فلا سطر إيرادات لها أيضًا. أمّا 2018 و2019 فمستبعدتان بقرار: تلك القوانين تطبع مجموع إيرادات واحدًا موزعًا على العنوان الأول والعنوان الثاني وصناديق الخزينة الخاصة، والاقتراض داخل العنوان الثاني، ودون تفصيل بين ضريبة وغير ضريبة، فلا يمكن إدراجهما في هاتين النسبتين دون اختراع مطابقة.',
+			leftOut: 'لا تنقص أي سنة مصادق عليها بين 2020 و2026. وسنة 2021 ليست في الدراسة: لم يُوثَّق جدول نفقاتها، فلا صفّ إيرادات لها أيضًا. أمّا 2018 و2019 فمُستبعدتان عمدًا: تلك القوانين تطبع مجموع إيرادات واحدًا موزعًا على العنوان الأول والعنوان الثاني وصناديق الخزينة الخاصة، والاقتراض داخل العنوان الثاني، ودون تفصيل بين ضريبة وغير ضريبة، فلا يمكن إدراجهما في هاتين النسبتين دون اختراع مطابقة.',
 			sources: 'المصادر، من جهة الإيرادات، مع الصفحات والصور المحفوظة'
 		},
 		verification: {
@@ -719,7 +728,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				heading: 'لوحة واحدة، قطعة واحدة، بلا نقاط',
 				body: [
 					'يُظهر كلّ قطاع شريطين على سلّم واحد: مشروع الدولة لسنة 2027، وتوزيعك. وفوقهما أشرطة رفيعة تبيّن الميزانيات المصادق عليها للسنوات الماضية، من الأقدم إلى الأحدث. اسحب قطاعًا على آخر فتنتقل بينهما قطعة من 100 م.د. المال الذي تأخذه ولم تضعه بعد ينتظر في المحفظة، وتنهي حين تفرغ المحفظة.',
-					'لا شيء يُنقَّط أو يُرتَّب. الإبقاء على المشروع كما هو إجابة مقبولة.'
+					'لا شيء يُنقَّط أو يُرتَّب. يمكن فتح كلّ بند للاطلاع على برامجه في قانون 2026، أو ضبطه على الصفر أو إعادته إلى المشروع؛ كما تتيح أداة النموذج الأوّلي ضبطه على مستوى 2024، خارج مهمّة الدراسة. والإبقاء على المشروع كما هو يُعدّ إجابة صالحة: أشّر على أنّك تُبقيه كما هو، فيُتاح زرّ الإنهاء.'
 				]
 			},
 			{
@@ -729,7 +738,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				heading: 'أرقام المشروع، كلّ منها بوضعه',
 				body: [
 					'كلّ مبلغ هنا رقم من المشروع نقلته الصحافة خلال جلسات الميزانية. لم يُتحقَّق من أيّ منها بعد في الوثيقة الرسمية. عند المصادقة على قانون المالية لسنة 2027، تأخذ نسخة جديدة من الدراسة الأرقام المصادق عليها، كلّ رقم مع صفحته.',
-					'تجمع بعض بنود اللوحة عدّة وزارات، وبند الدعم مقتطع من اثنتين منها. يبيّن الجدول ممّا يتكوّن كلّ بند.'
+					'تجمع بعض بنود اللوحة عدّة وزارات، وبندا الدعم مقتطعان من اثنتين منها. يبيّن الجدول ممّا يتكوّن كلّ بند، ويمكن فتح كلّ بند للاطلاع على تفصيل برامجه لسنة 2026.'
 				]
 			},
 			{
@@ -738,7 +747,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				label: 'المنهج',
 				heading: 'كيف ستُقرأ الإجابات',
 				body: [
-					'لكلّ بند: نسبة المستجيبين الذين سيعطونه أكثر أو مثله أو أقلّ من مشروعه، والتغيّر الوسيط مع مداه الربيعي. والميزانية المتوسّطة المقدَّمة، مع مجال ثقة بطريقة bootstrap. ومقياس توافق. ونتيجة دون أكبر قناة ربط.',
+					'لكلّ بند: نسبة المستجيبين الذين سيعطونه أكثر أو مثله أو أقلّ من مشروعه، والتغيّر الوسيط مع مداه الربيعي. والميزانية المتوسّطة المقدَّمة، مع مجال ثقة إحصائي (bootstrap). ومقياس توافق. ونتيجة دون أكبر مصدر إحالة.',
 					'لا تُعرض النتائج إلّا فوق 300 إجابة صالحة، ولا تُعرض أيّ خليّة أقلّ من 20. وعدد الإجابات الصالحة وتواريخ العمل الميداني تتصدّر صفحة النتائج، لا هامشها. المجتمع: بين المستجيبين لاستبيان إلكتروني مفتوح وقائم على الانتقاء الذاتي للبالغين. تصف النتائج الأشخاص الذين شاركوا، لا البلد في مجموعه.'
 				]
 			},
@@ -763,14 +772,14 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				id: 'cannot',
 				num: '07',
 				label: 'ما لا تستطيع قوله',
-				heading: 'ما ليست هذه الإجابات',
+				heading: 'ما لا تعنيه هذه الإجابات',
 				body: ['الإجابات سجلّ لاختيارات من قاموا بها. ولا يمكنها أن تنوب عن بلد.']
 			},
 			{
 				id: 'record',
 				num: '08',
 				label: 'السجل',
-				heading: 'الوضع، مقولًا ببساطة',
+				heading: 'الوضع بوضوح',
 				body: ['الدراسة قيد التصميم. لا يُجمع شيء، ولم تُقرّها أيّ مراجعة.']
 			},
 			{
@@ -844,7 +853,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		share: {
 			button: 'انسخ الرابط',
 			heading: 'شارك هذه الصفحة',
-			text: 'قيد التصميم، لا جمع للردود. الرابط يفتح صفحة الهبوط المنشورة.'
+			text: 'قيد التصميم، لا جمع للردود. الرابط يفتح صفحة الدراسة المنشورة.'
 		}
 	}
 };

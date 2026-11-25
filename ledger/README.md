@@ -22,3 +22,11 @@ npx tsx scripts/ledger-verify.ts --ledger ledger/police-index.jsonl \
 The ledger fixes the record in place. It cannot show that the rows stored as
 they arrived came from real people; the integrity section of the study page
 covers what is done about that, and its limits.
+
+## Gaps
+
+- **2026-11-23 (`police-index.jsonl`):** No line was recorded for 2026-11-23,
+  and the 2026-11-24 line was recorded late (`2026-11-24T16:13:55Z`), because
+  the repository push token expired on 2026-11-22 and scheduled workflow runs
+  failed until rotation on 2026-11-24. Missing days are left visible rather
+  than backdated.
