@@ -224,10 +224,17 @@
 - id: p-pm-benali
   role: prime-minister
   holder: ben-ali
-  start: "1987-10-02"
+  start: "1987-10-03"
   end: "1987-11-07"
-  confidence: B
-  notes: ["Held for roughly five weeks before removing Bourguiba."]
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
+  notes:
+    - "Held for roughly five weeks before removing Bourguiba."
+    - "Décret n° 87-1183 du 1987-10-03 (JORT n° 70 du 1987-10-06, p. 1227) : « Monsieur Zinc El Abidine Ben Ali est nommé Premier ministre, ministre de l'intérieur. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1987/070.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1987/070/decret-87-1183; PDF at https://lake.jort.tn/journal-officiel/fr/1987/070.pdf."
+    - "Gazette decree is dated 3 October 1987; the canonical start was 2 October 1987. Start moved to the gazette date."
+    - "Previous recorded start: 1987-10-02."
   notes_fr:
     - >-
       Détenu environ cinq semaines avant d'écarter Bourguiba.
@@ -236,7 +243,7 @@
     - >-
       تولى المنصب حوالي خمسة أسابيع قبل إزاحة بورقيبة.
   notes_ar_by: model-reviewed
-  sources: [lemonde-1987-coup, wikipedia-benali, wikipedia-ben-ali-ar]
+  sources: [lemonde-1987-coup, wikipedia-benali, wikipedia-ben-ali-ar, jort-1987-1183]
 
 - id: p-pm-baccouche
   role: prime-minister
@@ -257,8 +264,14 @@
   holder: hamed-karoui
   start: "1989-09-27"
   end: "1999-11-17"
-  confidence: B
-  notes: ["Longest-serving prime minister under Ben Ali (10 years). Removed amid the 1999 power struggle within the ruling circle."]
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
+  notes:
+    - "Longest-serving prime minister under Ben Ali (10 years). Removed amid the 1999 power struggle within the ruling circle."
+    - "Décret n° 89-1512 du 1989-09-27 (JORT n° 65 du 1989-09-29, p. 1529) : « Monsieur Hamed Karoui est nommé Premier ministre. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1989/065.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1989/065/decret-89-1512; PDF at https://lake.jort.tn/journal-officiel/fr/1989/065.pdf."
+    - "Decree of 27 September 1989; the recorded start matches the decree date."
   notes_fr:
     - >-
       Chef du gouvernement le plus longtemps en poste sous Ben Ali (10 ans). Écarté lors de
@@ -269,12 +282,7 @@
       أطول رئيس حكومة بقاءً في المنصب في عهد بن علي (10 سنوات). أُزيح أثناء صراع السلطة لسنة
       1999 داخل الدائرة الحاكمة.
   notes_ar_by: model-reviewed
-  review:
-    by: JORT verification pass
-    date: "2026-07-28"
-    method: source-check
-    note: Checked against French Wikipedia sources
-  sources: [wikipedia-hamed-karoui]
+  sources: [wikipedia-hamed-karoui, jort-1989-1512]
 
 - id: p-pm-ghannouchi
   role: prime-minister
@@ -886,13 +894,14 @@
   holder: kacem-bousnina
   start: "1989-04-11"
   end: "1990-03-03"
-  confidence: B
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-    - >-
-      First holder of the secretariat of state created in the Baccouche III
-      government (decrees 89-436/89-437, JORT n°25 of 11 April 1989), kept
-      through the 27 September 1989 Karoui composition, and left in the
-      3 March 1990 remaniement to Ali Chebbi.
+    - "First holder of the secretariat of state created in the Baccouche III government (decrees 89-436/89-437, JORT n°25 of 11 April 1989), kept through the 27 September 1989 Karoui composition, and left in the 3 March 1990 remaniement to Ali Chebbi."
+    - "Décret n° 89-437 du 1989-04-11 (JORT n° 25 du 1989-04-11, p. 683) : « Secrétaire d'État auprès du Premier ministre, chargé des affaires religieuses : Monsieur Kacem Bousnina » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1989/025.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1989/025/decret-89-437; PDF at https://lake.jort.tn/journal-officiel/fr/1989/025.pdf."
+    - "Whole-government decree; this row is named as secretary of state for religious affairs."
   notes_fr:
     - >-
       Premier titulaire du secrétariat d'État créé dans le gouvernement Baccouche III
@@ -913,19 +922,21 @@
   falsifiable_by_ar: >-
     مرسوم في الرائد الرسمي يعيّن أو ينهي الولاية.
   falsifiable_by_ar_by: model-reviewed
-  sources: [frwiki-gouvernement-baccouche-iii, frwiki-gouvernement-karoui]
+  sources: [frwiki-gouvernement-baccouche-iii, frwiki-gouvernement-karoui, jort-1989-437]
 
 - id: p-relaff-se-chebbi
   role: religious-affairs-secretary-of-state
   holder: ali-chebbi
   start: "1990-03-03"
   end: "1992-03-09"
-  confidence: B
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-    - >-
-      Carried the secretariat of state from the 3 March 1990 remaniement
-      until it was elevated to a full ministry on 9 March 1992, becoming the
-      first minister (see p-relaff-chebbi).
+    - "Carried the secretariat of state from the 3 March 1990 remaniement until it was elevated to a full ministry on 9 March 1992, becoming the first minister (see p-relaff-chebbi)."
+    - "Décret n° 90-483 du 1990-03-03 (JORT n° 17 du 1990-03-06, p. 323) : « Secrétaire d'Etat auprès du Premier ministre, chargé des affaires religieuses : Monsieur Ali Chebbi » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1990/017.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1990/017/decret-90-483; PDF at https://lake.jort.tn/journal-officiel/fr/1990/017.pdf."
+    - "Whole-government decree; this row is named as secretary of state for religious affairs."
   notes_fr:
     - >-
       A porté le secrétariat d'État depuis le remaniement du 3 mars 1990 jusqu'à son
@@ -944,7 +955,7 @@
   falsifiable_by_ar: >-
     مرسوم في الرائد الرسمي يعيّن أو ينهي الولاية.
   falsifiable_by_ar_by: model-reviewed
-  sources: [frwiki-gouvernement-karoui, affaires-religieuses-bouhali]
+  sources: [frwiki-gouvernement-karoui, affaires-religieuses-bouhali, jort-1990-483]
 
 - id: p-relaff-chebbi
   role: religious-affairs-minister
@@ -4308,13 +4319,14 @@
   holder: chedli-neffati
   start: "1988-11"
   end: "1990-03-03"
-  confidence: B
-  review:
-    by: JORT verification pass
-    date: "2026-07-28"
-    method: source-check
-    note: Checked against French Wikipedia list of interior ministers, which provides precise dates
-  sources: [wikipedia-interior-ministers, wikipedia-ministry-of-interior-ar]
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
+  notes:
+    - "Décret n° 88-1863 du 1988-11-01 (JORT n° 74 du 1988-11-01, p. 1508) : « Monsieur Chédy Naffati est nommé ministre de l'intérieur. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1988/074.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1988/074/decret-88-1863; PDF at https://lake.jort.tn/journal-officiel/fr/1988/074.pdf."
+    - "The source prints Chédy Naffati, the canonical holder is Chedli Neffati. The recorded start is month-level 1988-11, which matches the decree month; the row keeps its month precision."
+  sources: [wikipedia-interior-ministers, wikipedia-ministry-of-interior-ar, jort-1988-1863]
 
 - id: p-int-kallel
   role: interior-minister
@@ -4738,8 +4750,14 @@
   holder: habib-boulares
   start: "1991-02-20"
   end: "1991-10-10"
-  confidence: B
-  notes: ["Brief tenure of less than a year, after the foreign portfolio."]
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
+  notes:
+    - "Brief tenure of less than a year, after the foreign portfolio."
+    - "Décret n° 91-276 du 1991-02-20 (JORT n° 15 du 1991-02-22, p. 327) : « Ministre de la défense nationale Habib BOULARES » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1991/015.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1991/015/decret-91-276; PDF at https://lake.jort.tn/journal-officiel/fr/1991/015.pdf."
+    - "Whole-government decree; this row is named as defence minister."
   notes_fr:
     - >-
       Mandat bref de moins d'un an, après le portefeuille des Affaires étrangères.
@@ -4748,20 +4766,6 @@
     - >-
       ولاية قصيرة تقل عن سنة، بعد حقيبة الشؤون الخارجية.
   notes_ar_by: model-reviewed
-  reasoning: >-
-    French Wikipedia's dated defence list records Boularès 20 February to
-    10 October 1991, succeeding Abdallah Kallel and preceding Abdelaziz Ben
-    Dhia, after leaving Foreign Affairs on 20 February 1991.
-  reasoning_fr: >-
-    La liste datée de Wikipédia en français consigne Boularès du 20 février au 10 octobre
-    1991, succédant à Abdallah Kallel et précédant Abdelaziz Ben Dhia, après avoir quitté
-    les Affaires étrangères le 20 février 1991.
-  reasoning_fr_by: model-reviewed
-  reasoning_ar: >-
-    القائمة المؤرّخة في ويكيبيديا الفرنسية تسجّل بولعراس من 20 فيفري إلى 10 أكتوبر 1991،
-    خلفًا لعبد الله القلال وسلفًا لعبد العزيز بن ضياء، بعد مغادرته الخارجية يوم 20 فيفري
-    1991.
-  reasoning_ar_by: model-reviewed
   falsifiable_by: >-
     JORT decree documenting cabinet changes in 1991 with different dates.
   falsifiable_by_fr: >-
@@ -4771,7 +4775,7 @@
   falsifiable_by_ar: >-
     مرسوم في الرائد الرسمي يوثّق تغييرات حكومية في 1991 بتواريخ مختلفة.
   falsifiable_by_ar_by: model-reviewed
-  sources: [wikipedia-habib-boulares, frwiki-defence-ministers]
+  sources: [wikipedia-habib-boulares, frwiki-defence-ministers, jort-1991-276]
 
 - id: p-def-ben-yahia
   role: defence-minister
@@ -5315,10 +5319,17 @@
 - id: p-foreign-ben-yahia-1
   role: foreign-minister
   holder: habib-ben-yahia
-  start: "1991-02-17"
+  start: "1991-02-20"
   end: "1997"
-  confidence: B
-  sources: [wikipedia-habib-ben-yahia]
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
+  notes:
+    - "Décret n° 91-276 du 1991-02-20 (JORT n° 15 du 1991-02-22, p. 327) : « Ministre des affaires étrangères Habib BEN YAHIA » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1991/015.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1991/015/decret-91-276; PDF at https://lake.jort.tn/journal-officiel/fr/1991/015.pdf."
+    - "Gazette decree is dated 20 February 1991; the canonical start was 17 February 1991. Start moved to the gazette date."
+    - "Previous recorded start: 1991-02-17."
+  sources: [wikipedia-habib-ben-yahia, jort-1991-276]
 
 - id: p-foreign-ben-mustapha
   role: foreign-minister
@@ -6222,53 +6233,16 @@
 - id: p-justice-bouaziz
   role: justice-minister
   holder: mustapha-bouaziz
-  start: "1989-09-27"
+  start: "1989-09-29"
   end: "1990-03-03"
-  confidence: B
-  verification: needs-primary-source
-  basis: reported
-  attributed_to: Wikipedia (French)
-  reasoning: >-
-    French Wikipedia's dated justice list records Bouaziz 27 September 1989 to
-    3 March 1990, in Karoui's own government; corroborated by Gouvernement
-    Karoui composition table (27 Sep 1989 Justice: Mustapha Bouaziz; remaniement
-    03 Mar 1990 Justice: Chédli Neffati) and the dedicated Mustapha Bouaziz bio
-    (predecessor Hamed Karoui, successor Neffati, and later Domaines portfolio).
-    Tier-3 corroboration only — JORT decree n°89-1514 du 29 Sep 1989 and
-    remaniement 03 Mar 1990 not retrieved. Hunt 2026-08-28: 9anoun.tn browse
-    (https://9anoun.tn/kb/jorts) returns only recent JORTs, no 1989 index surfaced;
-    direct 9anoun guesses and KB search for Bouaziz/Justice 1989 returned no hits;
-    justice.gov.tn has no historical minister list. Trace: search-engine snippet
-    "Vu le décret n°89-1514 du 29 septembre 1989, portant nomination de Monsieur
-    Mustapha Bouaziz ministre de la justice" in https://www.pist.tn/jort/1989/1989F/Jo08089.pdf
-    (PDF not fetched — transport error). Still needs primary source for A.
-  reasoning_fr: >-
-    La liste datée de Wikipédia en français consigne Bouaziz du 27 septembre 1989 au 3 mars
-    1990, dans le gouvernement de Karoui lui-même ; corroboré par le tableau Gouvernement
-    Karoui (27 sept. 1989 Justice : Mustapha Bouaziz ; remaniement 03 mars 1990 Justice :
-    Chédli Neffati) et la bio dédiée Mustapha Bouaziz (prédécesseur Hamed Karoui,
-    successeur Neffati, et portefeuille Domaines ensuite). Corroboration de niveau 3
-    seulement — décret JORT n°89-1514 du 29 sept. 1989 et remaniement 03 mars 1990 non
-    récupérés. Chasse 2026-08-28 : navigation 9anoun.tn (https://9anoun.tn/kb/jorts) ne
-    renvoie que les JORT récents, aucun index 1989 surfacé ; tentatives directes 9anoun et
-    recherche KB Bouaziz/Justice 1989 sans résultat ; justice.gov.tn sans liste historique.
-    Trace : extrait moteur "Vu le décret n°89-1514 du 29 septembre 1989, portant nomination
-    de Monsieur Mustapha Bouaziz ministre de la justice" dans
-    https://www.pist.tn/jort/1989/1989F/Jo08089.pdf (PDF non récupéré — erreur de transport).
-    Reste en attente de source primaire pour A.
-  reasoning_fr_by: model-reviewed
-  reasoning_ar: >-
-    القائمة المؤرّخة في ويكيبيديا الفرنسية تسجّل بوعزيز من 27 سبتمبر 1989 إلى 3 مارس 1990، في
-    حكومة القروي نفسه؛ ويؤيده جدول حكومة القروي (27 سبتمبر 1989 العدل: مصطفى بوعزيز؛ تعديل 3
-    مارس 1990 العدل: الشاذلي النفاتي) والسيرة المخصصة لمصطفى بوعزيز (السلف حامد القروي، الخلف
-    النفاتي، وحقيبة أملاك الدولة لاحقًا). تأييد من المستوى 3 فقط — لم يُسترد المرسوم بالرائد الرسمي
-    عدد 89-1514 المؤرخ في 29 سبتمبر 1989 ولا تعديل 3 مارس 1990. بحث 2026-08-28: تصفح 9anoun.tn
-    (https://9anoun.tn/kb/jorts) يعرض فقط الأعداد الحديثة، دون فهرس 1989؛ محاولات 9anoun المباشرة
-    وبحث القاعدة المعرفية عن Bouaziz/Justice 1989 دون نتيجة؛ justice.gov.tn بلا قائمة تاريخية.
-    أثر: مقتطف محرك البحث "Vu le décret n°89-1514 du 29 septembre 1989, portant nomination de
-    Monsieur Mustapha Bouaziz ministre de la justice" في https://www.pist.tn/jort/1989/1989F/Jo08089.pdf
-    (لم يُسحب الملف — خطأ نقل). لا يزال بحاجة إلى مصدر أولي للدرجة أ.
-  reasoning_ar_by: model-reviewed
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
+  notes:
+    - "Décret n° 89-1514 du 1989-09-29 (JORT n° 65 du 1989-09-29, p. 1529) : « Monsieur Mustapha Bouaziz est nommé ministre de la justice. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1989/065.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1989/065/decret-89-1514; PDF at https://lake.jort.tn/journal-officiel/fr/1989/065.pdf."
+    - "Gazette decree is dated 29 September 1989; the canonical start was 27 September 1989. Start moved to the gazette date."
+    - "Previous recorded start: 1989-09-27."
   falsifiable_by: >-
     JORT issue 1989-073 (https://lake.jort.tn/journal-officiel/fr/1989/073.pdf)
     or PIST PDF https://www.pist.tn/jort/1989/1989F/Jo08089.pdf page showing
@@ -6290,12 +6264,6 @@
     صاحب منصب مختلفين؛ من شأنه الترقية إلى موثّق/أ. قائمة تاريخية على justice.gov.tn، إن
     نُشرت، ستُفنّد أيضًا.
   falsifiable_by_ar_by: model-reviewed
-  notes:
-    - >-
-      Hunt 2026-08-28: JORT 27 Sep 1989 (Karoui composition) and 03 Mar 1990 (remaniement) via
-      9anoun.tn — not open in this session; JORT PDFs exist on pist.tn/JORT.tn but not fetched.
-      Corroborated at tier-3 by frwiki-gouvernement-karoui + frwiki-mustapha-bouaziz + dated
-      justice list. Falsifiable by lake.jort.tn 1989/073.pdf or Jo08089.pdf page image.
   notes_fr:
     - >-
       Recherche 2026-08-28 : JORT 27 sept. 1989 (composition Karoui) et 03 mars 1990 (remaniement)
@@ -6311,7 +6279,7 @@
       تُسحب. مؤيد في المستوى 3 عبر frwiki-gouvernement-karoui + frwiki-mustapha-bouaziz + القائمة
       المؤرخة للعدل. قابل للدحض بصورة صفحة lake.jort.tn 1989/073.pdf أو Jo08089.pdf.
   notes_ar_by: model-reviewed
-  sources: [wikipedia-justice-ministers-tunisia-fr, frwiki-gouvernement-karoui, frwiki-mustapha-bouaziz]
+  sources: [wikipedia-justice-ministers-tunisia-fr, frwiki-gouvernement-karoui, frwiki-mustapha-bouaziz, jort-1989-1514]
 
 - id: p-justice-zouari
   role: justice-minister
@@ -6922,16 +6890,13 @@
   holder: nouri-zorgati
   start: "1987-11-07"
   end: "1989"
-  confidence: B
-  verification: needs-primary-source
-  reasoning: >-
-    Wikipedia records his tenure. Exact dates not documented.
-  reasoning_fr: >-
-    Wikipédia consigne son mandat. Dates exactes non documentées.
-  reasoning_fr_by: model-reviewed
-  reasoning_ar: >-
-    تسجّل ويكيبيديا ولايته. التواريخ الدقيقة غير موثّقة.
-  reasoning_ar_by: model-reviewed
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
+  notes:
+    - "Décret n° 87-1283 du 1987-11-07 (JORT n° 80 du 1987-11-10, p. 1423) : « Ministre des finances Nouri Zorgati » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1987/080.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1987/080/decret-87-1283; PDF at https://lake.jort.tn/journal-officiel/fr/1987/080.pdf."
+    - "Whole-government decree; this row is named as finance minister."
   falsifiable_by: >-
     JORT decree appointing Nouri Zorgati as Minister of Finance.
   falsifiable_by_fr: >-
@@ -6940,7 +6905,7 @@
   falsifiable_by_ar: >-
     مرسوم في الرائد الرسمي يعيّن النوري الزرقاطي وزيرًا للمالية.
   falsifiable_by_ar_by: model-reviewed
-  sources: [wikipedia-finance-ministers]
+  sources: [wikipedia-finance-ministers, jort-1987-1283]
 
 - id: p-finance-zorgati-2
   role: finance-minister
@@ -40354,12 +40319,17 @@
   holder: fouad-mebazaa
   start: '1987-10-27'
   end: '1987-11-07'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Ben Ali
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de la Jeunesse et des Sports.'
+    - "Portfolio in the source: Ministre de la Jeunesse et des Sports."
+    - "Décret n° 87-1247 du 1987-10-27 (JORT n° 77 du 1987-11-03, p. 1378) : « Monsieur Foued M'Bazaâ est nommé ministre de la jeunesse et des sports. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1987/077.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1987/077/decret-87-1247; PDF at https://lake.jort.tn/journal-officiel/fr/1987/077.pdf."
+    - "The OCR prints the surname as M'Bazaâ; the canonical holder is Fouad Mebazaa."
   sources:
-  - fr-wiki-ben-ali
+    - fr-wiki-ben-ali
+    - jort-1987-1247
 - id: p-gov-hamed-karoui-minister-delegate
   role: minister-delegate
   holder: hamed-karoui
@@ -40381,600 +40351,869 @@
   holder: mohamed-ghannouchi
   start: '1987-11-07'
   end: '1988-07-27'
-  confidence: C
-  attributed_to: Wikipédia (fr), Premier gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre délégué auprès du Premier ministre chargé de la Planification.'
+    - "Portfolio in the source: Ministre délégué auprès du Premier ministre chargé de la Planification."
+    - "Décret n° 87-1283 du 1987-11-07 (JORT n° 80 du 1987-11-10, p. 1423) : « Ministre délégué auprès du Premier ministre, chargé du plan Mohamed Ghannouchi » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1987/080.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1987/080/decret-87-1283; PDF at https://lake.jort.tn/journal-officiel/fr/1987/080.pdf."
+    - "Whole-government decree; this row is named as minister delegate to the Prime Minister for the plan."
   sources:
-  - fr-wiki-baccouche-i
+    - fr-wiki-baccouche-i
+    - jort-1987-1283
 - id: p-gov-houcine-cherif-minister-delegate
   role: minister-delegate
   holder: houcine-cherif
   start: '1987-11-07'
   end: '1987-11-27'
-  confidence: C
-  attributed_to: Wikipédia (fr), Premier gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre délégué auprès du Premier ministre chargé de la Fonction publique.'
-  - The remaniement of 27 November 1987 turns his post into that of secretary-general of the government.
+    - "Portfolio in the source: Ministre délégué auprès du Premier ministre chargé de la Fonction publique."
+    - "The remaniement of 27 November 1987 turns his post into that of secretary-general of the government."
+    - "Décret n° 87-1283 du 1987-11-07 (JORT n° 80 du 1987-11-10, p. 1423) : « Ministre délégué auprès du Premier ministre chargé de la fonction publique et de la réforme administrative Houssine Chérif » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1987/080.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1987/080/decret-87-1283; PDF at https://lake.jort.tn/journal-officiel/fr/1987/080.pdf."
+    - "Whole-government decree; the source prints Houssine Chérif, the canonical holder is Houcine Cherif."
   sources:
-  - fr-wiki-baccouche-i
+    - fr-wiki-baccouche-i
+    - jort-1987-1283
 - id: p-gov-tijani-chelli-education
   role: education-minister
   holder: tijani-chelli
   start: '1987-11-07'
   end: '1988-04-12'
-  confidence: C
-  attributed_to: Wikipédia (fr), Premier gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Éducation.'
+    - "Portfolio in the source: Ministre de l'Éducation."
+    - "Décret n° 87-1283 du 1987-11-07 (JORT n° 80 du 1987-11-10, p. 1423) : « Ministre de l'éducation, de l'enseignement et de la recherche scientifique Tijani Chelly » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1987/080.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1987/080/decret-87-1283; PDF at https://lake.jort.tn/journal-officiel/fr/1987/080.pdf."
+    - "Whole-government decree; the source prints Tijani Chelly, the canonical holder is Tijani Chelli."
   sources:
-  - fr-wiki-baccouche-i
+    - fr-wiki-baccouche-i
+    - jort-1987-1283
 - id: p-gov-abdelwahab-abdallah-communication
   role: communication-minister
   holder: abdelwahab-abdallah
   start: '1987-11-07'
   end: '1988-07-27'
-  confidence: C
-  attributed_to: Wikipédia (fr), Premier gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Information.'
+    - "Portfolio in the source: Ministre de l'Information."
+    - "Décret n° 87-1283 du 1987-11-07 (JORT n° 80 du 1987-11-10, p. 1423) : « Ministre de l'information Abdelwaheb Abdallah » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1987/080.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1987/080/decret-87-1283; PDF at https://lake.jort.tn/journal-officiel/fr/1987/080.pdf."
+    - "The decree names the information portfolio, which the dataset records as communication-minister for this era."
   sources:
-  - fr-wiki-baccouche-i
+    - fr-wiki-baccouche-i
+    - jort-1987-1283
 - id: p-gov-slaheddine-ben-mbarek-economy
   role: economy-minister
   holder: slaheddine-ben-mbarek
   start: '1987-11-07'
   end: '1988-07-27'
-  confidence: C
-  attributed_to: Wikipédia (fr), Premier gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Économie nationale.'
+    - "Portfolio in the source: Ministre de l'Économie nationale."
+    - "Décret n° 87-1283 du 1987-11-07 (JORT n° 80 du 1987-11-10, p. 1423) : « Ministre de l'économie nationale Slaheddine Ben M'Barek » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1987/080.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1987/080/decret-87-1283; PDF at https://lake.jort.tn/journal-officiel/fr/1987/080.pdf."
+    - "Whole-government decree; this row is named as national economy minister."
   sources:
-  - fr-wiki-baccouche-i
+    - fr-wiki-baccouche-i
+    - jort-1987-1283
 - id: p-gov-sadok-ben-jemaa-equipment-2
   role: equipment-minister
   holder: sadok-ben-jemaa
   start: '1987-11-07'
   end: '1988-07-27'
-  confidence: C
-  attributed_to: Wikipédia (fr), Premier gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Équipement et de l''Habitat.'
+    - "Portfolio in the source: Ministre de l'Équipement et de l'Habitat."
+    - "Décret n° 87-1283 du 1987-11-07 (JORT n° 80 du 1987-11-10, p. 1423) : « Ministre de l'équipement et de l'habitat Sadok Ben Jemaâ » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1987/080.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1987/080/decret-87-1283; PDF at https://lake.jort.tn/journal-officiel/fr/1987/080.pdf."
+    - "Whole-government decree; this row is named as equipment and housing minister."
   sources:
-  - fr-wiki-baccouche-i
+    - fr-wiki-baccouche-i
+    - jort-1987-1283
 - id: p-gov-taoufik-cheikhrouhou-social-affairs
   role: social-affairs-minister
   holder: taoufik-cheikhrouhou
   start: '1987-11-07'
   end: '1988-07-27'
-  confidence: C
-  attributed_to: Wikipédia (fr), Premier gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre des Affaires sociales.'
+    - "Portfolio in the source: Ministre des Affaires sociales."
+    - "Décret n° 87-1283 du 1987-11-07 (JORT n° 80 du 1987-11-10, p. 1423) : « Ministre des affaires sociales Taoufik Cheikhrouhou » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1987/080.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1987/080/decret-87-1283; PDF at https://lake.jort.tn/journal-officiel/fr/1987/080.pdf."
+    - "Whole-government decree; this row is named as social affairs minister."
   sources:
-  - fr-wiki-baccouche-i
+    - fr-wiki-baccouche-i
+    - jort-1987-1283
 - id: p-gov-lassaad-ben-osman-agriculture-2
   role: agriculture-minister
   holder: lassaad-ben-osman
   start: '1987-11-07'
   end: '1988-04-12'
-  confidence: C
-  attributed_to: Wikipédia (fr), Premier gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Agriculture.'
-  - The remaniement of 12 April 1988 merges the ministry of agriculture and that of agricultural production under
-    him.
+    - "Portfolio in the source: Ministre de l'Agriculture."
+    - "The remaniement of 12 April 1988 merges the ministry of agriculture and that of agricultural production under him."
+    - "Décret n° 87-1283 du 1987-11-07 (JORT n° 80 du 1987-11-10, p. 1423) : « Ministre de l'agriculture Lassaâd Ben Osman » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1987/080.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1987/080/decret-87-1283; PDF at https://lake.jort.tn/journal-officiel/fr/1987/080.pdf."
+    - "Whole-government decree; this row is named as agriculture minister."
   sources:
-  - fr-wiki-baccouche-i
+    - fr-wiki-baccouche-i
+    - jort-1987-1283
 - id: p-gov-mohamed-ghedira-agriculture
   role: agriculture-minister
   holder: mohamed-ghedira
   start: '1987-11-07'
   end: '1988-04-12'
-  confidence: C
-  attributed_to: Wikipédia (fr), Premier gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de la Production agricole et des Industries agroalimentaires.'
-  - The remaniement of 12 April 1988 merges his ministry with that of agriculture.
+    - "Portfolio in the source: Ministre de la Production agricole et des Industries agroalimentaires."
+    - "The remaniement of 12 April 1988 merges his ministry with that of agriculture."
+    - "Décret n° 87-1283 du 1987-11-07 (JORT n° 80 du 1987-11-10, p. 1423) : « Ministre de la production agricole et de l'agro-alimentaire Mohamed Ghedira » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1987/080.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1987/080/decret-87-1283; PDF at https://lake.jort.tn/journal-officiel/fr/1987/080.pdf."
+    - "The decree names the agricultural production portfolio, which the dataset records as agriculture-minister."
   sources:
-  - fr-wiki-baccouche-i
+    - fr-wiki-baccouche-i
+    - jort-1987-1283
 - id: p-gov-brahim-khouaja-communication
   role: communication-minister
   holder: brahim-khouaja
   start: '1987-11-07'
   end: '1988-07-27'
-  confidence: C
-  attributed_to: Wikipédia (fr), Premier gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de la Communication.'
+    - "Portfolio in the source: Ministre de la Communication."
+    - "Décret n° 87-1283 du 1987-11-07 (JORT n° 80 du 1987-11-10, p. 1423) : « Ministre des communications Brahim Khouaja » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1987/080.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1987/080/decret-87-1283; PDF at https://lake.jort.tn/journal-officiel/fr/1987/080.pdf."
+    - "Whole-government decree; this row is named as communications minister."
   sources:
-  - fr-wiki-baccouche-i
+    - fr-wiki-baccouche-i
+    - jort-1987-1283
 - id: p-gov-hedi-khelil-education
   role: education-minister
   holder: hedi-khelil
   start: '1988-04-12'
   end: '1988-07-27'
-  confidence: C
-  attributed_to: Wikipédia (fr), Premier gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Éducation nationale.'
+    - "Portfolio in the source: Ministre de l'Éducation nationale."
+    - "Décret n° 88-736 du 1988-04-12 (JORT n° 24 du 1988-04-12, p. 543) : « Monsieur Hédi Khélil, ministre de l'éducation nationale » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1988/024.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1988/024/decret-88-736; PDF at https://lake.jort.tn/journal-officiel/fr/1988/024.pdf."
+    - "Multi-minister decree; this row is named as national education minister."
   sources:
-  - fr-wiki-baccouche-i
+    - fr-wiki-baccouche-i
+    - jort-1988-736
 - id: p-gov-abdessalem-mseddi-higher-education
   role: higher-education-minister
   holder: abdessalem-mseddi
   start: '1988-04-12'
   end: '1988-07-27'
-  confidence: C
-  attributed_to: Wikipédia (fr), Premier gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Enseignement supérieur et de la Recherche scientifique.'
+    - "Portfolio in the source: Ministre de l'Enseignement supérieur et de la Recherche scientifique."
+    - "Décret n° 88-736 du 1988-04-12 (JORT n° 24 du 1988-04-12, p. 543) : « Monsieur Abdesselem M'Seddi, ministre de l'enseignement supérieur et de la recherche scientifique » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1988/024.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1988/024/decret-88-736; PDF at https://lake.jort.tn/journal-officiel/fr/1988/024.pdf."
+    - "Multi-minister decree; this row is named as higher education and scientific research minister."
   sources:
-  - fr-wiki-baccouche-i
+    - fr-wiki-baccouche-i
+    - jort-1988-736
 - id: p-gov-abdelhamid-escheikh-youth-sports
   role: youth-sports-minister
   holder: abdelhamid-escheikh
   start: '1988-04-12'
   end: '1988-07-27'
-  confidence: C
-  attributed_to: Wikipédia (fr), Premier gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de la Jeunesse et des Sports.'
+    - "Portfolio in the source: Ministre de la Jeunesse et des Sports."
+    - "Décret n° 88-736 du 1988-04-12 (JORT n° 24 du 1988-04-12, p. 543) : « Monsieur Abdelhamid Escheikh, ministre de la jeunesse et des sports » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1988/024.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1988/024/decret-88-736; PDF at https://lake.jort.tn/journal-officiel/fr/1988/024.pdf."
+    - "Multi-minister decree; this row is named as youth and sports minister."
   sources:
-  - fr-wiki-baccouche-i
+    - fr-wiki-baccouche-i
+    - jort-1988-736
 - id: p-gov-abdelmalek-laarif-culture
   role: culture-minister
   holder: abdelmalek-laarif
   start: '1988-04-12'
   end: '1988-07-27'
-  confidence: C
-  attributed_to: Wikipédia (fr), Premier gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre des Affaires culturelles.'
+    - "Portfolio in the source: Ministre des Affaires culturelles."
+    - "Décret n° 88-736 du 1988-04-12 (JORT n° 24 du 1988-04-12, p. 543) : « Monsieur Abdelmalak Laârif, ministre des affaires culturelles » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1988/024.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1988/024/decret-88-736; PDF at https://lake.jort.tn/journal-officiel/fr/1988/024.pdf."
+    - "Multi-minister decree; this row is named as cultural affairs minister."
   sources:
-  - fr-wiki-baccouche-i
+    - fr-wiki-baccouche-i
+    - jort-1988-736
 - id: p-gov-mohamed-ghannouchi-planning
   role: planning-minister
   holder: mohamed-ghannouchi
   start: '1988-07-27'
   end: '1989-04-11'
-  confidence: C
-  attributed_to: Wikipédia (fr), Second gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre du Plan.'
+    - "Portfolio in the source: Ministre du Plan."
+    - "Décret n° 88-1392 du 1988-07-27 (JORT n° 51 du 1988-07-29, p. 1075) : « Ministre du plan ... : Mohamed Ghannouchi » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1988/051.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1988/051/decret-88-1392; PDF at https://lake.jort.tn/journal-officiel/fr/1988/051.pdf."
+    - "Whole-government decree; this row is named as plan minister."
   sources:
-  - fr-wiki-baccouche-ii
+    - fr-wiki-baccouche-ii
+    - jort-1988-1392-pdf
 - id: p-gov-moncef-belaid-industry
   role: industry-minister
   holder: moncef-belaid
   start: '1988-07-27'
   end: '1989-04-11'
-  confidence: C
-  attributed_to: Wikipédia (fr), Second gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Industrie et du Commerce.'
+    - "Portfolio in the source: Ministre de l'Industrie et du Commerce."
+    - "Décret n° 88-1392 du 1988-07-27 (JORT n° 51 du 1988-07-29, p. 1075) : « Ministre de l'industrie et du commerce ... : Moncef Belaid » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1988/051.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1988/051/decret-88-1392; PDF at https://lake.jort.tn/journal-officiel/fr/1988/051.pdf."
+    - "Whole-government decree; this row is named as industry and commerce minister."
   sources:
-  - fr-wiki-baccouche-ii
+    - fr-wiki-baccouche-ii
+    - jort-1988-1392-pdf
 - id: p-gov-sadok-rabah-industry
   role: industry-minister
   holder: sadok-rabah
   start: '1988-07-27'
   end: '1989-04-11'
-  confidence: C
-  attributed_to: Wikipédia (fr), Second gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Énergie et des Mines.'
+    - "Portfolio in the source: Ministre de l'Énergie et des Mines."
+    - "Décret n° 88-1392 du 1988-07-27 (JORT n° 51 du 1988-07-29, p. 1075) : « Ministre de l'énergie et des mines ... : Sadok Rabah » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1988/051.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1988/051/decret-88-1392; PDF at https://lake.jort.tn/journal-officiel/fr/1988/051.pdf."
+    - "The decree names the energy and mines portfolio, which the industry-minister role covers in this dataset."
   sources:
-  - fr-wiki-baccouche-ii
+    - fr-wiki-baccouche-ii
+    - jort-1988-1392-pdf
 - id: p-gov-moncef-mouelhi-equipment
   role: equipment-minister
   holder: moncef-mouelhi
   start: '1988-07-27'
   end: '1989-04-11'
-  confidence: C
-  attributed_to: Wikipédia (fr), Second gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Équipement et de l''Habitat.'
+    - "Portfolio in the source: Ministre de l'Équipement et de l'Habitat."
+    - "Décret n° 88-1392 du 1988-07-27 (JORT n° 51 du 1988-07-29, p. 1075) : « Ministre de l'équipement et de l'habitat ... : Moncef Mouelhi » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1988/051.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1988/051/decret-88-1392; PDF at https://lake.jort.tn/journal-officiel/fr/1988/051.pdf."
+    - "Whole-government decree; this row is named as equipment and housing minister."
   sources:
-  - fr-wiki-baccouche-ii
+    - fr-wiki-baccouche-ii
+    - jort-1988-1392-pdf
 - id: p-gov-ahmed-smaoui-transport
   role: transport-minister
   holder: ahmed-smaoui
   start: '1988-07-27'
   end: '1989-04-11'
-  confidence: C
-  attributed_to: Wikipédia (fr), Second gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre des Transports.'
+    - "Portfolio in the source: Ministre des Transports."
+    - "Décret n° 88-1392 du 1988-07-27 (JORT n° 51 du 1988-07-29, p. 1075) : « Ministre des transports ... : Ahmed Smaoui » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1988/051.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1988/051/decret-88-1392; PDF at https://lake.jort.tn/journal-officiel/fr/1988/051.pdf."
+    - "Whole-government decree; this row is named as transport minister."
   sources:
-  - fr-wiki-baccouche-ii
+    - fr-wiki-baccouche-ii
+    - jort-1988-1392-pdf
 - id: p-gov-mohamed-jegham-tourism
   role: tourism-minister
   holder: mohamed-jegham
   start: '1988-07-27'
   end: '1989-04-11'
-  confidence: C
-  attributed_to: Wikipédia (fr), Second gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre du Tourisme et de l''Artisanat.'
+    - "Portfolio in the source: Ministre du Tourisme et de l'Artisanat."
+    - "Décret n° 88-1392 du 1988-07-27 (JORT n° 51 du 1988-07-29, p. 1075) : « Ministre du tourisme et de l'artisanat ... : Mohamed Jegham » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1988/051.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1988/051/decret-88-1392; PDF at https://lake.jort.tn/journal-officiel/fr/1988/051.pdf."
+    - "Whole-government decree; this row is named as tourism and crafts minister."
   sources:
-  - fr-wiki-baccouche-ii
+    - fr-wiki-baccouche-ii
+    - jort-1988-1392-pdf
 - id: p-gov-habib-boulares-culture-2
   role: culture-minister
   holder: habib-boulares
   start: '1988-07-27'
   end: '1989-04-11'
-  confidence: C
-  attributed_to: Wikipédia (fr), Second gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre des Affaires culturelles.'
+    - "Portfolio in the source: Ministre des Affaires culturelles."
+    - "Décret n° 88-1392 du 1988-07-27 (JORT n° 51 du 1988-07-29, p. 1075) : « Ministre des affaires culturelles ... : Habib Bculares » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1988/051.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1988/051/decret-88-1392; PDF at https://lake.jort.tn/journal-officiel/fr/1988/051.pdf."
+    - "The archived transcription prints the surname as Bculares; the office, the date and the surrounding list identify Habib Boularès."
   sources:
-  - fr-wiki-baccouche-ii
+    - fr-wiki-baccouche-ii
+    - jort-1988-1392-pdf
 - id: p-gov-mohamed-hedi-khelil-education
   role: education-minister
   holder: mohamed-hedi-khelil
   start: '1988-07-27'
   end: '1989-04-11'
-  confidence: C
-  attributed_to: Wikipédia (fr), Second gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Éducation nationale.'
+    - "Portfolio in the source: Ministre de l'Éducation nationale."
+    - "Décret n° 88-1392 du 1988-07-27 (JORT n° 51 du 1988-07-29, p. 1075) : « Ministre de l'éducation nationale ... : Hédi Khelil » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1988/051.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1988/051/decret-88-1392; PDF at https://lake.jort.tn/journal-officiel/fr/1988/051.pdf."
+    - "Whole-government decree; this row is named as national education minister."
   sources:
-  - fr-wiki-baccouche-ii
+    - fr-wiki-baccouche-ii
+    - jort-1988-1392-pdf
 - id: p-gov-saadeddine-zmerli-health
   role: health-minister
   holder: saadeddine-zmerli
   start: '1988-07-27'
   end: '1989-04-11'
-  confidence: C
-  attributed_to: Wikipédia (fr), Second gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de la Santé publique.'
+    - "Portfolio in the source: Ministre de la Santé publique."
+    - "Décret n° 88-1392 du 1988-07-27 (JORT n° 51 du 1988-07-29, p. 1075) : « Ministre de la santé publique ... : Saadendine Zmerli » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1988/051.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1988/051/decret-88-1392; PDF at https://lake.jort.tn/journal-officiel/fr/1988/051.pdf."
+    - "Whole-government decree; the source prints Saadendine Zmerli, the canonical holder is Saadeddine Zmerli."
   sources:
-  - fr-wiki-baccouche-ii
+    - fr-wiki-baccouche-ii
+    - jort-1988-1392-pdf
 - id: p-gov-slaheddine-ben-mbarek-agriculture
   role: agriculture-minister
   holder: slaheddine-ben-mbarek
   start: '1988-07-27'
   end: '1989-04-11'
-  confidence: C
-  attributed_to: Wikipédia (fr), Second gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Agriculture.'
+    - "Portfolio in the source: Ministre de l'Agriculture."
+    - "Décret n° 88-1392 du 1988-07-27 (JORT n° 51 du 1988-07-29, p. 1075) : « Ministre de l'agriculture ... : Slaheddine Ben M'barek » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1988/051.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1988/051/decret-88-1392; PDF at https://lake.jort.tn/journal-officiel/fr/1988/051.pdf."
+    - "Whole-government decree; this row is named as agriculture minister."
   sources:
-  - fr-wiki-baccouche-ii
+    - fr-wiki-baccouche-ii
+    - jort-1988-1392-pdf
 - id: p-gov-abdelmalek-laarif-communication
   role: communication-minister
   holder: abdelmalek-laarif
   start: '1988-07-27'
   end: '1989-04-11'
-  confidence: C
-  attributed_to: Wikipédia (fr), Second gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Information.'
+    - "Portfolio in the source: Ministre de l'Information."
+    - "Décret n° 88-1392 du 1988-07-27 (JORT n° 51 du 1988-07-29, p. 1075) : « Ministre de l'information ... : Abdelmalek Laarif » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1988/051.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1988/051/decret-88-1392; PDF at https://lake.jort.tn/journal-officiel/fr/1988/051.pdf."
+    - "The decree names the information portfolio, which the dataset records as communication-minister for this era."
   sources:
-  - fr-wiki-baccouche-ii
+    - fr-wiki-baccouche-ii
+    - jort-1988-1392-pdf
 - id: p-gov-hamouda-ben-slama-youth-sports
   role: youth-sports-minister
   holder: hamouda-ben-slama
   start: '1988-07-27'
   end: '1989-04-11'
-  confidence: C
-  attributed_to: Wikipédia (fr), Second gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de la Jeunesse et des Sports.'
+    - "Portfolio in the source: Ministre de la Jeunesse et des Sports."
+    - "Décret n° 88-1392 du 1988-07-27 (JORT n° 51 du 1988-07-29, p. 1075) : « Ministre de la jeunesse et des sports ... : Hamouda Ben Slama » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1988/051.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1988/051/decret-88-1392; PDF at https://lake.jort.tn/journal-officiel/fr/1988/051.pdf."
+    - "Whole-government decree; this row is named as youth and sports minister."
   sources:
-  - fr-wiki-baccouche-ii
+    - fr-wiki-baccouche-ii
+    - jort-1988-1392-pdf
 - id: p-gov-moncef-belaid-economy
   role: economy-minister
   holder: moncef-belaid
   start: '1989-04-11'
   end: '1989-09-27'
-  confidence: C
-  attributed_to: Wikipédia (fr), Troisième gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Économie nationale.'
+    - "Portfolio in the source: Ministre de l'Économie nationale."
+    - "Décret n° 89-437 du 1989-04-11 (JORT n° 25 du 1989-04-11, p. 683) : « Ministre de l'économie nationale : Monsieur Moncef Belaid » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1989/025.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1989/025/decret-89-437; PDF at https://lake.jort.tn/journal-officiel/fr/1989/025.pdf."
+    - "Whole-government decree; this row is named as national economy minister."
   sources:
-  - fr-wiki-baccouche-iii
+    - fr-wiki-baccouche-iii
+    - jort-1989-437
 - id: p-gov-nouri-zorgati-agriculture
   role: agriculture-minister
   holder: nouri-zorgati
   start: '1989-04-11'
   end: '1989-09-27'
-  confidence: C
-  attributed_to: Wikipédia (fr), Troisième gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Agriculture.'
+    - "Portfolio in the source: Ministre de l'Agriculture."
+    - "Décret n° 89-437 du 1989-04-11 (JORT n° 25 du 1989-04-11, p. 683) : « Ministre de l'agriculture : Monsieur Nouri Zorgati » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1989/025.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1989/025/decret-89-437; PDF at https://lake.jort.tn/journal-officiel/fr/1989/025.pdf."
+    - "Whole-government decree; this row is named as agriculture minister."
   sources:
-  - fr-wiki-baccouche-iii
+    - fr-wiki-baccouche-iii
+    - jort-1989-437
 - id: p-gov-ahmed-friaa-equipment
   role: equipment-minister
   holder: ahmed-friaa
   start: '1989-04-11'
   end: '1989-09-27'
-  confidence: C
-  attributed_to: Wikipédia (fr), Troisième gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Équipement et de l''Habitat.'
+    - "Portfolio in the source: Ministre de l'Équipement et de l'Habitat."
+    - "Décret n° 89-437 du 1989-04-11 (JORT n° 25 du 1989-04-11, p. 683) : « Ministre de l'équipement et de l'habitat : Monsieur Ahmed Friaà » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1989/025.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1989/025/decret-89-437; PDF at https://lake.jort.tn/journal-officiel/fr/1989/025.pdf."
+    - "Whole-government decree; this row is named as equipment and housing minister."
   sources:
-  - fr-wiki-baccouche-iii
+    - fr-wiki-baccouche-iii
+    - jort-1989-437
 - id: p-gov-sadok-rabah-communication
   role: communication-minister
   holder: sadok-rabah
   start: '1989-04-11'
   end: '1989-09-27'
-  confidence: C
-  attributed_to: Wikipédia (fr), Troisième gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de la Communication.'
+    - "Portfolio in the source: Ministre de la Communication."
+    - "Décret n° 89-437 du 1989-04-11 (JORT n° 25 du 1989-04-11, p. 683) : « Ministre des communications : Monsieur Sadok Rabah » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1989/025.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1989/025/decret-89-437; PDF at https://lake.jort.tn/journal-officiel/fr/1989/025.pdf."
+    - "Whole-government decree; this row is named as communications minister."
   sources:
-  - fr-wiki-baccouche-iii
+    - fr-wiki-baccouche-iii
+    - jort-1989-437
 - id: p-gov-mohamed-charfi-education
   role: education-minister
   holder: mohamed-charfi
   start: '1989-04-11'
   end: '1989-09-27'
-  confidence: C
-  attributed_to: Wikipédia (fr), Troisième gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Éducation, de l''Enseignement supérieur et de la Recherche scientifique.'
+    - "Portfolio in the source: Ministre de l'Éducation, de l'Enseignement supérieur et de la Recherche scientifique."
+    - "Décret n° 89-437 du 1989-04-11 (JORT n° 25 du 1989-04-11, p. 683) : « Ministre de l'éducation, de l'enseignement supérieur et de la recherche scientifique : Monsieur Mohamed Charfi » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1989/025.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1989/025/decret-89-437; PDF at https://lake.jort.tn/journal-officiel/fr/1989/025.pdf."
+    - "Whole-government decree; the joint title covers education, higher education and scientific research."
   sources:
-  - fr-wiki-baccouche-iii
+    - fr-wiki-baccouche-iii
+    - jort-1989-437
 - id: p-gov-dali-jazi-health
   role: health-minister
   holder: dali-jazi
   start: '1989-04-11'
   end: '1989-09-27'
-  confidence: C
-  attributed_to: Wikipédia (fr), Troisième gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de la Santé.'
+    - "Portfolio in the source: Ministre de la Santé."
+    - "Décret n° 89-437 du 1989-04-11 (JORT n° 25 du 1989-04-11, p. 683) : « Ministre de la santé publique : Monsieur Daly Jazi » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1989/025.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1989/025/decret-89-437; PDF at https://lake.jort.tn/journal-officiel/fr/1989/025.pdf."
+    - "Whole-government decree; the source prints Daly Jazi, the canonical holder is Dali Jazi."
   sources:
-  - fr-wiki-baccouche-iii
+    - fr-wiki-baccouche-iii
+    - jort-1989-437
 - id: p-gov-moncer-rouissi-social-affairs
   role: social-affairs-minister
   holder: moncer-rouissi
   start: '1989-04-11'
   end: '1989-09-27'
-  confidence: C
-  attributed_to: Wikipédia (fr), Troisième gouvernement Hédi Baccouche
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre des Affaires sociales.'
+    - "Portfolio in the source: Ministre des Affaires sociales."
+    - "Décret n° 89-437 du 1989-04-11 (JORT n° 25 du 1989-04-11, p. 683) : « Ministre des affaires sociales : Monsieur Moncer Rouissi » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1989/025.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1989/025/decret-89-437; PDF at https://lake.jort.tn/journal-officiel/fr/1989/025.pdf."
+    - "Whole-government decree; this row is named as social affairs minister."
   sources:
-  - fr-wiki-baccouche-iii
+    - fr-wiki-baccouche-iii
+    - jort-1989-437
 - id: p-gov-chedli-neffati-justice
   role: justice-minister
   holder: chedli-neffati
   start: '1990-03-03'
   end: '1991-02-18'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de la Justice.'
+    - "Portfolio in the source: Ministre de la Justice."
+    - "Décret n° 90-483 du 1990-03-03 (JORT n° 17 du 1990-03-06, p. 323) : « Ministre de la justice : Monsieur Chedli Neffati » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1990/017.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1990/017/decret-90-483; PDF at https://lake.jort.tn/journal-officiel/fr/1990/017.pdf."
+    - "Whole-government decree; this row is named as justice minister."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1990-483
 - id: p-gov-mohamed-ghannouchi-economy
   role: economy-minister
   holder: mohamed-ghannouchi
   start: '1990-03-03'
   end: '1991-02-20'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Économie et des Finances.'
+    - "Portfolio in the source: Ministre de l'Économie et des Finances."
+    - "Décret n° 90-483 du 1990-03-03 (JORT n° 17 du 1990-03-06, p. 323) : « Ministre de l'économie et des finances : Monsieur Mohamed Ghannouchi » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1990/017.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1990/017/decret-90-483; PDF at https://lake.jort.tn/journal-officiel/fr/1990/017.pdf."
+    - "Whole-government decree; this row is named as economy and finance minister."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1990-483
 - id: p-gov-mustapha-nabli-planning
   role: planning-minister
   holder: mustapha-nabli
   start: '1990-03-03'
   end: '1991-02-20'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre du Plan et du Développement régional.'
+    - "Portfolio in the source: Ministre du Plan et du Développement régional."
+    - "Décret n° 90-483 du 1990-03-03 (JORT n° 17 du 1990-03-06, p. 323) : « Ministre du plan et du développement régional : Monsieur Mustapha Nabli » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1990/017.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1990/017/decret-90-483; PDF at https://lake.jort.tn/journal-officiel/fr/1990/017.pdf."
+    - "Whole-government decree; this row is named as plan and regional development minister."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1990-483
 - id: p-gov-mustapha-bouaziz-state-properties
   role: state-properties-minister
   holder: mustapha-bouaziz
   start: '1990-03-03'
   end: '1991-02-20'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre des Domaines de l''État.'
-  - The page says that from 22 May 1991 the ministry is called 'Domaines de l'État et des Affaires foncières'.
+    - "Portfolio in the source: Ministre des Domaines de l'État."
+    - "The page says that from 22 May 1991 the ministry is called 'Domaines de l'État et des Affaires foncières'."
+    - "Décret n° 90-483 du 1990-03-03 (JORT n° 17 du 1990-03-06, p. 323) : « Ministre des domaines de l'Etat : Monsieur Mustapha Bouaziz » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1990/017.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1990/017/decret-90-483; PDF at https://lake.jort.tn/journal-officiel/fr/1990/017.pdf."
+    - "Whole-government decree; this row is named as state properties minister."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1990-483
 - id: p-gov-ahmed-khaled-culture
   role: culture-minister
   holder: ahmed-khaled
   start: '1990-03-03'
   end: '1991-02-20'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de la Culture et de l''Information.'
+    - "Portfolio in the source: Ministre de la Culture et de l'Information."
+    - "Décret n° 90-483 du 1990-03-03 (JORT n° 17 du 1990-03-06, p. 323) : « Ministre de la culture et de l'information : Monsieur Ahmed Khaled » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1990/017.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1990/017/decret-90-483; PDF at https://lake.jort.tn/journal-officiel/fr/1990/017.pdf."
+    - "Whole-government decree; this row is named as culture and information minister."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1990-483
 - id: p-gov-tahar-azaiez-employment
   role: employment-minister
   holder: tahar-azaiez
   start: '1990-03-03'
   end: '1991-02-20'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de la Formation professionnelle.'
+    - "Portfolio in the source: Ministre de la Formation professionnelle."
+    - "Décret n° 90-483 du 1990-03-03 (JORT n° 17 du 1990-03-06, p. 323) : « Ministre de la formation professionnelle et de l'emploi : Monsieur Tahar Azaiez » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1990/017.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1990/017/decret-90-483; PDF at https://lake.jort.tn/journal-officiel/fr/1990/017.pdf."
+    - "Whole-government decree; this row is named as vocational training and employment minister."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1990-483
 - id: p-gov-sadok-rabah-economy
   role: economy-minister
   holder: sadok-rabah
   start: '1991-02-20'
   end: '1991-10-11'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Économie nationale.'
+    - "Portfolio in the source: Ministre de l'Économie nationale."
+    - "Décret n° 91-276 du 1991-02-20 (JORT n° 15 du 1991-02-22, p. 327) : « Ministre de l'économie nationale Sadok RABAH » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1991/015.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1991/015/decret-91-276; PDF at https://lake.jort.tn/journal-officiel/fr/1991/015.pdf."
+    - "Whole-government decree; this row is named as national economy minister."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1991-276
 - id: p-gov-mouldi-zouaoui-agriculture
   role: agriculture-minister
   holder: mouldi-zouaoui
   start: '1991-02-20'
   end: '1991-10-11'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Agriculture.'
+    - "Portfolio in the source: Ministre de l'Agriculture."
+    - "Décret n° 91-276 du 1991-02-20 (JORT n° 15 du 1991-02-22, p. 327) : « Ministre de l'agriculture Mouldi ZOUAOUl » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1991/015.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1991/015/decret-91-276; PDF at https://lake.jort.tn/journal-officiel/fr/1991/015.pdf."
+    - "Whole-government decree; the source prints Mouldi ZOUAOUl, the canonical holder is Mouldi Zouaoui."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1991-276
 - id: p-gov-ahmed-friaa-equipment-2
   role: equipment-minister
   holder: ahmed-friaa
   start: '1991-02-20'
   end: '1994-06-01'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Équipement et de l''Habitat.'
+    - "Portfolio in the source: Ministre de l'Équipement et de l'Habitat."
+    - "Décret n° 91-276 du 1991-02-20 (JORT n° 15 du 1991-02-22, p. 327) : « Ministre de l'équipement et de l'habitat Ahmed FRIAA » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1991/015.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1991/015/decret-91-276; PDF at https://lake.jort.tn/journal-officiel/fr/1991/015.pdf."
+    - "Whole-government decree; this row is named as equipment and housing minister."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1991-276
 - id: p-gov-faouzi-belkahia-transport
   role: transport-minister
   holder: faouzi-belkahia
   start: '1991-02-20'
   end: '1991-10-11'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre du Transport.'
+    - "Portfolio in the source: Ministre du Transport."
+    - "Décret n° 91-276 du 1991-02-20 (JORT n° 15 du 1991-02-22, p. 327) : « Ministre du transport Faouzi BELKAHIA » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1991/015.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1991/015/decret-91-276; PDF at https://lake.jort.tn/journal-officiel/fr/1991/015.pdf."
+    - "Whole-government decree; this row is named as transport minister."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1991-276
 - id: p-gov-mohamed-jegham-tourism-2
   role: tourism-minister
   holder: mohamed-jegham
   start: '1991-02-20'
   end: '1995-01-25'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre du Tourisme et de l''Artisanat.'
+    - "Portfolio in the source: Ministre du Tourisme et de l'Artisanat."
+    - "Décret n° 91-276 du 1991-02-20 (JORT n° 15 du 1991-02-22, p. 327) : « Ministre du tourisme et de l'artisanat Mohamed JEGHAM » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1991/015.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1991/015/decret-91-276; PDF at https://lake.jort.tn/journal-officiel/fr/1991/015.pdf."
+    - "Whole-government decree; this row is named as tourism and crafts minister."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1991-276
 - id: p-gov-habib-lazreg-communication
   role: communication-minister
   holder: habib-lazreg
   start: '1991-02-20'
   end: '1996-06-13'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de la Communication.'
+    - "Portfolio in the source: Ministre de la Communication."
+    - "Décret n° 91-276 du 1991-02-20 (JORT n° 15 du 1991-02-22, p. 327) : « Ministre des communications Habib LAZREG » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1991/015.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1991/015/decret-91-276; PDF at https://lake.jort.tn/journal-officiel/fr/1991/015.pdf."
+    - "Whole-government decree; this row is named as communications minister."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1991-276
 - id: p-gov-mohamed-charfi-education-2
   role: education-minister
   holder: mohamed-charfi
   start: '1991-02-20'
   end: '1992-06-09'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Éducation et des Sciences.'
+    - "Portfolio in the source: Ministre de l'Éducation et des Sciences."
+    - "Décret n° 91-276 du 1991-02-20 (JORT n° 15 du 1991-02-22, p. 327) : « Ministre de l'éducation et des sciences Mohamed CHARFI » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1991/015.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1991/015/decret-91-276; PDF at https://lake.jort.tn/journal-officiel/fr/1991/015.pdf."
+    - "Whole-government decree; this row is named as education and sciences minister."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1991-276
 - id: p-gov-moncer-rouissi-culture
   role: culture-minister
   holder: moncer-rouissi
   start: '1991-02-20'
   end: '1992-06-09'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de la Culture.'
+    - "Portfolio in the source: Ministre de la Culture."
+    - "Décret n° 91-276 du 1991-02-20 (JORT n° 15 du 1991-02-22, p. 327) : « Ministre de la culture Moncer ROUSSI » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1991/015.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1991/015/decret-91-276; PDF at https://lake.jort.tn/journal-officiel/fr/1991/015.pdf."
+    - "Whole-government decree; this row is named as culture minister."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1991-276
 - id: p-gov-dali-jazi-health-2
   role: health-minister
   holder: dali-jazi
   start: '1991-02-20'
   end: '1992-08-03'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de la Santé.'
+    - "Portfolio in the source: Ministre de la Santé."
+    - "Décret n° 91-276 du 1991-02-20 (JORT n° 15 du 1991-02-22, p. 327) : « Ministre de la santé publique Dali JAZI » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1991/015.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1991/015/decret-91-276; PDF at https://lake.jort.tn/journal-officiel/fr/1991/015.pdf."
+    - "Whole-government decree; this row is named as public health minister."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1991-276
 - id: p-gov-ahmed-smaoui-social-affairs
   role: social-affairs-minister
   holder: ahmed-smaoui
   start: '1991-02-20'
   end: '1992-06-09'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre des Affaires sociales.'
+    - "Portfolio in the source: Ministre des Affaires sociales."
+    - "Décret n° 91-276 du 1991-02-20 (JORT n° 15 du 1991-02-22, p. 327) : « Ministre des affaires sociales Ahmed SMAOUI » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1991/015.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1991/015/decret-91-276; PDF at https://lake.jort.tn/journal-officiel/fr/1991/015.pdf."
+    - "Whole-government decree; this row is named as social affairs minister."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1991-276
 - id: p-gov-taoufik-cheikhrouhou-employment
   role: employment-minister
   holder: taoufik-cheikhrouhou
   start: '1991-02-20'
   end: '1996-06-13'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de la Formation professionnelle et de l''Emploi.'
+    - "Portfolio in the source: Ministre de la Formation professionnelle et de l'Emploi."
+    - "Décret n° 91-276 du 1991-02-20 (JORT n° 15 du 1991-02-22, p. 327) : « Ministre de la formation professionnelle et de l'emploi Taoufik CHEIKHROUHOU » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1991/015.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1991/015/decret-91-276; PDF at https://lake.jort.tn/journal-officiel/fr/1991/015.pdf."
+    - "Whole-government decree; this row is named as vocational training and employment minister."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1991-276
 - id: p-gov-mohamed-saad-youth-sports
   role: youth-sports-minister
   holder: mohamed-saad
   start: '1991-02-20'
   end: '1991-10-11'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de la Jeunesse et des Sports et de l''Enfance.'
+    - "Portfolio in the source: Ministre de la Jeunesse et des Sports et de l'Enfance."
+    - "Décret n° 91-276 du 1991-02-20 (JORT n° 15 du 1991-02-22, p. 327) : « Ministre de la jeunesse et de l'enfance Mohamed SAAD » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1991/015.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1991/015/decret-91-276; PDF at https://lake.jort.tn/journal-officiel/fr/1991/015.pdf."
+    - "The decree names the youth and childhood portfolio, which the dataset records as youth-sports minister for this era."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1991-276
 - id: p-gov-abdelaziz-ben-dhia-defence
   role: defence-minister
   holder: abdelaziz-ben-dhia
   start: '1991-10-11'
   end: '1999-11-17'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de la Défense nationale.'
+    - "Portfolio in the source: Ministre de la Défense nationale."
+    - "Décret n° 91-1465 du 1991-10-11 (JORT n° 70 du 1991-10-18, p. 1706) : « Monsieur Abdellaziz Ben Dhia est nommé ministre de la défense nationale. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1991/070.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1991/070/decret-91-1465; PDF at https://lake.jort.tn/journal-officiel/fr/1991/070.pdf."
+    - "Individual appointment decree."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1991-1465
 - id: p-gov-salah-jebali-environment
   role: environment-minister
   holder: salah-jebali
   start: '1991-10-11'
   end: '1992-06-09'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Environnement et de l''Aménagement du territoire.'
+    - "Portfolio in the source: Ministre de l'Environnement et de l'Aménagement du territoire."
+    - "Décret n° 91-1466 du 1991-10-11 (JORT n° 70 du 1991-10-18, p. 1706) : « Monsieur Salah Jebali est nommé ministre de l'environnement et de l'aménagement du territoire. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1991/070.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1991/070/decret-91-1466; PDF at https://lake.jort.tn/journal-officiel/fr/1991/070.pdf."
+    - "Individual appointment decree."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1991-1466
 - id: p-gov-mongi-bousnina-culture
   role: culture-minister
   holder: mongi-bousnina
   start: '1991-10-11'
   end: '1993-06-15'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de la Culture.'
+    - "Portfolio in the source: Ministre de la Culture."
+    - "Décret n° 91-1467 du 1991-10-11 (JORT n° 70 du 1991-10-18, p. 1706) : « Monsieur Mongi Bousnina est nommé ministre de la culture. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1991/070.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1991/070/decret-91-1467; PDF at https://lake.jort.tn/journal-officiel/fr/1991/070.pdf."
+    - "Individual appointment decree."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1991-1467
 - id: p-gov-mohamed-ghannouchi-development
   role: development-minister
   holder: mohamed-ghannouchi
@@ -40991,67 +41230,97 @@
   holder: mohamed-charfeddine-gallouz
   start: '1992-06-09'
   end: '1993-06-15'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Équipement et de l''Habitat.'
+    - "Portfolio in the source: Ministre de l'Équipement et de l'Habitat."
+    - "Décret n° 92-1097 du 1992-06-09 (JORT n° 38 du 1992-06-16, p. 770) : « Monsieur Mohamed Charfeddine Guallouz est nommé Ministre de l'Equipement et de l'Habitat. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1992/038.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1992/038/decret-92-1097; PDF at https://lake.jort.tn/journal-officiel/fr/1992/038.pdf."
+    - "The source prints Guallouz, the canonical holder is Mohamed Charfeddine Gallouz."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1992-1097
 - id: p-gov-mohamed-mehdi-mlika-environment
   role: environment-minister
   holder: mohamed-mehdi-mlika
   start: '1992-06-09'
   end: '1993-06-15'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Environnement et de l''Aménagement du territoire.'
+    - "Portfolio in the source: Ministre de l'Environnement et de l'Aménagement du territoire."
+    - "Décret n° 92-1098 du 1992-06-09 (JORT n° 38 du 1992-06-16, p. 770) : « Monsieur Mohamed Mehdi M'lika est nommé Ministre de l'Environnement et de l'Aménagement du Territoire. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1992/038.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1992/038/decret-92-1098; PDF at https://lake.jort.tn/journal-officiel/fr/1992/038.pdf."
+    - "Individual appointment decree."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1992-1098
 - id: p-gov-tahar-hadj-ali-transport
   role: transport-minister
   holder: tahar-hadj-ali
   start: '1992-06-09'
   end: '1994-06-01'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre du Transport.'
+    - "Portfolio in the source: Ministre du Transport."
+    - "Décret n° 92-1099 du 1992-06-09 (JORT n° 38 du 1992-06-16, p. 770) : « Monsieur Tahar Hadj Ali est nommé Ministre du Transport. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1992/038.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1992/038/decret-92-1099; PDF at https://lake.jort.tn/journal-officiel/fr/1992/038.pdf."
+    - "Individual appointment decree."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1992-1099
 - id: p-gov-moncer-rouissi-employment
   role: employment-minister
   holder: moncer-rouissi
   start: '1992-06-09'
   end: '1993-06-15'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de la Formation professionnelle et de l''Emploi.'
+    - "Portfolio in the source: Ministre de la Formation professionnelle et de l'Emploi."
+    - "Décret n° 92-1100 du 1992-06-09 (JORT n° 38 du 1992-06-16, p. 770) : « Monsieur Moncer Rouissi est nommé Ministre de la Formation Professionnelle et de l'Emploi. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1992/038.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1992/038/decret-92-1100; PDF at https://lake.jort.tn/journal-officiel/fr/1992/038.pdf."
+    - "Individual appointment decree."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1992-1100
 - id: p-gov-hedi-mhenni-health
   role: health-minister
   holder: hedi-mhenni
   start: '1992-08-03'
   end: '1994-11-16'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de la Santé.'
+    - "Portfolio in the source: Ministre de la Santé."
+    - "Décret n° 92-1429 du 1992-08-03 (JORT n° 52 du 1992-08-07, p. 1004) : « Monsieur Hédi M'Henni, est nommé ministre de la santé publique. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1992/052.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1992/052/decret-92-1429; PDF at https://lake.jort.tn/journal-officiel/fr/1992/052.pdf."
+    - "Individual appointment decree."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1992-1429
 - id: p-gov-mohamed-fadhel-khelil-social-affairs
   role: social-affairs-minister
   holder: mohamed-fadhel-khelil
   start: '1992-08-03'
   end: '1993-06-15'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre des Affaires sociales.'
+    - "Portfolio in the source: Ministre des Affaires sociales."
+    - "Décret n° 92-1430 du 1992-08-03 (JORT n° 52 du 1992-08-07, p. 1004) : « Monsieur Mohamed Fadhel Khélil, est nommé ministre des affaires sociales. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1992/052.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1992/052/decret-92-1430; PDF at https://lake.jort.tn/journal-officiel/fr/1992/052.pdf."
+    - "Individual appointment decree."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1992-1430
 - id: p-gov-mohamed-ben-rejeb-agriculture
   role: agriculture-minister
   holder: mohamed-ben-rejeb
@@ -41073,234 +41342,332 @@
   holder: ali-chaouch
   start: '1993-06-15'
   end: '1995-01-25'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Équipement et de l''Habitat.'
+    - "Portfolio in the source: Ministre de l'Équipement et de l'Habitat."
+    - "Décret n° 93-1305 du 1993-06-15 (JORT n° 45 du 1993-06-18, p. 842) : « Monsieur Ali Chaouch est nommé ministre de l'équipement et de l'habitat. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1993/045.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1993/045/decret-93-1305; PDF at https://lake.jort.tn/journal-officiel/fr/1993/045.pdf."
+    - "Individual appointment decree."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1993-1305
 - id: p-gov-abderrahim-zouari-youth-sports
   role: youth-sports-minister
   holder: abderrahim-zouari
   start: '1993-06-15'
   end: '1997-01-22'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de la Jeunesse et des Sports et de l''Enfance.'
+    - "Portfolio in the source: Ministre de la Jeunesse et des Sports et de l'Enfance."
+    - "Décret n° 93-1306 du 1993-06-15 (JORT n° 45 du 1993-06-18, p. 842) : « Monsieur Abderrahim Zouari est nommé ministre de la jeunesse et de l'enfance. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1993/045.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1993/045/decret-93-1306; PDF at https://lake.jort.tn/journal-officiel/fr/1993/045.pdf."
+    - "The decree names the youth and childhood portfolio, which the dataset records as youth-sports minister for this era."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1993-1306
 - id: p-gov-neziha-mezhoud-minister-delegate
   role: minister-delegate
   holder: neziha-mezhoud
   start: '1993-08-06'
   end: '1995-03-27'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre déléguée auprès du Premier ministre chargée des Affaires de la femme et de
-    la Famille.'
+    - "Portfolio in the source: Ministre déléguée auprès du Premier ministre chargée des Affaires de la femme et de la Famille."
+    - "Décret n° 93-1639 du 1993-08-06 (JORT n° 62 du 1993-08-20, p. 1291) : « Madame Néziha Mezhoud, est nommée en qualité de ministre délégué auprès du Premier ministre chargée des affaires de la femme et de la famille. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1993/062.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1993/062/decret-93-1639; PDF at https://lake.jort.tn/journal-officiel/fr/1993/062.pdf."
+    - "Individual appointment decree; the same decree also supports the separate family-women-minister row for this holder."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1993-1639
 - id: p-gov-mondher-zenaidi-transport
   role: transport-minister
   holder: mondher-zenaidi
   start: '1994-06-01'
   end: '1996-06-13'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre du Transport.'
+    - "Portfolio in the source: Ministre du Transport."
+    - "Décret n° 94-1219 du 1994-06-01 (JORT n° 44 du 1994-06-07, p. 936) : « Monsieur Mondher Zenaïdi, est nommé ministre du transport. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1994/044.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1994/044/decret-94-1219; PDF at https://lake.jort.tn/journal-officiel/fr/1994/044.pdf."
+    - "Individual appointment decree."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1994-1219
 - id: p-gov-ahmed-friaa-education
   role: education-minister
   holder: ahmed-friaa
   start: '1994-06-01'
   end: '1996-06-13'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Éducation et des Sciences.'
+    - "Portfolio in the source: Ministre de l'Éducation et des Sciences."
+    - "Décret n° 94-1220 du 1994-06-01 (JORT n° 44 du 1994-06-07, p. 936) : « Monsieur Ahmed Friâa est nommé ministre de l'éducation et des sciences. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1994/044.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1994/044/decret-94-1220; PDF at https://lake.jort.tn/journal-officiel/fr/1994/044.pdf."
+    - "Individual appointment decree."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1994-1220
 - id: p-gov-hatem-ben-othman-education
   role: education-minister
   holder: hatem-ben-othman
   start: '1994-11-16'
   end: ~1999
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Éducation.'
-  - The source does not date the end of this tenure; the year of the end of the government is used as an approximate
-    bound.
+    - "Portfolio in the source: Ministre de l'Éducation."
+    - "The source does not date the end of this tenure; the year of the end of the government is used as an approximate bound."
+    - "Décret n° 94-2340 du 1994-11-16 (JORT n° 91 du 1994-11-18, p. 1874) : « Monsieur Hatem Ben Othman est nommé ministre de l'éducation. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1994/091.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1994/091/decret-94-2340; PDF at https://lake.jort.tn/journal-officiel/fr/1994/091.pdf."
+    - "Individual appointment decree."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1994-2340
 - id: p-gov-dali-jazi-higher-education
   role: higher-education-minister
   holder: dali-jazi
   start: '1994-11-16'
   end: '1996-06-13'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Enseignement supérieur.'
+    - "Portfolio in the source: Ministre de l'Enseignement supérieur."
+    - "Décret n° 94-2341 du 1994-11-16 (JORT n° 91 du 1994-11-18, p. 1874) : « Monsieur Dali Jazi est nommé ministre de l'enseignement supérieur. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1994/091.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1994/091/decret-94-2341; PDF at https://lake.jort.tn/journal-officiel/fr/1994/091.pdf."
+    - "Individual appointment decree."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1994-2341
 - id: p-gov-mustapha-nabli-development
   role: development-minister
   holder: mustapha-nabli
   start: '1995-01-25'
   end: '1999-04-23'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre du Développement économique.'
+    - "Portfolio in the source: Ministre du Développement économique."
+    - "Décret n° 95-143 du 1995-01-25 (JORT n° 8 du 1995-01-27, p. 247) : « Monsieur Mustapha Kamel Nabli est nommé ministre du développement économique. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1995/008.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1995/008/decret-95-143; PDF at https://lake.jort.tn/journal-officiel/fr/1995/008.pdf."
+    - "The source prints Mustapha Kamel Nabli, the canonical holder is Mustapha Nabli. The decree names the economic development portfolio, recorded as development-minister."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1995-143
 - id: p-gov-slaheddine-bouguerra-industry
   role: industry-minister
   holder: slaheddine-bouguerra
   start: '1995-01-25'
   end: ~1999
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Industrie.'
-  - The source does not date the end of this tenure; the year of the end of the government is used as an approximate
-    bound.
+    - "Portfolio in the source: Ministre de l'Industrie."
+    - "The source does not date the end of this tenure; the year of the end of the government is used as an approximate bound."
+    - "Décret n° 95-144 du 1995-01-25 (JORT n° 8 du 1995-01-27, p. 247) : « Monsieur Slaheddine Bouguerra est nommé ministre de l'industrie. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1995/008.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1995/008/decret-95-144; PDF at https://lake.jort.tn/journal-officiel/fr/1995/008.pdf."
+    - "Individual appointment decree."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1995-144
 - id: p-gov-slaheddine-ben-mbarek-commerce-2
   role: commerce-minister
   holder: slaheddine-ben-mbarek
   start: '1995-01-25'
   end: '1996-06-13'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre du Commerce.'
+    - "Portfolio in the source: Ministre du Commerce."
+    - "Décret n° 95-145 du 1995-01-25 (JORT n° 8 du 1995-01-27, p. 247) : « Monsieur Slaheddine Ben M'barek est nommé ministre du commerce. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1995/008.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1995/008/decret-95-145; PDF at https://lake.jort.tn/journal-officiel/fr/1995/008.pdf."
+    - "Individual appointment decree."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1995-145
 - id: p-gov-sadok-rabah-social-affairs
   role: social-affairs-minister
   holder: sadok-rabah
   start: '1995-01-25'
   end: '1996-06-13'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre des Affaires sociales.'
+    - "Portfolio in the source: Ministre des Affaires sociales."
+    - "Décret n° 95-146 du 1995-01-25 (JORT n° 8 du 1995-01-27, p. 247) : « Monsieur Sadok Rabeh est nommé ministre des affaires sociales. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1995/008.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1995/008/decret-95-146; PDF at https://lake.jort.tn/journal-officiel/fr/1995/008.pdf."
+    - "The source prints Sadok Rabeh, the canonical holder is Sadok Rabah."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1995-146
 - id: p-gov-habib-ammar-communication
   role: communication-minister
   holder: habib-ammar
   start: '1995-01-25'
   end: ~1997
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre des Communications.'
-  - The source does not date the end of this tenure; the year of the end of the government is used as an approximate
-    bound.
+    - "Portfolio in the source: Ministre des Communications."
+    - "The source does not date the end of this tenure; the year of the end of the government is used as an approximate bound."
+    - "Décret n° 95-147 du 1995-01-25 (JORT n° 8 du 1995-01-27, p. 248) : « Monsieur Habib Ammar est nommé ministre des communications. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1995/008.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1995/008/decret-95-147; PDF at https://lake.jort.tn/journal-officiel/fr/1995/008.pdf."
+    - "Individual appointment decree."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1995-147
 - id: p-gov-slaheddine-maaoui-tourism
   role: tourism-minister
   holder: slaheddine-maaoui
   start: '1995-01-25'
   end: ~1999
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre du Tourisme et de l''Artisanat.'
-  - The source does not date the end of this tenure; the year of the end of the government is used as an approximate
-    bound.
+    - "Portfolio in the source: Ministre du Tourisme et de l'Artisanat."
+    - "The source does not date the end of this tenure; the year of the end of the government is used as an approximate bound."
+    - "Décret n° 95-148 du 1995-01-25 (JORT n° 8 du 1995-01-27, p. 248) : « Monsieur Slaheddine Maâoui est nommé ministre du tourisme et de l'artisanat. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1995/008.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1995/008/decret-95-148; PDF at https://lake.jort.tn/journal-officiel/fr/1995/008.pdf."
+    - "Individual appointment decree."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1995-148
 - id: p-gov-salah-baccari-culture
   role: culture-minister
   holder: salah-baccari
   start: '1995-01-25'
   end: '1996-08-05'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de la Culture.'
+    - "Portfolio in the source: Ministre de la Culture."
+    - "Décret n° 95-149 du 1995-01-25 (JORT n° 8 du 1995-01-27, p. 248) : « Monsieur Salah Baccari est nommé ministre de la culture. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1995/008.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1995/008/decret-95-149; PDF at https://lake.jort.tn/journal-officiel/fr/1995/008.pdf."
+    - "Individual appointment decree."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1995-149
 - id: p-gov-neziha-zarrouk-minister-delegate
   role: minister-delegate
   holder: neziha-zarrouk
   start: '1995-03-27'
   end: ~1999
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre déléguée chargée des Affaires de la femme et de la Famille.'
-  - The source does not date the end of this tenure; the year of the end of the government is used as an approximate
-    bound.
+    - "Portfolio in the source: Ministre déléguée chargée des Affaires de la femme et de la Famille."
+    - "The source does not date the end of this tenure; the year of the end of the government is used as an approximate bound."
+    - "Décret n° 95-463 du 1995-03-27 (JORT n° 26 du 1995-03-31, p. 566) : « Madame Néziha Zarrouk, est nommée ministre délégué auprès du Premier ministre, chargée des affaires de la femme et de la famille. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1995/026.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1995/026/decret-95-463; PDF at https://lake.jort.tn/journal-officiel/fr/1995/026.pdf."
+    - "Individual appointment decree."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1995-463
 - id: p-gov-abdallah-kallel-defence
   role: defence-minister
   holder: abdallah-kallel
-  start: '1996-06-13'
+  start: '1996-06-15'
   end: '1997-01-22'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de la Défense.'
+    - "Portfolio in the source: Ministre de la Défense."
+    - "Décret n° 96-1120 du 1996-06-15 (JORT n° 49 du 1996-06-18, p. 1199) : « Monsieur Abdallah Kallel, est nommé ministre d'Etat, ministre de la défense nationale. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1996/049.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1996/049/decret-96-1120; PDF at https://lake.jort.tn/journal-officiel/fr/1996/049.pdf."
+    - "Gazette decree is dated 15 June 1996; the canonical start was 13 June 1996. Start moved to the gazette date."
+    - "Previous recorded start: 1996-06-13."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1996-1120
 - id: p-gov-chedli-neffati-social-affairs
   role: social-affairs-minister
   holder: chedli-neffati
-  start: '1996-06-13'
+  start: '1996-06-15'
   end: '1999-11-17'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre des Affaires sociales.'
+    - "Portfolio in the source: Ministre des Affaires sociales."
+    - "Décret n° 96-1121 du 1996-06-15 (JORT n° 49 du 1996-06-18, p. 1199) : « Monsieur Chedly Neffati, est nommé ministre des affaires sociales. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1996/049.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1996/049/decret-96-1121; PDF at https://lake.jort.tn/journal-officiel/fr/1996/049.pdf."
+    - "Gazette decree is dated 15 June 1996; the canonical start was 13 June 1996. Start moved to the gazette date."
+    - "Previous recorded start: 1996-06-13."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1996-1121
 - id: p-gov-sadok-rabah-transport
   role: transport-minister
   holder: sadok-rabah
-  start: '1996-06-13'
+  start: '1996-06-15'
   end: '1997-10-09'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre du Transport.'
+    - "Portfolio in the source: Ministre du Transport."
+    - "Décret n° 96-1122 du 1996-06-15 (JORT n° 49 du 1996-06-18, p. 1199) : « Monsieur Sadok Rabeh, est nommé ministre du transport. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1996/049.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1996/049/decret-96-1122; PDF at https://lake.jort.tn/journal-officiel/fr/1996/049.pdf."
+    - "Gazette decree is dated 15 June 1996; the canonical start was 13 June 1996. Start moved to the gazette date."
+    - "Previous recorded start: 1996-06-13."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1996-1122
 - id: p-gov-mondher-zenaidi-commerce
   role: commerce-minister
   holder: mondher-zenaidi
-  start: '1996-06-13'
+  start: '1996-06-15'
   end: '1999-11-17'
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre du Commerce.'
+    - "Portfolio in the source: Ministre du Commerce."
+    - "Décret n° 96-1123 du 1996-06-15 (JORT n° 49 du 1996-06-18, p. 1199) : « Monsieur Mondher Znaïdi, est nommé ministre du commerce. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1996/049.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1996/049/decret-96-1123; PDF at https://lake.jort.tn/journal-officiel/fr/1996/049.pdf."
+    - "Gazette decree is dated 15 June 1996; the canonical start was 13 June 1996. Start moved to the gazette date."
+    - "Previous recorded start: 1996-06-13."
+    - "Source prints Znaïdi, the canonical holder is Mondher Zenaidi."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1996-1123
 - id: p-gov-abdelbaki-hermassi-culture
   role: culture-minister
   holder: abdelbaki-hermassi
   start: '1996-08-05'
   end: ~1999
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de la Culture.'
-  - The source does not date the end of this tenure; the year of the end of the government is used as an approximate
-    bound.
+    - "Portfolio in the source: Ministre de la Culture."
+    - "The source does not date the end of this tenure; the year of the end of the government is used as an approximate bound."
+    - "Décret n° 96-1349 du 1996-08-05 (JORT n° 65 du 1996-08-13, p. 1732) : « Monsieur Abdelbaki Hermassi est nommé ministre de la culture. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1996/065.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1996/065/decret-96-1349; PDF at https://lake.jort.tn/journal-officiel/fr/1996/065.pdf."
+    - "Individual appointment decree."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1996-1349
 - id: p-gov-mohamed-ben-rejeb-interior
   role: interior-minister
   holder: mohamed-ben-rejeb
@@ -41407,29 +41774,40 @@
 - id: p-gov-houcine-chouk-transport
   role: transport-minister
   holder: houcine-chouk
-  start: '1997-10-09'
+  start: '1997-10-11'
   end: ~1999
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre du Transport.'
-  - The source does not date the end of this tenure; the year of the end of the government is used as an approximate
-    bound.
+    - "Portfolio in the source: Ministre du Transport."
+    - "The source does not date the end of this tenure; the year of the end of the government is used as an approximate bound."
+    - "Décret n° 97-1964 du 1997-10-11 (JORT n° 82 du 1997-10-14, p. 1887) : « Monsieur Houcine Echouk, est nommé ministre du transport. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1997/082.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1997/082/decret-97-1964; PDF at https://lake.jort.tn/journal-officiel/fr/1997/082.pdf."
+    - "Gazette decree is dated 11 October 1997; the canonical start was 9 October 1997. Start moved to the gazette date."
+    - "Previous recorded start: 1997-10-09."
+    - "Source prints Echouk, the canonical holder is Houcine Chouk."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1997-1964
 - id: p-gov-sadok-rabah-agriculture
   role: agriculture-minister
   holder: sadok-rabah
-  start: '1997-10-09'
+  start: '1997-10-11'
   end: ~1999
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernement Hamed Karoui
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre de l''Agriculture.'
-  - The source does not date the end of this tenure; the year of the end of the government is used as an approximate
-    bound.
+    - "Portfolio in the source: Ministre de l'Agriculture."
+    - "The source does not date the end of this tenure; the year of the end of the government is used as an approximate bound."
+    - "Décret n° 97-1967 du 1997-10-11 (JORT n° 82 du 1997-10-14, p. 1887) : « Monsieur Sadok Rabah, est nommé ministre de l'agriculture. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1997/082.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1997/082/decret-97-1967; PDF at https://lake.jort.tn/journal-officiel/fr/1997/082.pdf."
+    - "Gazette decree is dated 11 October 1997; the canonical start was 9 October 1997. Start moved to the gazette date."
+    - "Previous recorded start: 1997-10-09."
   sources:
-  - fr-wiki-karoui
+    - fr-wiki-karoui
+    - jort-1997-1967
 - id: p-gov-ridha-grira-state-properties
   role: state-properties-minister
   holder: ridha-grira
@@ -49008,14 +49386,19 @@
   holder: abderrazak-kefi
   start: '1987-11-07'
   end: '1988-07-27'
-  confidence: B
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre du Tourisme.'
-  - 'Printed holder between Ezzeddine Chelbi and Mohamed Jegham, and the only holder printed inside the stated 2.1-year
-    gap. The page leaves 19 July 1986 – 7 November 1987 blank: see gaps_unresolved.'
+    - "Portfolio in the source: Ministre du Tourisme."
+    - "Printed holder between Ezzeddine Chelbi and Mohamed Jegham, and the only holder printed inside the stated 2.1-year gap. The page leaves 19 July 1986 – 7 November 1987 blank: see gaps_unresolved."
+    - "Décret n° 87-1283 du 1987-11-07 (JORT n° 80 du 1987-11-10, p. 1423) : « Ministre du transport et du tourisme Abderrazak Kéfi » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1987/080.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1987/080/decret-87-1283; PDF at https://lake.jort.tn/journal-officiel/fr/1987/080.pdf."
+    - "The decree names a joint transport and tourism ministry; this row records the tourism portfolio."
   sources:
-  - fr-wp-tourisme
-  - ar-wp-tourisme
+    - fr-wp-tourisme
+    - ar-wp-tourisme
+    - jort-1987-1283
 - id: p-gov-bahi-ladgham-finance
   role: finance-minister
   holder: bahi-ladgham
@@ -49767,14 +50150,19 @@
   holder: mohamed-charfi
   start: '1989-04-11'
   end: '1994-06-01'
-  confidence: B
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: aussi chargé de l''Éducation, puis de l''Éducation et des Sciences.'
-  - Listed between Abdessalem Mseddi (ends 11 avril 1989) and Dali Jazi (from 16 novembre 1994), inside the record's
-    hole; his article gives the same dates for the higher education portfolio.
+    - "Portfolio in the source: aussi chargé de l'Éducation, puis de l'Éducation et des Sciences."
+    - "Listed between Abdessalem Mseddi (ends 11 avril 1989) and Dali Jazi (from 16 novembre 1994), inside the record's hole; his article gives the same dates for the higher education portfolio."
+    - "Décret n° 89-437 du 1989-04-11 (JORT n° 25 du 1989-04-11, p. 683) : « Ministre de l'éducation, de l'enseignement supérieur et de la recherche scientifique : Monsieur Mohamed Charfi » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1989/025.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1989/025/decret-89-437; PDF at https://lake.jort.tn/journal-officiel/fr/1989/025.pdf."
+    - "The decree holds education, higher education and scientific research in one joint title; this row records the higher education portfolio."
   sources:
-  - fr-wp-enssup
-  - fr-wp-mohamed-charfi
+    - fr-wp-enssup
+    - fr-wp-mohamed-charfi
+    - jort-1989-437
 - id: p-gov-ahmed-friaa-higher-education
   role: higher-education-minister
   holder: ahmed-friaa
@@ -49922,43 +50310,54 @@
   holder: sadok-rabah
   start: '1989-04-11'
   end: '1991-02-20'
-  confidence: B
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Ministre tunisien des Communications.'
-  - His own article lists him as minister of communications from 11 April 1989 to 20 February 1991, and the Arabic
-    ministry page gives the same term, inside the record's hole between Habib Ben Cheikh and Montasser Ouaïli.
+    - "Portfolio in the source: Ministre tunisien des Communications."
+    - "His own article lists him as minister of communications from 11 April 1989 to 20 February 1991, and the Arabic ministry page gives the same term, inside the record's hole between Habib Ben Cheikh and Montasser Ouaïli."
+    - "Décret n° 89-437 du 1989-04-11 (JORT n° 25 du 1989-04-11, p. 683) : « Ministre des communications : Monsieur Sadok Rabah » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1989/025.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1989/025/decret-89-437; PDF at https://lake.jort.tn/journal-officiel/fr/1989/025.pdf."
+    - "The decree names the communications portfolio, which the dataset records as ict-minister for this era."
   sources:
-  - ar-wp-tic
-  - fr-wp-sadok-rabah
+    - ar-wp-tic
+    - fr-wp-sadok-rabah
+    - jort-1989-437
 - id: p-gov-habib-ammar-ict
   role: ict-minister
   holder: habib-ammar
   start: '1995-01-25'
   end: '1997-01-22'
-  confidence: C
-  attributed_to: Wikipédia (fr or ar), ministry list
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Communications.'
-  - Named on the Arabic ministry page as الحبيب عمار in the communications ministry section, between Habib Azraq
-    and Ahmed Friaâ. The French homonymy page lists two men named Habib Ammar and does not say which one held the
-    portfolio, so the identity is not settled.
+    - "Portfolio in the source: Communications."
+    - "Named on the Arabic ministry page as الحبيب عمار in the communications ministry section, between Habib Azraq and Ahmed Friaâ. The French homonymy page lists two men named Habib Ammar and does not say which one held the portfolio, so the identity is not settled."
+    - "Décret n° 95-147 du 1995-01-25 (JORT n° 8 du 1995-01-27, p. 248) : « Monsieur Habib Ammar est nommé ministre des communications. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1995/008.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1995/008/decret-95-147; PDF at https://lake.jort.tn/journal-officiel/fr/1995/008.pdf."
+    - "The decree names the communications portfolio, which the dataset records as ict-minister for this era. The communication-minister row for the same holder and date is covered by the same decree."
   sources:
-  - ar-wp-tic
-  - fr-wp-habib-ammar-homonymie
+    - ar-wp-tic
+    - fr-wp-habib-ammar-homonymie
+    - jort-1995-147
 - id: p-gov-ahmed-friaa-ict
   role: ict-minister
   holder: ahmed-friaa
   start: '1997-01-22'
   end: '2002-09-05'
-  confidence: C
-  attributed_to: Wikipédia (fr or ar), ministry list
+  confidence: A
+  verification: unflagged
+  source_relation: direct-record
+  independence: 1
   notes:
-  - 'Portfolio in the source: Communications, puis Technologies de l''information et de la communication.'
-  - Two consecutive rows on the Arabic ministry page, communications until 23 January 2001 and technology and communication
-    until 5 September 2002. The French technology page instead lists the first minister of that ministry as Montasser
-    Ouaïli from 10 November 2004 and places Ahmed Friaâ in education and higher education in 1994. See date_conflicts.
+    - "Portfolio in the source: Communications, puis Technologies de l'information et de la communication."
+    - "Two consecutive rows on the Arabic ministry page, communications until 23 January 2001 and technology and communication until 5 September 2002. The French technology page instead lists the first minister of that ministry as Montasser Ouaïli from 10 November 2004 and places Ahmed Friaâ in education and higher education in 1994. See date_conflicts."
+    - "Décret n° 97-129 du 1997-01-22 (JORT n° 7 du 1997-01-24, p. 115) : « Monsieur Ahmed Friaâ, est nommé ministre des communications. » Read from the JORT OCR layer at https://ocr.jort.tn/journal-officiel/fr/1997/007.md and the decree page at https://www.jort.tn/view/journal-officiel/fr/1997/007/decret-97-129; PDF at https://lake.jort.tn/journal-officiel/fr/1997/007.pdf."
+    - "The decree names the communications portfolio, which the dataset records as ict-minister for this era."
   sources:
-  - ar-wp-tic
+    - ar-wp-tic
+    - jort-1997-129
 - id: p-gov-habib-azrak-ar-ict
   role: ict-minister
   holder: habib-azrak-ar
