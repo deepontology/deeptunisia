@@ -1898,7 +1898,7 @@
 - id: wikipedia-etap
   title: ETAP
   publisher: Wikipedia
-  url: https://fr.wikipedia.org/wiki/Entreprise_tunisienne_des_activit%C3%A9s_p%C3%A9troli%C3%A8res
+  url: https://fr.wikipedia.org/wiki/Entreprise_tunisienne_d%27activit%C3%A9s_p%C3%A9troli%C3%A8res
   tier: 3
   lang: fr
 - id: wikipedia-stb
@@ -1918,13 +1918,13 @@
 - id: wikipedia-bh-bank
   title: BH Bank
   publisher: Wikipedia
-  url: https://fr.wikipedia.org/wiki/Banque_de_l%27habitat_%28Tunisie%29
+  url: https://fr.wikipedia.org/wiki/BH_Bank
   tier: 3
   lang: fr
 - id: wikipedia-bvmt
   title: BVMT
   publisher: Wikipedia
-  url: https://fr.wikipedia.org/wiki/Bourse_des_valeurs_mobili%C3%A8res_de_Tunis
+  url: https://fr.wikipedia.org/wiki/Bourse_de_Tunis
   tier: 3
   lang: fr
 - id: wikipedia-justice-ministers
@@ -2233,7 +2233,7 @@
 - id: wikipedia-abderrazak-rassaa-fr
   title: Abderrazak Rassaa
   publisher: Wikipedia (French)
-  url: https://fr.wikipedia.org/wiki/Abderrazak_Rassa
+  url: https://fr.wikipedia.org/wiki/Abderrazak_Rassaa
   tier: 3
   lang: fr
 - id: wikipedia-mansour-moalla-fr
@@ -2246,7 +2246,7 @@
 - id: wikipedia-salah-ben-mbarka-fr
   title: Salah Ben M'barka
   publisher: Wikipedia (French)
-  url: https://fr.wikipedia.org/wiki/Salah_Ben_M%27barka
+  url: https://fr.wikipedia.org/wiki/Salah_Ben_M%27Barka
   archive_url: https://web.archive.org/web/20250528233147/https://fr.wikipedia.org/wiki/Salah_Ben_M'Barka
   tier: 3
   lang: fr
@@ -2301,7 +2301,7 @@
 - id: wikipedia-ridha-ben-ali-fr
   title: Ridha Ben Ali
   publisher: Wikipédia
-  url: https://fr.wikipedia.org/wiki/Ridha_Ben_Ali_%28homme_politique%29
+  url: https://fr.wikipedia.org/wiki/Ridha_Ben_Ali
   tier: 3
   lang: fr
 - id: wikipedia-ayari-fr
@@ -2406,7 +2406,7 @@
 - id: wikipedia-ett
   title: Établissement de la Télévision Tunisienne
   publisher: Wikipedia (FR)
-  url: https://fr.wikipedia.org/wiki/%C3%89tablissement_de_la_T%C3%A9l%C3%A9vision_tunisienne
+  url: https://fr.wikipedia.org/wiki/%C3%89tablissement_de_la_t%C3%A9l%C3%A9vision_tunisienne
   archive_url: https://web.archive.org/web/20260605155326/https://fr.wikipedia.org/wiki/%C3%89tablissement_de_la_t%C3%A9l%C3%A9vision_tunisienne
   tier: 4
   lang: fr
@@ -2440,7 +2440,7 @@
 - id: wikipedia-el-hiwar
   title: El Hiwar Ettounsi
   publisher: Wikipedia (FR)
-  url: https://fr.wikipedia.org/wiki/El_Hiwar_Ettounsi
+  url: https://fr.wikipedia.org/wiki/El_Hiwar_El_Tounsi
   tier: 4
   lang: fr
 - id: jawharafm-fehri-elhiwar-2014
@@ -2617,7 +2617,7 @@
 - id: wikipedia-ifm-tunisie
   title: IFM (Tunisie)
   publisher: Wikipedia (FR)
-  url: https://fr.wikipedia.org/wiki/IFM_%28Tunisie%29
+  url: https://fr.wikipedia.org/wiki/Radio_IFM
   tier: 4
   lang: fr
 - id: wikipedia-rtci
@@ -2648,7 +2648,7 @@
 - id: wikipedia-assabah
   title: Assabah
   publisher: Wikipedia (FR)
-  url: https://fr.wikipedia.org/wiki/Assabah_%28journal_tunisien%29
+  url: https://fr.wikipedia.org/wiki/Assabah_%28Tunisie%29
   tier: 4
   lang: fr
 - id: wikipedia-al-chourouk
@@ -2706,7 +2706,7 @@
 - id: wikipedia-leaders-tunisie
   title: Leaders (magazine)
   publisher: Wikipedia (FR)
-  url: https://fr.wikipedia.org/wiki/Leaders_%28magazine_tunisien%29
+  url: https://fr.wikipedia.org/wiki/Leaders_%28Tunisie%29
   tier: 4
   lang: fr
 - id: wikipedia-african-manager
@@ -2745,7 +2745,7 @@
 - id: wikipedia-ivd
   title: Instance Vérité et Dignité
   publisher: Wikipedia (FR)
-  url: https://fr.wikipedia.org/wiki/Instance_V%C3%A9rit%C3%A9_et_Dignit%C3%A9
+  url: https://fr.wikipedia.org/wiki/Instance_v%C3%A9rit%C3%A9_et_dignit%C3%A9
   archive_url: https://web.archive.org/web/20260202040012/https://fr.wikipedia.org/wiki/Instance_v%C3%A9rit%C3%A9_et_dignit%C3%A9
   tier: 4
   lang: fr
@@ -2994,7 +2994,7 @@
 - id: wikipedia-mohamed-abbou
   title: Mohamed Abbou
   publisher: Wikipedia (FR)
-  url: https://fr.wikipedia.org/wiki/Mohamed_Abbou_%28homme_politique%29
+  url: https://fr.wikipedia.org/wiki/Mohamed_Abbou_%28homme_politique_tunisien%29
   tier: 4
   lang: fr
 - id: wikipedia-kamal-gharbi
@@ -3248,7 +3248,7 @@
 - id: wikipedia-upl
   title: Free Patriotic Union
   publisher: Wikipedia
-  url: https://en.wikipedia.org/wiki/Free_Patriotic_Union_%28Tunisia%29
+  url: https://en.wikipedia.org/wiki/Free_Patriotic_Union
   tier: 3
   lang: en
 - id: wikipedia-popular-front-tunisia
@@ -3343,7 +3343,7 @@
 - id: wikipedia-upr-tunisia
   title: Republican People's Union (Tunisia)
   publisher: Wikipedia
-  url: https://en.wikipedia.org/wiki/Republican_People%27s_Union_%28Tunisia%29
+  url: https://en.wikipedia.org/wiki/Republican_People%27s_Union
   tier: 3
   lang: en
 - id: charfi-1989-ministres
@@ -17933,7 +17933,7 @@
   title: وزارة التجارة وتنمية الصادرات (تونس)
   publisher: ويكيبيديا (العربية)
   date: '2026-10-20'
-  url: https://ar.wikipedia.org/wiki/%D9%88%D8%B2%D8%A7%D8%B1%D8%A9_%D8%A7%D9%84%D8%AA%D8%AC%D8%A7%D8%B1%D8%A9_%D9%88%D8%AA%D9%86%D9%85%D9%8A%D8%A9_%D8%A7%D9%84%D8%B5%D8%A7%D8%AF%D8%A7%D8%AA_(%D8%AA%D9%88%D9%86%D8%B3)
+  url: https://ar.wikipedia.org/wiki/%D9%88%D8%B2%D8%A7%D8%B1%D8%A9_%D8%A7%D9%84%D8%AA%D8%AC%D8%A7%D8%B1%D8%A9_%D9%88%D8%AA%D9%86%D9%85%D9%8A%D8%A9_%D8%A7%D9%84%D8%B5%D8%A7%D8%AF%D8%B1%D8%A7%D8%AA_%28%D8%AA%D9%88%D9%86%D8%B3%29
   tier: 3
   lang: ar
   excerpt: صلاح الدين بن مبارك 26 ديسمبر 1977 – 24 أبريل 1980 ; 28 أبريل 1986 – 27 يوليو 1988 ; المنصف بلعيد 27
@@ -17978,7 +17978,7 @@
   title: وزارة حقوق الإنسان والعدالة الانتقالية (تونس)
   publisher: ويكيبيديا (العربية)
   date: '2026-10-20'
-  url: https://ar.wikipedia.org/wiki/%D9%88%D8%B2%D8%A7%D8%B1%D8%A9_%D8%AD%D9%82%D9%88%D9%82_%D8%A7%D9%84%D8%A5%D9%86%D8%B3%D8%A7%D9%86_%D9%88%D8%A7%D9%84%D8%B9%D8%AF%D9%84%D8%A9_%D8%A7%D9%84%D8%A7%D9%86%D8%AA%D9%82%D8%A7%D9%84%D9%8A%D8%A9_(%D8%AA%D9%88%D9%86%D8%B3)
+  url: https://ar.wikipedia.org/wiki/%D9%88%D8%B2%D8%A7%D8%B1%D8%A9_%D8%AD%D9%82%D9%88%D9%82_%D8%A7%D9%84%D8%A5%D9%86%D8%B3%D8%A7%D9%86_%D9%88%D8%A7%D9%84%D8%B9%D8%AF%D8%A7%D9%84%D8%A9_%D8%A7%D9%84%D8%A7%D9%86%D8%AA%D9%82%D8%A7%D9%84%D9%8A%D8%A9_%28%D8%AA%D9%88%D9%86%D8%B3%29
   tier: 3
   lang: ar
   excerpt: سمير ديلو 24 ديسمبر 2011 – 29 يناير 2014 ; حافظ بن صالح 29 يناير 2014 – 6 فبراير 2015 ; حل = 6 فبراير
