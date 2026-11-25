@@ -40,11 +40,26 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - name: Verify FEED_PAT before checkout
+        env:
+          FEED_PAT: ${{ secrets.FEED_PAT }}
+        run: |
+          set -euo pipefail
+          if [ -z "${FEED_PAT:-}" ]; then
+            echo "::error::FEED_PAT secret is empty. Set a valid classic PAT with repo scope in Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+          code=$(curl -sS -o /dev/null -w '%{http_code}' -H "Authorization: Bearer ${FEED_PAT}" -H "Accept: application/vnd.github+json" https://api.github.com/user || echo "000")
+          if [ "$code" != "200" ]; then
+            echo "::error::FEED_PAT authentication failed (HTTP ${code}: token expired or revoked). Mint a new classic PAT with repo scope, update FEED_PAT, and re-run."
+            exit 1
+          fi
+
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           token: ${{ secrets.FEED_PAT }}
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '22'
           cache: npm
@@ -82,7 +97,18 @@ jobs:
           git add -- ledger/police-index.jsonl
           period=$(node -e "const l=require('fs').readFileSync('ledger/police-index.jsonl','utf8').trim().split('\n').pop(); const e=JSON.parse(l); process.stdout.write(e.current.period+' '+e.current.stored+' stored')")
           git commit -m "Ledger: police index commitment for ${period}" -m "Copied from the public live endpoint; checked with scripts/ledger-verify.ts." -m "[skip ci]"
-          git push
+          for attempt in 1 2 3; do
+            if git push; then
+              exit 0
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              echo "::error::git push failed after 3 attempts"
+              exit 1
+            fi
+            echo "Push raced with another commit on main (attempt ${attempt}/3); rebasing and retrying"
+            sleep $((attempt * 3))
+            git pull --rebase --autostash origin main
+          done
 
       # After the push, never before it: a line that fails the check is exactly
       # what the ledger exists to show, so it is recorded first and the job then
