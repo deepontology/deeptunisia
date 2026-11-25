@@ -26,6 +26,8 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           fetch-depth: 0
+      - name: Fetch feed branch
+        run: git fetch --no-tags origin feed:refs/remotes/origin/feed
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "22"
@@ -66,11 +68,13 @@ jobs:
       - name: data at the base commit
         working-directory: base
         run: |
+          git fetch --no-tags origin feed:refs/remotes/origin/feed
           npm ci --ignore-scripts
           npm run data
       - name: data at the head commit
         working-directory: head
         run: |
+          git fetch --no-tags origin feed:refs/remotes/origin/feed
           npm ci --ignore-scripts
           npm run data
       - name: compare the two hashes
@@ -110,6 +114,8 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           fetch-depth: 0
+      - name: Fetch feed branch
+        run: git fetch --no-tags origin feed:refs/remotes/origin/feed
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "22"

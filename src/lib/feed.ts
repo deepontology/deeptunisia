@@ -19,8 +19,8 @@
  * oversight to add later: giving an unread headline the vocabulary of an assessed
  * claim would assert a judgement that was never made.
  *
- * Written by `scripts/fetch-feed.ts`; the separation is asserted by
- * `scripts/test-feed.ts`.
+ * Written by `scripts/fetch-feed.ts`, loaded from the `feed` branch by
+ * `scripts/load-feed.ts`; the separation is asserted by `scripts/test-feed.ts`.
  */
 import archive from '../../feed/feed.json';
 
