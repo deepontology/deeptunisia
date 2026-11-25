@@ -3,6 +3,106 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:1823dc922c5fb767",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunis | Projection du film d’animation Josep à l’IFT (Bande-annonce )",
+      "link": "https://kapitalis.com/tunisie/2026/11/24/tunis-projection-du-film-danimation-josep-a-lift-bande-annonce/",
+      "published": "2026-11-24T22:29:55Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:22355fbd9d9bb5c9",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Chiens errants | Le Lions Club poursuit sa campagne à La Manouba",
+      "link": "https://kapitalis.com/tunisie/2026/11/24/chiens-errants-le-lions-club-poursuit-sa-campagne-a-la-manouba/",
+      "published": "2026-11-24T22:14:55Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:aa5273af50141006",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Jadd Hilal présente son roman « Ici commence la terre » à la librairie Al Kitab Mutuelleville",
+      "link": "https://kapitalis.com/tunisie/2026/11/24/jadd-hilal-presente-son-roman-ici-commence-la-terre-a-la-librairie-al-kitab-mutuelleville/",
+      "published": "2026-11-24T21:26:09Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:e50bdb7832d00694",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Hajj 2027 | L’aéroport de Gafsa-Ksar maintient ses vols",
+      "link": "https://kapitalis.com/tunisie/2026/11/24/hajj-2027-laeroport-de-gafsa-ksar-maintient-ses-vols/",
+      "published": "2026-11-24T20:42:23Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:495877c7fbe6ee19",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "One Tech à l’équilibre, et BNA glisse",
+      "link": "https://africanmanager.com/one-tech-a-lequilibre-et-bna-glisse/",
+      "published": "2026-11-24T20:23:58Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:9639ee27a97b126c",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "S. Tunisien : Wael Ouerghemi indisponible entre 4 et 6 semaines",
+      "link": "https://africanmanager.com/s-tunisien-wael-ouerghemi-indisponible-entre-4-et-6-semaines/",
+      "published": "2026-11-24T20:21:59Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:kapitalis:4529cb2c21370a64",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Cité des sciences à Tunis célèbre la 8e édition de la Journée de l’aéronautique",
+      "link": "https://kapitalis.com/tunisie/2026/11/24/cite-des-sciences-a-tunis-celebre-la-8e-edition-de-la-journee-de-laeronautique/",
+      "published": "2026-11-24T19:00:54Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:nawaat:2a80c34a8a288268",
+      "outlet": "Nawaat",
+      "outletId": "nawaat",
+      "title": "مشروع قانون مالية 2027: حين يرتدي العجز عباءة ”السيادة“ وتصبح المخاتلة عنوانا للإنقاذ",
+      "link": "https://nawaat.org/2026/11/24/%d9%85%d8%b4%d8%b1%d9%88%d8%b9-%d9%82%d8%a7%d9%86%d9%88%d9%86-%d9%85%d8%a7%d9%84%d9%8a%d8%a9-2027-%d8%ad%d9%8a%d9%86-%d9%8a%d8%b1%d8%aa%d8%af%d9%8a-%d8%a7%d9%84%d8%b9%d8%ac%d8%b2-%d8%b9%d8%a8%d8%a7/",
+      "published": "2026-11-24T18:00:42Z",
+      "lang": "ar",
+      "author": "Samih Beji Okkez"
+    },
+    {
+      "id": "feed:african-manager:d92929143d54557f",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Aéronautique en Tunisie : Chiffres clés et cap stratégique à 2035",
+      "link": "https://africanmanager.com/lindustrie-aeronautique-en-tunisie-chiffres-cles-et-cap-strategique-a-lhorizon-2035/",
+      "published": "2026-11-24T16:51:37Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:0f4abae4394b8d5d",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Rejet en commissions d’articles sur le solaire et le biodégradable",
+      "link": "https://africanmanager.com/rejet-en-commissions-parlementaires-darticles-sur-les-batteries-les-panneaux-solaires-et-les-sacs-biodegradables/",
+      "published": "2026-11-24T16:44:08Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
       "id": "feed:african-manager:02a8c384259c8943",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -11900,106 +12000,6 @@
       "published": "2026-10-28T20:17:15Z",
       "lang": "fr",
       "author": "Yusra NY"
-    },
-    {
-      "id": "feed:kapitalis:7203d2644f9f381f",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Tunis | Verdict dans l’affaire du viol d’un enfant souffrant d’un handicap",
-      "link": "https://kapitalis.com/tunisie/2026/10/28/tunis-verdict-dans-laffaire-du-viol-dun-enfant-souffrant-dun-handicap/",
-      "published": "2026-10-28T20:01:32Z",
-      "lang": "fr",
-      "author": "Yusra NY"
-    },
-    {
-      "id": "feed:nawaat:b8b7cc0f8c010fb4",
-      "outlet": "Nawaat",
-      "outletId": "nawaat",
-      "title": "نواة في دقيقة: ميزانية لكتابة الشعارات وأخرى للتنفيذ",
-      "link": "https://nawaat.org/2026/10/28/%d9%86%d9%88%d8%a7%d8%a9-%d9%81%d9%8a-%d8%af%d9%82%d9%8a%d9%82%d8%a9-%d9%85%d9%8a%d8%b2%d8%a7%d9%86%d9%8a%d8%a9-%d9%84%d9%83%d8%aa%d8%a7%d8%a8%d8%a9-%d8%a7%d9%84%d8%b4%d8%b9%d8%a7%d8%b1%d8%a7%d8%aa/",
-      "published": "2026-10-28T18:54:09Z",
-      "lang": "ar",
-      "author": "Samih Beji Okkez"
-    },
-    {
-      "id": "feed:african-manager:70fdb9bea110c8a6",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "L’économie nationale fait preuve d’une résilience relative face aux chocs mondiaux",
-      "link": "https://africanmanager.com/leconomie-nationale-fait-preuve-dune-resilience-relative-face-aux-chocs-mondiaux/",
-      "published": "2026-10-28T16:35:21Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:5f01b0bca7f63612",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le taux d’inclusion financière des femmes reste faible dans sept gouvernorats",
-      "link": "https://africanmanager.com/le-taux-dinclusion-financiere-des-femmes-reste-faible-dans-sept-gouvernorats/",
-      "published": "2026-10-28T16:32:16Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:08c41ee8d543ff6d",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Bourse de Tunis: Le Tunindex clôture mercredi dans le rouge",
-      "link": "https://africanmanager.com/bourse-de-tunis-le-tunindex-cloture-mercredi-dans-le-rouge/",
-      "published": "2026-10-28T16:32:03Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:4052615a73d11c27",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Ouverture des candidatures aux bourses de master et de doctorat à l’étranger pour l’année universitaire 2027-2028",
-      "link": "https://africanmanager.com/ouverture-des-candidatures-aux-bourses-de-master-et-de-doctorat-a-letranger-pour-lannee-universitaire-2027-2028/",
-      "published": "2026-10-28T16:28:11Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:bf9d0d34d416502e",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "La Tunisie vise une croissance de 3,1 % en 2027",
-      "link": "https://africanmanager.com/la-tunisie-vise-une-croissance-de-31-en-2027/",
-      "published": "2026-10-28T15:45:32Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:c7c83b34d7940051",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Les ventes de voitures accélèrent, leurs prix calent",
-      "link": "https://africanmanager.com/les-ventes-de-voitures-accelerent-leurs-prix-calent/",
-      "published": "2026-10-28T14:56:00Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:a83c62e6a37529d9",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Tunisie-UE : Lancement de la plateforme d’investissement T-MED",
-      "link": "https://africanmanager.com/tunisie-ue-lancement-de-la-plateforme-dinvestissement-t-med/",
-      "published": "2026-10-28T14:55:00Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:abd008b416b01afa",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Energies renouvelables : La Tunisie ouvre ses portes aux investisseurs",
-      "link": "https://africanmanager.com/energies-renouvelables-la-tunisie-ouvre-ses-portes-aux-investisseurs/",
-      "published": "2026-10-28T14:53:46Z",
-      "lang": "fr",
-      "author": "African Manager"
     }
   ]
 }
