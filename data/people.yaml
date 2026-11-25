@@ -36462,3 +36462,46 @@
   falsifiable_by: "A second outlet or a press-card record."
   sources:
     - snjt-2026-10-26-2357a
+
+- id: mohamed-bouazizi
+  name_en: Mohamed Bouazizi
+  name_fr: Mohamed Bouazizi
+  name_ar: محمد البوعزيزي
+  aliases: [Mohammed Bouazizi, Bouazizi]
+  layers: [civil]
+  tagline: Street vendor whose self-immolation in Sidi Bouzid on 17 December 2010 started the revolution
+  summary: >-
+    Street vendor in Sidi Bouzid who set himself on fire on 17 December 2010. The
+    accounts cited here describe the act as the spark of the protests that reached
+    Tunis on 27 December and ended with Ben Ali's departure on 14 January 2011.
+    This entry identifies the person those accounts name and records the outline
+    they give of the act; it does not carry the circumstances of the encounter
+    that preceded it, because no record of that encounter was read for this entry.
+  confidence: B
+  basis: reported
+  falsifiable_by: >-
+    A primary record naming a different person, date or town for the
+    self-immolation of 17 December 2010 would refute the record.
+  sources: [carnegie-who-will-lead, carnegie-quiet-revolution, enwiki-tunisian-revolution]
+
+- id: lamine-bey
+  name_en: Mohamed Lamine Pacha Bey
+  name_fr: Mohamed Lamine Pacha Bey
+  aliases: [Lamine Bey, Mohamed Lamine Bey]
+  layers: [political]
+  tagline: Bey of Tunis who signed the 3 August 1956 decree transferring regulatory power to the first minister
+  summary: >-
+    Bey of Tunis. The décret beylical of 3 August 1956 opens "Nous, Mohamed Lamine
+    Pacha Bey, possesseur du Royaume de Tunisie" and transfers the taking of
+    regulatory and ordinary decrees to the first minister, president of the
+    council. The Constituent Assembly decided the total abolition of the
+    monarchical regime and the proclamation of the Republic on 25 July 1957, as
+    the Justice Ministry's account of the proclamation records. This entry
+    identifies the officeholder the instruments name; it carries no date of birth,
+    accession or death, because none of the cited texts states one.
+  confidence: B
+  basis: reported
+  falsifiable_by: >-
+    A record showing that the 1956 decree was signed by another Bey, or that the
+    office did not hold in 1956-1957, would refute the record.
+  sources: [dcaf-decret-beylical-1956-08-03, minjustice-proclamation-republique-1957]

@@ -6377,3 +6377,161 @@
   - fr-wiki-anc-2011
   - fr-wiki-anc-2011-list
   - letunizien-com-hichem-hosni-president-du-part
+- id: uget
+  name_en: General Union of Tunisian Students
+  name_fr: Union générale des étudiants de Tunisie
+  name_ar: الاتحاد العام لطلبة تونس
+  aliases: [UGET]
+  abbr: UGET
+  type: association
+  layer: civil
+  parent: null
+  summary: >-
+    National student union. On 22 October 2026 it called a general strike for
+    Friday 23 October in every faculty and higher institute of the Sfax
+    governorate, after the death of the student Rahma Dziri at the Sidi Mansour
+    university residence, per the union's communiqué as relayed by Kapitalis.
+    The record identifies the body the cited account names; it carries no
+    founding date, membership or leadership, because no source read states them.
+  confidence: B
+  basis: reported
+  attributed_to: UGET communiqué, as relayed by Kapitalis (22 October 2026)
+  falsifiable_by: >-
+    A UGET statement that it did not call the 23 October 2026 strike, or that the
+    call was limited to one faculty, would correct the record.
+  sources: [kapitalis-uget-sfax-greve-2026-10-22]
+- id: crldht
+  name_en: Committee for the Respect of Freedoms and Human Rights in Tunisia
+  name_fr: Comité pour le respect des libertés et des droits de l'Homme en Tunisie
+  name_ar: لجنة احترام الحريات وحقوق الإنسان في تونس
+  aliases: [CRLDHT]
+  abbr: CRLDHT
+  type: ngo
+  layer: civil
+  parent: null
+  summary: >-
+    Tunisian human-rights body. Its communiqué of 24 August 2026, republished by
+    Kapitalis, gave the toll of the Zarzis sinking that preceded the Ben Guerdane
+    protests — twelve bodies recovered, two people missing, one survivor — and set
+    the police response to the protests against official silence on the drownings.
+    No founding date, membership or leadership is recorded, because no source read
+    states them.
+  confidence: B
+  basis: reported
+  attributed_to: CRLDHT communiqué of 24 August 2026, republished by Kapitalis
+  falsifiable_by: >-
+    The quoted body proving to be a different committee, or the CRLDHT denying
+    the communiqué, would refute the record.
+  sources: [kapitalis-ben-guerdane-naufrage-2026]
+- id: sea-watch
+  name_en: Sea-Watch
+  name_fr: Sea-Watch
+  aliases: [Sea Watch]
+  type: ngo
+  layer: foreign
+  parent: null
+  summary: >-
+    Search-and-rescue NGO whose ship Aurora found a deflated dinghy near the
+    Hasdrubal platform on 30 September 2026, recovered five survivors and two
+    bodies from it and took 23 more people off the platform, disembarking 28
+    people at Lampedusa; the organisation reported six missing, three of them
+    children. The account is Sea Watch's own, relayed through Ansa by Kapitalis;
+    no Tunisian authority statement was cited.
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: Sea Watch statements via Ansa, relayed by Kapitalis
+  reasoning: >-
+    One relay of the organisation's own statements gives the toll, the platform
+    transfer and the missing count; no SAR log or transport record was retrieved.
+    The record states a reasoned reading of that relay.
+  falsifiable_by: >-
+    A Sea Watch log or a Tunisian, Italian or Libyan SAR record showing that the
+    Aurora was not the rescuing ship, or a different toll, would refute the record.
+  sources: [kapitalis-naufrage-hasdrubal-2026-09-30]
+- id: fitch-ratings
+  name_en: Fitch Ratings
+  name_fr: Fitch Ratings
+  aliases: [Fitch]
+  type: company
+  layer: foreign
+  parent: null
+  summary: >-
+    Credit-rating agency. In September 2026 it affirmed Tunisia's long-term
+    issuer default rating at B- with a stable outlook, as reported on 9 September
+    2026 by African Manager and restated in Kapitalis's 12 September account of
+    both Fitch and S&P. The record identifies the agency the two accounts name;
+    the rating action belongs to the event record, and the agency's own
+    rating-action page was not retrieved.
+  confidence: B
+  basis: reported
+  attributed_to: African Manager (9 September 2026); Kapitalis (12 September 2026)
+  falsifiable_by: >-
+    Fitch's own rating-action page showing no September 2026 action on Tunisia,
+    or a different rating or outlook, would refute the record.
+  sources: [african-manager-fitch-b-2026-09-09, kapitalis-sp-fitch-2026-09-12]
+  notes:
+    - >-
+      Typed as a company, not a regulator. A credit-rating agency is a private
+      firm that issues opinions, not binding rules, so it is recorded as a
+      foreign company and not in the regulator type.
+- id: unesco
+  name_en: United Nations Educational, Scientific and Cultural Organization
+  name_fr: Organisation des Nations unies pour l'éducation, la science et la culture
+  name_ar: منظمة الأمم المتحدة للتربية والعلم والثقافة
+  aliases: [UNESCO, Unesco]
+  abbr: UNESCO
+  type: international-organisation
+  seat: FR
+  layer: foreign
+  parent: null
+  summary: >-
+    The UN organisation whose World Heritage Committee inscribed the Village of
+    Sidi Bou Saïd on the World Heritage List on 25 July 2026, at its 48th session
+    in Busan, South Korea. Its World Heritage Centre handed the inscription
+    certificate to Tunisia's permanent delegate, ambassador Dhia Khaled, at its
+    Paris headquarters on 24 September 2026, per the Tunisian permanent
+    delegation's communiqué relayed by Kapitalis and African Manager.
+  confidence: B
+  basis: reported
+  attributed_to: Tunisian permanent delegation to UNESCO communiqué, relayed by Kapitalis and African Manager
+  falsifiable_by: >-
+    UNESCO's World Heritage List entry or the 48th-session decision showing no
+    Sidi Bou Saïd inscription, or a different handover, would refute the record.
+  sources: [kapitalis-sidi-bou-said-2026-09-24, am-sidi-bou-said-2026-09-24]
+  notes:
+    - >-
+      The seat is the Paris headquarters both accounts name ("au Siège de
+      l'Organisation", "au siège de l'organisation à Paris"), not a separate
+      institutional record.
+- id: aksa-composites
+  name_en: Aksa Composites
+  name_fr: Aksa Composites
+  aliases: [Aksa]
+  type: company
+  layer: economic
+  parent: null
+  summary: >-
+    Turkish composites manufacturer, a subsidiary of the Akkök group. It signed
+    its industrial lease at the Borj Cédria technopole south of Tunis on 24
+    September 2026, its first site in Africa, with an announced initial
+    investment of USD 5m in composite components and materials, notably for
+    aeronautics, per the Gitas industry association's account relayed by
+    Kapitalis. Single-outlet and association-sourced: the lease is recorded as
+    reported, not as a registered investment.
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: Gitas (Groupement des industries tunisiennes aéronautiques et spatiales), via Kapitalis
+  reasoning: >-
+    The lease and the amount rest on one industry association's communiqué
+    relayed by one outlet; no FIPA-Tunisia, technopole or company record was
+    retrieved. The record states a reasoned reading of that account.
+  falsifiable_by: >-
+    A FIPA-Tunisia or Borj Cédria technopole record showing no lease, or a
+    different investor or amount, would refute the record.
+  sources: [kapitalis-aksa-composites-2026-09-25]
+  notes:
+    - >-
+      The company record carries the corporate fields; this institution record
+      carries the summary the company kind has no field for.
