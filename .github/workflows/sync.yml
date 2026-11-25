@@ -20,9 +20,9 @@
 
 name: Sync main into release
 
+# Schedule paused after Release 1.0.0 shipped in PR #122. Keep workflow_dispatch
+# so a sync can be triggered by hand or re-enabled when release/1.1 opens.
 on:
-  schedule:
-    - cron: '40 2 * * *'
   workflow_dispatch:
 
 permissions:
