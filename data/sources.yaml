@@ -29271,3 +29271,44 @@
   tier: 1
   lang: fr
   excerpt: "Monsieur Habib Essid est nommé ministre de l'intérieur."
+# Gazette decrees verified for the 1987 to 2010 ministerial audit, 2026-11-25.
+# Every entry below was read on the issue text at ocr.jort.tn and cross-read
+# on the decree page at jort.tn; the PDF at lake.jort.tn is the scan of record.
+- id: jort-1988-1863
+  title: Décrets n° 88-1862 et 88-1863 du 1er novembre 1988, nomination d'un ministre d'État et du ministre de l'intérieur, JORT n° 74 du 1er novembre 1988, p. 1508
+  title_gloss_ar: الأمران عدد 1862 و1863 لسنة 1988 المؤرخان في 1 نوفمبر 1988 والمتعلقان بتسمية وزير دولة ووزير الداخلية
+  title_gloss_ar_by: model-reviewed
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, lake.jort.tn / ocr.jort.tn)
+  date: '1988-11-01'
+  url: https://lake.jort.tn/journal-officiel/fr/1988/074.pdf
+  tier: 1
+  lang: fr
+  excerpt: >-
+    Par décret n° 88-1862 du 1er novembre 1988 : Monsieur Habib Ammar est nommé
+    ministre d'État conseiller spécial auprès du Président de la République. Par
+    décret n° 88-1863 du 1er novembre 1988 : Monsieur Chédy Naffati est nommé
+    ministre de l'intérieur.
+- id: jort-1987-623
+  title: Décret n° 87-623 du 15 avril 1987 portant nomination du ministre des affaires sociales, JORT n° 28 du 17 avril 1987, p. 531
+  title_gloss_ar: أمر عدد 623 لسنة 1987 مؤرخ في 15 أفريل 1987 يتعلق بتسمية وزير الشؤون الاجتماعية
+  title_gloss_ar_by: model-reviewed
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, lake.jort.tn / ocr.jort.tn)
+  date: '1987-04-15'
+  url: https://lake.jort.tn/journal-officiel/fr/1987/028.pdf
+  tier: 1
+  lang: fr
+  excerpt: >-
+    Par décret n° 87-623 du 15 avril 1987 : Monsieur Hédi Baccouche est nommé
+    ministre des affaires sociales.
+- id: jort-1987-622
+  title: Décret n° 87-622 du 15 avril 1987 portant nomination d'un ministre délégué auprès du Premier ministre, JORT n° 28 du 17 avril 1987, p. 531
+  title_gloss_ar: أمر عدد 622 لسنة 1987 مؤرخ في 15 أفريل 1987 يتعلق بتسمية وزير منتدب لدى الوزير الأول
+  title_gloss_ar_by: model-reviewed
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, lake.jort.tn / ocr.jort.tn)
+  date: '1987-04-15'
+  url: https://lake.jort.tn/journal-officiel/fr/1987/028.pdf
+  tier: 1
+  lang: fr
+  excerpt: >-
+    Par décret n° 87-622 du 15 avril 1987 : Monsieur Abdellaziz Ben Dhia est
+    nommé ministre délégué auprès du Premier ministre.
