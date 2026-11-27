@@ -36522,3 +36522,101 @@
     A record showing that the 1956 decree was signed by another Bey, or that the
     office did not hold in 1956-1957, would refute the record.
   sources: [dcaf-decret-beylical-1956-08-03, minjustice-proclamation-republique-1957]
+
+# ---------------------------------------------------------------------------
+# Daily sweep 2026-11-25 to 2026-11-27 (data/contrib/daily-2026-11-25.yaml,
+# daily-2026-11-26.yaml, daily-2026-11-27.yaml)
+# ---------------------------------------------------------------------------
+- id: mohamed-bouanane
+  name_en: Mohamed Bouanane
+  name_fr: Mohamed Bouanane
+  name_ar: محمد بوعنان
+  aliases: [Mohamed Bouanan, Bouanan, بوعنان]
+  layers: [economic]
+  tagline: "Former bakery owners' leader; 24-year sentence confirmed on appeal in the subsidised-flour speculation case"
+  summary: >-
+    Tunisian bakery owners' representative, described by Mosaique FM and
+    Business News as the former president of the Chambre nationale des
+    propriétaires de boulangeries and by Business News as, at the time of his
+    arrest, president of the UTICA-affiliated Chambre syndicale des patrons de
+    boulangeries. He was arrested in August 2023 during the subsidised-flour
+    crisis and held in detention. On the night of 26 February 2026 the
+    criminal chamber specialised in financial-corruption cases at the Tunis
+    Court of First Instance sentenced him to 24 years for illegal speculation
+    in subsidised products, habitual money laundering and illicit enrichment,
+    with fines; on 26 November 2026 the criminal chamber of the Tunis Court of
+    Appeal upheld the sentence. Business News described him as 86 years old on
+    3 March 2026. The sources give no birth date, no place of birth and no
+    Arabic spelling other than محمد بوعنان, and no retrieved source carries a
+    full biography.
+  confidence: B
+  verification: needs-primary-source
+  attributed_to: "TAP's judicial source (27 November 2026), Mosaique FM, Business News, Webdo, African Manager, Al Chourouk, Babnet, and the TAP relays in Nessma TV"
+  reasoning: >-
+    The identity and role are consistent across the state agency, Mosaique FM,
+    Business News, Webdo, African Manager and Al Chourouk, and the sentence is
+    reported by the same outlets. That supports B, not A: no judgment text,
+    court communique or case number was retrieved, and several outlets share
+    the TAP judicial source or the Mosaique FM item, so the agreement is not
+    fully independent. The age is a single Business News statement on 3 March
+    2026 and is reported as such, not converted into a birth date. The Arabic
+    spelling is the one printed by TAP, Mosaique FM, Babnet and Al Chourouk.
+  falsifiable_by: >-
+    A court record, the judgment or a dated court communique naming Bouanane
+    and the case would confirm the sentence, the charges and the role. A
+    primary record giving a different birth date, a different Arabic spelling
+    or a different person in the same role would correct the identification.
+  sources:
+    - tap-ar-bouanane-appeal-verdict-2026-11-27
+    - mosaique-ar-bouanane-appeal-verdict-2026-11-27
+    - bn-bouanane-appeal-verdict-2026-11-27
+    - webdo-bouanane-appeal-verdict-2026-11-27
+    - bn-bouanane-first-instance-verdict-2026-02-27
+    - bn-bouanane-profile-2026-03-03
+    - nessma-bouanane-first-instance-verdict-2026-02-27
+- id: nabil-chaibi
+  name_en: Nabil Chaibi
+  name_fr: Nabil Chaïbi
+  name_ar: نبيل الشايبي
+  aliases: [Nabil Chaïbi]
+  layers: [economic]
+  tagline: "Businessman; owner of Districom in the Tunisie Telecom distribution-contract case"
+  summary: >-
+    Tunisian businessman. Court reporting identifies him as the owner of
+    Districom, the distributor that signed a contract with Tunisie Telecom at
+    the centre of a financial-corruption case. In a verdict reported on
+    27 November 2026, the criminal chamber specialised in financial-corruption
+    cases at the Tunis Court of First Instance sentenced him to five years'
+    imprisonment and financial fines in that case, while his co-defendant
+    Montasser Ouaïli, the former minister of communication technologies and
+    former PDG of Tunisie Telecom, received six years with immediate execution.
+    Al Chourouk names
+    him in its verdict report; Babnet, Mosaique FM and African Manager report
+    the verdict without names, and Babnet gives the same two prison terms
+    while Mosaique FM and African Manager give no lengths. No birth date, age
+    or fuller biography was carried by the sources read, and none is invented
+    here.
+  confidence: B
+  verification: needs-primary-source
+  attributed_to: "Al Chourouk (24 September and 27 November 2026), Univers News (30 April 2026) and Réalités (16 January 2026)"
+  reasoning: >-
+    Two independent outlets name Nabil Chaïbi in the Districom file: Al
+    Chourouk in its 24 September 2026 hearing report and its 27 November 2026
+    verdict report, and Univers News on 30 April 2026, with Réalités on
+    16 January 2026 also naming him as Districom's owner. That supports B for
+    the identification. The verdict report gives the five-year term and the
+    financial fines; Babnet's anonymous account gives the same five years and
+    fines without a name, which corroborates the sentence but not the
+    identification. No birth date, age or fuller biography was carried by the
+    sources read, and none is invented here.
+  falsifiable_by: >-
+    The judgment text, the case file or a court communique would confirm the
+    sentence and his role in the Districom contract. A court or registry
+    record naming another businessman as Districom's owner, or a judgment
+    giving a different term, would correct the identification or the record.
+  sources:
+    - alchourouk-districom-verdict-2026-11-27
+    - alchourouk-districom-hearing-2026-09-24
+    - universnews-districom-chaibi-2026-04-30
+    - realites-districom-chaibi-2026-01-16
+

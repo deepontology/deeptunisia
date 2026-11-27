@@ -29974,3 +29974,1333 @@
   tier: 1
   lang: fr
   excerpt: 'ministre des affaires religieuses : Monsieur Kamel Omrane.'
+
+# ---------------------------------------------------------------------------
+# Daily sweep 2026-11-25 to 2026-11-27 (data/contrib/daily-2026-11-25.yaml,
+# daily-2026-11-26.yaml, daily-2026-11-27.yaml)
+# ---------------------------------------------------------------------------
+- id: icsid-arb23-18-case-record-2026-11-23
+  title: "Zenith Energy Africa Ltd., Zenith Overseas Assets Ltd. and Compagnie du Désert Ltd. v. Republic of Tunisia (ICSID Case No. ARB/23/18)"
+  publisher: International Centre for Settlement of Investment Disputes (World Bank)
+  date: "2026-11-23"
+  url: https://icsid.worldbank.org/cases/case-database/case-detail?CaseNo=ARB/23/18
+  tier: 2
+  lang: en
+  excerpt: >-
+    November 23, 2026 - The proceeding is suspended for non-payment of the
+    required advances pursuant to ICSID Administrative and Financial
+    Regulation 16(2)(b).
+  note: >-
+    The Centre's own case-detail page, read at source 2026-11-25. Besides the
+    suspension entry it fixes the registration date (June 5, 2023), the
+    tribunal (Loretta Malintoppi, president, appointed by the Chairman of the
+    Administrative Council; Henri C. Alvarez for the claimants; Nassib G.
+    Ziadé for the respondent), the language of the proceeding (French), the
+    status ("Pending"), and the procedural history: hearing on jurisdiction and
+    the merits in Paris 20-24 April 2026, post-hearing briefs 31 July and
+    30 September 2026, submissions on costs 23 October 2026 and observations
+    on them 30 October 2026. It also shows an earlier suspension at the
+    claimants' request (request 11 March 2026, Procedural Order No. 10 of
+    22 March 2026). It does not name which party failed to pay, does not give
+    the sum unpaid, and carries no Tunisian position.
+
+- id: icsid-po5-2025-07-14
+  title: "Ordonnance de procédure n° 5 - Décision sur la demande de mesure conservatoire des Demanderesses concernant le paiement intégral par la Défenderesse de sa quote-part de provision pour les frais d'arbitrage"
+  publisher: International Centre for Settlement of Investment Disputes (World Bank)
+  date: "2025-07-14"
+  url: https://icsidfiles.worldbank.org/icsid/ICSIDBLOBS/OnlineAwards/C11259/DS21007_Fr.pdf
+  tier: 2
+  lang: fr
+  excerpt: >-
+    Lorsque l'une des Parties à une instance arbitrale CIRDI s'abstient de
+    verser sa quote-part des provisions, il appartient à l'autre Partie de
+    suppléer à ce manquement si elle souhaite éviter la suspension de la
+    procédure. [...] si une instance est suspendue pour non-paiement pendant
+    plus de 90 jours consécutifs, le Secrétaire général peut mettre fin à
+    l'instance [...] le Tribunal réitère que la Défenderesse se doit de payer
+    la moitié des frais de la procédure demandés par le Secrétariat du CIRDI
+    [...] Le Tribunal se réserve le droit de se pencher sur la question des
+    paiements non effectués lorsqu'il examinera la répartition finale des
+    coûts.
+  note: >-
+    Three passages joined with ellipses: paragraph 22, paragraph 20(2)(c)
+    reciting Article 16 of the Administrative and Financial Regulations, and
+    paragraph 24. Read from the PDF, 25 November 2026. Procedural Order No. 5,
+    signed 14 July 2025, decides the claimants' second request for provisional
+    measures. The tribunal rejected the request that it
+    order Tunisia to pay its share, holding that the default mechanism belongs
+    exclusively to the Secretary-General under Article 16 of the Administrative
+    and Financial Regulations and that the tribunal cannot change those rules.
+    It recited the steps in that article: notification, 30 days to pay,
+    a further 15 days, then suspension, then discontinuance if a suspension for
+    non-payment lasts more than 90 consecutive days. It reiterated that Tunisia
+    must pay half the costs and reserved the question of unpaid payments to the
+    final allocation. This is the document behind the company's statement that
+    Procedural Order No. 5 of 14 July 2025 confirmed the position on costs.
+
+- id: zenith-rns-suspension-2026-11-24
+  title: "ICSID Arbitration against the Republic of Tunisia - Proceedings Suspended Due to Tunisia's Non-Payment of Arbitration Costs, Opening Window for Settlement Discussions"
+  publisher: "Zenith Energy Ltd (regulatory announcement, distributed by Cision)"
+  date: "2026-11-24"
+  url: https://news.cision.com/zenith-energy-ltd/r/icsid-arbitration-against-the-republic-of-tunisia---proceedings-suspended-due-to-tunisia-s-non-payme,c4428418
+  tier: 2
+  lang: en
+  excerpt: >-
+    Further to the Company's announcement of 9 November 2026, and despite
+    ICSID's renewed request, the Republic of Tunisia has again failed to pay its
+    outstanding share of the advance on costs requested by ICSID within the
+    period prescribed under the ICSID Administrative and Financial Regulations.
+    The Claimants have therefore decided, on this occasion, not to advance
+    Tunisia's outstanding share of the costs at this stage. [...] As a direct
+    consequence of Tunisia's default, the ICSID Arbitration has been suspended
+    with effect from today pending payment of the outstanding amount [...]
+    The post-hearing written submissions phase has concluded, and the Company
+    has previously indicated that the Tribunal's final award was expected by
+    May 2027. The suspension of proceedings may delay the issuance of the final
+    award by several months.
+  note: >-
+    Published 24 November 2026 at 00:40 CET and carrying the EU Market Abuse
+    Regulation disclosure used for the Stockholm listing. Primary for what the
+    company says and for the fact that it announced the suspension; it is not
+    an independent record of the default it alleges. Also gives approximately
+    US$573 million, ICSID Case No. ARB/23/18, the 1989 UK-Tunisia treaty, the
+    claimants' statement that they paid Tunisia's share on every previous call,
+    the CNQ Global Advisors settlement offer, and Andrea Cattaneo's statement
+    attributing any delay to Tunisia and expecting the tribunal to weigh it in
+    the final allocation of costs. The London Stock Exchange news service
+    carries the same announcement as "ICSID Suspension - Potential Negotiated
+    Settlement", 24 November 2026.
+
+- id: am-zenith-suspension-2026-11-25
+  title: "L'arbitrage Zenith Tunisie est suspendu « faute de paiement des frais »"
+  publisher: African Manager
+  date: "2026-11-25"
+  url: https://africanmanager.com/larbitrage-zenith-tunisie-est-suspendu-faute-de-paiement-des-frais/
+  tier: 3
+  lang: fr
+  excerpt: >-
+    Zenith Energy Ltd a annoncé mardi la suspension de la procédure d'arbitrage
+    avec la République tunisienne, le gouvernement du pays « n'ayant pas payé sa
+    part des frais », affirme la compagnie citée par London South East [...]
+    La société [...] réclame 572,7 millions de dollars de dommages et intérêts
+    pour « comportement arbitraire des autorités tunisiennes » [...] La
+    sentence finale du tribunal était attendue pour mai 2027, mais la
+    suspension de la procédure « pourrait retarder le prononcé de la sentence
+    finale de plusieurs mois ».
+  note: >-
+    The starting item, published the day after the announcement and crediting
+    London South East, which credits the release. Carries USD 572.7 million, the
+    Sidi El Kilani concession, the 1989 UK-Tunisia treaty, the CNQ sentence and
+    Cattaneo's cost-allocation statement, plus the London close down 4.1 per
+    cent at 3.50 pence. Adds no fact that is not in the announcement. The
+    London South East page returned 403 on fetch, so the relay's own page was
+    not read.
+
+- id: webdo-zenith-suspension-2026-11-24
+  title: "Arbitrage de 573 millions de dollars : Zenith annonce la suspension de la procédure contre la Tunisie"
+  publisher: Webdo
+  date: "2026-11-24"
+  url: https://www.webdo.tn/fr/actualite/national/arbitrage-de-573-millions-de-dollars-zenith-annonce-la-suspension-de-la-procedure-contre-la-tunisie/407645
+  tier: 3
+  lang: fr
+  excerpt: >-
+    Dans un communiqué réglementaire publié ce mardi et relayé par Euronext, le
+    groupe indique que ses filiales britanniques ont décidé de ne plus avancer,
+    pour le moment, les sommes dues par la partie tunisienne. [...] Les demandes
+    d'indemnisation s'élèvent à près de 573 millions de dollars, hors intérêts.
+    Ce montant ne correspond toutefois pas à une dette reconnue de l'État
+    tunisien, mais aux prétentions financières des investisseurs [...] L'annonce
+    de la suspension reste à confirmer auprès du CIRDI et des autorités
+    tunisiennes.
+  note: >-
+    Same-day Tunisian account, signed Ramzi Haddad, 10:16. The only outlet read
+    that states plainly that the sum is a claim and not a recognised debt, and
+    that the suspension needed confirmation from ICSID and the Tunisian
+    authorities - which the ICSID docket later supplied. Attributes the 14 July
+    2025 procedural order to the company rather than reporting it as its own
+    finding, and gives the registration date as 5 June 2023.
+
+- id: alliance-news-zenith-suspension-2026-11-25
+  title: "Zenith Tunisia arbitration suspended as government fails to pay costs"
+  publisher: "Alliance News (carried by AJ Bell)"
+  date: "2026-11-25"
+  url: https://www.ajbell.co.uk/news/articles/zenith-tunisia-arbitration-suspended-government-fails-pay-costs
+  tier: 3
+  lang: en
+  excerpt: >-
+    Zenith Energy Ltd on Tuesday announced the suspension of arbitration
+    proceedings with the Republic of Tunisia, as the country's government has
+    failed to pay its share of costs. [...] The tribunal's final award was
+    expected by May 2027, but the suspension of proceedings "may delay the
+    issuance of the final award by several months", Zenith added. [...] Shares
+    in Zenith closed down 4.1% at 3.50 pence each in London on Tuesday.
+  note: >-
+    An Alliance News wire rewrite of the release, published the day after; the
+    same piece appears on Morningstar under the Alliance News byline. It carries
+    USD 572.7 million, the same quotations and the London close, and adds no
+    reporting of its own. Useful only to show that the English-language
+    coverage of the announcement is one wire repeated, not independent
+    confirmation of the default.
+
+- id: terafinances-zenith-suspension-2026-11-25
+  title: "Zenith-Tunisie : le CIRDI inscrit la suspension de l'arbitrage pour avances impayées"
+  publisher: Tera Finances
+  date: "2026-11-25"
+  url: https://terafinances.com/zenith-tunisie-le-cirdi-inscrit-la-suspension-de-larbitrage-pour-avances-impayees-682
+  tier: 4
+  lang: fr
+  excerpt: >-
+    La version indexée du registre public du CIRDI date la suspension du dossier
+    ARB/23/18 du 23 novembre 2026. Dans son communiqué publié le 24 novembre à
+    0 h 40, heure de Tunis, Zenith Energy indique que la suspension prend effet
+    le jour même. Les deux sources présentent ainsi un écart d'un jour. [...]
+    Si la suspension pour défaut de paiement se prolonge au-delà de 90 jours
+    consécutifs, le secrétaire général du Centre peut mettre fin à l'instance
+    après avoir avisé les parties et le tribunal.
+  note: >-
+    Signed Moez Hadidane, 11:23. The only account read that puts the docket's
+    23 November and the company's 24 November next to each other and names the
+    one-day gap; its reading of both records matches what they say when opened.
+    Also states that the public sources consulted give no amount for the unpaid
+    advance and no Tunisian official reaction. Not independent of the release
+    for anything in the release.
+
+- id: courdescomptes-linkedin-oman-2026-11-24
+  title: "محكمة المحاسبات التونسية وجهاز الرقابة المالية والإدارية للدولة بسلطنة عمان : نحو تعزيز التعاون وتبادل الخبرات"
+  publisher: "La Cour des comptes tunisienne (official LinkedIn page)"
+  date: "2026-11-24"
+  url: https://ae.linkedin.com/posts/la-cour-des-comptes-tunisienne-%D9%85%D8%AD%D9%83%D9%85%D8%A9-%D8%A7%D9%84%D9%85%D8%AD%D8%A7%D8%B3%D8%A8%D8%A7%D8%AA_%D9%85%D8%AD%D9%83%D9%85%D8%A9-%D8%A7%D9%84%D9%85%D8%AD%D8%A7%D8%B3%D8%A8%D8%A7%D8%AA-%D8%A7%D9%84%D8%AA%D9%88%D9%86%D8%B3%D9%8A%D8%A9-%D9%88%D8%AC%D9%87%D8%A7%D8%B2-%D8%A7%D9%84%D8%B1%D9%82%D8%A7%D8%A8%D8%A9-%D8%A7%D9%84%D9%85%D8%A7%D9%84%D9%8A%D8%A9-activity-7530742364873658368-Q7h2
+  tier: 2
+  lang: ar
+  excerpt: >-
+    وتوّجت هذه الزيارة بتوقيع اتفاقية شراكة وتعاون بين المؤسستين، ترمي إلى
+    إرساء إطار مؤسسي للتعاون المشترك وتعزيز تبادل التجارب والخبرات وتطوير
+    مجالات العمل المشترك، بما يسهم في دعم قدراتهما وتحقيق الأهداف المشتركة.
+  note: >-
+    The Court's own account, on its LinkedIn page: it received an Omani
+    delegation, the visit produced a partnership and cooperation agreement,
+    and the page lists the purpose in general terms. It gives no date of
+    signature, no signatory, no duration and no text. The page displayed "1
+    day" when read on 25 November, which is how the 24 November date is
+    assigned. This page is not linked from the Court's website, so it is
+    treated as the institution's social account, not as a hosted communique;
+    the same text was relayed by Tunisien.tn, Djerid FM, African Manager, Le
+    Temps and Managers, and TAP reports it on 23 November.
+  tier_note: "Institution speaking in its own name; a social post, not the instrument."
+
+- id: isc-oman-x-mou-2026-11-24
+  title: "Enhancing audit cooperation and integration of expertise in protecting public fund and combating corruption"
+  publisher: "State Financial and Administrative Audit Authority, Sultanate of Oman (official X account @StateAudit_Oman)"
+  date: "2026-11-24"
+  url: https://x.com/StateAudit_Oman/status/2125310101317898666
+  tier: 2
+  lang: en
+  excerpt: >-
+    His Excellency Chairman of the Authority, and Her Excellency Judge Fadhila
+    Gargouri, Vice Prime-President of the Court of Accounts of the Republic of
+    Tunisia, signed a Memorandum of Understanding aimed at expanding areas of
+    cooperation and exchanging professional knowledge and expertise through the
+    development of audit practices, implementation of training programs,
+    organization of scientific events, and exchange of experiences and
+    methodologies, thereby enhancing the efficiency and effectiveness of audit
+    work.
+  note: >-
+    The Omani authority's own account, in English, on its official account.
+    It is the only source read that names both signatories: Sheikh Ghuson bin
+    Hilal Al Alawi, chairman of the authority, and Judge Fadhila Gargouri, Vice
+    Prime-President of the Tunisian Court of Accounts. It calls the instrument
+    a Memorandum of Understanding and lists the fields of cooperation. It gives
+    no date of signature, no duration and no text. The post time decoded from
+    the post id is 2026-11-24 19:26 UTC; the page does not display a date.
+    Spellings of the two names vary across sources (Ghuson/Ghosn/Ghossn,
+    Gargouri/Guergouri/Al-Qarqouri).
+  tier_note: "Institution speaking in its own name; a social post, not the instrument."
+
+- id: tap-oman-court-agreement-2026-11-23
+  title: "التوقيع على اتفاقية شراكة بين محكمة المحاسبات و جهاز الرقابة المالية والإدارية للدولة بسلطنة عمان"
+  publisher: TAP (Tunis Afrique Presse)
+  date: "2026-11-23"
+  url: https://www.tap.info.tn/ar/%D9%88%D9%8A%D8%A8-%D8%B3%D9%8A%D8%AA-%D8%B3%D9%8A%D8%A7%D8%B3%D8%A9-Portal-Politic/20837604-%D8%A7%D9%84%D8%AA%D9%88%D9%82%D9%8A%D8%B9-%D8%B9%D9%84%D9%89-%D8%A7%D8%AA%D9%81%D8%A7%D9%82%D9%8A%D8%A9
+  tier: 2
+  lang: ar
+  excerpt: >-
+    تونس 23 نوفمبر 2026 (وات)- تم اليوم الاثنين، التوقيع على اتفاقية شراكة
+    وتعاون بين محكمة المحاسبات وجهاز الرقابة المالية والإدارية للدولة بسلطنة
+    عمان، وذلك وفق بلاغ لمحكمة المحاسبات.وتهدف هذه الاتفاقية، إلى إرساء إطار
+    مؤسسي للتعاون المشترك وتعزيز...
+  note: >-
+    The state agency's item, timestamped 23/11/2026 22:47. Only the lead is
+    readable: the body is behind the subscriber prompt and stops at the page's
+    own ellipsis. It fixes the day (Monday 23 November 2026), states that the
+    announcement came from a Court communique ("وفق بلاغ لمحكمة المحاسبات"),
+    and gives the purpose in the Court's wording. It names no signatory and no
+    duration. Fetched with curl because the certificate chain failed in the
+    webfetch client.
+
+- id: tunisien-oman-court-agreement-2026-11-23
+  title: "توقيع اتفاقية شراكة بين محكمة المحاسبات وجهاز الرقابة المالية والإدارية للدولة بسلطنة عمان"
+  publisher: Tunisien.tn
+  date: "2026-11-23"
+  url: https://www.tunisien.tn/?p=358100
+  tier: 4
+  lang: ar
+  excerpt: >-
+    تم اليوم الإثنين، التوقيع على اتفاقية شراكة وتعاون بين محكمة المحاسبات
+    وجهاز الرقابة المالية والإدارية للدولة بسلطنة عمان، وذلك وفق بلاغ لمحكمة
+    المحاسبات.
+  note: >-
+    The earliest full relay of the Court communique read, published on the day
+    of the signing ("today Monday"). Adds the purpose, the reception of the
+    Omani delegation, the reference to the supreme audit institutions and the
+    exchange of experience. No signatory, no text, no duration. Last updated
+    23/11/2026.
+
+- id: djeridfm-oman-court-agreement-2026-11-23
+  title: "محكمة المحاسبات التونسية توقع اتفاقية شراكة وتعاون مع جهاز الرقابة العماني"
+  publisher: Djerid FM
+  date: "2026-11-23"
+  url: https://djeridfm.com/%D9%85%D8%AD%D9%83%D9%85%D8%A9-%D8%A7%D9%84%D9%85%D8%AD%D8%A7%D8%B3%D8%A8%D8%A7%D8%AA-%D8%A7%D9%84%D8%AA%D9%88%D9%86%D8%B3%D9%8A%D8%A9-%D8%AA%D9%88%D9%82%D8%B9-%D8%A7%D8%AA%D9%81%D8%A7%D9%82%D9%8A%D8%A9/
+  tier: 4
+  lang: ar
+  excerpt: >-
+    أوضحت محكمة المحاسبات، في بلاغ لها، أن هذه الاتفاقية تُوّجت زيارة أدّاها
+    وفد عُماني إلى تونس.
+  note: >-
+    Radio station relaying the Court communique and naming it ("في بلاغ لها").
+    Says the agreement crowned a visit by an Omani delegation and adds the
+    areas of cooperation in general terms. No signatory, no date of signature
+    beyond "since two days" relative to the 25 November read, no text, no
+    duration.
+
+- id: am-oman-court-agreement-2026-11-24
+  title: "Tunisie–Oman : accord pour contrôler les finances publiques"
+  publisher: African Manager
+  date: "2026-11-24"
+  url: https://africanmanager.com/tunisie-oman-un-accord-de-partenariat-pour-renforcer-le-controle-des-finances-publiques/
+  tier: 3
+  lang: fr
+  excerpt: >-
+    Un accord de partenariat a été signé lundi à Tunis entre la Cour des comptes
+    et l’Institution nationale de contrôle financier et administratif (ISC) du
+    Sultanat d’Oman, en vue de renforcer la coopération entre les deux
+    institutions et de promouvoir l’échange d’expertises en matière de contrôle
+    de la gestion des deniers publics.
+  note: >-
+    The starting item, read in full. It derives from the Court's social
+    announcement ("Selon la Cour des comptes, qui a annoncé cette signature sur
+    ses réseaux sociaux") and says the agreement was concluded "à l'issue d'une
+    visite en Tunisie d'une délégation omanaise". Headline says "contrôler", the
+    body describes cooperation and expertise exchange. No signatory, no text,
+    no duration.
+
+- id: letemps-oman-court-agreement-2026-11-24
+  title: "Tunisie-Oman : un accord pour renforcer la coopération en matière de contrôle des finances publiques"
+  publisher: Le Temps News
+  date: "2026-11-24"
+  url: https://letemps.news/2026/11/24/tunisie-oman-un-accord-pour-renforcer-la-cooperation-en-matiere-de-controle-des-finances-publiques/
+  tier: 3
+  lang: fr
+  excerpt: >-
+    Conclu à l’issue d’une visite en Tunisie d’une délégation omanaise, cet
+    accord prévoit la mise en place d’un cadre de coopération institutionnelle
+    axé sur le partage des connaissances et des bonnes pratiques, ainsi que sur
+    le renforcement des capacités des deux institutions dans le domaine du
+    contrôle des finances publiques.
+  note: >-
+    Same communique text as African Manager, published at 09:34 on 24 November.
+    Carries the institutional-cooperation framework wording and the reference
+    to the Court's regional and international outreach. Same limits: no
+    signatory, no text, no duration.
+
+- id: managers-oman-court-agreement-2026-11-24
+  title: "Finances publiques: les Cours des comptes tunisienne et omanaise misent sur la coopération"
+  publisher: Managers
+  date: "2026-11-24"
+  url: https://managers.tn/2026/11/24/finances-publiques-les-cours-des-comptes-tunisienne-et-omanaise-misent-sur-la-cooperation/
+  tier: 3
+  lang: fr
+  excerpt: >-
+    Paraphé à l’issue d’une visite d’une délégation omanaise en Tunisie, le
+    document définit les contours d’une coopération appelée à s’enrichir par le
+    partage d’expériences, la transmission des bonnes pratiques et le
+    renforcement des capacités des deux organismes.
+  note: >-
+    Signed (Wejden Jlassi) and rewritten rather than pasted. The only relay
+    read that states explicitly that the contours of the possible initiatives
+    were not specified: "Les contours de ces éventuelles initiatives n’ont
+    cependant pas été précisés." Calls the instrument "paraphé". Same limits.
+
+- id: ona-oman-tunisia-mous-2026-11-25
+  title: "سلطنة عُمان تشارك في اجتماع المجلس التنفيذي للأرابوساي بتونس"
+  publisher: Oman News Agency (وكالة الأنباء العمانية)
+  date: "2026-11-25"
+  url: https://omannews.gov.om/topics/ar/3/show/477299/
+  tier: 2
+  lang: ar
+  excerpt: >-
+    وعلى هامش الاجتماع، زار معالي الشيخ غصن العلوي، رئيس الجهاز، كلًّا من
+    محكمة المحاسبات التونسية والهيئة العليا للرقابة الإدارية والمالية بتونس،
+    برفقة سعادة الدكتور هلال بن عبدالله السناني، سفير سلطنة عُمان المعتمد لدى
+    الجمهورية التونسية، واطلع الوفد خلال الزيارتين على التجارب والممارسات
+    الرقابية، وتبادل الخبرات، وبحث آفاق تطوير التعاون المؤسسي، كما جرى توقيع
+    مذكرتي تفاهم لتعزيز التعاون المشترك في مجالات العمل الرقابي.
+  note: >-
+    The Omani state agency, dateline Tunis 25 November 2026. Reports the 71st
+    Executive Council meeting of ARABOSAI, hosted by Tunisia over three days,
+    and says that on its sidelines the authority's chairman visited both the
+    Tunisian Court of Accounts and the Haute instance du contrôle administratif
+    et financier (HICAF) and that two memoranda of understanding were
+    signed. It does not date either signature and does not name the Tunisian
+    signatories. The omannews.gov.om page returned a transport error on 25
+    November; the full text was read in a verbatim reproduction that carries
+    the /العُمانية/ dateline and links this URL.
+
+- id: alwaha-oman-tunisia-mous-2026-11-25
+  title: "تعزيزا لمسارات الشراكة المؤسسية.. سلطنة عُمان والجمهورية التونسية توقّعان مذكرتي تفاهم لتعزيز التعاون الرقابي وصون المال العام"
+  publisher: Al Waha (مجلة الواحة العمانية)
+  date: "2026-11-25"
+  url: https://alwahamagazine.com/archives/48600
+  tier: 3
+  lang: ar
+  excerpt: >-
+    مذكرة تفاهم أولى مع محكمة المحاسبات في الجمهورية التونسية، ممثّلةً في
+    معالي القاضية فضيلة القرقوري وكيل الرئيس الأول للمحكمة، في مجال حماية
+    المال العام ومكافحة الفساد
+  note: >-
+    Signed Omani magazine piece (إسحاق الحارثي) and the fullest Omani account
+    read. Dates the authority's delegation visit to 22-27 November 2026, names
+    the Court's signatory as Judge Fadhila Al-Qarqouri, Vice Prime-President of
+    the Court, and gives the Court memorandum's field as protection of public
+    money and fighting corruption. The second memorandum is with HICAF. The
+    page's own text places asterisks around the second memorandum; the excerpt
+    stops before them. No text, no duration.
+
+- id: shabiba-oman-tunisia-mous-2026-11-25
+  title: "سلطنة عُمان توقّع مذكرتي تفاهم لتعزيز التعاون الرقابي مع تونس"
+  publisher: Al Shabiba
+  date: "2026-11-25"
+  url: https://shabiba.com/a/215161
+  tier: 3
+  lang: ar
+  excerpt: >-
+    وعلى هامش الاجتماع، زار معالي الشيخ غصن العلوي، رئيس الجهاز، كلًّا من
+    محكمة المحاسبات التونسية والهيئة العليا للرقابة الإدارية والمالية بتونس،
+    برفقة سعادة الدكتور هلال بن عبدالله السناني، سفير سلطنة عُمان المعتمد لدى
+    الجمهورية التونسية، واطلع الوفد خلال الزيارتين على التجارب والممارسات
+    الرقابية، وتبادل الخبرات، وبحث آفاق تطوير التعاون المؤسسي، كما جرى توقيع
+    مذكرتي تفاهم لتعزيز التعاون المشترك في مجالات العمل الرقابي.
+  note: >-
+    Omani daily, published 25 November 17:39, carrying the same agency text and
+    crediting it ("حسبما أفادت وكالة الأنباء العُمانية"). Its own headline says
+    two memoranda of understanding. Same limits: no signature date, no text, no
+    duration.
+
+- id: am-hicaf-oman-mou-2026-11-25
+  title: "Tunisie-Oman : Un MoU en matière de contrôle public"
+  publisher: African Manager
+  date: "2026-11-25"
+  url: https://africanmanager.com/tunisie-oman-un-memorandum-dentente-pour-renforcer-la-cooperation-en-matiere-de-controle-public/
+  tier: 3
+  lang: fr
+  excerpt: >-
+    La signature de ce mémorandum intervient au lendemain de la conclusion d’un
+    accord de partenariat et de coopération entre l’autorité omanaise et la Cour
+    des comptes tunisienne, visant à renforcer les échanges d’expériences et de
+    connaissances et à développer les domaines de coopération entre les deux
+    institutions.
+  note: >-
+    The separate memorandum with HICAF, signed on Tuesday 24 November at the
+    Ennejma Ezzahra palace in Sidi Bou Saïd by HICAF president Imed Hazgui and
+    the Omani authority's chairman (Cheikh Ghossn Ben Hilal Al Alawi in this
+    text). Used only to keep the two instruments apart: this is a second
+    instrument with a different Tunisian body, not the Court agreement. The
+    article's closing paragraph reuses the Court's "ouverture" wording, which is
+    the page's own and is not evidence that the Court signed this memorandum.
+
+- id: courdescomptes-site-news-index-2026-11-25
+  title: "Actualités — Cour des comptes tunisienne (news index)"
+  publisher: "La Cour des comptes tunisienne"
+  date: "2026-11-25"
+  url: https://www.courdescomptes.nat.tn/fr/category/actualites/
+  tier: 2
+  lang: fr
+  excerpt: >-
+    La Cour des comptes organise ses journées évaluatives 2026 sous le thème du
+    « « Renforcement du professionnalisme »
+  note: >-
+    Read 25 November 2026. The index's newest item is dated 26 October 2026 and
+    no item on the Omani visit or the signing appeared. Cited for that absence
+    only, which supports the finding that the Court announced the signing on
+    its social accounts rather than on its website. The date field is the
+    retrieval date, not a publication date.
+
+- id: arp-plf-2027-project-4328
+  title: مشروع قانون عدد 063/ 2026 يتعلّق بقانون المالية لسنة 2027
+  publisher: مجلس نواب الشعب (ARP)
+  url: https://www.arp.tn/loi/project/4328
+  tier: 2
+  lang: ar
+  excerpt: "2026/063 المرحلة: مشاريع ومقترحات قوانين معروضة على اللجان. 2026-11-24
+    08:30:00 جلسة مشتركة للجنة المالية والميزانية يوم الثلاثاء 24 نوفمبر 2026
+    حول مشروع قانون المالية لسنة 2027. 2026-11-25 08:00:00 جلسة مشتركة للجنة
+    المالية والميزانية بتاريخ 25 نوفمبر 2026."
+  note: The Assembly's own legislative file for bill 063/2026, read on 26 November
+    2026. It still places the text at the committee stage ("معروضة على
+    اللجان"), lists the joint committee sittings of 24 and 25 November, and
+    shows no plenary sitting, adopted-law entry or committee report on the
+    bill. It records the meetings, not their outcome; the plenary section is
+    empty.
+- id: arp-reunion-8067-plf-2027-2026-11-25
+  title: جلسة مشتركة للجنة المالية والميزانية بتاريخ 25 نوفمبر 2026
+  publisher: مجلس نواب الشعب (ARP)
+  url: https://www.arp.tn/reunion/details/8067
+  tier: 2
+  lang: ar
+  excerpt: تعقد لجنتيْ المالية والميزانية لمجلس نواب الشعب والمجلس الوطني للجهات
+    والأقاليم جلسة مشتركة يوم غد الأربعاء 25 نوفمبر 2026 على الساعة التاسعة
+    صباحا (09.00) بالقاعة عدد 2 للتصويت على أحكام الميزانية لمشروع قانون
+    المالية لسنة 2027.
+  note: The Assembly's meeting notice for the second sitting. It fixes Wednesday
+    25 November 2026 at 09:00 and the purpose, voting the budget provisions
+    of the 2027 finance bill, but gives the agenda, not the result.
+- id: lapresse-plf-2027-commission-2026-11-25
+  title: Le projet de loi de finances 2027 adopté en Commission
+  publisher: La Presse de Tunisie
+  date: "2026-11-25"
+  url: https://www.lapresse.tn/2026/11/25/le-projet-de-loi-de-finances-2027-adopte-en-commission/
+  tier: 3
+  lang: fr
+  excerpt: Le projet de loi de finances pour l'exercice 2027 a été adopté,
+    mercredi 25 novembre 2026, par les commissions des finances et du budget
+    relevant de l'Assemblée des représentants du peuple (ARP) et du Conseil
+    national des régions et des districts (CNRD), à l'occasion d'une réunion
+    conjointe au Palais du Bardo. Le détail du vote fait état de 5 voix pour
+    et 2 abstentions côté ARP et à l'unanimité des membres présents côté CNRD.
+  note: Signed Lassâad Ben Ahmed and dated 25 November 2026. Gives the vote split,
+    the 70-article starting text, four articles rejected and 13 added (the
+    earlier tally), the budget totals, and says the bill will go to the
+    plenary "au cours des prochains jours" to be debated and adopted article
+    by article. Its figures are absent from the ARP-communiqué text, so it is
+    counted as independent support.
+- id: radionationale-plf-2027-commission-2026-11-25
+  title: لجنتا المالية والميزانية تصادقان على مشروع قانون المالية لسنة 2027 معدلا
+  publisher: الإذاعة الوطنية التونسية
+  date: "2026-11-25"
+  url: https://www.radionationale.tn/article/6b07677e24f658fa46034775/%D9%84%D8%AC%D9%86%D8%AA%D8%A7-%D8%A7%D9%84%D9%85%D8%A7%D9%84%D9%8A%D8%A9-%D9%88%D8%A7%D9%84%D9%85%D9%8A%D8%B2%D8%A7%D9%86%D9%8A%D8%A9-%D8%AA%D8%B5%D8%A7%D8%AF%D9%82%D8%A7%D9%86-%D8%B9%D9%84%D9%89-%D9%85%D8%B4%D8%B1%D9%88%D8%B9-%D9%82%D8%A7%D9%86%D9%88%D9%86-%D8%A7%D9%84%D9%85%D8%A7%D9%84%D9%8A%D8%A9-%D9%84%D8%B3%D9%86%D8%A9-2027-%D9%85%D8%B9%D8%AF%D9%84%D8%A7
+  tier: 3
+  lang: ar
+  excerpt: صادقت لجنتا المالية والميزانية بمجلس نواب الشعب والمجلس الوطني للجهات
+    والأقاليم، اليوم 25 الاربعاء، على مشروع قانون المالية لسنة 2027 برمته في
+    صيغته المعدلة ... وفق بلاغ لمجلس نواب الشعب.
+  note: Filed at 23:54 on 25 November and explicitly credited to an ARP
+    communiqué. Gives the same measures as the French dispatch and says the
+    second sitting voted articles 1-12 and then the whole bill. Also reports
+    committee vice-president Dhafer Sghiri expecting the plenary debate to
+    begin on Friday 27 November. The communiqué text itself is not reproduced
+    on the page.
+- id: african-manager-plf-2027-commission-2026-11-26
+  title: L'ARP et le CNRD adoptent en commission le texte amendé
+  publisher: African Manager
+  date: "2026-11-26"
+  url: https://africanmanager.com/larp-et-le-cnrd-adoptent-en-commission-le-texte-amende/
+  tier: 3
+  lang: fr
+  excerpt: Les commissions des finances et du budget de l'Assemblée des
+    représentants du peuple (ARP) et du Conseil national des régions et des
+    districts (CNRD) ont adopté, mercredi 25 novembre, le texte intégral du
+    projet de loi de finances (PLF) 2027 dans sa version remaniée. Deux
+    séances conjointes, les 24 et 25 novembre, ont suffi à boucler le dossier,
+    selon un communiqué de l'ARP.
+  note: The seed article, published 26 November 2026. It credits an ARP communiqué
+    but does not reproduce it, and its measure-by-measure list is the dispatch
+    Mosaique FM carries with a TAP credit. Counted once with that dispatch,
+    not as independent support.
+- id: mosaique-plf-2027-commission-2026-11-26
+  title: "ARP – CNRD : Le Projet de Loi de finances 2027 adopté en commission"
+  publisher: Mosaique FM
+  date: "2026-11-26"
+  url: https://www.mosaiquefm.net/fr/national-tunisie/1538236/arp-cnrd-le-projet-de-loi-de-finances-2027-adopte-en-commission
+  tier: 3
+  lang: fr
+  excerpt: Les commissions des finances et du budget de l'Assemblée des
+    représentants du peuple (ARP) et du Conseil national des régions et des
+    districts (CNRD) ont adopté, mercredi 25 novembre, le texte intégral du
+    projet de loi de finances (PLF) 2027 dans sa version remaniée.
+  note: Published 26 November 2026 at 07:20 with a "(TAP)" credit at the foot. The
+    live page returned only its keyword block to a direct fetch; this text is
+    the search-result rendering of the same URL. It carries the African
+    Manager dispatch, which fixes the common origin as the state wire, so the
+    two are one source, not two.
+- id: ar-tunisienumerique-plf-2027-commission-2026-11-26
+  title: "قانون المالية 2027: سيارة لكل عائلة، عفو ديواني وإجراءات جبائية… ماذا
+    أقرت اللجان البرلمانية؟"
+  publisher: تونس الرقمية (Tunisie Numérique)
+  date: "2026-11-26"
+  url: https://ar.tunisienumerique.com/%D9%82%D8%A7%D9%86%D9%88%D9%86-%D8%A7%D9%84%D9%85%D8%A7%D9%84%D9%8A%D8%A9-2027-%D8%B3%D9%8A%D8%A7%D8%B1%D8%A9-%D9%84%D9%83%D9%84-%D8%B9%D8%A7%D8%A6%D9%84%D8%A9%D8%8C-%D8%B9%D9%81%D9%88-%D8%AF%D9%8A/
+  tier: 3
+  lang: ar
+  excerpt: صادقت لجنتا المالية والميزانية بالمجلسين، يوم الأربعاء 25 نوفمبر 2026،
+    على مشروع القانون بعد تعديله. ... لا تزال هذه الإجراءات في انتظار عرضها
+    على الجلسة العامة، وهي غير قابلة للتطبيق في المرحلة الحالية.
+  note: "Signed Yassine El Atoui, published 26 November 2026. The fullest
+    independent account read: it reports the 13-then-14 shift (Dhafer Sghiri
+    in the morning, Maher Gtari in the evening), the sitting running into the
+    night of 25-26 November, the four rejected articles (24, 49, 50, 63), the
+    separate rejection of the tyre-duty proposal, the 10 December
+    constitutional deadline, and states that the measures still await the
+    plenary and are not applicable."
+- id: am-elmed-terrain-2026-11-25
+  title: "ELMED : financé en 2023, terrain non acquis en 2026"
+  publisher: African Manager
+  date: "2026-11-25"
+  url: https://africanmanager.com/elmed-finance-en-2023-terrain-non-acquis-en-2026/
+  tier: 4
+  lang: fr
+  excerpt: Le lot destiné à la station de conversion d'ELMED, l'interconnexion
+    électrique entre la Tunisie et l'Italie, n'est pas encore acquis. Le
+    constat ressort d'une séance de travail présidée le 25 novembre 2026 par
+    la gouverneure de Nabeul.
+- id: tn-ar-elmed-terrain-2026-11-25
+  title: "نابل: تسريع الإجراءات العقارية لإنجاز محطة التحويل الكهربائي ضمن مشروع
+    ELMED"
+  publisher: Tunisie Numérique
+  date: "2026-11-25"
+  url: https://ar.tunisienumerique.com/%D9%86%D8%A7%D8%A8%D9%84-%D8%AA%D8%B3%D8%B1%D9%8A%D8%B9-%D8%A7%D9%84%D8%A5%D8%AC%D8%B1%D8%A7%D8%A1%D8%A7%D8%AA-%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A%D8%A9-%D9%84%D8%A5%D9%86%D8%AC%D8%A7%D8%B2
+  tier: 4
+  lang: ar
+  excerpt: وفي هذا الإطار، أشرفت والية نابل، هناء شوشاني، اليوم الأربعاء 25 نوفمبر
+    2026، على جلسة عمل خُصصت لمتابعة الاستعدادات لإنجاز المنطقة الصناعية،
+    بحضور الكاتب العام للولاية وجدي برغل، ومديرة مشروع ELMED.
+- id: worldbank-elmed-268m-2023-06-22
+  title: World Bank Approves $268 Million Project Linking Tunisia's Energy Grids
+    with Europe
+  publisher: World Bank
+  date: 2023-06-22
+  url: https://www.worldbank.org/en/news/press-release/2023/06/22/world-bank-approves-268-million-project-linking-tunisia-s-energy-grids-with-europe
+  archive_url: https://web.archive.org/web/20261005010059/https://www.worldbank.org/en/news/press-release/2023/06/22/world-bank-approves-268-million-project-linking-tunisia-s-energy-grids-with-europe
+  tier: 2
+  lang: en
+  note: "Dateline Tunis, 21 June 2023: the Board approved the USD 268.4 million on
+    Wednesday 21 June 2023. The page carries 22 June 2023 as its publication
+    date. The release states the financing covers part of the main converter
+    station and associated substations on the Tunisian side."
+- id: am-plf-plenary-preview-2026-11-26
+  title: Le Parlement s'apprête à examiner le PLF 2027 après des amendements en
+    commission
+  publisher: African Manager
+  date: "2026-11-26"
+  url: https://africanmanager.com/le-parlement-sapprete-a-examiner-le-plf-2027-apres-des-amendements-en-commission/
+  tier: 3
+  lang: fr
+  excerpt: Les travaux des deux commissions ont abouti au rejet de quatre articles
+    du projet gouvernemental, à l'adoption de plusieurs nouveaux articles et à
+    l'introduction d'amendements portant sur différentes dispositions fiscales
+    et financières.
+  note: A second piece from the same outlet on the same day, with the budget
+    aggregates and article 12 (the BCT treasury facility). It names the four
+    rejected articles and gives the expenditure, revenue, deficit and
+    borrowing figures. It is not an independent outlet.
+
+- id: am-un-framework-444m-2026-11-27
+  title: "Tunisie-ONU : un cadre de coopération stratégique de 444 millions de dollars pour la période 2027-2031"
+  publisher: African Manager
+  date: "2026-11-27"
+  url: https://africanmanager.com/tunisie-onu-un-cadre-de-cooperation-strategique-de-444-millions-de-dollars-pour-la-periode-2027-2031/
+  tier: 3
+  lang: fr
+  excerpt: >-
+    La Tunisie et les Nations unies ont signé, vendredi à Tunis, un cadre de
+    coopération stratégique couvrant la période 2027-2031, assorti de besoins
+    de financement estimés à quelque 444 millions de dollars.
+  note: >-
+    Read in full. Reports the signature at the foreign ministry by Mohamed
+    Ali Nafti and Rana Taha, the three axes, the reference to the ONU 80
+    initiative and the 70th anniversary of Tunisia's UN membership. It states
+    the 444 million as estimated financing needs ("besoins de financement
+    estimés"), not as a committed or disbursed amount, and cites the 2023
+    multi-donor trust fund for employment and youth (USD 10 million, Dutch
+    contribution) as an example of innovative financing.
+
+- id: am-un-framework-taha-2026-11-27
+  title: "Le Cadre de coopération Tunisie–ONU 2027-2031 est la feuille de route de l'action onusienne en Tunisie, selon la coordinatrice de l'ONU à Tunis"
+  publisher: African Manager
+  date: "2026-11-27"
+  url: https://africanmanager.com/le-cadre-de-cooperation-tunisie-onu-2027-2031-est-la-feuille-de-route-de-laction-onusienne-en-tunisie-selon-la-coordinatrice-de-lonu-a-tunis/
+  tier: 3
+  lang: fr
+  excerpt: >-
+    La responsable onusienne s'exprimait à l'occasion de la signature du
+    Cadre de coopération stratégique pour la période 2027-2031, au siège du
+    ministère des Affaires étrangères, de la Migration et des Tunisiens à
+    l'étranger, avec le ministre Mohamed Ali Nafti. L'enveloppe allouée à
+    cette coopération s'élève à environ 444 millions de dollars.
+  note: >-
+    Companion piece from the same outlet and day, built on Rana Taha's
+    remarks. It repeats the signature and the venue. Its wording on the money
+    is looser than the main report's ("enveloppe allouée" rather than
+    "besoins de financement estimés"), which is why the record treats the
+    figure as an estimate and files the difference as a dispute.
+
+- id: managers-un-framework-2026-11-27
+  title: "Emploi, investissement, économie verte: ce que vise le nouveau partenariat Tunisie–ONU"
+  publisher: Managers (managers.tn)
+  date: "2026-11-27"
+  url: https://managers.tn/2026/11/27/emploi-investissement-economie-verte-ce-que-vise-le-nouveau-partenariat-tunisie-onu/
+  tier: 3
+  lang: fr
+  excerpt: >-
+    L'accord a été signé par Rana Taha, coordinatrice résidente des Nations
+    Unies en Tunisie, et Mohamed Ali Nafti, ministre des Affaires étrangères,
+    de la Migration et des Tunisiens à l'étranger.
+  note: >-
+    Read in full. A separately written same-day account, by Wejden Jlassi,
+    confirming the ceremony at the foreign ministry and both signatories. It
+    gives the three orientations in its own words. It carries no dollar
+    figure and states that the announcements available to it were silent on
+    the programme's total amount, which is the main reason the 444 million is
+    not graded above C.
+
+- id: tap-gallery-un-framework-2026-11-27
+  title: "توقيع إطار التعاون الاستراتيجي بين تونس ومنظمة الأمم المتحدة"
+  publisher: TAP (Tunis Afrique Presse)
+  date: "2026-11-27"
+  url: https://www.tap.info.tn/ar/%D9%88%D9%8A%D8%A8-%D8%B3%D9%8A%D8%AA-%D8%B5%D9%88%D8%B1-Portal-AR-Galerie/20851363-%D8%AA%D9%88%D9%82%D9%8A%D8%B9-%D8%A5%D8%B7%D8%A7%D8%B1-%D8%A7%D9%84%D8%AA%D8%B9%D8%A7%D9%88%D9%86
+  tier: 2
+  lang: ar
+  excerpt: "توقيع إطار التعاون الاستراتيجي بين تونس ومنظمة الأمم المتحدة"
+  note: >-
+    Photo gallery entry timestamped 11:57 on 27 November 2026. The page body
+    would not open from this host (transport error), so only the indexed
+    listing, its title and its timestamp were read. The title records the
+    signing as a TAP event of that day; it names no signatory, amount or
+    instrument in full.
+
+- id: undp-cpd-tunisia-2027-2031-draft-2026-11
+  title: "Draft country programme document for Tunisia (2027-2031), DP/DCP/TUN/4"
+  publisher: United Nations Development Programme
+  date: "2026-11-02"
+  url: https://www.undp.org/sites/g/files/zskgke326/files/2026-10/draft-undp-cpd-for-tunisia-2027-2031.pdf
+  tier: 2
+  lang: en
+  excerpt: >-
+    ...the vision of the United Nations Sustainable Development Cooperation
+    Framework (UNSDCF) 2027-2031, which supports Tunisia's new National
+    Development Plan (NDP) 2026-2030.
+  note: >-
+    Downloaded and read. A draft UNDP Board document, not the framework
+    itself. It fixes the English name and the three outcome areas, and shows
+    the framework was a settled reference inside the UN system before the
+    signature. It gives no signature date and no financing figure.
+
+- id: un-tunisia-annual-report-2025
+  title: "Rapport annuel des résultats des Nations Unies en 2025"
+  publisher: United Nations Tunisia
+  date: "2026-06-23"
+  url: https://tunisia.un.org/sites/default/files/2026-06/Rapport%20Nations%20Unies%20Tunisie_1.pdf
+  tier: 2
+  lang: fr
+  excerpt: >-
+    Le Cadre de coopération des Nations Unies pour le développement durable
+    2021–2026 constitue le principal cadre de référence de l'action collective
+    des Nations Unies en Tunisie.
+  note: >-
+    Downloaded and read. Written in 2026, it calls the predecessor framework
+    the 2021-2026 framework, which shows the 2021-2025 instrument was carried
+    through 2026 in practice.
+
+- id: unsdcf-tunisia-2021-2025-text
+  title: "Plan cadre des Nations Unies pour l'aide au développement 2021 – 2025 (UNSDCF)"
+  publisher: Government of Tunisia and United Nations system in Tunisia
+  date: "2020-11"
+  url: https://unsdg.un.org/sites/default/files/2020-11/Tunisia-UNSDCF-2021-2025.pdf
+  tier: 1
+  lang: fr
+  excerpt: >-
+    Le Gouvernement de la République tunisienne et les agences du Système des
+    Nations Unies s'engagent à travailler ensemble pour la réalisation des
+    objectifs contenus dans le présent Cadre de coopération des Nations Unies
+    pour le développement durable (UNSDCF) pendant la période 2021-2025.
+  note: >-
+    Downloaded and read. The cover is dated November 2020. The signature block
+    reads "Fait à Tunis, le XX XX 2020", with the day and month left blank,
+    and carries the names of Othman Jerandi, foreign minister, and Arnaud
+    Peral, UN resident coordinator.
+
+- id: unsdcf-tunisia-2021-2025-evaluation
+  title: "Évaluation finale du Cadre de coopération des Nations Unies pour le développement durable, Tunisie (UNSDCF 2021-2025), rapport final"
+  publisher: United Nations Tunisia
+  date: "2025-05-11"
+  url: https://document.ess.uninfo.org/uninfo-production-main/f3d9b398-d69c-4b65-9467-f5fe2b7b009c_RAPPORT%20DEVALUATION%20UNSDCF%20TUNISIE%2020212025.pdf
+  tier: 2
+  lang: fr
+  excerpt: >-
+    Signé en décembre 2020, le UNSDCF 2021-2025 constitue le cadre
+    stratégique de partenariat entre le Gouvernement Tunisien et l'Équipe de
+    pays des Nations Unies (UNCT). Il a été signé conjointement par 22
+    agences, fonds et programmes du Système des Nations Unies, résidents et
+    non-résidents, ainsi que par le Ministère des Affaires Étrangères, de la
+    Migration et des Tunisiens à l'Étranger.
+  note: >-
+    Downloaded and read. Gives December 2020 for the signature month and the
+    count of 22 UN entities, against the blank month in the signed text.
+
+- id: unsdg-tunisia-country-page
+  title: "UN in Action: Tunisia (cooperation framework dates)"
+  publisher: United Nations Sustainable Development Group
+  date: "?"
+  url: https://unsdg.un.org/un-in-action/tunisia
+  tier: 2
+  lang: en
+  excerpt: >-
+    UNDAF / CF START DATE 01 January 2021; UNDAF / CF END DATE 31 December
+    2026; START OF NEW CF CYCLE 01 January 2027.
+  note: >-
+    Read as HTML. Gives the current cooperation framework cycle's dates and
+    the start of the new cycle. It does not name the 2027-2031 instrument and
+    carries no publication date.
+- id: am-takween-avenant-2026-11-27
+  title: "Tunisie-Suisse : signature d'un avenant au programme « Takween » dédié à la formation professionnelle"
+  publisher: African Manager
+  date: "2026-11-27"
+  url: https://africanmanager.com/tunisie-suisse-signature-dun-avenant-au-programme-takween-dedie-a-la-formation-professionnelle/
+  tier: 3
+  lang: fr
+  excerpt: >-
+    Un avenant à la convention du programme de coopération tuniso-suisse dédié
+    à la formation professionnelle en Tunisie, « Takween », a été signé,
+    jeudi, au siège du ministère de l'Emploi et de la Formation
+    professionnelle. [...] Le programme « Takween » s'inscrit dans la
+    continuité du Programme de formation et d'intégration professionnelles en
+    Tunisie (PFIPT), conduit par la Coopération suisse de 2012 à 2021 et mis
+    en œuvre par Swisscontact, sous l'égide du ministère de l'Emploi et de la
+    Formation professionnelle.
+  note: >-
+    Says "jeudi" and gives no calendar date for the signature. Attributes the
+    account to a ministry communique published on Facebook on Friday 27
+    November 2026. Gives 30 specialised training platforms, about 2,500
+    beneficiaries a year and an insertion rate near 70 per cent. No amount,
+    no programme period and no description of what the amendment changes.
+
+- id: tap-takween-avenant-2026-11-27
+  title: "Tunisie-Suisse : signature d'un avenant au programme « Takween » dédié à la formation professionnelle"
+  publisher: TAP (Tunis Afrique Presse)
+  date: "2026-11-27"
+  url: https://www.tap.info.tn/fr/Portail-Soci%C3%A9t%C3%A9/20851064-tunisie-suisse
+  tier: 2
+  lang: fr
+  excerpt: >-
+    Un avenant à l'accord du programme de coopération tuniso-suisse de
+    formation professionnelle a été signé, jeudi au siège du ministère de
+    l'Emploi et de la Formation professionnelle, sous l'égide du ministre de
+    l'Emploi et de la Formation professionnelle, Riadh Chaoued, et en présence
+    de la chargée d'affaires par intérim de l'ambassade de Suisse en Tunisie,
+    Gabriel Schreyer, selon un communiqué du ministère publié sur sa page
+    Facebook.
+  note: >-
+    The state wire, indexed at 27/11/2026 10:43. The TAP page returned
+    transport errors for both the French and English editions; the text above
+    is the TAP copy as carried verbatim by Nessma TV with the TAP byline. A
+    separate English item (tap.info.tn/en/Portal-Society/20851111-tunisia-and,
+    indexed at 11:12) is visible only as a lead line in search results. No
+    amount and no calendar date for the signature.
+
+- id: nessma-tap-takween-avenant-2026-11-27
+  title: "Signature d'un avenant à l'accord du programme Takween"
+  publisher: Nessma TV (TAP byline)
+  date: "2026-11-27"
+  url: https://www.nessma.tv/fr/nationale/actu/signature-dun-avenant-a-laccord-du-programme-takween/604760
+  tier: 3
+  lang: fr
+  excerpt: >-
+    Un avenant à l'accord du programme de coopération tuniso-suisse de
+    formation professionnelle a été signé, jeudi au siège du ministère de
+    l'Emploi et de la Formation professionnelle, sous l'égide du ministre de
+    l'Emploi et de la Formation professionnelle, Riadh Chaoued, et en présence
+    de la chargée d'affaires par intérim de l'ambassade de Suisse en Tunisie,
+    Gabriel Schreyer, selon un communiqué du ministère publié sur sa page
+    Facebook.
+  note: >-
+    Carries the TAP byline, timestamped Friday 27 November 2026 at 09:46, and
+    reproduces the ministry communique in full. This is the readable copy of
+    the TAP wire cited above, not an independent account. Spells the Swiss
+    diplomat "Gabriel Schreyer"; African Manager and Webmanagercenter have
+    "Gabrielle Schreier" and Managers "Gabriele Schreier". No amount.
+
+- id: managers-takween-avenant-2026-11-27
+  title: "Formation professionnelle: la Suisse s'engage de nouveau pour l'emploi des jeunes en Tunisie"
+  publisher: Managers
+  date: "2026-11-27"
+  url: https://managers.tn/2026/11/27/formation-professionnelle-la-suisse-sengage-de-nouveau-pour-lemploi-des-jeunes-en-tunisie/
+  tier: 3
+  lang: fr
+  excerpt: >-
+    C'est dans cette perspective que le ministre de l'Emploi et de la
+    Formation professionnelle, Riadh Chaoued, a signé, jeudi 26 novembre 2026,
+    au siège de son département, l'avenant à la convention du programme « La
+    formation professionnelle en Tunisie – TAKWEEN ».
+  note: >-
+    The only source read that gives the calendar date of the signature, 26
+    November 2026. Adds that ministry officials and officials of institutions
+    under the ministry attended, and repeats the programme figures (30
+    platforms, about 2,500 beneficiaries a year, near 70 per cent insertion).
+    Written in its own words rather than copied from the communique, but it
+    describes the same ceremony and does not cite a second source. No amount
+    and no programme period.
+
+- id: wmc-tap-takween-avenant-2026-11-27
+  title: "Formation professionnelle : la Tunisie et la Suisse renforcent leur coopération"
+  publisher: Webmanagercenter (WMC avec TAP)
+  date: "2026-11-27"
+  url: https://www.webmanagercenter.com/2026/11/27/578161/formation-professionnelle-la-tunisie-et-la-suisse-renforcent-leur-cooperation/
+  tier: 3
+  lang: fr
+  excerpt: >-
+    Un avenant à la convention du programme de coopération tuniso-suisse dédié
+    à la formation professionnelle en Tunisie, « Takween », a été signé,
+    jeudi, au siège du ministère de l'Emploi et de la Formation
+    professionnelle.
+  note: >-
+    Credited "WMC avec TAP" and reproduces the same communique text as African
+    Manager and the TAP copy, including the spelling "Gabrielle Schreier".
+    Confirms the communique's Friday publication. No amount and no calendar
+    date for the signature.
+
+- id: eda-takween-project-7f10597
+  title: "TAKWEEN - Formation professionnelle en Tunisie (project 7F10597, phase 1)"
+  publisher: Swiss Agency for Development and Cooperation (SDC), Federal Department of Foreign Affairs
+  date: "2025-07-29"
+  url: https://www.eda.admin.ch/deza/fr/home/projets-vue-ensemble/projekte.filterResults.olddesign.par_projectfilter_copy_page2.html/content/dezaprojects/SDC/en/2021/7F10597/phase1?oldPagePath=/content/deza/fr/home/projekte/projekte.html
+  tier: 2
+  lang: fr
+  excerpt: >-
+    Pays/région Tunisie [...] Période 01.10.2020 - 31.07.2027 [...] Budget
+    CHF 9'995'975 [...] Budget suisse déjà attribué CHF 8'835'364 [...]
+    Partenaire contractuel Swisscontact [...] Dernière mise à jour 29.07.2025.
+  note: >-
+    The institutional project record for the Takween phase, not a record of
+    the amendment. The page lists project number 7F10597 and labels the phase
+    "Phase en cours". Its period and budget predate the 26 November 2026
+    signature, and no source read says whether the amendment changes either.
+
+- id: eda-takween-fiche-2022
+  title: "Programme Takween: formation professionnelle en Tunisie (fiche)"
+  publisher: Swiss Agency for Development and Cooperation (SDC), Embassy of Switzerland in Tunisia
+  date: "2022-11-04"
+  url: https://www.schweiz-tunesien.eda.admin.ch/dam/fr/eda-cms/cw35mR93x5Kf/fiche-takween_FR.pdf
+  tier: 2
+  lang: fr
+  excerpt: >-
+    DURÉE TOTALE 2021-2031 (phase 1 : 2021-2026) [...] BUDGET TOTAL 20
+    millions de francs suisses (9,8 millions de francs suisses pour la phase
+    1) [...] PARTENAIRES DE MISE EN ŒUVRE Swisscontact.
+  note: >-
+    Undated communication fiche; the date given is the PDF metadata creation
+    date, not a stated publication date. Its period and budget differ from
+    the SDC project database entry (phase 1, 1 October 2020 to 31 July 2027,
+    CHF 9,995,975). The difference is left standing. Neither figure is tied
+    to the amendment by any source read.
+- id: tap-ar-bouanane-appeal-verdict-2026-11-27
+  title: "استئناف : إقرار الحكم الابتدائي ضد رئيس الغرفة الوطنية لأصحاب المخابز مع مصادرة مناباته وحساباته المالية المجمدة"
+  publisher: TAP (Tunis Afrique Presse)
+  date: "2026-11-27"
+  url: https://www.tap.info.tn/ar/%D9%88%D9%8A%D8%A8-%D8%B3%D9%8A%D8%AA-%D8%B3%D9%8A%D8%A7%D8%B3%D8%A9-Portal-Politic/20851070-%D8%A7%D8%B3%D8%AA%D8%A6%D9%86%D8%A7%D9%81-%D8%A5%D9%82%D8%B1%D8%A7%D8%B1
+  tier: 2
+  lang: ar
+  excerpt: >-
+    تونس 27 نوفمبر 2026 (وات)- أقرت الدائرة الجنائية المختصة بالنظر في قضايا
+    الفساد المالي بمحكمة الاستئناف بتونس الحكم الإبتدائي الصادر ضد رئيس الغرفة
+    الوطنية لأصحاب المخابز محمد بوعنان بسجنة لمدة 24 سنة مع خطايا مالية ،
+    وإتمام نصه، وذلك بمصادرة...
+  note: >-
+    The agency's own page, timestamped 27/11/2026 12:45. The body is truncated
+    at the subscriber prompt after the confiscation clause. It fixes the
+    confirmation and the agency's Friday filing date, not the day the ruling
+    was given, and it carries no breakdown of the sentences or fines.
+
+- id: mosaique-ar-bouanane-appeal-verdict-2026-11-27
+  title: "تأييد الأحكام السجنية في حق الرئيس السابق لغرفة أصحاب المخابز وآخرين"
+  publisher: Mosaique FM
+  date: "2026-11-27"
+  url: https://www.mosaiquefm.net/ar/%D8%AA%D9%88%D9%86%D8%B3-%D9%88%D8%B7%D9%86%D9%8A%D8%A9/1538398/%D8%AA%D8%A3%D9%8A%D9%8A%D8%AF-%D8%A7%D9%84%D8%A3%D8%AD%D9%83%D8%A7%D9%85-%D8%A7%D9%84%D8%B3%D8%AC%D9%86%D9%8A%D8%A9-%D9%81%D9%8A-%D8%AD%D9%82-%D8%A7%D9%84%D8%B1%D8%A6%D9%8A%D8%B3-%D8%A7%D9%84%D8%B3%D8%A7%D8%A8%D9%82-%D9%84%D8%BA%D8%B1%D9%81%D8%A9-%D8%A3%D8%B5%D8%AD%D8%A7%D8%A8-%D8%A7%D9%84%D9%85%D8%AE%D8%A7%D8%A8%D8%B2-%D9%88%D8%A2%D8%AE%D8%B1%D9%8A%D9%86
+  tier: 3
+  lang: ar
+  excerpt: >-
+    أيدت الدائرة الجنائية المختصة بالنظر في قضايا الفساد المالي بمحكمة
+    الاستئناف بتونس ليلة أمس الخميس 27 نوفمبر 2026، الحكم الصادر في حق الرئيس
+    السابق للغرفة الوطنية لأصحاب المخابز محمد بوعنان ابتدائيا والقاضي بسجنه
+    لمدة 24 سنة مع تسليط خطايا مالية في حقه فاقت 6 ملايين دينار.
+  note: >-
+    Published at 12:02 on Friday 27 November, so "last night, Thursday"
+    points to 26 November while the printed date says 27 November. The item
+    also gives the 1,566,000 and 7,833,000 dinar company fines and the three
+    charges (illegal speculation, habitual money laundering, illicit
+    enrichment). Its French edition carries the same wording and the same
+    date conflict.
+
+- id: mosaique-fr-bouanane-appeal-verdict-2026-11-27
+  title: "Mohamed Bouanane : Sa peine de 24 ans confirmée en appel"
+  publisher: Mosaique FM
+  date: "2026-11-27"
+  url: https://www.mosaiquefm.net/fr/national-tunisie/1538400/mohamed-bouanane-sa-peine-de-24-ans-confirmee-en-appel
+  tier: 3
+  lang: fr
+  excerpt: >-
+    La chambre criminelle spécialisée dans les affaires de corruption
+    financière près la Cour d'appel de Tunis a confirmé, jeudi soir 27
+    novembre 2026, le jugement prononcé en première instance à l'encontre de
+    Mohamed Bouanane, ancien président de la Chambre nationale des
+    propriétaires de boulangeries, le condamnant à 24 ans de prison et à des
+    amendes dépassant les 6 millions de dinars.
+  note: >-
+    French edition of the Arabic item, published at 12:15 on 27 November. It
+    repeats the "Thursday 27 November" mismatch and the 6 million dinar
+    figure. Used to fix the French rendering of the role and the charges.
+
+- id: bn-bouanane-appeal-verdict-2026-11-27
+  title: "Affaire du pain : 24 ans de prison confirmés pour Mohamed Bouanane en appel"
+  publisher: Business News
+  date: "2026-11-27"
+  url: https://businessnews.com.tn/2026/11/27/affaire-du-pain-24-ans-de-prison-confirmes-pour-mohamed-bouanane-en-appel/1431043/
+  tier: 3
+  lang: fr
+  excerpt: >-
+    La chambre criminelle spécialisée dans les affaires de corruption
+    financière près la Cour d'appel de Tunis a confirmé, jeudi 26 novembre
+    2026, la condamnation de Mohamed Bouanane, ancien président de la Chambre
+    nationale des propriétaires de boulangeries, à 24 ans de prison, assortis
+    d'amendes financières avoisinant les dix millions de dinars, selon des
+    sources concordantes.
+  note: >-
+    Explicitly dates the ruling to Thursday 26 November 2026, which resolves
+    the weekday/date conflict in Mosaique FM and African Manager. It says
+    three other accused each received 13 years and that the four defendants
+    were committed by the indictment chamber of the Tunis Court of Appeal. Its
+    fine figure (around 10 million dinars) differs from Mosaique FM's (over 6
+    million dinars).
+
+- id: webdo-bouanane-appeal-verdict-2026-11-27
+  title: "Farine subventionnée : La peine de 24 ans de Mohamed Bouanane maintenue en appel"
+  publisher: Webdo
+  date: "2026-11-27"
+  url: https://www.webdo.tn/fr/actualite/national/farine-subventionnee-la-peine-de-24-ans-de-mohamed-bouanane-maintenue-en-appel/407807/
+  tier: 3
+  lang: fr
+  excerpt: >-
+    La chambre criminelle spécialisée dans les affaires de corruption
+    financière près la Cour d'appel de Tunis a confirmé, jeudi 26 novembre
+    2026, sa condamnation à 24 ans de prison.
+  note: >-
+    Published at 12:02 on 27 November. It names Thursday 26 November
+    explicitly, says the fines are around 10 million dinars and that three
+    other accused keep 13-year sentences. The page presents the material as
+    its own account rather than crediting TAP or Mosaique FM.
+
+- id: am-bouanane-appeal-verdict-2026-11-27
+  title: "Tunisie: 24 ans de prison pour l'ancien patron des boulangeries !"
+  publisher: African Manager
+  date: "2026-11-27"
+  url: https://africanmanager.com/tunisie-24-ans-de-prison-pour-lancien-patron-des-boulangeries
+  tier: 3
+  lang: fr
+  excerpt: >-
+    La chambre criminelle spécialisée dans les affaires de corruption
+    financière près la Cour d'appel de Tunis a confirmé, jeudi soir 27
+    novembre 2026, le jugement prononcé en première instance à l'encontre de
+    Mohamed Bouanane, ancien président de la Chambre nationale des
+    propriétaires de boulangeries, le condamnant à 24 ans de prison et à des
+    amendes dépassant les 6 millions de dinars, selon mosaique fm.
+  note: >-
+    The item behind the feed signal. It credits Mosaique FM, repeats the
+    "Thursday 27 November" wording, and says two agro-food companies were
+    fined 1.566 and 7.833 million dinars for concealment of goods from
+    speculation.
+
+- id: alchourouk-bouanane-appeal-verdict-2026-11-27
+  title: "إقرار الحكم الابتدائي القاضي بسجن رئيس غرفة المخابز محمد بوعنان"
+  publisher: Al Chourouk
+  date: "2026-11-27"
+  url: https://www.alchourouk.com/article/%D8%A5%D9%82%D8%B1%D8%A7%D8%B1-%D8%A7%D9%84%D8%AD%D9%83%D9%85-%D8%A7%D9%84%D8%A7%D8%A8%D8%AA%D8%AF%D8%A7%D8%A6%D9%8A-%D8%A7%D9%84%D9%82%D8%A7%D8%B6%D9%8A-%D8%A8%D8%B3%D8%AC%D9%86-%D8%B1%D8%A6%D9%8A%D8%B3-%D8%BA%D8%B1%D9%81%D8%A9-%D8%A7%D9%84%D9%85%D8%AE%D8%A7%D8%A8%D8%B2-%D9%85%D8%AD%D9%85%D8%AF-%D8%A8%D9%88%D8%B9%D9%86%D8%A7%D9%86
+  tier: 3
+  lang: ar
+  excerpt: >-
+    قضت الدائرة الجنائية بمحكمة الاستئناف بتونس باقرار ادانة رئيس الغرفة
+    الوطنية لأصحاب المخابز محمد بوعنان و سجنه مدة 24 عاما و ذلك من أجل تهم
+    "الاحتكار والمضاربة في السوق بمواد غذائية مدعمة والاثراء غير المشروع و
+    غسل الأموال بإستعمال الخصائص التي خولها الوظيف.
+  note: >-
+    Published at 09:05 on 27 November, before the TAP copy. It gives 24 years,
+    says the other defendants keep 13-year sentences, and its index summary
+    puts the fines at nearly 10 million dinars. It names monopoly,
+    speculation, illicit enrichment and money laundering, and gives no ruling
+    day.
+
+- id: babnet-bouanane-appeal-verdict-2026-11-27
+  title: "إقرار الحكم الابتدائي ضد رئيس الغرفة الوطنية لأصحاب المخابز مع مصادرة مناباته وحساباته المالية المجمدة"
+  publisher: Babnet
+  date: "2026-11-27"
+  url: https://www.babnet.net/rttdetail-340295.asp
+  tier: 3
+  lang: ar
+  excerpt: >-
+    أقرت الدائرة الجنائية المختصة بالنظر في قضايا الفساد المالي بمحكمة
+    الاستئناف بتونس الحكم الإبتدائي الصادر ضد رئيس الغرفة الوطنية لأصحاب
+    المخابز محمد بوعنان بسجنة لمدة 24 سنة مع خطايا مالية ، وإتمام نصه، وذلك
+    بمصادرة المنابات الراجعة له ب 10 شركات لفائدة الدولة ، ومصادرة الحسابات
+    المالية المجمدة ، على أن تودع بحساب خاص يفتح على دفاتر البنك المركزي بإسم
+    الخزينة العامة للبلاد التونسية
+  note: >-
+    Reproduces the full TAP copy, including the passage that the agency's own
+    page truncates. It attributes the account to a judicial source speaking to
+    TAP "today, Friday", dates the update to 27 November at 12:57, and gives
+    the sentence breakdown: 7 years and a 2,470,000 dinar fine for habitual
+    money laundering, 4 years and a 2,072,000 dinar fine for illicit
+    enrichment, plus the company fines and the confiscation of holdings in 10
+    companies. It does not name the ruling day.
+
+- id: bn-bouanane-first-instance-verdict-2026-02-27
+  title: "Mohamed Bouanane condamné à 24 ans pour spéculation et monopole de produits de base compensés"
+  publisher: Business News
+  date: "2026-02-27"
+  url: https://businessnews.com.tn/2026/02/27/mohamed-bouanane-condamne-a-24-ans-pour-speculation-et-monopole-de-produits-de-base-compenses/1390131
+  tier: 3
+  lang: fr
+  excerpt: >-
+    La chambre criminelle, spécialisée dans les affaires de corruption
+    financière près du Tribunal de première instance de Tunis, a rendu tard
+    dans la nuit du jeudi au vendredi 27 février 2026 son verdict concernant
+    des affaires de monopole et de spéculation sur le marché des produits
+    alimentaires compensés, ainsi que d'enrichissement illicite.
+  note: >-
+    Fixes the first-instance ruling as the night of Thursday 26 to Friday 27
+    February 2026. It gives 24 years for Bouanane and 13 years for other
+    accused, and records the August 2023 arrest and the deposit warrant.
+
+- id: bn-bouanane-profile-2026-03-03
+  title: "Mohamed Bouanane condamné à 24 ans, la chute d'un homme, le maintien d'un système"
+  publisher: Business News
+  date: "2026-03-03"
+  url: https://businessnews.com.tn/2026/03/03/mohamed-bouanane-condamne-a-24-ans-la-chute-dun-homme-le-maintien-dun-systeme/1390614
+  tier: 3
+  lang: fr
+  excerpt: >-
+    L'ancien président de la Chambre syndicale nationale des boulangers,
+    Mohamed Bouanane, 86 ans, a été condamné à 24 ans de prison pour monopole,
+    spéculation sur des produits alimentaires compensés et enrichissement
+    illicite.
+  note: >-
+    Profile published four days after the first-instance verdict. It gives his
+    age as 86, says he had been detained since 2023, and describes the
+    sentence as equivalent to life imprisonment. It dates the ruling to the
+    night of Thursday to Friday 27 February 2026 and cites decree-law 14/2022.
+
+- id: nessma-bouanane-first-instance-verdict-2026-02-27
+  title: "تفاصيل الحكم بالسجن 24 سنة على رئيس الغرفة الوطنية لأصحاب المخابز محمد بوعنان"
+  publisher: Nessma TV
+  date: "2026-02-27"
+  url: https://www.nessma.tv/ar/%D8%A3%D8%AE%D8%A8%D8%A7%D8%B1-%D9%88%D8%B7%D9%86%D9%8A%D8%A9/actu/%D8%AA%D9%81%D8%A7%D8%B5%D9%8A%D9%84-%D8%A7%D9%84%D8%AD%D9%83%D9%85-%D8%A8%D8%A7%D9%84%D8%B3%D8%AC%D9%86-24-%D8%B3%D9%86%D8%A9-%D8%B9%D9%84%D9%89-%D8%B1%D8%A6%D9%8A%D8%B3-%D8%A7%D9%84%D8%BA%D8%B1%D9%81%D8%A9-%D8%A7%D9%84%D9%88%D8%B7%D9%86%D9%8A%D8%A9-%D9%84%D8%A3%D8%B5%D8%AD%D8%A7%D8%A8-%D8%A7%D9%84%D9%85%D8%AE%D8%A7%D8%A8%D8%B2-%D9%85%D8%AD%D9%85%D8%AF-%D8%A8%D9%88%D8%B9%D9%86%D8%A7%D9%86/571190
+  tier: 3
+  lang: ar
+  excerpt: >-
+    أصدرت الدائرة الجنائية المختصة بقضايا الفساد المالي بالمحكمة الابتدائية
+    بتونس، حُكما بسجن رئيس الغرفة الوطنية لاصحاب المخابز محمد بوعنان،(بحالة
+    إيقاف) مدّة 24 سنة، سجنا وفق ما أكّده مصدر قضائي لوكالة تونس افريقيا
+    للأنباء، اليوم الجمعة.
+  note: >-
+    TAP relay published on Friday 27 February 2026. It says the court gave the
+    ruling "yesterday Thursday", which fixes the first-instance date at 26
+    February, and it carries the full breakdown: 13 years and a 100,000 dinar
+    fine for speculation, 7 years and 2,470,000 dinars for money laundering,
+    4 years and 2,072,000 dinars for illicit enrichment, plus company fines of
+    1,566,000 and 7,833,000 dinars.
+
+- id: assabah-bouanane-appeal-postponed-2026-10-27
+  title: "تأجيل قضية الرئيس السابق لغرفة أصحاب المخابز إلى 12 نوفمبر المقبل"
+  publisher: Assabah News
+  date: "2026-10-27"
+  url: https://www.assabahnews.tn/ar/%D8%A7%D9%84%D8%A7%D8%AE%D8%A8%D8%A7%D8%B1/%D9%85%D8%AC%D8%AA%D9%85%D8%B9/156716-%D8%AA%D8%A3%D8%AC%D9%8A%D9%84-%D9%82%D8%B6%D9%8A%D8%A9-%D8%A7%D9%84%D8%B1%D8%A6%D9%8A%D8%B3-%D8%A7%D9%84%D8%B3%D8%A7%D8%A8%D9%82-%D9%84%D8%BA%D8%B1%D9%81%D8%A9-%D8%A3%D8%B5%D8%AD%D8%A7%D8%A8-%D8%A7
+  tier: 3
+  lang: ar
+  excerpt: >-
+    أجلت الدائرة الجنائية المختصة بالنظر في قضايا الفساد المالي بمحكمة
+    الاستئناف بتونس محاكمة الرئيس السابق للغرفة الوطنية لأصحاب المخابز محمد
+    بوعنان ومتهمين آخرين، إلى يوم 12 نوفمبر القادم.
+  note: >-
+    Shows the appeal was pending in October 2026 and fixes a 12 November
+    session. The report adds that Bouanane had been sentenced to 24 years and
+    the other accused to 13 years at first instance.
+
+- id: babnet-bouanane-appeal-postponed-2026-11-23
+  title: "تأخير النظر في قضية الرئيس السابق لغرفة أصحاب المخابز محمد بوعنان إلى ديسمبر ورفض الإفراج عن المتهمين"
+  publisher: Babnet, republished by Nabd
+  date: "2026-11-23"
+  url: https://nabd.com/s/181207845-ce1aea
+  tier: 3
+  lang: ar
+  excerpt: >-
+    قررت الدائرة الجنائية المختصة بالنظر في قضايا الفساد المالي لدى محكمة
+    الاستئناف بتونس تأخير النظر في القضية المرفوعة ضد الرئيس السابق للغرفة
+    الوطنية لأصحاب المخابز، محمد بوعنان، وثلاثة متهمين آخرين، إلى شهر ديسمبر
+    المقبل، مع رفض مطالب الإفراج.
+  note: >-
+    Published on Monday 23 November 2026 at 09:03. The Babnet article slot now
+    carries the 27 November verdict, so this text was read in the Nabd
+    republication and in the Babnet justice index. It conflicts with the 26
+    November verdict and is the basis of the procedural dispute on the event.
+- id: alchourouk-districom-verdict-2026-11-27
+  title: "6 سنوات سجنا للرئيس المدير العام السابق لاتصالات تونس و5 أعوام لرجل أعمال"
+  publisher: Al Chourouk
+  date: "2026-11-27"
+  url: https://alchourouk.com/article/6-%D8%B3%D9%86%D9%88%D8%A7%D8%AA-%D8%B3%D8%AC%D9%86%D8%A7-%D9%84%D9%84%D8%B1%D8%A6%D9%8A%D8%B3-%D8%A7%D9%84%D9%85%D8%AF%D9%8A%D8%B1-%D8%A7%D9%84%D8%B9%D8%A7%D9%85-%D8%A7%D9%84%D8%B3%D8%A7%D8%A8%D9%82-%D9%84%D8%A7%D8%AA%D8%B5%D8%A7%D9%84%D8%A7%D8%AA-%D8%AA%D9%88%D9%86%D8%B3-%D9%885-%D8%A3%D8%B9%D9%88%D8%A7%D9%85-%D9%84%D8%B1%D8%AC%D9%84-%D8%A3%D8%B9%D9%85%D8%A7%D9%84
+  tier: 3
+  lang: ar
+  excerpt: >-
+    قضت الدائرة الجنائية المختصة في قضايا الفساد المالي بالمحكمة الابتدائية
+    بتونس بسجن الرئيس المدير العام السابق لاتصالات تونس منتصر والي ( فرار )
+    مدة 6 أعوام [...] و قضت بسجن رجل الأعمال نبيل الشايبي مدة 5 أعوام ( احيل
+    بحالة سراح ) [...] و ذلك في قضية تتعلق بابرام عقد بين شركة الشايبي و شركة
+    اتصالات تونس.
+  note: >-
+    Published at 09:45 on 27 November 2026, the earliest named report read.
+    It names both defendants, gives six years for Ouaïli as a fugitive and
+    five years for Chaïbi, who was at liberty, and identifies the file as
+    the contract between Chaïbi's company and Tunisie Telecom. It gives no
+    fine, no charge article and no date or time of pronouncement. The page
+    spells the former minister's name "منتصر والي" with one lam.
+
+- id: babnet-districom-verdict-2026-11-27
+  title: "الوزير الأسبق لتكنولوجيا المعلومات يدان بـ6 أعوام سجناً ورجل أعمال بـ5 أعوام في قضية فساد مالي"
+  publisher: Babnet
+  date: "2026-11-27"
+  url: https://www.babnet.net/rttdetail-340602.asp
+  tier: 4
+  lang: ar
+  excerpt: >-
+    قضت الدائرة الجنائية المختصة بالنظر في قضايا الفساد المالي بالمحكمة
+    الابتدائية بتونس، ابتدائياً، بالسجن مدة ستة أعوام مع النفاذ العاجل في حق
+    الوزير الأسبق لتكنولوجيا المعلومات والاتصال، في قضية تتعلق باستغلال موظف
+    عمومي لصفته لاستخلاص فائدة لا وجه لها لنفسه أو لغيره والإضرار بالإدارة.
+    [...] كما قضت الدائرة الجنائية، في نفس القضية، بالسجن مدة خمسة أعوام في حق
+    رجل أعمال ينشط في قطاع المساحات التجارية الكبرى، مع الخطايا المالية، وذلك
+    على خلفية عقد شركة يديرها رجل الأعمال.
+  note: >-
+    Published at 09:04 on 27 November 2026, before Al Chourouk. It confirms
+    the six years with immediate execution, the five years with financial
+    fines, the first-instance character and the charge formula (a public
+    official exploiting his position to obtain an undue advantage and harm
+    the administration). It does not name either defendant and describes the
+    businessman only as active in large retail. It gives no fine amount. Its
+    related-item link points to the same file's 19 October postponement
+    report, which names DISTRICOM and both defendants.
+
+- id: mosaique-districom-verdict-2026-11-27
+  title: "La prison contre un homme d'affaires et un ex-ministre"
+  publisher: Mosaique FM
+  date: "2026-11-27"
+  url: https://www.mosaiquefm.net/fr/national-tunisie/1538408/la-prison-contre-un-homme-d-affaires-et-un-ex-ministre
+  tier: 3
+  lang: fr
+  excerpt: >-
+    La chambre criminelle spécialisée dans les affaires de corruption
+    financière près le tribunal de première instance de Tunis a prononcé des
+    peines de prison et de lourdes amendes à l'encontre d'un homme d'affaires
+    et d'un ancien ministre des Technologies de la communication. Le tribunal
+    a également ordonné l'exécution immédiate de la peine prononcée contre ce
+    dernier.
+  note: >-
+    Timestamped 27/11/2026 12:50. The credited original of the relay. It is
+    anonymous: no name, no sentence length and no amount. It is the source
+    for the immediate execution against the former minister and for the
+    "lourdes amendes" against both, and it describes the file as a
+    distribution contract between the businessman's company and a
+    telecommunications operator.
+
+- id: am-districom-verdict-2026-11-27
+  title: "De lourdes peines pour un homme d'affaires et un ex-ministre !"
+  publisher: African Manager
+  date: "2026-11-27"
+  url: https://africanmanager.com/de-lourdes-peines-pour-un-homme-daffaires-et-un-ex-ministre
+  tier: 3
+  lang: fr
+  excerpt: >-
+    La chambre criminelle spécialisée dans les affaires de corruption
+    financière près le tribunal de première instance de Tunis a prononcé des
+    peines de prison et de lourdes amendes à l'encontre d'un homme d'affaires
+    et d'un ancien ministre des Technologies de la communication. Le tribunal
+    a également ordonné l'exécution immédiate de la peine prononcée contre ce
+    dernier, selon Mosaique fm.
+  note: >-
+    The relay named in the sweep. It credits Mosaique FM and carries the same
+    text, so it is the same witness repeated, not independent corroboration.
+    It gives no name, no sentence length, no charge and no amount.
+
+- id: alchourouk-districom-hearing-2026-09-24
+  title: "في قضايا فساد مالي ... محاكمة منتصر وايلي ورجل الأعمال نبيل الشايبي"
+  publisher: Al Chourouk
+  date: "2026-09-24"
+  url: https://www.alchourouk.com/article/%D9%81%D9%8A-%D9%82%D8%B6%D8%A7%D9%8A%D8%A7-%D9%81%D8%B3%D8%A7%D8%AF-%D9%85%D8%A7%D9%84%D9%8A-%D9%85%D8%AD%D8%A7%D9%83%D9%85%D8%A9-%D9%85%D9%86%D8%AA%D8%B5%D8%B1-%D9%88%D8%A7%D9%8A%D9%84%D9%8A-%D9%88%D8%B1%D8%AC%D9%84-%D8%A7%D9%84%D8%A3%D8%B9%D9%85%D8%A7%D9%84-%D9%86%D8%A8%D9%8A%D9%84-%D8%A7%D9%84%D8%B4%D8%A7%D9%8A%D8%A8%D9%8A
+  tier: 3
+  lang: ar
+  excerpt: >-
+    أرجأت الدائرة الجنائية المختصة في النظر في قضايا الفساد المالي بالمحكمة
+    الابتدائية بتونس النظر في قضية الفساد المالي بشركة اتصالات تونس وشركة
+    DISTRICOM إلى جلسة يوم 19 أكتوبر المقبل. و لم يحضر الرئيس المدير العام
+    السابق لاتصالات تونس منتصر والي المحال بحالة فرار.
+  note: >-
+    A print-edition report dated 24 September 2026. It names both defendants
+    in this file, fixes the case as Tunisie Telecom against DISTRICOM, gives
+    Ouaïli's former PDG role and his fugitive status, and says the hearing was
+    adjourned to 19 October. The online page reproduces only the opening of
+    the print article.
+
+- id: universnews-districom-chaibi-2026-04-30
+  title: "Affaire Tunisie Telecom et Districom : Le procès de Nabil Chaïbi reporté au 1er juin"
+  publisher: Univers News
+  date: "2026-04-30"
+  url: https://universnews.tn/affaire-tunisie-telecom-et-districom-le-proces-de-nabil-chaibi-reporte-au-1er-juin/
+  tier: 4
+  lang: fr
+  excerpt: >-
+    L'affaire remonte à l'époque de la direction de Montassar Ouaïli. L'homme
+    d'affaires Nabil Chaïbi est accusé d'avoir conclu un contrat avec
+    l'opérateur national en violation flagrante des lois et des procédures en
+    vigueur, notamment en contournant le règlement intérieur relatif aux
+    marchés publics. [...] Le contrat aurait forcé Tunisie Telecom à accorder
+    à la société Districom (appartenant à l'accusé et liée à l'une des sœurs
+    de Leïla Ben Ali) le droit d'exploitation partielle du réseau mobile sous
+    la marque « Elissa ».
+  note: >-
+    Timestamped 30 April 2026 16:30. It names both defendants and states that
+    Districom belonged to Chaïbi. It supplies the Elissa brand and the link to
+    a sister of Leïla Ben Ali, neither of which appears in the verdict
+    reports. A smaller outlet, used for the identification and the contract
+    description, not for the sentence.
+
+- id: realites-districom-chaibi-2026-01-16
+  title: "Corruption : procès fixé en février contre un homme d'affaires et des gendres de l'ancien président"
+  publisher: Réalités
+  date: "2026-01-16"
+  url: https://realites.com.tn/fr/corruption-proces-fixe-en-fevrier-contre-un-homme-daffaires-et-des-gendres-de-lancien-president/
+  tier: 3
+  lang: fr
+  excerpt: >-
+    La chambre criminelle spécialisée dans les affaires de corruption
+    financière relevant du pôle judiciaire économique et financier a fixé au
+    16 février la date d'examen de l'affaire de corruption impliquant l'homme
+    d'affaires Nabil Chaïbi ainsi que plusieurs gendres de l'ancien président,
+    en lien avec des contrats conclus entre une société de télécommunications
+    publique et la société DISTRICOM. [...] Les investigations trouvent leur
+    origine dans une plainte déposée par le chargé général des litiges de
+    l'État [...] contre son ancien président-directeur général Moncef Ouaili,
+    plusieurs gendres de l'ancien président et l'homme d'affaires Nabil
+    Chaïbi.
+  note: >-
+    Dated 16 January 2026. The fullest account of the file: no tender or prior
+    consultation, no board submission, a company not yet legally constituted
+    at signature, exclusive nationwide distribution, five-year term against
+    three for other distributors, kiosks supplied through a company affiliated
+    with Leïla Trabelsi, and the 28 February 2018 indictment chamber decision
+    retaining article 96 of the Penal Code, with the cassation appeal rejected
+    on 5 February 2019. It spells the former PDG's name "Moncef Ouaili"; the
+    other reports and the graph give Montasser Ouaïli. Treated as a name
+    variant in one account, not as a second person.
+

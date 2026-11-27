@@ -126,9 +126,20 @@ time:
   #   announcement, each resting on one agency dispatch or one outlet. The sweep read
   #   the feed through 2026-11-23 and covers through 2026-11-24, so the cutoff takes
   #   the coverage date rather than the latest record date.
+  # Advanced again 2026-11-27 when the three sweeps of 25-27 November were merged
+  #   together: six events, three agreements, two people and two corrections. The
+  #   records dated past the previous horizon are the ARP-CNRD finance-bill adoption
+  #   and the Nabeul El Mlaabi session (both 25 November), the Bouanane appeal
+  #   verdict and the Takween amendment (both 26 November), and the Chaibi-Ouaili
+  #   verdict and the UN cooperation framework (both 27 November). The Zenith ICSID
+  #   suspension and the Oman audit cooperation instrument are dated 23 November,
+  #   inside the previous horizon, and the 2021-2025 UNSDCF backfill is dated 2020.
+  #   The last sweep read the feed through 2026-11-27 and covers through
+  #   2026-11-27, so the cutoff takes the coverage date rather than the latest
+  #   record date.
   # V31 now fails the build on any record interval dated past the cutoff.
   floor: "1956-03-20"
-  cutoff: "2026-11-24"
+  cutoff: "2026-11-27"
   # How far back an open-ended "in post by X" bound may reach. A plausible
   # ceiling for a senior command tenure; the longest documented run in the
   # dataset is about seven and a half years.
