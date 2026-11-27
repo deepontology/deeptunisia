@@ -33,6 +33,36 @@ import { translate } from '../src/lib/i18n.ts';
 import { EVENT_CATEGORIES } from '../src/lib/taxonomy.ts';
 import { BASIS_COLOR, BASIS_OPACITY, BASIS_ORDER, DASH } from '../src/lib/model.ts';
 
+await import('../static/events-rings.js');
+
+interface RingGeometry {
+	geometry(
+		years: number[],
+		counts: number[],
+		focus: number,
+		growDay: number | null,
+		rho: number
+	): { inner: number[]; outer: number[]; coreEnd: number | null; rc: number; bark: number };
+	layout(
+		events: { i: number; day: number }[],
+		years: number[],
+		ring: { inner: number[]; outer: number[]; coreEnd: number | null; rc: number; bark: number },
+		rho: number,
+		dir: number
+	): ({ r: number; a: number; y: number; cored: boolean } | undefined)[];
+	angle(frac: number, dir: number): number;
+	point(r: number, a: number): [number, number];
+	f1(value: number): number;
+	yearOfDay(day: number): number;
+	startOfYear(year: number): number;
+	fracOfDay(day: number): number;
+}
+const GEO = (globalThis as unknown as { EventsRingsGeometry?: RingGeometry }).EventsRingsGeometry;
+if (!GEO) {
+	console.error('  FAIL  static/events-rings.js did not expose its geometry');
+	process.exit(1);
+}
+
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
 const BUILD = join(ROOT, 'build');
@@ -74,6 +104,7 @@ if (!existsSync(PAGE)) {
 
 interface Span {
 	startEarliest?: number;
+	startLatest?: number;
 	startPrecision?: string;
 	endPrecision?: string;
 	status?: string;
@@ -97,6 +128,7 @@ interface EraRow {
 	interval: Span;
 }
 interface Dataset {
+	meta?: { cutoff?: number };
 	eras: EraRow[];
 	events: EventRow[];
 }
@@ -133,7 +165,9 @@ ok(
 	bytes <= ceiling,
 	`${(bytes / 1024).toFixed(1)} KB raw, ${perEvent.toFixed(0)} bytes per event`
 );
-ok('the page carries no inline SVG', !/<svg/i.test(html), 'the strokes are CSS from the model constants');
+const ledgerBody = html.slice(html.indexOf('<div id=ledger'), html.indexOf('<footer'));
+ok('no ledger row carries inline SVG', !/<svg/i.test(ledgerBody), 'the strokes are CSS from the model constants');
+ok('the page loads the rings script', html.includes('<script src=/events-rings.js defer></script>'));
 
 /* ---------------------------------------------------------------------------
    Rows: every event once, at the floor or hidden below it
@@ -180,7 +214,7 @@ ok('the visible rows are the events at the floor', visibleCount === expectedShow
 ok('the hidden rows are the events below the floor', hiddenCount === data.events.length - expectedShown, `${hiddenCount}`);
 
 /* The filter reads these; a row missing one would silently never match. */
-const NEEDED = ['data-event', 'data-year', 'data-cat', 'data-basis', 'data-grade', 'data-ver', 'data-contested', 'data-entities'];
+const NEEDED = ['data-event', 'data-year', 'data-t', 'data-cat', 'data-basis', 'data-grade', 'data-ver', 'data-contested', 'data-entities'];
 const GONE = ['data-era', 'data-decade', 'data-rupture', 'data-q'];
 const incomplete: string[] = [];
 const leftovers: string[] = [];
@@ -338,6 +372,91 @@ for (const slug of EVENT_CATEGORIES) {
 	if (!option || !option[1].startsWith(word) || option[1].startsWith(slug)) optionProblems.push(slug);
 }
 ok('the category filter options are words, not slugs', optionProblems.length === 0, optionProblems.length ? optionProblems.join(', ') : '');
+
+/* ---------------------------------------------------------------------------
+   The growth-rings figure: one first frame from the shared geometry
+   --------------------------------------------------------------------------- */
+
+const figure = /<figure class=rings-fig[\s\S]*?<\/figure>/.exec(html)?.[0] ?? '';
+ok('the growth-rings figure is on the page', figure.includes('id=rings') && figure.includes('class=rings-plate'));
+ok('the figure renders no lens control without script', !/<button\b|<input\b/.test(figure), 'the presets and the slider are built by the script');
+ok('the figure names the ledger as its table', /<figcaption[^>]*id=rings-cap[\s\S]*href=#contents/.test(figure));
+
+const ringScript = readFileSync(join(BUILD, 'events-rings.js'), 'utf8');
+ok('the rings script is plain, with no import or export', !/\bimport\s*[\(\{]/.test(ringScript) && !/\bexport\s/.test(ringScript) && !ringScript.includes('modulepreload'));
+ok('the rings script is within 24 KB', Buffer.byteLength(ringScript) <= 24 * 1024, `${(Buffer.byteLength(ringScript) / 1024).toFixed(1)} KB`);
+
+const RING_DAY = 86_400_000;
+const ringCutoff = Math.floor(Number((data.meta as { cutoff?: number } | undefined)?.cutoff ?? 0) / RING_DAY);
+function ringYear(ms: number): number {
+	return new Date(ms).getUTCFullYear();
+}
+const ringEvents = data.events.map((event, i) => {
+	const span = event.interval as Span;
+	const lo = Number(span.startEarliest ?? 0);
+	const hi = Number(span.startLatest ?? lo);
+	const mid = Math.round((lo + hi) / 2);
+	return { i, id: event.id, day: Math.floor(mid / RING_DAY), year: ringYear(mid), basis: String(event.basis), atFloor: atFloor(event) };
+});
+const ringFirst = Math.min(...ringEvents.map((e) => e.year));
+const ringLast = Math.max(...ringEvents.map((e) => e.year));
+const ringYears = Array.from({ length: ringLast - ringFirst + 1 }, (_, i) => ringFirst + i);
+const ringCounts = ringYears.map((y) => ringEvents.filter((e) => e.year === y).length);
+const lastEraStart = ringYear(Number(eras[eras.length - 1].interval.startEarliest));
+const ring = GEO.geometry(ringYears, ringCounts, lastEraStart, null, 4);
+const ringPositions = GEO.layout(ringEvents, ringYears, ring, 4, 1);
+const atFloorEvents = ringEvents.filter((e) => e.atFloor);
+const placed = atFloorEvents.filter((e) => ringPositions[e.i] && Number.isFinite(ringPositions[e.i]!.r) && Number.isFinite(ringPositions[e.i]!.a));
+ok(
+	'every event at the floor has exactly one mark position',
+	placed.length === atFloorEvents.length,
+	`${placed.length} of ${atFloorEvents.length}`
+);
+
+const lineGroup = /<g id=rings-lines>([\s\S]*?)<\/g>/.exec(figure)?.[1] ?? '';
+const builtRadii = [...lineGroup.matchAll(/<circle[^>]* r=([\d.]+)/g)].map((m) => Number(m[1])).sort((a, b) => a - b);
+const wantedRadii = ringYears
+	.slice(1)
+	.map((_, index) => index + 1)
+	.filter((i) => ring.inner[i] > ring.rc + 0.5 && ring.inner[i] < ring.bark - 0.1)
+	.map((i) => GEO.f1(ring.inner[i]))
+	.sort((a, b) => a - b);
+ok('the first frame draws the rings the shared geometry computes', JSON.stringify(builtRadii) === JSON.stringify(wantedRadii), `${builtRadii.length} rings`);
+
+const markGroup = /<g id=rings-marks>([\s\S]*?)<\/g>/.exec(figure)?.[1] ?? '';
+const markProblems: string[] = [];
+const markIds = new Set<string>();
+for (const match of markGroup.matchAll(/<a class="rings-mark b-(\w+)" href=\/e\/([^ >]+)[^>]*><circle class=m cx=([\d.]+) cy=([\d.]+)/g)) {
+	const id = decodeURIComponent(match[2]);
+	const event = ringEvents.find((e) => e.id === id);
+	const position = event ? ringPositions[event.i] : null;
+	if (!event || !position) {
+		markProblems.push(`${id}: no position`);
+		continue;
+	}
+	if (markIds.has(id)) markProblems.push(`${id}: two marks`);
+	markIds.add(id);
+	const at = GEO.point(position.r, position.a);
+	if (Math.abs(Number(match[3]) - GEO.f1(at[0])) > 0.15 || Math.abs(Number(match[4]) - GEO.f1(at[1])) > 0.15) {
+		markProblems.push(`${id}: off the geometry`);
+	}
+	if (!recordIds.has(id) || !existsSync(join(E, `${id}.html`))) markProblems.push(`${id}: no record page`);
+}
+ok('the first frame marks sit on the shared geometry and link to records', markProblems.length === 0, markProblems.length ? sample(markProblems) : `${markIds.size} marks`);
+
+const coreRadius = /<circle class=rings-core-disc[^>]* r=([\d.]+)/.exec(figure)?.[1];
+ok(
+	'the core disc is the shared core radius',
+	ring.coreEnd === null ? coreRadius === undefined : coreRadius !== undefined && Math.abs(Number(coreRadius) - GEO.f1(ring.rc)) <= 0.15,
+	ring.coreEnd === null ? 'no core at this lens' : `core to ${ring.coreEnd}`
+);
+
+const css = readFileSync(join(ROOT, 'static', 'events.css'), 'utf8');
+const figureCss = css.slice(css.indexOf('Growth rings: the figure'), css.indexOf('Focus and the last word'));
+const colourLiteral = /#[0-9a-f]{3,8}\b|\b(?:rgb|hsl|oklch|lab|lch)\(/i.test(figureCss);
+const pxLiteral = /\d+px\b/.test(figureCss);
+const sideLiteral = /\b(?:left|right)\s*:/.test(figureCss) || /\btext-align\s*:\s*(?:left|right)/.test(figureCss);
+ok('the figure styles use tokens only', !colourLiteral && !pxLiteral && !sideLiteral, colourLiteral ? 'colour literal' : pxLiteral ? 'px' : sideLiteral ? 'left or right' : 'tokens');
 
 /* ---------------------------------------------------------------------------
    The eras in order, and the sitemap

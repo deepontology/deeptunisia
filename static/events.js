@@ -114,6 +114,12 @@
 			}
 			if (v) out.push(key + '=' + encodeURIComponent(v));
 		}
+		/* The figure owns these two keys; a filter pass must not drop them. */
+		var current = new URLSearchParams(location.search);
+		var extra = ['since', 'id'];
+		for (var e = 0; e < extra.length; e++) {
+			if (current.has(extra[e])) out.push(extra[e] + '=' + encodeURIComponent(current.get(extra[e])));
+		}
 		return out.length ? '?' + out.join('&') : '';
 	}
 
@@ -314,6 +320,7 @@
 	function apply() {
 		var sections = ledger.querySelectorAll('[data-chapter]');
 		var basisBelow = { documented: 0, reported: 0, inferred: 0, unsubstantiated: 0 };
+		var visibleIds = [];
 		shown = 0;
 		below = 0;
 		weakestBelow = '';
@@ -330,6 +337,7 @@
 				if (ok) {
 					visible++;
 					shown++;
+					visibleIds.push(row.getAttribute('data-event'));
 					years[row.dataset.year] = true;
 				} else if (pass(row, 'basis') && rank(row.dataset.basis) > rank(state.basis)) {
 					below++;
@@ -400,6 +408,11 @@
 
 		categoryCounts();
 		syncControls();
+		document.dispatchEvent(
+			new CustomEvent('events:filtered', {
+				detail: { visible: visibleIds, floor: state.basis, actor: state.actor, institution: state.institution }
+			})
+		);
 	}
 
 	function commit() {

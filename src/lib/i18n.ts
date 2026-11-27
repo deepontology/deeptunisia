@@ -2292,7 +2292,26 @@ const en: Dict = {
 	'events.empty.lower': 'Show the {n} events below this floor',
 	'events.empty.lowerOne': 'Show the one event below this floor',
 	'events.empty.noLower': 'Nothing below this floor matches these filters either.',
-	'events.nojs': 'Filtering requires JavaScript. The complete ledger at the reported floor follows below.'
+	'events.nojs': 'Filtering requires JavaScript. The complete ledger at the reported floor follows below.',
+
+	/*
+	 * The growth rings figure on /events. Its geometry is in
+	 * static/events-rings.js; these are the words around it. Numbers are
+	 * placeholders filled from the rows at build or in the browser.
+	 */
+	'events.rings.lookBack': 'Look back',
+	'events.rings.side': 'In the lens, newest first',
+	'events.rings.grow': 'Watch it grow',
+	'events.rings.stop': 'Stop',
+	'events.rings.today': 'Today',
+	'events.rings.fresh': '{n} in the last {days} days',
+	'events.rings.lensRange': '{from} to today: {n} events',
+	'events.rings.everything': 'All years',
+	'events.rings.since': 'Since {year}',
+	'events.rings.sinceShort': '{year}+',
+	'events.rings.openRecord': 'Open the record',
+	'events.rings.close': 'Close',
+	'events.rings.caption': '{n} events over {years} years, one ring per year, January at the top. The bark is today. A rupture carries a ring and a scar.',
 };
 
 const fr: Dict = {
@@ -4500,7 +4519,20 @@ const fr: Dict = {
 	'events.empty.lower': 'Afficher les {n} événements sous ce seuil',
 	'events.empty.lowerOne': 'Afficher l’événement sous ce seuil',
 	'events.empty.noLower': 'Rien sous ce seuil ne correspond non plus à ces filtres.',
-	'events.nojs': 'Le filtrage nécessite JavaScript. Le répertoire complet au seuil rapporté suit ci-dessous.'
+	'events.nojs': 'Le filtrage nécessite JavaScript. Le répertoire complet au seuil rapporté suit ci-dessous.',
+	'events.rings.lookBack': 'Reculer',
+	'events.rings.side': 'Dans le champ, du plus récent au plus ancien',
+	'events.rings.grow': 'Voir la croissance',
+	'events.rings.stop': 'Arrêter',
+	'events.rings.today': 'Aujourd’hui',
+	'events.rings.fresh': '{n} sur les {days} derniers jours',
+	'events.rings.lensRange': 'De {from} à aujourd’hui : {n} événements',
+	'events.rings.everything': 'Toutes les années',
+	'events.rings.since': 'Depuis {year}',
+	'events.rings.sinceShort': '{year}+',
+	'events.rings.openRecord': 'Ouvrir la fiche',
+	'events.rings.close': 'Fermer',
+	'events.rings.caption': '{n} événements sur {years} ans, un anneau par an, janvier en haut. L’écorce, c’est aujourd’hui. Une rupture porte un anneau et une cicatrice.',
 };
 
 
@@ -6702,7 +6734,20 @@ const ar: Dict = {
 	'events.empty.lower': 'اعرض {n} حدثاً تحت هذا الحد',
 	'events.empty.lowerOne': 'اعرض الحدث الواحد تحت هذا الحد',
 	'events.empty.noLower': 'لا شيء تحت هذا الحد يطابق هذه المرشّحات أيضاً.',
-	'events.nojs': 'تتطلّب التصفية تشغيل جافاسكربت. يلي السجل الكامل عند الحد المنقول.'
+	'events.nojs': 'تتطلّب التصفية تشغيل جافاسكربت. يلي السجل الكامل عند الحد المنقول.',
+	'events.rings.lookBack': 'إلى الوراء',
+	'events.rings.side': 'داخل النطاق، الأحدث أولًا',
+	'events.rings.grow': 'شاهدها تنمو',
+	'events.rings.stop': 'إيقاف',
+	'events.rings.today': 'اليوم',
+	'events.rings.fresh': '{n} خلال آخر {days} يومًا',
+	'events.rings.lensRange': 'من {from} إلى اليوم: {n} حدثًا',
+	'events.rings.everything': 'كل السنوات',
+	'events.rings.since': 'منذ {year}',
+	'events.rings.sinceShort': '{year}+',
+	'events.rings.openRecord': 'افتح السجل',
+	'events.rings.close': 'إغلاق',
+	'events.rings.caption': '{n} حدثًا على مدى {years} سنة، حلقة لكل سنة، ويناير في الأعلى. اللحاء هو اليوم. الانقطاع يحمل حلقة وأثرًا.',
 };
 
 
