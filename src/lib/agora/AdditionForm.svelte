@@ -36,7 +36,7 @@
 	import Segmented from '$lib/ui/Segmented.svelte';
 	import Textarea from '$lib/ui/Textarea.svelte';
 	import RecordPicker, { type PickerOption } from './RecordPicker.svelte';
-	import { t, layerLabel } from '$lib/t.svelte';
+	import { t, layerLabel, eventCategoryLabel } from '$lib/t.svelte';
 	import { english, nameOf } from '$lib/names.svelte';
 	import { agora } from '$lib/agora.svelte';
 	import { LAYER_COLOR, communityTypeOf, ds, institutionById, type Layer } from '$lib/model';
@@ -323,7 +323,7 @@
 			</div>
 			<Field for="add-f9" label={t('agora.add.category')} required>
 				<select id="add-f9" class="pick" bind:value={category}>
-					{#each EVENT_CATEGORIES as v (v)}<option value={v}>{t('eventCat.' + v)}</option>{/each}
+					{#each EVENT_CATEGORIES as v (v)}<option value={v}>{eventCategoryLabel(v)}</option>{/each}
 				</select>
 			</Field>
 		{:else if kind === 'relationship'}

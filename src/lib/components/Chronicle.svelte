@@ -7,7 +7,7 @@
 	import { relationshipsByEntity } from '$lib/model';
 	import { app } from '$lib/state.svelte';
 	import { applyEntityLink } from '$lib/deeplink.svelte';
-	import { t, tf, basisLabel, describeInterval, durationLabel, formatDate } from '$lib/t.svelte';
+	import { t, tf, basisLabel, describeInterval, durationLabel, formatDate, eventCategoryLabel } from '$lib/t.svelte';
 	import { englishList, eventTitle, nameOf } from '$lib/names.svelte';
 	import { dateFormatter } from '$lib/i18n';
 	import Button from '$lib/ui/Button.svelte';
@@ -1178,7 +1178,7 @@
 					aria-pressed={!hiddenCats.has(cat)}
 					onclick={() => toggleCat(cat)}
 				>
-					{t('eventCat.' + cat)} <span class="eb-n mono">{n}</span>
+					{eventCategoryLabel(cat)} <span class="eb-n mono">{n}</span>
 				</button>
 			{/each}
 			<span class="eb-sep"></span>
@@ -1991,7 +1991,7 @@
 					<tr>
 						<td>{formatDate(e.interval.startEarliest, 'day')}</td>
 						<td>{eventTitle(e)}</td>
-						<td>{t('eventCat.' + e.category)}</td>
+						<td>{eventCategoryLabel(e.category)}</td>
 						<td>{e.rupture ? t('record.yes') : t('record.no')}</td>
 						<td>{e.confidence}</td>
 						<td>{e.origins ?? e.independence ?? '?'}</td>

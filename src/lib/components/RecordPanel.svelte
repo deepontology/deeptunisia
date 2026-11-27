@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { app } from '$lib/state.svelte';
-	import { t, basisLabel, confidenceLabel, describeInterval, formatDate } from '$lib/t.svelte';
+	import { t, basisLabel, confidenceLabel, describeInterval, formatDate, eventCategoryLabel } from '$lib/t.svelte';
 	import { english, nameOf } from '$lib/names.svelte';
 	import SourceList from './SourceList.svelte';
 	import OriginsChip from '$lib/ui/OriginsChip.svelte';
@@ -156,7 +156,7 @@
 			if (e.start) out.push(field(t('record.period'), `${e.start}${e.end ? ' – ' + e.end : ''}`));
 		} else if (event) {
 			const ev = event as EventRec;
-			out.push(field(t('record.category'), t('eventCat.' + ev.category)));
+			out.push(field(t('record.category'), eventCategoryLabel(ev.category)));
 			if (ev.rupture) out.push(field(t('record.rupture'), t('record.yes')));
 		}
 		return out;
