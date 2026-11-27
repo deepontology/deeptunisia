@@ -1898,7 +1898,7 @@
 - id: wikipedia-etap
   title: ETAP
   publisher: Wikipedia
-  url: https://fr.wikipedia.org/wiki/Entreprise_tunisienne_des_activit%C3%A9s_p%C3%A9troli%C3%A8res
+  url: https://fr.wikipedia.org/wiki/Entreprise_tunisienne_d%27activit%C3%A9s_p%C3%A9troli%C3%A8res
   tier: 3
   lang: fr
 - id: wikipedia-stb
@@ -1918,13 +1918,13 @@
 - id: wikipedia-bh-bank
   title: BH Bank
   publisher: Wikipedia
-  url: https://fr.wikipedia.org/wiki/Banque_de_l%27habitat_%28Tunisie%29
+  url: https://fr.wikipedia.org/wiki/BH_Bank
   tier: 3
   lang: fr
 - id: wikipedia-bvmt
   title: BVMT
   publisher: Wikipedia
-  url: https://fr.wikipedia.org/wiki/Bourse_des_valeurs_mobili%C3%A8res_de_Tunis
+  url: https://fr.wikipedia.org/wiki/Bourse_de_Tunis
   tier: 3
   lang: fr
 - id: wikipedia-justice-ministers
@@ -2233,7 +2233,7 @@
 - id: wikipedia-abderrazak-rassaa-fr
   title: Abderrazak Rassaa
   publisher: Wikipedia (French)
-  url: https://fr.wikipedia.org/wiki/Abderrazak_Rassa
+  url: https://fr.wikipedia.org/wiki/Abderrazak_Rassaa
   tier: 3
   lang: fr
 - id: wikipedia-mansour-moalla-fr
@@ -2246,7 +2246,7 @@
 - id: wikipedia-salah-ben-mbarka-fr
   title: Salah Ben M'barka
   publisher: Wikipedia (French)
-  url: https://fr.wikipedia.org/wiki/Salah_Ben_M%27barka
+  url: https://fr.wikipedia.org/wiki/Salah_Ben_M%27Barka
   archive_url: https://web.archive.org/web/20250528233147/https://fr.wikipedia.org/wiki/Salah_Ben_M'Barka
   tier: 3
   lang: fr
@@ -2301,7 +2301,7 @@
 - id: wikipedia-ridha-ben-ali-fr
   title: Ridha Ben Ali
   publisher: Wikipédia
-  url: https://fr.wikipedia.org/wiki/Ridha_Ben_Ali_%28homme_politique%29
+  url: https://fr.wikipedia.org/wiki/Ridha_Ben_Ali
   tier: 3
   lang: fr
 - id: wikipedia-ayari-fr
@@ -2406,7 +2406,7 @@
 - id: wikipedia-ett
   title: Établissement de la Télévision Tunisienne
   publisher: Wikipedia (FR)
-  url: https://fr.wikipedia.org/wiki/%C3%89tablissement_de_la_T%C3%A9l%C3%A9vision_tunisienne
+  url: https://fr.wikipedia.org/wiki/%C3%89tablissement_de_la_t%C3%A9l%C3%A9vision_tunisienne
   archive_url: https://web.archive.org/web/20260605155326/https://fr.wikipedia.org/wiki/%C3%89tablissement_de_la_t%C3%A9l%C3%A9vision_tunisienne
   tier: 4
   lang: fr
@@ -2440,7 +2440,7 @@
 - id: wikipedia-el-hiwar
   title: El Hiwar Ettounsi
   publisher: Wikipedia (FR)
-  url: https://fr.wikipedia.org/wiki/El_Hiwar_Ettounsi
+  url: https://fr.wikipedia.org/wiki/El_Hiwar_El_Tounsi
   tier: 4
   lang: fr
 - id: jawharafm-fehri-elhiwar-2014
@@ -2617,7 +2617,7 @@
 - id: wikipedia-ifm-tunisie
   title: IFM (Tunisie)
   publisher: Wikipedia (FR)
-  url: https://fr.wikipedia.org/wiki/IFM_%28Tunisie%29
+  url: https://fr.wikipedia.org/wiki/Radio_IFM
   tier: 4
   lang: fr
 - id: wikipedia-rtci
@@ -2648,7 +2648,7 @@
 - id: wikipedia-assabah
   title: Assabah
   publisher: Wikipedia (FR)
-  url: https://fr.wikipedia.org/wiki/Assabah_%28journal_tunisien%29
+  url: https://fr.wikipedia.org/wiki/Assabah_%28Tunisie%29
   tier: 4
   lang: fr
 - id: wikipedia-al-chourouk
@@ -2706,7 +2706,7 @@
 - id: wikipedia-leaders-tunisie
   title: Leaders (magazine)
   publisher: Wikipedia (FR)
-  url: https://fr.wikipedia.org/wiki/Leaders_%28magazine_tunisien%29
+  url: https://fr.wikipedia.org/wiki/Leaders_%28Tunisie%29
   tier: 4
   lang: fr
 - id: wikipedia-african-manager
@@ -2745,7 +2745,7 @@
 - id: wikipedia-ivd
   title: Instance Vérité et Dignité
   publisher: Wikipedia (FR)
-  url: https://fr.wikipedia.org/wiki/Instance_V%C3%A9rit%C3%A9_et_Dignit%C3%A9
+  url: https://fr.wikipedia.org/wiki/Instance_v%C3%A9rit%C3%A9_et_dignit%C3%A9
   archive_url: https://web.archive.org/web/20260202040012/https://fr.wikipedia.org/wiki/Instance_v%C3%A9rit%C3%A9_et_dignit%C3%A9
   tier: 4
   lang: fr
@@ -2994,7 +2994,7 @@
 - id: wikipedia-mohamed-abbou
   title: Mohamed Abbou
   publisher: Wikipedia (FR)
-  url: https://fr.wikipedia.org/wiki/Mohamed_Abbou_%28homme_politique%29
+  url: https://fr.wikipedia.org/wiki/Mohamed_Abbou_%28homme_politique_tunisien%29
   tier: 4
   lang: fr
 - id: wikipedia-kamal-gharbi
@@ -3248,7 +3248,7 @@
 - id: wikipedia-upl
   title: Free Patriotic Union
   publisher: Wikipedia
-  url: https://en.wikipedia.org/wiki/Free_Patriotic_Union_%28Tunisia%29
+  url: https://en.wikipedia.org/wiki/Free_Patriotic_Union
   tier: 3
   lang: en
 - id: wikipedia-popular-front-tunisia
@@ -3343,7 +3343,7 @@
 - id: wikipedia-upr-tunisia
   title: Republican People's Union (Tunisia)
   publisher: Wikipedia
-  url: https://en.wikipedia.org/wiki/Republican_People%27s_Union_%28Tunisia%29
+  url: https://en.wikipedia.org/wiki/Republican_People%27s_Union
   tier: 3
   lang: en
 - id: charfi-1989-ministres
@@ -17933,7 +17933,7 @@
   title: وزارة التجارة وتنمية الصادرات (تونس)
   publisher: ويكيبيديا (العربية)
   date: '2026-10-20'
-  url: https://ar.wikipedia.org/wiki/%D9%88%D8%B2%D8%A7%D8%B1%D8%A9_%D8%A7%D9%84%D8%AA%D8%AC%D8%A7%D8%B1%D8%A9_%D9%88%D8%AA%D9%86%D9%85%D9%8A%D8%A9_%D8%A7%D9%84%D8%B5%D8%A7%D8%AF%D8%A7%D8%AA_(%D8%AA%D9%88%D9%86%D8%B3)
+  url: https://ar.wikipedia.org/wiki/%D9%88%D8%B2%D8%A7%D8%B1%D8%A9_%D8%A7%D9%84%D8%AA%D8%AC%D8%A7%D8%B1%D8%A9_%D9%88%D8%AA%D9%86%D9%85%D9%8A%D8%A9_%D8%A7%D9%84%D8%B5%D8%A7%D8%AF%D8%B1%D8%A7%D8%AA_%28%D8%AA%D9%88%D9%86%D8%B3%29
   tier: 3
   lang: ar
   excerpt: صلاح الدين بن مبارك 26 ديسمبر 1977 – 24 أبريل 1980 ; 28 أبريل 1986 – 27 يوليو 1988 ; المنصف بلعيد 27
@@ -17978,7 +17978,7 @@
   title: وزارة حقوق الإنسان والعدالة الانتقالية (تونس)
   publisher: ويكيبيديا (العربية)
   date: '2026-10-20'
-  url: https://ar.wikipedia.org/wiki/%D9%88%D8%B2%D8%A7%D8%B1%D8%A9_%D8%AD%D9%82%D9%88%D9%82_%D8%A7%D9%84%D8%A5%D9%86%D8%B3%D8%A7%D9%86_%D9%88%D8%A7%D9%84%D8%B9%D8%AF%D9%84%D8%A9_%D8%A7%D9%84%D8%A7%D9%86%D8%AA%D9%82%D8%A7%D9%84%D9%8A%D8%A9_(%D8%AA%D9%88%D9%86%D8%B3)
+  url: https://ar.wikipedia.org/wiki/%D9%88%D8%B2%D8%A7%D8%B1%D8%A9_%D8%AD%D9%82%D9%88%D9%82_%D8%A7%D9%84%D8%A5%D9%86%D8%B3%D8%A7%D9%86_%D9%88%D8%A7%D9%84%D8%B9%D8%AF%D8%A7%D9%84%D8%A9_%D8%A7%D9%84%D8%A7%D9%86%D8%AA%D9%82%D8%A7%D9%84%D9%8A%D8%A9_%28%D8%AA%D9%88%D9%86%D8%B3%29
   tier: 3
   lang: ar
   excerpt: سمير ديلو 24 ديسمبر 2011 – 29 يناير 2014 ; حافظ بن صالح 29 يناير 2014 – 6 فبراير 2015 ; حل = 6 فبراير
@@ -29081,3 +29081,896 @@
     in the body. Counted as the same report, not as corroboration, and cited
     because its body carries the correct attribution that Al Chourouk's sentence
     garbles.
+
+- id: jort-1987-1282
+  title: "Décret n° 87-1282 du 7 novembre 1987 portant nomination du Premier ministre (JORT n° 80 du 10 novembre 1987, p. 1422)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1987-11-07
+  url: https://lake.jort.tn/journal-officiel/fr/1987/080.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1987/080/decret-87-1282
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Hédi Baccouche est nommé Premier ministre."
+- id: jort-1987-1283
+  title: "Décret n° 87-1283 du 7 novembre 1987 portant nomination des membres du gouvernement (JORT n° 80 du 10 novembre 1987, p. 1423)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1987-11-07
+  url: https://lake.jort.tn/journal-officiel/fr/1987/080.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1987/080/decret-87-1283
+  tier: 1
+  lang: fr
+  excerpt: "Ministre de l'intérieur ... Habib Ammar. Ministre délégué auprès du Premier ministre ... Hamed Karoui."
+- id: jort-1988-1392-pdf
+  title: "Décret n° 88-1392 du 27 juillet 1988 portant nomination des membres du gouvernement (JORT n° 51 du 29 juillet 1988, p. 1075)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1988-07-27
+  url: https://lake.jort.tn/journal-officiel/fr/1988/051.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1988/051/decret-88-1392
+  tier: 1
+  lang: fr
+  excerpt: "Ministre de la justice ... Hamed Karoui. Ministre de l'industrie et du commerce ... Moncef Belaid."
+- id: jort-1990-483
+  title: "Décret n° 90-483 du 3 mars 1990 portant nomination des membres du gouvernement (JORT n° 17 du 6 mars 1990, p. 323)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1990-03-03
+  url: https://lake.jort.tn/journal-officiel/fr/1990/017.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1990/017/decret-90-483
+  tier: 1
+  lang: fr
+  excerpt: "Ministre de l'intérieur ... Monsieur Abdelhamid Escheikh. Ministre de la défense nationale ... Monsieur Abdallah Kallel. Ministre des affaires étrangères ... Monsieur Ismail Khelil."
+- id: jort-1990-1323
+  title: "Décret n° 90-1323 du 28 août 1990 portant nomination du ministre des affaires étrangères (JORT n° 57 du 11 septembre 1990, p. 1206)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1990-08-28
+  url: https://lake.jort.tn/journal-officiel/fr/1990/057.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1990/057/decret-90-1323
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Habib Boularès est nommé ministre des affaires étrangères."
+- id: jort-1991-276
+  title: "Décret n° 91-276 du 20 février 1991 portant nomination des membres du gouvernement (JORT n° 15 du 22 février 1991, p. 327)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1991-02-20
+  url: https://lake.jort.tn/journal-officiel/fr/1991/015.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1991/015/decret-91-276
+  tier: 1
+  lang: fr
+  excerpt: "Ministre de la justice ... Abderrahim ZOUARI. Ministre de l'intérieur ... Abdallah KALLEL."
+- id: jort-1992-527
+  title: "Décret n° 92-527 du 9 mars 1992 portant nomination du ministre des affaires religieuses (JORT n° 18 du 24 mars 1992, p. 355)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1992-03-09
+  url: https://lake.jort.tn/journal-officiel/fr/1992/018.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1992/018/decret-92-527
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Ali Chebbi, est nommé ministre des affaires religieuses."
+- id: jort-1992-1094
+  title: "Décret n° 92-1094 du 9 juin 1992 portant nomination du ministre de la justice (JORT n° 38 du 16 juin 1992, p. 770)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1992-06-09
+  url: https://lake.jort.tn/journal-officiel/fr/1992/038.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1992/038/decret-92-1094
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Sadok Chaâbane est nommé Ministre de la Justice."
+- id: jort-1993-1304
+  title: "Décret n° 93-1304 du 15 juin 1993 portant nomination du ministre de l'agriculture (JORT n° 45 du 18 juin 1993, p. 844)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1993-06-15
+  url: https://lake.jort.tn/journal-officiel/fr/1993/045.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1993/045/decret-93-1304
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Mohamed Ben Rejeb est nommé ministre de l'agriculture."
+- id: jort-1993-1639
+  title: "Décret n° 93-1639 du 6 août 1993 portant nomination de la ministre déléguée auprès du Premier ministre chargée des affaires de la femme et de la famille (JORT n° 62 du 20 août 1993, p. 1291)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1993-08-06
+  url: https://lake.jort.tn/journal-officiel/fr/1993/062.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1993/062/decret-93-1639
+  tier: 1
+  lang: fr
+  excerpt: "Madame Néziha Mezhoud, est nommée en qualité de ministre délégué auprès du Premier ministre chargée des affaires de la femme et de la famille."
+- id: jort-1995-142
+  title: "Décret n° 95-142 du 25 janvier 1995 portant nomination du ministre de l'intérieur (JORT n° 8 du 27 janvier 1995, p. 247)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1995-01-25
+  url: https://lake.jort.tn/journal-officiel/fr/1995/008.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1995/008/decret-95-142
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Mohamed Jegham est nommé ministre de l'intérieur."
+- id: jort-1997-1962
+  title: "Décret n° 97-1962 du 11 octobre 1997 portant nomination du ministre de l'intérieur (JORT n° 82 du 14 octobre 1997, p. 1887)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1997-10-11
+  url: https://lake.jort.tn/journal-officiel/fr/1997/082.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1997/082/decret-97-1962
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Ali Chaouch, est nommé ministre de l'intérieur."
+- id: jort-1997-1963
+  title: "Décret n° 97-1963 du 11 octobre 1997 portant nomination du ministre de l'éducation (JORT n° 82 du 14 octobre 1997, p. 1887)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1997-10-11
+  url: https://lake.jort.tn/journal-officiel/fr/1997/082.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1997/082/decret-97-1963
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Ridha Ferchiou, est nommé ministre de l'éducation."
+- id: jort-1999-2558
+  title: "Décret n° 99-2558 du 17 novembre 1999 portant nomination des membres du gouvernement (JORT n° 94 du 23 novembre 1999, p. 2463)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1999-11-17
+  url: https://lake.jort.tn/journal-officiel/fr/1999/094.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1999/094/decret-99-2558
+  tier: 1
+  lang: fr
+  excerpt: "Ministre de la Justice ... Monsieur Béchir Takkari. Ministre des Affaires Religieuses ... Monsieur Jalloul Jeribi."
+- id: jort-2001-291
+  title: "Décret n° 2001-291 du 23 janvier 2001 portant nomination des membres du gouvernement (JORT n° 9 du 30 janvier 2001, p. 180)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 2001-01-23
+  url: https://lake.jort.tn/journal-officiel/fr/2001/009.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/2001/009/decret-2001-291
+  tier: 1
+  lang: fr
+  excerpt: "ministre de l'intérieur ... Monsieur Abdallah Kaâbi. ministre de la défense nationale ... Monsieur Dali Jazi."
+- id: jort-2002-2011
+  title: "Décret n° 2002-2011 du 5 septembre 2002 portant nomination des membres du gouvernement (JORT n° 74 du 10 septembre 2002, p. 2105)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 2002-09-05
+  url: https://lake.jort.tn/journal-officiel/fr/2002/074.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/2002/074/decret-2002-2011
+  tier: 1
+  lang: fr
+  excerpt: "ministre de l'agriculture, de l'environnement et des ressources hydrauliques ... Habib Haddad"
+- id: jort-2004-2644
+  title: "Décret n° 2004-2644 du 10 novembre 2004 portant nomination des membres du gouvernement (JORT n° 94 du 23 novembre 2004, p. 3283)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 2004-11-10
+  url: https://lake.jort.tn/journal-officiel/fr/2004/094.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/2004/094/decret-2004-2644
+  tier: 1
+  lang: fr
+  excerpt: "Ministre du tourisme ... Monsieur Tijani Haddad"
+- id: jort-2007-2278
+  title: "Décret n° 2007-2278 du 4 septembre 2007 portant nomination de la ministre des affaires de la femme, de la famille, de l'enfance et des personnes âgées (JORT n° 74 du 14 septembre 2007, p. 3259)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 2007-09-04
+  url: https://lake.jort.tn/journal-officiel/fr/2007/074.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/2007/074/decret-2007-2278
+  tier: 1
+  lang: fr
+  excerpt: "Madame Sarra Kanoun Jarraya est nommée ministre des affaires de la femme, de la famille, de l'enfance et des personnes âgées."
+- id: jort-2008-2956
+  title: "Décret n° 2008-2956 du 29 août 2008 portant nomination du ministre de l'éducation et de la formation (JORT n° 73 du 9 septembre 2008, p. 2954)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 2008-08-29
+  url: https://lake.jort.tn/journal-officiel/fr/2008/073.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/2008/073/decret-2008-2956
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Hatem Ben Salem est nommé ministre de l'éducation et de la formation."
+- id: jort-2010-72
+  title: "Décret n° 2010-72 du 14 janvier 2010 portant nomination de membres du gouvernement (JORT n° 7 du 22 janvier 2010, p. 224)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 2010-01-14
+  url: https://lake.jort.tn/journal-officiel/fr/2010/007.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/2010/007/decret-2010-72
+  tier: 1
+  lang: fr
+  excerpt: "Ministre des affaires étrangères ... Monsieur Kamel Morjane"
+- id: jort-2011-374
+  title: "Décret n° 2011-374 du 28 mars 2011 portant nomination du ministre de l'intérieur (JORT n° 24 du 8 avril 2011, p. 450)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 2011-03-28
+  url: https://lake.jort.tn/journal-officiel/fr/2011/024.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/2011/024/decret-2011-374
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Habib Essid est nommé ministre de l'intérieur."
+# Gazette decrees verified for the 1987 to 2010 ministerial audit, 2026-11-25.
+# Every entry below was read on the issue text at ocr.jort.tn and cross-read
+# on the decree page at jort.tn; the PDF at lake.jort.tn is the scan of record.
+- id: jort-1988-1863
+  title: Décrets n° 88-1862 et 88-1863 du 1er novembre 1988, nomination d'un ministre d'État et du ministre de l'intérieur, JORT n° 74 du 1er novembre 1988, p. 1508
+  title_gloss_ar: الأمران عدد 1862 و1863 لسنة 1988 المؤرخان في 1 نوفمبر 1988 والمتعلقان بتسمية وزير دولة ووزير الداخلية
+  title_gloss_ar_by: model-reviewed
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, lake.jort.tn / ocr.jort.tn)
+  date: '1988-11-01'
+  url: https://lake.jort.tn/journal-officiel/fr/1988/074.pdf
+  tier: 1
+  lang: fr
+  excerpt: >-
+    Par décret n° 88-1862 du 1er novembre 1988 : Monsieur Habib Ammar est nommé
+    ministre d'État conseiller spécial auprès du Président de la République. Par
+    décret n° 88-1863 du 1er novembre 1988 : Monsieur Chédy Naffati est nommé
+    ministre de l'intérieur.
+- id: jort-1987-623
+  title: Décret n° 87-623 du 15 avril 1987 portant nomination du ministre des affaires sociales, JORT n° 28 du 17 avril 1987, p. 531
+  title_gloss_ar: أمر عدد 623 لسنة 1987 مؤرخ في 15 أفريل 1987 يتعلق بتسمية وزير الشؤون الاجتماعية
+  title_gloss_ar_by: model-reviewed
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, lake.jort.tn / ocr.jort.tn)
+  date: '1987-04-15'
+  url: https://lake.jort.tn/journal-officiel/fr/1987/028.pdf
+  tier: 1
+  lang: fr
+  excerpt: >-
+    Par décret n° 87-623 du 15 avril 1987 : Monsieur Hédi Baccouche est nommé
+    ministre des affaires sociales.
+- id: jort-1987-622
+  title: Décret n° 87-622 du 15 avril 1987 portant nomination d'un ministre délégué auprès du Premier ministre, JORT n° 28 du 17 avril 1987, p. 531
+  title_gloss_ar: أمر عدد 622 لسنة 1987 مؤرخ في 15 أفريل 1987 يتعلق بتسمية وزير منتدب لدى الوزير الأول
+  title_gloss_ar_by: model-reviewed
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, lake.jort.tn / ocr.jort.tn)
+  date: '1987-04-15'
+  url: https://lake.jort.tn/journal-officiel/fr/1987/028.pdf
+  tier: 1
+  lang: fr
+  excerpt: >-
+    Par décret n° 87-622 du 15 avril 1987 : Monsieur Abdellaziz Ben Dhia est
+    nommé ministre délégué auprès du Premier ministre.
+- id: jort-1987-1183
+  title: "Décret n° 87-1183 du 3 octobre 1987 portant nomination du Premier ministre (JORT n° 70 du 6 octobre 1987, p. 1227)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1987-10-03
+  url: https://lake.jort.tn/journal-officiel/fr/1987/070.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1987/070/decret-87-1183
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Zinc El Abidine Ben Ali est nommé Premier ministre, ministre de l'intérieur."
+- id: jort-1987-1247
+  title: "Décret n° 87-1247 du 27 octobre 1987 portant nomination du ministre de la jeunesse et des sports (JORT n° 77 du 3 novembre 1987, p. 1378)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1987-10-27
+  url: https://lake.jort.tn/journal-officiel/fr/1987/077.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1987/077/decret-87-1247
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Foued M'Bazaâ est nommé ministre de la jeunesse et des sports."
+- id: jort-1988-736
+  title: "Décret n° 88-736 du 12 avril 1988 portant nomination de membres du gouvernement (JORT n° 24 du 12 avril 1988, p. 543)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1988-04-12
+  url: https://lake.jort.tn/journal-officiel/fr/1988/024.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1988/024/decret-88-736
+  tier: 1
+  lang: fr
+  excerpt: "Sont nommés : Monsieur Hédi Khélil, ministre de l'éducation nationale; Monsieur Abdesselem M'Seddi, ministre de l'enseignement supérieur et de la recherche scientifique; Monsieur Abdelmalak Laârif, ministre des affaires culturelles; Monsieur Abdelhamid Escheikh, ministre de la jeunesse et des sports."
+- id: jort-1989-437
+  title: "Décret n° 89-437 du 11 avril 1989 portant nomination des membres du gouvernement (JORT n° 25 du 11 avril 1989, p. 683)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1989-04-11
+  url: https://lake.jort.tn/journal-officiel/fr/1989/025.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1989/025/decret-89-437
+  tier: 1
+  lang: fr
+  excerpt: "Sont nommés : Ministre de l'économie nationale : Monsieur Moncef Belaid. Ministre de l'agriculture : Monsieur Nouri Zorgati. Ministre des communications : Monsieur Sadok Rabah. Ministre de l'éducation, de l'enseignement supérieur et de la recherche scientifique : Monsieur Mohamed Charfi."
+- id: jort-1989-1512
+  title: "Décret n° 89-1512 du 27 septembre 1989 portant nomination du Premier ministre (JORT n° 65 du 29 septembre 1989, p. 1529)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1989-09-27
+  url: https://lake.jort.tn/journal-officiel/fr/1989/065.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1989/065/decret-89-1512
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Hamed Karoui est nommé Premier ministre."
+- id: jort-1989-1514
+  title: "Décret n° 89-1514 du 29 septembre 1989 portant nomination du ministre de la justice (JORT n° 65 du 29 septembre 1989, p. 1529)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1989-09-29
+  url: https://lake.jort.tn/journal-officiel/fr/1989/065.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1989/065/decret-89-1514
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Mustapha Bouaziz est nommé ministre de la justice."
+- id: jort-1991-1465
+  title: "Décret n° 91-1465 du 11 octobre 1991 portant nomination du ministre de la défense nationale (JORT n° 70 du 18 octobre 1991, p. 1706)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1991-10-11
+  url: https://lake.jort.tn/journal-officiel/fr/1991/070.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1991/070/decret-91-1465
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Abdellaziz Ben Dhia est nommé ministre de la défense nationale."
+- id: jort-1991-1466
+  title: "Décret n° 91-1466 du 11 octobre 1991 portant nomination du ministre de l'environnement et de l'aménagement du territoire (JORT n° 70 du 18 octobre 1991, p. 1706)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1991-10-11
+  url: https://lake.jort.tn/journal-officiel/fr/1991/070.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1991/070/decret-91-1466
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Salah Jebali est nommé ministre de l'environnement et de l'aménagement du territoire."
+- id: jort-1991-1467
+  title: "Décret n° 91-1467 du 11 octobre 1991 portant nomination du ministre de la culture (JORT n° 70 du 18 octobre 1991, p. 1706)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1991-10-11
+  url: https://lake.jort.tn/journal-officiel/fr/1991/070.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1991/070/decret-91-1467
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Mongi Bousnina est nommé ministre de la culture."
+- id: jort-1992-1097
+  title: "Décret n° 92-1097 du 9 juin 1992 portant nomination du ministre de l'équipement et de l'habitat (JORT n° 38 du 16 juin 1992, p. 770)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1992-06-09
+  url: https://lake.jort.tn/journal-officiel/fr/1992/038.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1992/038/decret-92-1097
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Mohamed Charfeddine Guallouz est nommé Ministre de l'Equipement et de l'Habitat."
+- id: jort-1992-1098
+  title: "Décret n° 92-1098 du 9 juin 1992 portant nomination du ministre de l'environnement et de l'aménagement du territoire (JORT n° 38 du 16 juin 1992, p. 770)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1992-06-09
+  url: https://lake.jort.tn/journal-officiel/fr/1992/038.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1992/038/decret-92-1098
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Mohamed Mehdi M'lika est nommé Ministre de l'Environnement et de l'Aménagement du Territoire."
+- id: jort-1992-1099
+  title: "Décret n° 92-1099 du 9 juin 1992 portant nomination du ministre du transport (JORT n° 38 du 16 juin 1992, p. 770)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1992-06-09
+  url: https://lake.jort.tn/journal-officiel/fr/1992/038.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1992/038/decret-92-1099
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Tahar Hadj Ali est nommé Ministre du Transport."
+- id: jort-1992-1100
+  title: "Décret n° 92-1100 du 9 juin 1992 portant nomination du ministre de la formation professionnelle et de l'emploi (JORT n° 38 du 16 juin 1992, p. 770)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1992-06-09
+  url: https://lake.jort.tn/journal-officiel/fr/1992/038.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1992/038/decret-92-1100
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Moncer Rouissi est nommé Ministre de la Formation Professionnelle et de l'Emploi."
+- id: jort-1992-1429
+  title: "Décret n° 92-1429 du 3 août 1992 portant nomination du ministre de la santé publique (JORT n° 52 du 7 août 1992, p. 1004)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1992-08-03
+  url: https://lake.jort.tn/journal-officiel/fr/1992/052.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1992/052/decret-92-1429
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Hédi M'Henni, est nommé ministre de la santé publique."
+- id: jort-1992-1430
+  title: "Décret n° 92-1430 du 3 août 1992 portant nomination du ministre des affaires sociales (JORT n° 52 du 7 août 1992, p. 1004)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1992-08-03
+  url: https://lake.jort.tn/journal-officiel/fr/1992/052.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1992/052/decret-92-1430
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Mohamed Fadhel Khélil, est nommé ministre des affaires sociales."
+- id: jort-1993-1305
+  title: "Décret n° 93-1305 du 15 juin 1993 portant nomination du ministre de l'équipement et de l'habitat (JORT n° 45 du 18 juin 1993, p. 842)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1993-06-15
+  url: https://lake.jort.tn/journal-officiel/fr/1993/045.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1993/045/decret-93-1305
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Ali Chaouch est nommé ministre de l'équipement et de l'habitat."
+- id: jort-1993-1306
+  title: "Décret n° 93-1306 du 15 juin 1993 portant nomination du ministre de la jeunesse et de l'enfance (JORT n° 45 du 18 juin 1993, p. 842)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1993-06-15
+  url: https://lake.jort.tn/journal-officiel/fr/1993/045.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1993/045/decret-93-1306
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Abderrahim Zouari est nommé ministre de la jeunesse et de l'enfance."
+- id: jort-1994-1219
+  title: "Décret n° 94-1219 du 1 juin 1994 portant nomination du ministre du transport (JORT n° 44 du 7 juin 1994, p. 936)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1994-06-01
+  url: https://lake.jort.tn/journal-officiel/fr/1994/044.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1994/044/decret-94-1219
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Mondher Zenaïdi, est nommé ministre du transport."
+- id: jort-1994-1220
+  title: "Décret n° 94-1220 du 1 juin 1994 portant nomination du ministre de l'éducation et des sciences (JORT n° 44 du 7 juin 1994, p. 936)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1994-06-01
+  url: https://lake.jort.tn/journal-officiel/fr/1994/044.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1994/044/decret-94-1220
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Ahmed Friâa est nommé ministre de l'éducation et des sciences."
+- id: jort-1994-2340
+  title: "Décret n° 94-2340 du 16 novembre 1994 portant nomination du ministre de l'éducation (JORT n° 91 du 18 novembre 1994, p. 1874)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1994-11-16
+  url: https://lake.jort.tn/journal-officiel/fr/1994/091.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1994/091/decret-94-2340
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Hatem Ben Othman est nommé ministre de l'éducation."
+- id: jort-1994-2341
+  title: "Décret n° 94-2341 du 16 novembre 1994 portant nomination du ministre de l'enseignement supérieur (JORT n° 91 du 18 novembre 1994, p. 1874)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1994-11-16
+  url: https://lake.jort.tn/journal-officiel/fr/1994/091.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1994/091/decret-94-2341
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Dali Jazi est nommé ministre de l'enseignement supérieur."
+- id: jort-1995-143
+  title: "Décret n° 95-143 du 25 janvier 1995 portant nomination du ministre du développement économique (JORT n° 8 du 27 janvier 1995, p. 247)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1995-01-25
+  url: https://lake.jort.tn/journal-officiel/fr/1995/008.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1995/008/decret-95-143
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Mustapha Kamel Nabli est nommé ministre du développement économique."
+- id: jort-1995-144
+  title: "Décret n° 95-144 du 25 janvier 1995 portant nomination du ministre de l'industrie (JORT n° 8 du 27 janvier 1995, p. 247)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1995-01-25
+  url: https://lake.jort.tn/journal-officiel/fr/1995/008.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1995/008/decret-95-144
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Slaheddine Bouguerra est nommé ministre de l'industrie."
+- id: jort-1995-145
+  title: "Décret n° 95-145 du 25 janvier 1995 portant nomination du ministre du commerce (JORT n° 8 du 27 janvier 1995, p. 247)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1995-01-25
+  url: https://lake.jort.tn/journal-officiel/fr/1995/008.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1995/008/decret-95-145
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Slaheddine Ben M'barek est nommé ministre du commerce."
+- id: jort-1995-146
+  title: "Décret n° 95-146 du 25 janvier 1995 portant nomination du ministre des affaires sociales (JORT n° 8 du 27 janvier 1995, p. 247)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1995-01-25
+  url: https://lake.jort.tn/journal-officiel/fr/1995/008.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1995/008/decret-95-146
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Sadok Rabeh est nommé ministre des affaires sociales."
+- id: jort-1995-147
+  title: "Décret n° 95-147 du 25 janvier 1995 portant nomination du ministre des communications (JORT n° 8 du 27 janvier 1995, p. 248)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1995-01-25
+  url: https://lake.jort.tn/journal-officiel/fr/1995/008.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1995/008/decret-95-147
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Habib Ammar est nommé ministre des communications."
+- id: jort-1995-148
+  title: "Décret n° 95-148 du 25 janvier 1995 portant nomination du ministre du tourisme et de l'artisanat (JORT n° 8 du 27 janvier 1995, p. 248)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1995-01-25
+  url: https://lake.jort.tn/journal-officiel/fr/1995/008.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1995/008/decret-95-148
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Slaheddine Maâoui est nommé ministre du tourisme et de l'artisanat."
+- id: jort-1995-149
+  title: "Décret n° 95-149 du 25 janvier 1995 portant nomination du ministre de la culture (JORT n° 8 du 27 janvier 1995, p. 248)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1995-01-25
+  url: https://lake.jort.tn/journal-officiel/fr/1995/008.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1995/008/decret-95-149
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Salah Baccari est nommé ministre de la culture."
+- id: jort-1995-463
+  title: "Décret n° 95-463 du 27 mars 1995 portant nomination du ministre délégué auprès du Premier ministre chargé des affaires de la femme et de la famille (JORT n° 26 du 31 mars 1995, p. 566)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1995-03-27
+  url: https://lake.jort.tn/journal-officiel/fr/1995/026.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1995/026/decret-95-463
+  tier: 1
+  lang: fr
+  excerpt: "Madame Néziha Zarrouk, est nommée ministre délégué auprès du Premier ministre, chargée des affaires de la femme et de la famille."
+- id: jort-1996-1120
+  title: "Décret n° 96-1120 du 15 juin 1996 portant nomination d'un ministre d'Etat, ministre de la défense nationale (JORT n° 49 du 18 juin 1996, p. 1199)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1996-06-15
+  url: https://lake.jort.tn/journal-officiel/fr/1996/049.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1996/049/decret-96-1120
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Abdallah Kallel, est nommé ministre d'Etat, ministre de la défense nationale."
+- id: jort-1996-1121
+  title: "Décret n° 96-1121 du 15 juin 1996 portant nomination d'un ministre des affaires sociales (JORT n° 49 du 18 juin 1996, p. 1199)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1996-06-15
+  url: https://lake.jort.tn/journal-officiel/fr/1996/049.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1996/049/decret-96-1121
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Chedly Neffati, est nommé ministre des affaires sociales."
+- id: jort-1996-1122
+  title: "Décret n° 96-1122 du 15 juin 1996 portant nomination d'un ministre du transport (JORT n° 49 du 18 juin 1996, p. 1199)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1996-06-15
+  url: https://lake.jort.tn/journal-officiel/fr/1996/049.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1996/049/decret-96-1122
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Sadok Rabeh, est nommé ministre du transport."
+- id: jort-1996-1123
+  title: "Décret n° 96-1123 du 15 juin 1996 portant nomination d'un ministre du commerce (JORT n° 49 du 18 juin 1996, p. 1199)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1996-06-15
+  url: https://lake.jort.tn/journal-officiel/fr/1996/049.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1996/049/decret-96-1123
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Mondher Znaïdi, est nommé ministre du commerce."
+- id: jort-1996-1349
+  title: "Décret n° 96-1349 du 5 août 1996 portant nomination du ministre de la culture (JORT n° 65 du 13 août 1996, p. 1732)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1996-08-05
+  url: https://lake.jort.tn/journal-officiel/fr/1996/065.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1996/065/decret-96-1349
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Abdelbaki Hermassi est nommé ministre de la culture."
+- id: jort-1997-129
+  title: "Décret n° 97-129 du 22 janvier 1997 portant nomination du ministre des communications (JORT n° 7 du 24 janvier 1997, p. 115)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1997-01-22
+  url: https://lake.jort.tn/journal-officiel/fr/1997/007.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1997/007/decret-97-129
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Ahmed Friaâ, est nommé ministre des communications."
+- id: jort-1997-1964
+  title: "Décret n° 97-1964 du 11 octobre 1997 portant nomination du ministre du transport (JORT n° 82 du 14 octobre 1997, p. 1887)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1997-10-11
+  url: https://lake.jort.tn/journal-officiel/fr/1997/082.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1997/082/decret-97-1964
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Houcine Echouk, est nommé ministre du transport."
+- id: jort-1997-1967
+  title: "Décret n° 97-1967 du 11 octobre 1997 portant nomination du ministre de l'agriculture (JORT n° 82 du 14 octobre 1997, p. 1887)"
+  publisher: Journal Officiel de la République Tunisienne
+  date: 1997-10-11
+  url: https://lake.jort.tn/journal-officiel/fr/1997/082.pdf
+  archive_url: https://www.jort.tn/view/journal-officiel/fr/1997/082/decret-97-1967
+  tier: 1
+  lang: fr
+  excerpt: "Monsieur Sadok Rabah, est nommé ministre de l'agriculture."
+- id: jort-1999-375
+  title: Décret n° 99-375 du 19 février 1999 portant nomination du ministre de l'éducation (JORT n° 17 du 26 février
+    1999, p. 315)
+  publisher: Journal Officiel de la République Tunisienne
+  date: '1999-02-19'
+  url: https://lake.jort.tn/journal-officiel/fr/1999/017.pdf
+  archive_url: https://jort.tn/view/journal-officiel/fr/1999/017/decret-99-375/
+  tier: 1
+  lang: fr
+  excerpt: Article premier. - Monsieur Abderrahim Zouari est nommé ministre de l'éducation.
+- id: jort-1999-2557
+  title: Décret n° 99-2557 du 17 novembre 1999 portant nomination du Premier Ministre (JORT n° 94 du 23 novembre
+    1999, p. 2463)
+  publisher: Journal Officiel de la République Tunisienne
+  date: '1999-11-17'
+  url: https://lake.jort.tn/journal-officiel/fr/1999/094.pdf
+  archive_url: https://jort.tn/view/journal-officiel/fr/1999/094/decret-99-2557/
+  tier: 1
+  lang: fr
+  excerpt: Article premier. - Monsieur Mohamed Ghannouchi est nommé Premier Ministre.
+- id: jort-2000-720
+  title: Décret n° 2000-720 du 10 avril 2000 portant nomination du ministre délégué auprès du Premier ministre chargé
+    des droits de l'homme, de la communication et des relations avec la chambre des députés (JORT n° 29 du 11 avril
+    2000, p. 815)
+  publisher: Journal Officiel de la République Tunisienne
+  date: '2000-04-10'
+  url: https://lake.jort.tn/journal-officiel/fr/2000/029.pdf
+  archive_url: https://jort.tn/view/journal-officiel/fr/2000/029/decret-2000-720/
+  tier: 1
+  lang: fr
+  excerpt: Article premier. - Monsieur Afif Hendaoui est nommé ministre délégué auprès du Premier ministre chargé
+    des droits de l'homme, de la communication et des relations avec la chambre des députés à compter du 5 avril
+    2000.
+- id: jort-2001-590
+  title: Décret n° 2001-590 du 19 février 2001 portant nomination du ministre délégué auprès du Premier ministre
+    chargé des droits de l'homme, de la communication et des relations avec la chambre des députés (JORT n° 20 du
+    9 mars 2001, p. 500)
+  publisher: Journal Officiel de la République Tunisienne
+  date: '2001-02-19'
+  url: https://lake.jort.tn/journal-officiel/fr/2001/020.pdf
+  archive_url: https://jort.tn/view/journal-officiel/fr/2001/020/decret-2001-590/
+  tier: 1
+  lang: fr
+  excerpt: Article premier. - Monsieur Slaheddine Mâaoui est nommé ministre délégué auprès du Premier ministre chargé
+    des droits de l'homme, de la communication et des relations avec la chambre des députés.
+- id: jort-2001-2397
+  title: Décret n° 2001-2397 du 16 octobre 2001 portant nomination du ministre des affaires de la femme et de la
+    famille (JORT n° 83 du 16 octobre 2001, p. 3676)
+  publisher: Journal Officiel de la République Tunisienne
+  date: '2001-10-16'
+  url: https://lake.jort.tn/journal-officiel/fr/2001/083.pdf
+  archive_url: https://jort.tn/view/journal-officiel/fr/2001/083/decret-2001-2397/
+  tier: 1
+  lang: fr
+  excerpt: Article premier. - Madame Néziha Ben Yedder est nommée ministre des affaires de la femme et de la famille,
+    à compter du 8 octobre 2001.
+- id: jort-2001-2398
+  title: Décret n° 2001-2398 du 16 octobre 2001 portant nomination du ministre de la formation professionnelle et
+    de l'emploi (JORT n° 83 du 16 octobre 2001, p. 3676)
+  publisher: Journal Officiel de la République Tunisienne
+  date: '2001-10-16'
+  url: https://lake.jort.tn/journal-officiel/fr/2001/083.pdf
+  archive_url: https://jort.tn/view/journal-officiel/fr/2001/083/decret-2001-2398/
+  tier: 1
+  lang: fr
+  excerpt: Article premier. - Madame Néziha Zarrouk est nommée ministre de la formation professionnelle et de l'emploi,
+    à compter du 8 octobre 2001.
+- id: jort-2001-2399
+  title: Décret n° 2001-2399 du 16 octobre 2001 portant nomination du ministre de la santé publique (JORT n° 83
+    du 16 octobre 2001, p. 3677)
+  publisher: Journal Officiel de la République Tunisienne
+  date: '2001-10-16'
+  url: https://lake.jort.tn/journal-officiel/fr/2001/083.pdf
+  archive_url: https://jort.tn/view/journal-officiel/fr/2001/083/decret-2001-2399/
+  tier: 1
+  lang: fr
+  excerpt: Article premier. - Monsieur Habib M'Barek est nommé ministre de la santé publique, à compter du 8 octobre
+    2001.
+- id: jort-2001-2400
+  title: Décret n° 2001-2400 du 16 octobre 2001 portant nomination du ministre délégué auprès du Premier ministre
+    chargé de la recherche scientifique et de la technologie (JORT n° 83 du 16 octobre 2001, p. 3677)
+  publisher: Journal Officiel de la République Tunisienne
+  date: '2001-10-16'
+  url: https://lake.jort.tn/journal-officiel/fr/2001/083.pdf
+  archive_url: https://jort.tn/view/journal-officiel/fr/2001/083/decret-2001-2400/
+  tier: 1
+  lang: fr
+  excerpt: Article premier. - Monsieur Abdelkerim Zébidi est nommé ministre délégué auprès du Premier ministre chargé
+    de la recherche scientifique et de la technologie, à compter du 8 octobre 2001.
+- id: jort-2002-912
+  title: Décret n° 2002-912 du 27 avril 2002 portant nomination du ministre de l'intérieur (JORT n° 35 du 30 avril
+    2002, p. 1051)
+  publisher: Journal Officiel de la République Tunisienne
+  date: '2002-04-27'
+  url: https://lake.jort.tn/journal-officiel/fr/2002/035.pdf
+  archive_url: https://jort.tn/view/journal-officiel/fr/2002/035/decret-2002-912/
+  tier: 1
+  lang: fr
+  excerpt: Article premier. - Monsieur Hédi M'henni est nommé ministre de l'intérieur.
+- id: jort-2002-913
+  title: Décret n° 2002-913 du 27 avril 2002 portant nomination du ministre des affaires sociales (JORT n° 35 du
+    30 avril 2002, p. 1051)
+  publisher: Journal Officiel de la République Tunisienne
+  date: '2002-04-27'
+  url: https://lake.jort.tn/journal-officiel/fr/2002/035.pdf
+  archive_url: https://jort.tn/view/journal-officiel/fr/2002/035/decret-2002-913/
+  tier: 1
+  lang: fr
+  excerpt: Article premier. - Monsieur Chedli Neffati est nommé ministre des affaires sociales.
+- id: jort-2002-1046
+  title: Décret n° 2002-1046 du 14 mai 2002 portant nomination du ministre délégué auprès du Premier ministre, chargé
+    des droits de l'homme, de la communication et des relations avec la chambre des députés (JORT n° 39 du 14 mai
+    2002, p. 1156)
+  publisher: Journal Officiel de la République Tunisienne
+  date: '2002-05-14'
+  url: https://lake.jort.tn/journal-officiel/fr/2002/039.pdf
+  archive_url: https://jort.tn/view/journal-officiel/fr/2002/039/decret-2002-1046/
+  tier: 1
+  lang: fr
+  excerpt: Article premier. - Monsieur Mohamed Fethi Houidi est nommé ministre délégué auprès du Premier ministre,
+    chargé des droits de l'homme, de la communication et des relations avec la chambre des députés.
+- id: jort-2003-1835
+  title: Décret n° 2003-1835 du 1er septembre 2003 portant nomination du ministre de l'éducation et de la formation
+    (JORT n° 71 du 5 septembre 2003, p. 2693)
+  publisher: Journal Officiel de la République Tunisienne
+  date: '2003-09-01'
+  url: https://lake.jort.tn/journal-officiel/fr/2003/071.pdf
+  archive_url: https://jort.tn/view/journal-officiel/fr/2003/071/decret-2003-1835/
+  tier: 1
+  lang: fr
+  excerpt: Article premier. - Monsieur Mohamed Raouf Najjar est nommé ministre de l'éducation et de la formation.
+- id: jort-2003-1836
+  title: Décret n° 2003-1836 du 1er septembre 2003 portant nomination du ministre de l'industrie et de l'énergie
+    (JORT n° 71 du 5 septembre 2003, p. 2693)
+  publisher: Journal Officiel de la République Tunisienne
+  date: '2003-09-01'
+  url: https://lake.jort.tn/journal-officiel/fr/2003/071.pdf
+  archive_url: https://jort.tn/view/journal-officiel/fr/2003/071/decret-2003-1836/
+  tier: 1
+  lang: fr
+  excerpt: Article premier. - Monsieur Fethi Merdessi est nommé ministre de l'industrie et de l'énergie.
+- id: jort-2004-65
+  title: Décret n° 2004-65 du 14 janvier 2004 portant nomination du ministre du tourisme et de l'artisanat (JORT
+    n° 6 du 20 janvier 2004, p. 117)
+  publisher: Journal Officiel de la République Tunisienne
+  date: '2004-01-14'
+  url: https://lake.jort.tn/journal-officiel/fr/2004/006.pdf
+  archive_url: https://jort.tn/view/journal-officiel/fr/2004/006/decret-2004-65/
+  tier: 1
+  lang: fr
+  excerpt: Article premier. - Monsieur Abderrahim Zouari est nommé ministre du tourisme et de l'artisanat.
+- id: jort-2004-68
+  title: Décret n° 2004-68 du 14 janvier 2004 portant nomination du ministre des sports (JORT n° 6 du 20 janvier
+    2004, p. 117)
+  publisher: Journal Officiel de la République Tunisienne
+  date: '2004-01-14'
+  url: https://lake.jort.tn/journal-officiel/fr/2004/006.pdf
+  archive_url: https://jort.tn/view/journal-officiel/fr/2004/006/decret-2004-68/
+  tier: 1
+  lang: fr
+  excerpt: Article premier. - Monsieur Abdallah Kaâbi est nommé ministre des sports.
+- id: jort-2005-2217
+  title: Décret n° 2005-2217 du 17 août 2005 portant nomination du ministre de l'éducation et de la formation (JORT
+    n° 67 du 23 août 2005, p. 2215)
+  publisher: Journal Officiel de la République Tunisienne
+  date: '2005-08-17'
+  url: https://lake.jort.tn/journal-officiel/fr/2005/067.pdf
+  archive_url: https://jort.tn/view/journal-officiel/fr/2005/067/decret-2005-2217/
+  tier: 1
+  lang: fr
+  excerpt: Article premier. - Monsieur Sadok Korbi est nommé ministre de l'éducation et de la formation.
+- id: jort-2005-2218
+  title: Décret n° 2005-2218 du 17 août 2005 portant nomination du ministre des affaires sociales, de la solidarité
+    et des Tunisiens à l'étranger (JORT n° 67 du 23 août 2005, p. 2215)
+  publisher: Journal Officiel de la République Tunisienne
+  date: '2005-08-17'
+  url: https://lake.jort.tn/journal-officiel/fr/2005/067.pdf
+  archive_url: https://jort.tn/view/journal-officiel/fr/2005/067/decret-2005-2218/
+  tier: 1
+  lang: fr
+  excerpt: Article premier. - Monsieur Ali Chaouch est nommé ministre des affaires sociales, de la solidarité et
+    des Tunisiens à l'étranger.
+- id: jort-2005-2219
+  title: Décret n° 2005-2219 du 17 août 2005 portant nomination du ministre chargé de la communication et des relations
+    avec la chambre des députés et la chambre des conseillers (JORT n° 67 du 23 août 2005, p. 2215)
+  publisher: Journal Officiel de la République Tunisienne
+  date: '2005-08-17'
+  url: https://lake.jort.tn/journal-officiel/fr/2005/067.pdf
+  archive_url: https://jort.tn/view/journal-officiel/fr/2005/067/decret-2005-2219/
+  tier: 1
+  lang: fr
+  excerpt: Article premier. - Monsieur Rafaâ Dekhil est nommé ministre chargé de la communication et des relations
+    avec la chambre des députés et la chambre des conseillers.
+- id: jort-2007-2276
+  title: Décret n° 2007-2276 du 4 septembre 2007 portant nomination du ministre de la santé publique (JORT n° 74
+    du 14 septembre 2007, p. 3259)
+  publisher: Journal Officiel de la République Tunisienne
+  date: '2007-09-04'
+  url: https://lake.jort.tn/journal-officiel/fr/2007/074.pdf
+  archive_url: https://jort.tn/view/journal-officiel/fr/2007/074/decret-2007-2276/
+  tier: 1
+  lang: fr
+  excerpt: Article premier. - Monsieur Mondher Zenaïdi est nommé ministre de la santé publique.
+- id: jort-2007-2277
+  title: Décret n° 2007-2277 du 4 septembre 2007 portant nomination du ministre du tourisme (JORT n° 74 du 14 septembre
+    2007, p. 3259)
+  publisher: Journal Officiel de la République Tunisienne
+  date: '2007-09-04'
+  url: https://lake.jort.tn/journal-officiel/fr/2007/074.pdf
+  archive_url: https://jort.tn/view/journal-officiel/fr/2007/074/decret-2007-2277/
+  tier: 1
+  lang: fr
+  excerpt: Article premier. - Monsieur Khelil Lajimi est nommé ministre du tourisme.
+- id: jort-2007-2279
+  title: Décret n° 2007-2279 du 4 septembre 2007 portant nomination du ministre du commerce et de l'artisanat (JORT
+    n° 74 du 14 septembre 2007, p. 3259)
+  publisher: Journal Officiel de la République Tunisienne
+  date: '2007-09-04'
+  url: https://lake.jort.tn/journal-officiel/fr/2007/074.pdf
+  archive_url: https://jort.tn/view/journal-officiel/fr/2007/074/decret-2007-2279/
+  tier: 1
+  lang: fr
+  excerpt: Article premier. - Monsieur Ridha Touiti est nommé ministre du commerce et de l'artisanat.
+- id: jort-2007-2280
+  title: Décret n° 2007-2280 du 4 septembre 2007 portant nomination du ministre des technologies de la communication
+    (JORT n° 74 du 14 septembre 2007, p. 3259)
+  publisher: Journal Officiel de la République Tunisienne
+  date: '2007-09-04'
+  url: https://lake.jort.tn/journal-officiel/fr/2007/074.pdf
+  archive_url: https://jort.tn/view/journal-officiel/fr/2007/074/decret-2007-2280/
+  tier: 1
+  lang: fr
+  excerpt: Article premier. - Monsieur Haj Klaï est nommé ministre des technologies de la communication.
+- id: jort-2008-2957
+  title: Décret n° 2008-2957 du 29 août 2008 portant nomination du ministre de la culture et de la sauvegarde du
+    patrimoine (JORT n° 73 du 9 septembre 2008, p. 2954)
+  publisher: Journal Officiel de la République Tunisienne
+  date: '2008-08-29'
+  url: https://lake.jort.tn/journal-officiel/fr/2008/073.pdf
+  archive_url: https://jort.tn/view/journal-officiel/fr/2008/073/decret-2008-2957/
+  tier: 1
+  lang: fr
+  excerpt: Article premier. - Monsieur Abderraouf El Basti est nommé ministre de la culture et de la sauvegarde
+    du patrimoine.
+- id: jort-2008-2958
+  title: Décret n° 2008-2958 du 29 août 2008 portant nomination du ministre de l'emploi et de l'insertion professionnelle
+    des jeunes (JORT n° 73 du 9 septembre 2008, p. 2954)
+  publisher: Journal Officiel de la République Tunisienne
+  date: '2008-08-29'
+  url: https://lake.jort.tn/journal-officiel/fr/2008/073.pdf
+  archive_url: https://jort.tn/view/journal-officiel/fr/2008/073/decret-2008-2958/
+  tier: 1
+  lang: fr
+  excerpt: Article premier. - Monsieur Slim Tletli est nommé ministre de l'emploi et de l'insertion professionnelle
+    des jeunes.
+- id: jort-2008-2959
+  title: Décret n° 2008-2959 du 29 août 2008 portant nomination du ministre de la jeunesse, des sports et de l'éducation
+    physique (JORT n° 73 du 9 septembre 2008, p. 2954)
+  publisher: Journal Officiel de la République Tunisienne
+  date: '2008-08-29'
+  url: https://lake.jort.tn/journal-officiel/fr/2008/073.pdf
+  archive_url: https://jort.tn/view/journal-officiel/fr/2008/073/decret-2008-2959/
+  tier: 1
+  lang: fr
+  excerpt: Article premier. - Monsieur Samir Labidi est nommé ministre de la jeunesse, des sports et de l'éducation
+    physique.
+- id: jort-2008-2960
+  title: Décret n° 2008-2960 du 29 août 2008 portant nomination du ministre de l'agriculture et des ressources hydrauliques
+    (JORT n° 73 du 9 septembre 2008, p. 2954)
+  publisher: Journal Officiel de la République Tunisienne
+  date: '2008-08-29'
+  url: https://lake.jort.tn/journal-officiel/fr/2008/073.pdf
+  archive_url: https://jort.tn/view/journal-officiel/fr/2008/073/decret-2008-2960/
+  tier: 1
+  lang: fr
+  excerpt: Article premier. - Monsieur Abdessalem Mansour est nommé ministre de l'agriculture et des ressources
+    hydrauliques.
+- id: jort-2009-1942
+  title: Décret n° 2009-1942 du 10 juin 2009 portant nomination du ministre du commerce et de l'artisanat (JORT
+    n° 50 du 23 juin 2009, p. 1628)
+  publisher: Journal Officiel de la République Tunisienne
+  date: '2009-06-10'
+  url: https://lake.jort.tn/journal-officiel/fr/2009/050.pdf
+  archive_url: https://jort.tn/view/journal-officiel/fr/2009/050/decret-2009-1942/
+  tier: 1
+  lang: fr
+  excerpt: Article premier - Monsieur Ridha Ben Mosbah est nommé ministre du commerce et de l'artisanat.
+- id: jort-2009-1943
+  title: Décret n° 2009-1943 du 10 juin 2009 portant nomination d'un ministre délégué auprès du Premier ministre
+    (JORT n° 50 du 23 juin 2009, p. 1628)
+  publisher: Journal Officiel de la République Tunisienne
+  date: '2009-06-10'
+  url: https://lake.jort.tn/journal-officiel/fr/2009/050.pdf
+  archive_url: https://jort.tn/view/journal-officiel/fr/2009/050/decret-2009-1943/
+  tier: 1
+  lang: fr
+  excerpt: Article premier - Monsieur Ridha Touiti est nommé ministre délégué auprès du Premier ministre.
+- id: jort-2009-2879
+  title: Décret n° 2009-2879 du 10 octobre 2009 portant nomination d'un ministre chargé de la communication et des
+    relations avec la chambre des députés et la chambre des conseillers par intérim (JORT n° 82 du 13 octobre 2009,
+    p. 3061)
+  publisher: Journal Officiel de la République Tunisienne
+  date: '2009-10-10'
+  url: https://lake.jort.tn/journal-officiel/fr/2009/082.pdf
+  archive_url: https://jort.tn/view/journal-officiel/fr/2009/082/decret-2009-2879/
+  tier: 1
+  lang: fr
+  excerpt: Article premier - Monsieur Oussama Romdhani, est nommé ministre chargé de la communication et des relations
+    avec la chambre des députés et la chambre des conseillers par intérim.
+- id: jort-2010-2620
+  title: Décret n° 2010-2620 du 12 octobre 2010 portant nomination du ministre des domaines de l'État et des affaires
+    foncières (JORT n° 84 du 19 octobre 2010, p. 2867)
+  publisher: Journal Officiel de la République Tunisienne
+  date: '2010-10-12'
+  url: https://lake.jort.tn/journal-officiel/fr/2010/084.pdf
+  archive_url: https://jort.tn/view/journal-officiel/fr/2010/084/decret-2010-2620/
+  tier: 1
+  lang: fr
+  excerpt: Article premier - Monsieur Foued Daghfous est nommé ministre des domaines de l'Etat et des affaires foncières.
+- id: jort-2010-3464
+  title: Décret n° 2010-3464 du 29 décembre 2010 portant nomination de membres du gouvernement (JORT n° 1 du 4 janvier
+    2011, p. 8)
+  publisher: Journal Officiel de la République Tunisienne
+  date: '2010-12-29'
+  url: https://lake.jort.tn/journal-officiel/fr/2011/001.pdf
+  archive_url: https://jort.tn/view/journal-officiel/fr/2011/001/decret-2010-3464/
+  tier: 1
+  lang: fr
+  excerpt: 'ministre des affaires religieuses : Monsieur Kamel Omrane.'

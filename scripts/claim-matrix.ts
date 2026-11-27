@@ -289,7 +289,7 @@ export const CLAIM_MATRIX: MatrixRow[] = [
 		test_pointer:
 			'scripts/test-validators.ts :: V26: more independent origins than cited sources is rejected; scripts/test-pipeline.ts :: an incompatible source relation fails and names the record (V26)',
 		notes:
-			'V26 shipped in the kind-versus-strength migration (`output/kind-migration.csv`, 40 applied rows each with a reviewer). Appendix A in the v0.1.1 source stops at V24; the successor paper extends it through V29.'
+			'V26 shipped in the kind-versus-strength migration (`output/kind-migration.csv`, 40 reviewed rows: 39 applied and one superseded after a duplicate merge). Appendix A in the v0.1.1 source stops at V24; the successor paper extends it through V29.'
 	},
 
 	// -----------------------------------------------------------------------

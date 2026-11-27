@@ -70,8 +70,9 @@ ok(
 );
 
 // The kind-versus-strength migration (output/kind-migration.csv) is the record
-// of which claims were moved to explicit kinds and source relations. Every row
-// is applied and must match the graph exactly: kind, relation and origin count.
+// of which claims were moved to explicit kinds and source relations. Every
+// applied row must match the graph exactly: kind, relation and origin count.
+// A row superseded by a later record merge must be absent from the graph.
 {
 	const migrationPath = join(HERE, '..', 'output', 'kind-migration.csv');
 	if (existsSync(migrationPath)) {
@@ -92,6 +93,7 @@ ok(
 			};
 		});
 		const applied = parsed.filter((r) => r.applied === 'yes');
+		const superseded = parsed.filter((r) => r.status === 'superseded');
 		const mismatches: string[] = [];
 		for (const row of applied) {
 			const rows = (ds[row.kind] ?? []) as {
@@ -112,17 +114,31 @@ ok(
 				);
 			}
 		}
+		const resurrected = superseded.filter((row) =>
+			((ds[row.kind] ?? []) as { id: string }[]).some((r) => r.id === row.id)
+		);
 		const unresolved = applied.filter((r) => !r.reviewer || r.status === 'research-confirm');
-		ok('kind migration: 40 applied rows are recorded', applied.length === 40, `${applied.length} applied`);
+		const unclassified = parsed.filter((r) => r.applied !== 'yes' && r.status !== 'superseded');
+		ok('kind migration: 40 rows are recorded', parsed.length === 40, `${parsed.length} rows`);
 		ok(
 			'kind migration: every applied row matches the emitted graph',
 			mismatches.length === 0,
-			mismatches.slice(0, 5).join(', ') || 'all 40 match'
+			mismatches.slice(0, 5).join(', ') || `all ${applied.length} match`
 		);
 		ok(
 			'kind migration: every applied row carries a reviewer',
 			unresolved.length === 0,
 			unresolved.slice(0, 5).map((r) => r.id).join(', ') || 'all signed off'
+		);
+		ok(
+			'kind migration: every superseded row is absent from the graph',
+			resurrected.length === 0,
+			resurrected.slice(0, 5).map((r) => r.id).join(', ') || `all ${superseded.length} absent`
+		);
+		ok(
+			'kind migration: every row is applied or superseded',
+			unclassified.length === 0,
+			unclassified.slice(0, 5).map((r) => r.id).join(', ') || 'all classified'
 		);
 	} else {
 		ok('kind migration: output/kind-migration.csv exists', false, 'file missing');
@@ -1495,13 +1511,13 @@ const KIND_TO_DATASET: Record<string, string> = {
 	// hashes, and a reading that still holds passes under a later hash and says
 	// so. Moving a reading is a ledgered change to the published counts and the
 	// hash, and the paper's section on what the succession counts count follows it.
-	const AUDITED_HASH = '89e17f830c91591b41e40f673f3f5814e9a9534a72f8fafcadbc1354c9eecde2';
+	const AUDITED_HASH = '469172c4c71d548bbdc283c23eca61f24f510fd19646ef7e2e63a9b33b156d9a';
 	const audited = {
 		chainOverlaps: 49,
 		overlappingPairs: 67,
 		overlapIncidents: 43,
-		chainGaps: 126,
-		coverageHoles: 121,
+		chainGaps: 127,
+		coverageHoles: 122,
 		chainGapsAnotherHolderCovers: 5
 	};
 	type Readings = typeof audited;

@@ -3509,10 +3509,10 @@ if (runSection('every language')) for (const locale of ['ar', 'fr'] as const) {
 			// (atlas), git commit subjects (corrections), hypothesis prose from
 			// records lacking fr/ar (evidence). Ceilings fall as DATA translation
 			// lands; the UI-chrome part of each landing is done.
-			// The ceiling stays 37. The Arabic page stands above it only under the
-			// dated exception in scripts/prose-exceptions.ts (75 of 198 roles without
-			// `title_ar`), applied below until its date, and the build fails when the
-			// date passes with titles still missing.
+			// The ceiling stays 37. The Arabic page stood above it only under the
+			// dated exception in scripts/prose-exceptions.ts while roles lacked
+			// `title_ar`; every role now has one and the exception sits at zero,
+			// so the build fails if titles go missing again.
 			'/methodology': 37,
 			'/map': 5,
 			'/network': 5,

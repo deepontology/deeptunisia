@@ -67,12 +67,12 @@
     "crossings": []
   },
   "edges": {
-    "total": 493,
+    "total": 492,
     "byKind": {
       "succession": 97,
       "appointment": 292,
       "patronage": 1,
-      "co-membership": 103
+      "co-membership": 102
     }
   },
   "paths": {
@@ -221,16 +221,16 @@
     "shuffledCohorts": {
       "trials": 200,
       "min": 0,
-      "median": 3,
-      "max": 17,
-      "atLeastReal": 95
+      "median": 5,
+      "max": 19,
+      "atLeastReal": 116
     },
     "randomDates": {
       "trials": 200,
       "min": 0,
-      "median": 0,
-      "max": 32,
-      "atLeastReal": 26
+      "median": 2,
+      "max": 83,
+      "atLeastReal": 66
     }
   },
   "review": {

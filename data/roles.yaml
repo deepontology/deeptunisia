@@ -201,6 +201,7 @@
 - id: usgn-commander
   title_en: Commander of the National Guard Special Unit
   title_fr: Commandant de l'USGN
+  title_ar: قائد الوحدة الخاصة للحرس الوطني
   institution: usgn
   authority: 40
 
@@ -224,6 +225,7 @@
 - id: dg-public-security
   title_en: Director-General of Public Security
   title_fr: Directeur général de la sûreté publique
+  title_ar: المدير العام للأمن العمومي
   institution: public-security
   authority: 52
 
@@ -276,6 +278,7 @@
 - id: inspector-general-forces
   title_en: Inspector-General of the Armed Forces
   title_fr: Inspecteur général des forces armées
+  title_ar: المتفقد العام للقوات المسلحة
   institution: armed-forces
   authority: 48
 
@@ -303,6 +306,7 @@
 - id: head-anrsd
   title_en: Head of the National Agency for Security and Defence Intelligence
   title_fr: Directeur de l'ANRSD
+  title_ar: مدير الوكالة الوطنية للاستخبارات الأمنية والدفاعية
   institution: anrsd
   authority: 72
   summary: >-
@@ -345,12 +349,14 @@
 - id: dg-presidential-security
   title_en: Director-General of Presidential Security
   title_fr: Directeur général de la sécurité présidentielle
+  title_ar: المدير العام للأمن الرئاسي
   institution: presidential-security
   authority: 52
 
 - id: national-security-adviser
   title_en: National Security Adviser to the President
   title_fr: Conseiller à la sécurité nationale auprès du Président
+  title_ar: مستشار الأمن القومي لدى رئيس الجمهورية
   institution: presidential-security-adviser
   authority: 58
 
@@ -366,12 +372,14 @@
 - id: tourism-minister
   title_en: Minister of Tourism
   title_fr: Ministre du Tourisme
+  title_ar: وزير السياحة
   institution: head-of-government
   authority: 35
 
 - id: foreign-minister
   title_en: Minister of Foreign Affairs
   title_fr: Ministre des Affaires étrangères
+  title_ar: وزير الشؤون الخارجية
   institution: head-of-government
   authority: 50
 
@@ -380,174 +388,203 @@
 - id: party-leader-ennahda
   title_en: President of Ennahda
   title_fr: Président d'Ennahdha
+  title_ar: رئيس حركة النهضة
   institution: ennahda
   authority: 45
 
 - id: party-leader-nidaa
   title_en: Leader of Nidaa Tounes
   title_fr: Chef de Nidaa Tounes
+  title_ar: رئيس نداء تونس
   institution: nidaa-tounes
   authority: 42
 
 - id: party-leader-qalb
   title_en: Leader of Qalb Tounes
   title_fr: Chef de Qalb Tounes
+  title_ar: رئيس قلب تونس
   institution: qalb-tounes
   authority: 35
 
 - id: party-leader-tahya
   title_en: Leader of Tahya Tounes
   title_fr: Chef de Tahya Tounes
+  title_ar: رئيس تحيا تونس
   institution: tahya-tounes
   authority: 32
 
 - id: party-leader-pdl
   title_en: Leader of the Free Destourian Party
   title_fr: Chef du Parti destourien libre
+  title_ar: رئيس الحزب الدستوري الحر
   institution: pdl
   authority: 28
 
 - id: party-leader-cpr
   title_en: Leader of the Congress for the Republic
   title_fr: Chef du Congrès pour la République
+  title_ar: رئيس المؤتمر من أجل الجمهورية
   institution: cpr
   authority: 38
 
 - id: party-leader-ettakatol
   title_en: Leader of the Democratic Forum for Labour and Liberties
   title_fr: Chef du Forum démocratique pour le travail et les libertés
+  title_ar: رئيس المنتدى الديمقراطي للعمل والحريات
   institution: ettakatol
   authority: 36
 
 - id: party-leader-aridha
   title_en: Leader of the Popular Petition
   title_fr: Chef de l'Aridha Chaabia
+  title_ar: رئيس العريضة الشعبية
   institution: aridha-chaabia
   authority: 30
 
 - id: party-leader-pdp
   title_en: Leader of the Progressive Democratic Party
   title_fr: Chef du Parti démocratique progressiste
+  title_ar: رئيس الحزب الديمقراطي التقدمي
   institution: pdp
   authority: 32
 
 - id: party-leader-afek
   title_en: Leader of Afek Tounes
   title_fr: Chef d'Afek Tounes
+  title_ar: رئيس أفق تونس
   institution: afek-tounes
   authority: 28
 
 - id: party-leader-upl
   title_en: Leader of the Free Patriotic Union
   title_fr: Chef de l'Union patriotique libre
+  title_ar: رئيس الاتحاد الوطني الحر
   institution: upl
   authority: 30
 
 - id: party-leader-popular-front
   title_en: Leader of the Popular Front
   title_fr: Chef du Front populaire
+  title_ar: رئيس الجبهة الشعبية
   institution: popular-front
   authority: 30
 
 - id: party-leader-tayyar
   title_en: Leader of the Democratic Current
   title_fr: Chef du Courant démocratique
+  title_ar: رئيس التيار الديمقراطي
   institution: tayyar-dimocrati
   authority: 32
 
 - id: party-leader-id
   title_en: Leader of the National Destourian Initiative
   title_fr: Chef de l'Initiative nationale destourienne
+  title_ar: رئيس المبادرة الوطنية الدستورية
   institution: id-party
   authority: 25
 
 - id: party-leader-people-movement
   title_en: Leader of the People's Movement
   title_fr: Chef du Mouvement du peuple
+  title_ar: رئيس حركة الشعب
   institution: people-movement
   authority: 28
 
 - id: party-leader-mds
   title_en: Leader of the Movement of Socialist Democrats
   title_fr: Chef du Mouvement des démocrates socialistes
+  title_ar: رئيس حركة الديمقراطيين الاشتراكيين
   institution: mds
   authority: 25
 
 - id: party-leader-republican
   title_en: Leader of the Republican Party
   title_fr: Chef du Parti républicain
+  title_ar: رئيس الحزب الجمهوري
   institution: republican-party
   authority: 22
 
 - id: party-leader-democratic-alliance
   title_en: Leader of the Democratic Alliance Party
   title_fr: Chef du Parti de l'alliance démocratique
+  title_ar: رئيس حزب التحالف الديمقراطي
   institution: democratic-alliance
   authority: 20
 
 - id: party-leader-karama
   title_en: Leader of the Dignity Coalition
   title_fr: Chef de la Coalition Karama
+  title_ar: رئيس ائتلاف الكرامة
   institution: karama-coalition
   authority: 30
 
 - id: party-leader-machrouu
   title_en: Leader of Machrouu Tounes
   title_fr: Chef de Machrouu Tounes
+  title_ar: رئيس مشروع تونس
   institution: machrouu-tounes
   authority: 22
 
 - id: party-leader-vds
   title_en: Leader of the Democratic and Social Union
   title_fr: Chef de l'Union démocratique et sociale
+  title_ar: رئيس الاتحاد الديمقراطي والاجتماعي
   institution: vds-pr-mds
   authority: 20
 
 - id: party-leader-errahma
   title_en: Leader of Errahma
   title_fr: Chef d'Errahma
+  title_ar: رئيس حزب الرحمة
   institution: errahma
   authority: 22
 
 - id: party-leader-aich
   title_en: Leader of Aich Tounsi
   title_fr: Chef d'Aich Tounsi
+  title_ar: رئيس عيش تونسي
   institution: aich-tounsi
   authority: 18
 
 - id: party-leader-alternative
   title_en: Leader of the Tunisian Alternative
   title_fr: Chef de l'Alternative tunisienne
+  title_ar: رئيس البديل التونسي
   institution: alten-tounsi
   authority: 22
 
 - id: party-leader-upr
   title_en: Leader of the Republican People's Union
   title_fr: Chef de l'Union populaire républicaine
+  title_ar: رئيس الاتحاد الشعبي الجمهوري
   institution: republican-people-union
   authority: 22
 
 - id: mabrouk-principal
   title_en: Principal, Mabrouk Group
   title_fr: Dirigeant du Groupe Mabrouk
+  title_ar: مسير مجموعة المبروك
   institution: mabrouk-group
   authority: 30
 
 - id: elloumi-principal
   title_en: Principal, Elloumi Group
   title_fr: Dirigeant du Groupe Elloumi
+  title_ar: مسير مجموعة اللومي
   institution: elloumi-group
   authority: 26
 
 - id: nessma-owner
   title_en: Owner, Nessma TV
   title_fr: Propriétaire de Nessma TV
+  title_ar: مالك قناة نسمة
   institution: nessma-tv
   authority: 24
 
 - id: ugtt-secretary-general
   title_en: Secretary-General of the UGTT
   title_fr: Secrétaire général de l'UGTT
+  title_ar: الأمين العام للاتحاد العام التونسي للشغل
   institution: ugtt
   authority: 40
 
@@ -1383,6 +1420,7 @@
 - id: csee-secretary-general
   title_en: Secretary-General of the Higher Council for Education
   title_fr: Secrétaire général du Conseil supérieur de l'éducation et de l'enseignement
+  title_ar: الكاتب العام للمجلس الأعلى للتربية والتعليم
   institution: conseil-superieur-education
   authority: 15
 
@@ -1390,12 +1428,14 @@
 - id: equipment-minister
   title_en: Minister of Equipment and Housing
   title_fr: Ministre de l'Équipement et de l'Habitat
+  title_ar: وزير التجهيز والإسكان
   institution: ministry-equipment-housing
   authority: 45
 
 - id: onpf-pdg
   title_en: "President-Director General, Office national de la propriété foncière"
   title_fr: "Président-directeur général, Office national de la propriété foncière"
+  title_ar: الرئيس المدير العام للديوان الوطني للملكية العقارية
   institution: onpf
   authority: 35
   sources: [jort-2026-091]
@@ -1782,6 +1822,7 @@
 - id: secretary-of-state-interior
   title_en: Secretary of State to the Minister of the Interior
   title_fr: Secrétaire d'État auprès du ministre de l'Intérieur
+  title_ar: كاتب دولة لدى وزير الداخلية
   institution: ministry-interior
   authority: 22
   sources:
@@ -1807,6 +1848,7 @@
 - id: secretary-of-state-industry-transition
   title_en: Secretary of State to the Minister of Industry, in charge of the energy transition
   title_fr: Secrétaire d'État auprès du ministre de l'Industrie, chargé de la transition énergétique
+  title_ar: كاتب دولة لدى وزير الصناعة مكلف بالانتقال الطاقي
   institution: head-of-government
   authority: 20
   sources:
@@ -1852,6 +1894,7 @@
 - id: administrative-reform-minister
   title_en: Minister in charge of Administrative Reform
   title_fr: Ministre chargé de la Réforme administrative
+  title_ar: وزير مكلف بالإصلاح الإداري
   institution: head-of-government
   authority: 28
   sources:
@@ -1859,6 +1902,7 @@
 - id: development-minister
   title_en: Minister of Development and Regional Planning
   title_fr: Ministre du Développement et de la Planification régionale
+  title_ar: وزير التنمية والتخطيط الجهوي
   institution: head-of-government
   authority: 40
   sources:
@@ -1866,6 +1910,7 @@
 - id: economic-affairs-minister
   title_en: Minister in charge of Economic Affairs and Coordination
   title_fr: Ministre chargé de la Coordination et des Affaires économiques
+  title_ar: وزير مكلف بالشؤون الاقتصادية والتنسيق
   institution: head-of-government
   authority: 35
   sources:
@@ -1873,6 +1918,7 @@
 - id: government-secretariat-minister
   title_en: Minister in charge of the General Secretariat of the Government
   title_fr: Ministre auprès du chef du gouvernement chargé du secrétariat général du gouvernement
+  title_ar: وزير لدى رئيس الحكومة مكلف بالكتابة العامة للحكومة
   institution: head-of-government
   authority: 28
   sources:
@@ -1880,6 +1926,7 @@
 - id: investment-minister
   title_en: Minister of Investment and International Cooperation
   title_fr: Ministre de l'Investissement et de la Coopération internationale
+  title_ar: وزير الاستثمار والتعاون الدولي
   institution: head-of-government
   authority: 40
   sources:
@@ -1887,6 +1934,7 @@
 - id: local-affairs-minister
   title_en: Minister of Local Affairs
   title_fr: Ministre des Affaires locales
+  title_ar: وزير الشؤون المحلية
   institution: head-of-government
   authority: 35
   sources:
@@ -1894,6 +1942,7 @@
 - id: major-projects-minister
   title_en: Minister in charge of Major National Projects
   title_fr: Ministre chargée des Grands projets nationaux
+  title_ar: وزير مكلف بالمشاريع الوطنية الكبرى
   institution: head-of-government
   authority: 28
   sources:
@@ -1901,6 +1950,7 @@
 - id: migration-minister
   title_en: Minister in charge of Migration and Tunisians Abroad
   title_fr: Ministre chargé de l'Émigration et des Tunisiens à l'étranger
+  title_ar: وزير مكلف بالهجرة والتونسيين بالخارج
   institution: head-of-government
   authority: 28
   sources:
@@ -1908,6 +1958,7 @@
 - id: minister-delegate
   title_en: Minister Delegate
   title_fr: Ministre délégué
+  title_ar: وزير مفوض
   institution: head-of-government
   authority: 25
   sources:
@@ -1915,6 +1966,7 @@
 - id: planning-minister
   title_en: Minister of Planning and International Cooperation
   title_fr: Ministre de la Planification et de la Coopération internationale
+  title_ar: وزير التخطيط والتعاون الدولي
   institution: head-of-government
   authority: 38
   sources:
@@ -1922,6 +1974,7 @@
 - id: public-service-minister
   title_en: Minister of Public Service and Governance
   title_fr: Ministre de la Fonction publique et de la Gouvernance
+  title_ar: وزير الوظيفة العمومية والحوكمة
   institution: head-of-government
   authority: 35
   sources:
@@ -1929,6 +1982,7 @@
 - id: relations-parliament-minister
   title_en: Minister Delegate in charge of Relations with Parliament
   title_fr: Ministre auprès du chef du gouvernement chargé des Relations avec le Parlement
+  title_ar: وزير لدى رئيس الحكومة مكلف بالعلاقات مع البرلمان
   institution: head-of-government
   authority: 30
   sources:
@@ -1936,6 +1990,7 @@
 - id: security-minister
   title_en: Minister Delegate in charge of National Security
   title_fr: Ministre délégué chargé de la Sécurité nationale
+  title_ar: وزير مفوض مكلف بالأمن الوطني
   institution: head-of-government
   authority: 30
   sources:
@@ -1943,6 +1998,7 @@
 - id: social-economy-minister
   title_en: Minister in charge of the Social and Solidarity Economy
   title_fr: Ministre chargé de l'Économie sociale et solidaire
+  title_ar: وزير مكلف بالاقتصاد الاجتماعي والتضامني
   institution: head-of-government
   authority: 25
   sources:
@@ -1970,16 +2026,19 @@
 - id: communication-minister
   title_en: Minister of Communication
   title_fr: Ministre de la Communication
+  title_ar: وزير الاتصال
   institution: head-of-government
   authority: 40
 - id: state-minister
   title_en: Minister of State
   title_fr: Ministre d'État
+  title_ar: وزير الدولة
   institution: head-of-government
   authority: 50
 - id: anc-1956-member
   title_en: Member of the National Constituent Assembly
   title_fr: 'Membre : Assemblée nationale constituante'
+  title_ar: عضو المجلس القومي التأسيسي التونسي
   institution: anc-1956
   authority: 20
   seats: 98
@@ -1989,6 +2048,7 @@
 - id: cdd-i-member
   title_en: Member of the National Assembly (Chamber of Deputies, 1st legislature)
   title_fr: 'Membre : Assemblée nationale (Chambre des députés, Ire législature)'
+  title_ar: نائب بمجلس النواب (المدة النيابية الأولى)
   institution: cdd-i
   authority: 20
   seats: 90
@@ -1999,6 +2059,7 @@
 - id: cdd-ii-member
   title_en: Member of the National Assembly (Chamber of Deputies, 2nd legislature)
   title_fr: 'Membre : Assemblée nationale (Chambre des députés, IIe législature)'
+  title_ar: نائب بمجلس النواب (المدة النيابية الثانية)
   institution: cdd-ii
   authority: 20
   seats: 101
@@ -2009,6 +2070,7 @@
 - id: cdd-iii-member
   title_en: Member of the National Assembly (Chamber of Deputies, 3rd legislature)
   title_fr: 'Membre : Assemblée nationale (Chambre des députés, IIIe législature)'
+  title_ar: نائب بمجلس النواب (المدة النيابية الثالثة)
   institution: cdd-iii
   authority: 20
   seats: 101
@@ -2019,6 +2081,7 @@
 - id: cdd-iv-member
   title_en: Member of the National Assembly (Chamber of Deputies, 4th legislature)
   title_fr: 'Membre : Assemblée nationale (Chambre des députés, IVe législature)'
+  title_ar: نائب بمجلس النواب (المدة النيابية الرابعة)
   institution: cdd-iv
   authority: 20
   seats: 112
@@ -2029,6 +2092,7 @@
 - id: cdd-v-member
   title_en: Member of the National Assembly (Chamber of Deputies, 5th legislature)
   title_fr: 'Membre : Assemblée nationale (Chambre des députés, Ve législature)'
+  title_ar: نائب بمجلس النواب (المدة النيابية الخامسة)
   institution: cdd-v
   authority: 20
   seats: 121
@@ -2038,6 +2102,7 @@
 - id: cdd-vi-member
   title_en: Member of the National Assembly (Chamber of Deputies, 6th legislature)
   title_fr: 'Membre : Assemblée nationale (Chambre des députés, VIe législature)'
+  title_ar: نائب بمجلس النواب (المدة النيابية السادسة)
   institution: cdd-vi
   authority: 20
   seats: 136
@@ -2047,6 +2112,7 @@
 - id: cdd-vii-member
   title_en: Member of the Chamber of Deputies (7th legislature)
   title_fr: 'Membre : Chambre des députés (VIIe législature)'
+  title_ar: نائب بمجلس النواب (المدة النيابية السابعة)
   institution: cdd-vii
   authority: 20
   seats: 125
@@ -2057,6 +2123,7 @@
 - id: cdd-viii-member
   title_en: Member of the Chamber of Deputies (8th legislature)
   title_fr: 'Membre : Chambre des députés (VIIIe législature)'
+  title_ar: نائب بمجلس النواب (المدة النيابية الثامنة)
   institution: cdd-viii
   authority: 20
   seats: 141
@@ -2067,6 +2134,7 @@
 - id: cdd-ix-member
   title_en: Member of the Chamber of Deputies (9th legislature)
   title_fr: 'Membre : Chambre des députés (IXe législature)'
+  title_ar: نائب بمجلس النواب (المدة النيابية التاسعة)
   institution: cdd-ix
   authority: 20
   seats: 163
@@ -2077,6 +2145,7 @@
 - id: cdd-x-member
   title_en: Member of the Chamber of Deputies (10th legislature)
   title_fr: 'Membre : Chambre des députés (Xe législature)'
+  title_ar: نائب بمجلس النواب (المدة النيابية العاشرة)
   institution: cdd-x
   authority: 20
   seats: 182
@@ -2087,6 +2156,7 @@
 - id: cdd-xi-member
   title_en: Member of the Chamber of Deputies (11th legislature)
   title_fr: 'Membre : Chambre des députés (XIe législature)'
+  title_ar: نائب بمجلس النواب (المدة النيابية الحادية عشرة)
   institution: cdd-xi
   authority: 20
   seats: 189
@@ -2097,6 +2167,7 @@
 - id: cdd-xii-member
   title_en: Member of the Chamber of Deputies (12th legislature)
   title_fr: 'Membre : Chambre des députés (XIIe législature)'
+  title_ar: نائب بمجلس النواب (المدة النيابية الثانية عشرة)
   institution: cdd-xii
   authority: 20
   seats: 214
@@ -2108,6 +2179,7 @@
 - id: chambre-conseillers-2005-member
   title_en: Member of the Chamber of Advisors
   title_fr: 'Membre : Chambre des conseillers'
+  title_ar: عضو مجلس المستشارين
   institution: chambre-conseillers-2005
   authority: 20
   seats: 126
@@ -2117,6 +2189,7 @@
 - id: chambre-conseillers-president
   title_en: President of the Chamber of Advisors
   title_fr: Président de la Chambre des conseillers
+  title_ar: رئيس مجلس المستشارين
   institution: chambre-conseillers-2005
   authority: 45
   sources:
@@ -2135,6 +2208,7 @@
 - id: cnrd-first-vice-president
   title_en: First Vice-President of the National Council of Regions and Districts
   title_fr: Premier vice-président du Conseil national des régions et des districts
+  title_ar: النائب الأول لرئيس المجلس الوطني للجهات والأقاليم
   institution: cnrd
   authority: 35
   sources:
@@ -2143,6 +2217,7 @@
 - id: cnrd-second-vice-president
   title_en: Second Vice-President of the National Council of Regions and Districts
   title_fr: Deuxième vice-président du Conseil national des régions et des districts
+  title_ar: النائب الثاني لرئيس المجلس الوطني للجهات والأقاليم
   institution: cnrd
   authority: 35
   sources:

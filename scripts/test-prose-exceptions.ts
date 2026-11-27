@@ -40,7 +40,11 @@ const missing = roles.filter((r) => !r.title_ar).length;
 
 ok('the exception states the roles without title_ar', X.rolesWithoutTitleAr === missing, `${missing} of ${roles.length}`);
 ok('the exception states the number of roles', X.rolesTotal === roles.length, String(roles.length));
-ok('the ceiling it grants is above the ordinary one', X.ceiling > X.baseCeiling, `${X.ceiling} over ${X.baseCeiling}`);
+ok(
+	'the ceiling it grants matches the state of the data',
+	missing === 0 ? X.ceiling === X.baseCeiling : X.ceiling > X.baseCeiling,
+	`${X.ceiling} over ${X.baseCeiling}, ${missing} missing`
+);
 ok('the expiry is a calendar date', /^\d{4}-\d{2}-\d{2}$/.test(X.expires) && !Number.isNaN(Date.parse(X.expires)), X.expires);
 ok('the exception holds on its last day', arabicTitleExceptionActive(X.expires));
 const next = new Date(Date.parse(X.expires) + 86_400_000).toISOString().slice(0, 10);
