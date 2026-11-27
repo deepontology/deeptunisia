@@ -202,6 +202,8 @@
 	var RANK = { documented: 0, reported: 1, inferred: 2, unsubstantiated: 3 };
 	var SHORT = {
 		lb: 'events.rings.lookBack',
+		as: 'events.rings.allShort',
+		hk: 'events.rings.hint',
 		sd: 'events.rings.side',
 		gr: 'events.rings.grow',
 		sp: 'events.rings.stop',
@@ -224,6 +226,7 @@
 	if (lang !== 'fr' && lang !== 'ar') lang = 'en';
 	var dir = root.getAttribute('dir') === 'rtl' ? -1 : 1;
 	var reduced = matchMedia('(prefers-reduced-motion: reduce)');
+	var narrow = matchMedia('(max-width: 61.99rem)');
 
 	/* ---------------------------------------------------------------------
 	   Words: three copies are in the page, this reads the reader's language.
@@ -280,11 +283,32 @@
 	var cutoff = Number(svg.getAttribute('data-cutoff'));
 	var y0 = Number(svg.getAttribute('data-y0'));
 	var defaultF = Number(svg.getAttribute('data-default'));
-	var transition = Number(svg.getAttribute('data-transition'));
+	var transition = 0;
 	var y1 = yearOfDay(cutoff);
 	var years = [];
 	for (var yy = y0; yy <= y1; yy++) years.push(yy);
 
+	function rowClass(row, prefix) {
+		var list = row.classList;
+		for (var i = 0; i < list.length; i++) if (list[i].indexOf(prefix) === 0) return list[i].slice(prefix.length);
+		return '';
+	}
+	var MONTHS = { jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5, jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11 };
+	function dayOfRow(row, year) {
+		var copy = row.querySelector('.ev-date b[data-l=en], .rupture-date b[data-l=en]');
+		var text = copy ? copy.textContent : '';
+		var full = /(\d{1,2}) ([A-Za-z]{3,}) (\d{4})/.exec(text);
+		if (full) {
+			var month = MONTHS[full[2].slice(0, 3).toLowerCase()];
+			if (month != null) return Date.UTC(Number(full[3]), month, Number(full[1])) / DAY;
+		}
+		var loose = /([A-Za-z]{3,}) (\d{4})/.exec(text);
+		if (loose) {
+			month = MONTHS[loose[1].slice(0, 3).toLowerCase()];
+			if (month != null) return Date.UTC(Number(loose[2]), month, 16) / DAY;
+		}
+		return Date.UTC(year, 6, 2) / DAY;
+	}
 	var rows = [].slice.call(ledger.querySelectorAll('[data-event]'));
 	var events = [];
 	var byId = {};
@@ -310,7 +334,7 @@
 	for (var r = 0; r < rows.length; r++) {
 		var row = rows[r];
 		var year = Number(row.dataset.year);
-		var day = startOfYear(year) + Number(row.dataset.t || 0);
+		var day = row.dataset.t != null ? startOfYear(year) + Number(row.dataset.t) : dayOfRow(row, year);
 		var gy = yearOfDay(day);
 		var e = {
 			i: r,
@@ -318,10 +342,10 @@
 			row: row,
 			day: day,
 			year: gy,
-			basis: row.dataset.basis,
+			basis: rowClass(row, 'b-'),
 			rup: row.classList.contains('ev-rupture'),
-			fr: Number(row.dataset.fr || 0),
-			above: (RANK[row.dataset.basis] == null ? 9 : RANK[row.dataset.basis]) <= floorRank
+			fr: (function () { var f = row.querySelector('.ev-framings'); return f ? parseInt(f.textContent, 10) || 0 : 0; })(),
+			above: (RANK[rowClass(row, 'b-')] == null ? 9 : RANK[rowClass(row, 'b-')]) <= floorRank
 		};
 		events.push(e);
 		byId[e.id] = e;
@@ -373,11 +397,11 @@
 	   --------------------------------------------------------------------- */
 
 	var groups = {};
-	['tints', 'lines', 'core', 'scars', 'links', 'marks', 'years', 'months', 'today'].forEach(function (name) {
+	['tints', 'lines', 'core', 'scars', 'links', 'marks', 'years', 'months', 'today', 'hot'].forEach(function (name) {
 		groups[name] = document.getElementById('rings-' + name);
 	});
 	var monthFmt = new Intl.DateTimeFormat(lang, { month: 'short', timeZone: 'UTC' });
-	var TODAY_DATE = new Intl.DateTimeFormat(lang, { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(cutoff * DAY));
+	var TODAY_DATE = new Intl.DateTimeFormat(lang === 'fr' ? 'fr' : lang === 'ar' ? 'ar' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(cutoff * DAY));
 	(function () {
 		var months = groups.months.querySelectorAll('text tspan');
 		for (var m = 0; m < 12; m++) months[m].textContent = monthFmt.format(new Date(Date.UTC(y1, m, 1)));
@@ -404,7 +428,10 @@
 			a.parentNode.removeChild(a);
 			return;
 		}
-		markById[id] = { a: a, m: a.querySelector('.m'), rr: a.querySelector('.rr'), fr: a.querySelector('.fr'), e: e };
+		var m = a.querySelector('circle');
+		if (m) m.classList.add('m');
+		a.classList.add('rings-mark', 'b-' + e.basis);
+		markById[id] = { a: a, m: m, rr: a.querySelector('.rr'), fr: a.querySelector('.fr'), e: e };
 		var node = markById[id];
 		if (e.fr > 1 && !node.fr) node.fr = el('circle', { class: 'fr' }, a);
 		if (e.rup && !node.rr) node.rr = el('circle', { class: 'rr' }, a);
@@ -530,6 +557,14 @@
 			var p0 = point(G.inner[y1 - y0], na);
 			var p1 = point(R + 30, na);
 			el('line', { class: 'rings-now-line', x1: px(p0[0]), y1: px(p0[1]), x2: px(p1[0]), y2: px(p1[1]), 'stroke-dasharray': '2 3' }, today);
+			for (i = 0; i < events.length; i++) {
+				var freshEvent = events[i];
+				if (!atFloor(freshEvent) || !visible(freshEvent) || cutoff - freshEvent.day > 30 || freshEvent.day > cutoff) continue;
+				var fa = angle(fracOfDay(freshEvent.day), dir);
+				var f0 = point(R + 2, fa);
+				var f1 = point(R + 11, fa);
+				el('line', { class: 'fk', x1: px(f0[0]), y1: px(f0[1]), x2: px(f1[0]), y2: px(f1[1]) }, today);
+			}
 			var pos = point(R + 38, na);
 			var extra = lang === 'ar' ? { lang: 'ar', dir: 'rtl' } : {};
 			var tEl = el('text', Object.assign({ class: 'rings-today-text', x: px(pos[0]), y: px(pos[1] - 10 * state.k), 'text-anchor': Math.cos(na) < 0 ? 'end' : 'start' }, extra), today);
@@ -562,15 +597,18 @@
 	var eras = [];
 	var eraStarts = {};
 	(function initEras() {
-		var raw = svg.getAttribute('data-eras') || '';
-		var parts = raw.split(';');
-		for (var i = 0; i < parts.length; i++) {
-			var bits = parts[i].split(',');
-			if (bits.length < 3) continue;
-			var start = Number(bits[0]);
-			var end = Number(bits[1]);
-			eras.push({ start: start, end: end, color: bits[2] });
-			eraStarts[yearOfDay(start)] = true;
+		var blocks = [].slice.call(document.querySelectorAll('[data-chapter][style*="--era"]'));
+		for (var i = 0; i < blocks.length; i++) {
+			var style = blocks[i].getAttribute('style') || '';
+			var color = /--era:\s*([^;]+)/.exec(style);
+			var yearsText = (blocks[i].querySelector('.chapter-years') || {}).textContent || '';
+			var yearsIn = yearsText.match(/(\d{4})\D+(\d{4})/);
+			if (!color || !yearsIn) continue;
+			var startYear = Number(yearsIn[1]);
+			var endYear = Number(yearsIn[2]);
+			eras.push({ start: startYear, end: endYear, color: color[1].trim() });
+			eraStarts[startYear] = true;
+			if (blocks[i].getAttribute('data-chapter') === 'transition') transition = startYear;
 		}
 		eras.sort(function (a, b) {
 			return a.start - b.start;
@@ -580,8 +618,7 @@
 		var first = -1;
 		var last = -1;
 		for (var i = 0; i < years.length; i++) {
-			var mid = Date.UTC(years[i], 6, 1) / DAY;
-			if (mid >= era.start && mid < era.end) {
+			if (years[i] >= era.start && years[i] <= era.end) {
 				if (first < 0) first = i;
 				last = i;
 			}
@@ -636,7 +673,7 @@
 				continue;
 			}
 			node.a.removeAttribute('display');
-			var hidden = !atFloor(e) || p.cored || (growing && e.day > state.grow);
+			var hidden = !atFloor(e);
 			if (!hidden) {
 				var at = point(p.r, p.a);
 				node.a.setAttribute('transform', 'translate(' + px(at[0]) + ' ' + px(at[1]) + ')');
@@ -697,12 +734,43 @@
 		}
 	}
 
+	var tag = null;
+	var tagSub = null;
+	function updateHot() {
+		var hot = groups.hot;
+		while (hot.firstChild) hot.removeChild(hot.firstChild);
+		var id = state.hot || state.sel;
+		if (!id || !byId[id] || !P || !P[byId[id].i] || !live(byId[id], P)) return;
+		var e = byId[id];
+		var at = point(P[e.i].r, P[e.i].a);
+		el('circle', { class: 'rings-halo', cx: px(at[0]), cy: px(at[1]), r: px(state.rho * 2.8) }, hot);
+		if (!state.hot && narrow.matches) return;
+		if (!tag) {
+			tag = el('text', { class: 'rings-tag' }, hot);
+			tag.appendChild(document.createTextNode(''));
+			tagSub = el('tspan', { class: 'rings-sub' }, tag);
+		}
+		var right = at[0] < C;
+		var tx = at[0] + (right ? 1 : -1) * state.rho * 3.4;
+		var title = langCopy(e.row.querySelector('.ev-title, .rupture-title'));
+		var max = Math.round(56 / state.k);
+		if (title.length > max) title = title.slice(0, max - 1).trim() + '…';
+		tag.setAttribute('x', px(tx));
+		tag.setAttribute('y', px(at[1] - 6 * state.k));
+		tag.setAttribute('text-anchor', right ? 'start' : 'end');
+		tag.firstChild.nodeValue = title;
+		tagSub.setAttribute('x', px(tx));
+		tagSub.setAttribute('dy', '1.35em');
+		tagSub.textContent = langCopy(e.row.querySelector('.ev-date, .rupture-date')) + ' · ' + value('cat:' + rowClass(e.row, 'c-'));
+	}
+
 	function draw(light) {
 		G = geometry(years, counts, state.focus, state.grow, state.rho);
 		P = layout(events, years, G, state.rho, dir);
 		renderBands(light);
 		updateMarks();
 		updateScars();
+		updateHot();
 		syncStrip();
 	}
 
@@ -772,7 +840,7 @@
 	}
 
 	function presetLabel(kind, year, short) {
-		if (kind === 'all') return short ? String(y0) : phrase('ev');
+		if (kind === 'all') return short ? phrase('as') : phrase('ev');
 		if (kind === 'year') return String(year);
 		return fill(phrase(short ? 'ss' : 'si'), { year: year });
 	}
@@ -836,6 +904,11 @@
 		strip.appendChild(slider);
 	}
 	buildLens();
+	var hint = document.getElementById('rings-hint');
+	if (hint) {
+		hint.textContent = phrase('hk');
+		hint.removeAttribute('hidden');
+	}
 
 	var axis = document.getElementById('rings-axis');
 	if (axis) {
@@ -1014,6 +1087,20 @@
 		names = JSON.parse(document.getElementById('events-names').textContent) || {};
 	} catch (err) {}
 
+	function placeOf(row) {
+		var meta = row.querySelector('.ev-meta');
+		if (!meta) return '';
+		var copies = meta.querySelectorAll(':scope > b[data-l="en"]');
+		if (copies.length < 2) return '';
+		var candidate = copies[1].textContent.trim();
+		var ids = (row.getAttribute('data-entities') || '').split(' ');
+		for (var i = 0; i < ids.length; i++) {
+			var name = names[ids[i]];
+			if (name && candidate.indexOf(name) >= 0) return '';
+		}
+		return candidate;
+	}
+
 	function select(id, fromKeys) {
 		state.sel = id && byId[id] ? id : null;
 		var e = state.sel ? byId[state.sel] : null;
@@ -1028,20 +1115,19 @@
 		var rel = relatedTo(e);
 		state.rel = rel.map(function (o) { return o.id; });
 		var basis = value('basis:' + e.basis);
-		var grade = e.row.dataset.grade;
+		var grade = rowClass(e.row, 'g');
 		var meta = fill(keyText('rec.meta.line'), { basis: basis, grade: grade }) + ': ' + value('grade:' + grade);
 		var ar = '';
 		if (lang !== 'ar') {
 			var arNode = e.row.querySelector('.ev-title b[data-l="ar"], .rupture-title b[data-l="ar"]');
 			if (arNode) ar = '<p class="rings-ar" lang="ar" dir="rtl">' + esc(arNode.textContent) + '</p>';
 		}
-		var place = langCopy(e.row.querySelector('.evp'));
 		var flags = [];
 		var ver = e.row.querySelector('.ev-ver');
 		if (ver) flags.push(langCopy(ver));
 		if (e.fr > 1) flags.push(fill(phrase('fm'), { n: e.fr }));
 		var html = '<button class="rings-close" type="button" aria-label="' + esc(phrase('cl')) + '">×</button>' +
-			'<p class="rings-card-date">' + (e.rup ? '<span class="rings-flag">' + esc(phrase('rp')) + '</span> · ' : '') + esc(langCopy(e.row.querySelector('.ev-date, .rupture-date'))) + ' · ' + esc(value('cat:' + e.row.dataset.cat)) + (place ? ' · ' + esc(place) : '') + '</p>' +
+			'<p class="rings-card-date">' + (e.rup ? '<span class="rings-flag">' + esc(keyText('events.rupture')) + '</span> · ' : '') + esc(langCopy(e.row.querySelector('.ev-date, .rupture-date'))) + ' · ' + esc(value('cat:' + rowClass(e.row, 'c-'))) + (placeOf(e.row) ? ' · ' + esc(placeOf(e.row)) : '') + '</p>' +
 			'<h3>' + esc(langCopy(e.row.querySelector('.ev-title, .rupture-title'))) + '</h3>' + ar +
 			'<p class="rings-card-meta">' + esc(meta) + (flags.length ? ' · ' + flags.map(esc).join(' · ') : '') + '</p>' +
 			(e.entities.length ? '<div class="rings-who">' + whoChips(e) + '</div>' : '') +
@@ -1150,11 +1236,13 @@
 		var e = nearest(ev);
 		if (state.hot !== (e ? e.id : null)) {
 			state.hot = e ? e.id : null;
-			}
+			updateHot();
+		}
 		svg.style.cursor = e ? 'pointer' : '';
 	});
 	svg.addEventListener('pointerleave', function () {
 		state.hot = null;
+		updateHot();
 	});
 	svg.addEventListener('click', function (ev) {
 		ev.preventDefault();

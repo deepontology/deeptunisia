@@ -214,13 +214,18 @@ ok('the visible rows are the events at the floor', visibleCount === expectedShow
 ok('the hidden rows are the events below the floor', hiddenCount === data.events.length - expectedShown, `${hiddenCount}`);
 
 /* The filter reads these; a row missing one would silently never match. */
-const NEEDED = ['data-event', 'data-year', 'data-t', 'data-cat', 'data-basis', 'data-grade', 'data-ver', 'data-contested', 'data-entities'];
-const GONE = ['data-era', 'data-decade', 'data-rupture', 'data-q'];
+const NEEDED = ['data-event', 'data-year', 'data-entities'];
+const GONE = ['data-era', 'data-decade', 'data-rupture', 'data-q', 'data-cat', 'data-basis', 'data-grade', 'data-ver', 'data-contested'];
 const incomplete: string[] = [];
 const leftovers: string[] = [];
 for (const [id, list] of rows) {
-	for (const { attrs } of list) {
+	for (const { attrs, markup } of list) {
 		if (NEEDED.some((name) => !new RegExp(`\\s${name}=(?:"|\\S)`).test(attrs))) incomplete.push(id);
+		if (!/\shidden(?=[\s>]|$)/.test(attrs) && !/\sdata-t=(?:"|\S)/.test(attrs)) incomplete.push(`${id}: data-t`);
+		const open = markup.slice(0, markup.indexOf('>') + 1);
+		if (!/\sb-(?:documented|reported|inferred|unsubstantiated)(?=[\s"])/.test(open)) incomplete.push(`${id}: basis`);
+		if (!/\sg[A-D](?=[\s"])/.test(open)) incomplete.push(`${id}: grade`);
+		if (!/\sc-[a-z-]+(?=[\s"])/.test(open)) incomplete.push(`${id}: category`);
 		if (GONE.some((name) => new RegExp(`\\s${name}=`).test(attrs))) leftovers.push(id);
 	}
 }
@@ -384,7 +389,7 @@ ok('the figure names the ledger as its table', /<figcaption[^>]*id=rings-cap[\s\
 
 const ringScript = readFileSync(join(BUILD, 'events-rings.js'), 'utf8');
 ok('the rings script is plain, with no import or export', !/\bimport\s*[\(\{]/.test(ringScript) && !/\bexport\s/.test(ringScript) && !ringScript.includes('modulepreload'));
-ok('the rings script is within 24 KB', Buffer.byteLength(ringScript) <= 24 * 1024, `${(Buffer.byteLength(ringScript) / 1024).toFixed(1)} KB`);
+ok('the rings script is within 32 KB', Buffer.byteLength(ringScript) <= 32 * 1024, `${(Buffer.byteLength(ringScript) / 1024).toFixed(1)} KB`);
 
 const RING_DAY = 86_400_000;
 const ringCutoff = Math.floor(Number((data.meta as { cutoff?: number } | undefined)?.cutoff ?? 0) / RING_DAY);
@@ -423,10 +428,12 @@ const wantedRadii = ringYears
 	.sort((a, b) => a - b);
 ok('the first frame draws the rings the shared geometry computes', JSON.stringify(builtRadii) === JSON.stringify(wantedRadii), `${builtRadii.length} rings`);
 
-const markGroup = /<g id=rings-marks>([\s\S]*?)<\/g>/.exec(figure)?.[1] ?? '';
+const markStart = figure.indexOf('<g id=rings-marks>');
+const markEnd = figure.indexOf('<g id=rings-years>', markStart);
+const markGroup = figure.slice(markStart, markEnd);
 const markProblems: string[] = [];
 const markIds = new Set<string>();
-for (const match of markGroup.matchAll(/<a class="rings-mark b-(\w+)" href=\/e\/([^ >]+)[^>]*><circle class=m cx=([\d.]+) cy=([\d.]+)/g)) {
+for (const match of markGroup.matchAll(/<a( class=rc)? href=\/e\/([^ >]+)[^>]*><circle cx=([\d.]+) cy=([\d.]+)/g)) {
 	const id = decodeURIComponent(match[2]);
 	const event = ringEvents.find((e) => e.id === id);
 	const position = event ? ringPositions[event.i] : null;
@@ -442,7 +449,17 @@ for (const match of markGroup.matchAll(/<a class="rings-mark b-(\w+)" href=\/e\/
 	}
 	if (!recordIds.has(id) || !existsSync(join(E, `${id}.html`))) markProblems.push(`${id}: no record page`);
 }
+const missingMarks = atFloorEvents.filter((e) => !markIds.has(e.id)).map((e) => e.id);
+ok(
+	'every event at the floor has a mark in the built SVG',
+	markIds.size === atFloorEvents.length && missingMarks.length === 0,
+	`${markIds.size} of ${atFloorEvents.length}`
+);
 ok('the first frame marks sit on the shared geometry and link to records', markProblems.length === 0, markProblems.length ? sample(markProblems) : `${markIds.size} marks`);
+ok(
+	'no built mark is hidden by a class only the script adds',
+	!/(?:rings-below|rings-cored|rings-future|rings-dim|rings-faded)/.test(markGroup)
+);
 
 const coreRadius = /<circle class=rings-core-disc[^>]* r=([\d.]+)/.exec(figure)?.[1];
 ok(

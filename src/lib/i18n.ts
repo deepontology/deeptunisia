@@ -6751,6 +6751,39 @@ const ar: Dict = {
 };
 
 
+/**
+ * Words the growth-rings figure needs but the app never reads. They live beside
+ * the dictionary so the build can print three copies without adding them to the
+ * app chunk that every reading page preloads.
+ */
+export const eventsRings: Record<Locale, Record<string, string>> = {
+	en: {
+		'events.rings.allShort': 'All',
+		'events.rings.hint': 'Arrows walk, Enter opens, plus and minus move the lens, Escape clears.',
+		'events.key.rupture': 'Rupture ring and scar',
+		'events.key.framings': 'Second ring: more than one framing',
+		'events.key.thread': 'Thread: one person or institution through time'
+	},
+	fr: {
+		'events.rings.allShort': 'Tout',
+		'events.rings.hint': 'Les flèches parcourent, Entrée ouvre, plus et moins bougent la lentille, Échap efface.',
+		'events.key.rupture': 'Anneau de rupture et cicatrice',
+		'events.key.framings': 'Second anneau : plus d’une lecture',
+		'events.key.thread': 'Fil : une personne ou une institution dans le temps'
+	},
+	ar: {
+		'events.rings.allShort': 'الكل',
+		'events.rings.hint': 'الأسهم تتنقل، وEnter يفتح، والزائد والناقص يحركان النطاق، وEsc يمسح.',
+		'events.key.rupture': 'حلقة انقطاع وأثر',
+		'events.key.framings': 'حلقة ثانية: أكثر من قراءة',
+		'events.key.thread': 'خيط: شخص أو مؤسسة عبر الزمن'
+	}
+};
+
+export function eventsRing(locale: Locale, key: string): string {
+	return eventsRings[locale][key] ?? key;
+}
+
 const DICTS: Record<Locale, Dict> = { en, fr, ar };
 
 /**
