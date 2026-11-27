@@ -1062,3 +1062,228 @@
     - tap-nessma-germany-75m-2026-11-19
     - mosaiqe-germany-75m-2026-11-19
     - alchourouk-germany-75m-2026-11-19
+
+# ---------------------------------------------------------------------------
+# Daily sweep 2026-11-25 to 2026-11-27 (data/contrib/daily-2026-11-25.yaml,
+# daily-2026-11-26.yaml, daily-2026-11-27.yaml)
+# ---------------------------------------------------------------------------
+- id: agr-tunisia-un-cooperation-framework-2027-2031
+  title_en: "Tunisia-United Nations Sustainable Development Cooperation Framework 2027-2031"
+  title_fr: "Cadre de coopération des Nations Unies pour le développement durable 2027-2031 (Tunisie)"
+  kind: other
+  parties: [united-nations]
+  signed: "2026-11-27"
+  summary: >-
+    A five-year cooperation framework between the Government of Tunisia and
+    the United Nations system in Tunisia, covering 2027-2031, signed at the
+    Ministry of Foreign Affairs, Migration and Tunisians Abroad in Tunis on
+    27 November 2026 by Foreign Minister Mohamed Ali Nafti and UN Resident
+    Coordinator Rana Taha. Tunisian accounts call it a strategic cooperation
+    framework; the UN system's name for the instrument is the United Nations
+    Sustainable Development Cooperation Framework (UNSDCF) 2027-2031, the
+    name used in a draft UNDP country programme document of 2 November 2026.
+    The framework rests on three axes: human capital and social inclusion;
+    inclusive economic transformation and decent jobs; and ecological and
+    energy transition with water and food security. It is presented as aligned
+    with the National Development Plan 2026-2030. Nafti linked the signature
+    to the UN's "ONU 80" reform initiative and to the 70th anniversary of
+    Tunisia's UN membership, and cited the 2023 multi-donor trust fund for
+    employment and youth, USD 10 million with a Dutch voluntary contribution,
+    as an example of innovative financing. African Manager
+    reports estimated financing needs of about USD 444 million; that figure
+    is an estimate reported by one outlet, not a committed amount, and no
+    other outlet read carries it. The record does not state a total for the
+    framework as agreed.
+  confidence: B
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: >-
+    African Manager for the signature, the two signatories and the USD 444
+    million financing-needs estimate; Managers for the signature and the two
+    signatories; TAP for the signing recorded in its photo gallery of 27
+    November 2026. The instrument's English name is taken from the draft UNDP
+    country programme document for Tunisia 2027-2031.
+  reasoning: >-
+    The signature, the date, the venue and both signatories are carried by two
+    separately written same-day accounts, African Manager and Managers, and by
+    a TAP photo gallery entry timestamped 11:57 that day. That supports B for
+    the event, not A: neither the signed framework nor a joint release was
+    retrieved. The UN Tunisia press-release list showed 25 November 2026 as
+    its newest item, and the foreign ministry site did not respond. The USD
+    444 million appears only in African Manager, whose main report calls it
+    estimated financing needs and whose companion report calls it an allocated
+    envelope; Managers states that the announcements available to it were
+    silent on the total. The record therefore keeps the figure inside the
+    summary as the outlet's estimate and does not treat it as a commitment.
+    The 2023 trust fund figures are also African Manager's account of what the
+    minister said at the ceremony.
+  falsifiable_by: >-
+    Retrieval of the signed framework text or a joint release by the foreign
+    ministry and the UN country team naming the signature date, the
+    signatories and any financing figure; a TAP news article of 27 November
+    2026 giving a different account; or a statement by either signatory that
+    no framework was signed that day.
+  disputes:
+    - claim: The framework carries an allocated envelope of about USD 444 million.
+      held_by: African Manager, in its second report of 27 November 2026
+      source: am-un-framework-taha-2026-11-27
+      assessment: >-
+        The same outlet's main report calls the figure estimated financing
+        needs, and no other outlet read reports any amount. The record adopts
+        the estimate wording and treats the "allocated envelope" wording as
+        the outlet's looser paraphrase, unresolved until the signed text or a
+        joint release is read.
+      status: open
+  sources:
+    - am-un-framework-444m-2026-11-27
+    - am-un-framework-taha-2026-11-27
+    - managers-un-framework-2026-11-27
+    - tap-gallery-un-framework-2026-11-27
+    - undp-cpd-tunisia-2027-2031-draft-2026-11
+
+- id: agr-tunisia-un-cooperation-framework-2021-2025
+  title_en: "United Nations Sustainable Development Cooperation Framework (UNSDCF) 2021-2025"
+  title_fr: "Plan cadre des Nations Unies pour l'aide au développement 2021-2025 (Cadre de coopération des Nations Unies pour le développement durable)"
+  kind: other
+  parties: [united-nations]
+  signed: "2020"
+  in_force: "2021-01-01"
+  text_url: https://unsdg.un.org/sites/default/files/2020-11/Tunisia-UNSDCF-2021-2025.pdf
+  summary: >-
+    The predecessor framework, signed in 2020 by Foreign Minister Othman
+    Jerandi and UN Resident Coordinator Arnaud Peral and, according to the
+    2025 final evaluation, jointly by 22 UN agencies, funds and programmes and
+    the foreign ministry. The signed PDF is dated November 2020 on its cover
+    and leaves the day of signature blank ("Fait à Tunis, le XX XX 2020");
+    the 2025 evaluation gives December 2020 as the signature month, so the
+    record keeps the year only. The framework covered 2021-2025 on paper. The
+    UN system in Tunisia continued to use it through 2026: the 2025 annual
+    report calls it the 2021-2026 framework, and the UN Sustainable
+    Development Group country page gives a cooperation framework end date of
+    31 December 2026 with a new cycle from 1 January 2027. The next cycle is
+    covered by the 2027-2031 framework signed on 27 November 2026.
+  confidence: A
+  basis: documented
+  reasoning: >-
+    The signed text is the primary record for the instrument, its title, its
+    two named signatories and its 2021-2025 period. The exact day is not in
+    that text: the signature block leaves the month and day blank, and the
+    only month in the record, December 2020, comes from the 2025 final
+    evaluation. The record therefore stores the year "2020" rather than a
+    month it cannot support from the instrument. The extension into 2026 is
+    taken from two UN records, the 2025 annual report and the Sustainable
+    Development Group country page, not from an amending instrument.
+  falsifiable_by: >-
+    A signed and dated copy of the 2021-2025 framework showing a signature
+    date outside 2020; a UN record showing the framework ended on 31 December
+    2025 rather than 31 December 2026; or a record showing a different
+    signatory in place of Othman Jerandi or Arnaud Peral.
+  sources:
+    - unsdcf-tunisia-2021-2025-text
+    - unsdcf-tunisia-2021-2025-evaluation
+    - un-tunisia-annual-report-2025
+    - unsdg-tunisia-country-page
+- id: agr-tunisia-switzerland-takween-amendment-2026
+  title_en: "Amendment to the Tunisia-Switzerland Takween vocational training cooperation convention (2026)"
+  title_fr: "Avenant à la convention du programme de coopération tuniso-suisse « La formation professionnelle en Tunisie – TAKWEEN » (2026)"
+  kind: other
+  parties: [CH]
+  signed: "2026-11-26"
+  summary: >-
+    An amendment (avenant) to the convention of the Tunisian-Swiss
+    cooperation programme for vocational training, Takween, was signed on
+    Thursday 26 November 2026 at the Ministry of Employment and Vocational
+    Training in Tunis. Minister Riadh Chaoued presided over the ceremony and
+    the Swiss embassy's chargée d'affaires a.i., Gabrielle Schreier, attended. The
+    programme supports the modernisation of the national vocational training
+    system and its alignment with labour-market needs, through the creation of
+    30 specialised training platforms with dual certification, support for
+    practical training and short courses; it reports about 2,500 beneficiaries
+    a year and an insertion rate near 70 per cent. It continues the Programme de
+    formation et d'intégration professionnelles en Tunisie (PFIPT), run by
+    Swiss Cooperation from 2012 to 2021 and implemented by Swisscontact under
+    the ministry's authority. No source read gives an amount for the
+    amendment, the clauses it changes, or the period it covers. The SDC
+    project record for the Takween phase (project 7F10597), last updated 29
+    July 2025, gives a Swiss budget of CHF 9,995,975, of which CHF 8,835,364
+    had been allocated, over 1 October 2020 to 31 July 2027; an earlier SDC
+    fiche gives the programme as 2021-2031 with CHF 20 million in total and
+    CHF 9.8 million for phase 1 (2021-2026). Both predate the signature and
+    neither is tied to the amendment by any source read.
+  summary_fr: >-
+    Un avenant à la convention du programme de coopération tuniso-suisse pour
+    la formation professionnelle, Takween, a été signé le jeudi 26 novembre
+    2026 au siège du ministère de l'Emploi et de la Formation professionnelle
+    à Tunis. Le ministre Riadh Chaoued a présidé la cérémonie et la chargée
+    d'affaires par intérim de l'ambassade de Suisse, Gabrielle Schreier, y a
+    assisté. Le programme soutient la modernisation du système national de
+    formation professionnelle et son adaptation aux besoins du marché du
+    travail, par la mise en place de 30 plateformes de formation spécialisée à
+    double certification, le soutien à la formation pratique et l'organisation
+    de cycles courts ; il fait état d'environ 2 500 bénéficiaires par an et
+    d'un taux d'insertion proche de 70 pour cent. Il s'inscrit dans la
+    continuité du Programme de formation et d'intégration professionnelles en
+    Tunisie (PFIPT), conduit par la Coopération suisse de 2012 à 2021 et mis
+    en œuvre par Swisscontact sous l'égide du ministère. Aucune source lue ne
+    donne ni le montant de l'avenant, ni les clauses qu'il modifie, ni la
+    période qu'il couvre. La fiche
+    de projet de la DDC pour la phase Takween (projet 7F10597), mise à jour le
+    29 juillet 2025, indique un budget suisse de 9 995 975 francs suisses,
+    dont 8 835 364 déjà attribués, sur la période du 1er octobre 2020 au 31
+    juillet 2027 ; une fiche antérieure de la DDC présente le programme comme
+    couvrant 2021-2031, avec 20 millions de francs suisses au total et 9,8
+    millions pour la phase 1 (2021-2026). Ces deux documents précèdent la
+    signature et aucune source lue ne les rattache à l'avenant.
+  summary_fr_by: machine
+  confidence: B
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: >-
+    The Tunisian Ministry of Employment and Vocational Training, in a
+    communique of 27 November 2026 published on its Facebook page and relayed
+    by African Manager, TAP, Nessma TV, Webmanagercenter and Managers. No
+    Swiss-side release and no text of the amendment was retrieved.
+  reasoning: >-
+    Three separate newsrooms (African Manager, TAP and Managers) carry the
+    signature, and TAP is the state wire; that is the basis for B. It does not
+    reach A: the instrument was not retrieved, no JORT notice was found, no
+    Swiss embassy, EDA or SDC page on the amendment was found, and every
+    account read either reproduces or explicitly cites the same ministry
+    communique of 27 November 2026, or, in Managers' case, describes the same
+    ceremony without naming another source. African Manager, Webmanagercenter
+    and Nessma reproduce the communique almost verbatim; the TAP copy is the
+    wire version; Managers rewrites it and is the only source that gives the
+    calendar date, 26 November 2026, while the others say only "jeudi". The
+    date is consistent with the Friday 27 November communique and with the
+    masthead dates. The grade therefore rests on an official account
+    circulating through several mastheads, not on reporting independent of
+    the ministry's account. The programme figures (30
+    platforms, about 2,500 beneficiaries a year, near 70 per cent insertion)
+    are the ministry's own and are repeated by every outlet, so they are
+    attributed rather than independently verified. The Swiss diplomat's name
+    is spelled Gabrielle Schreier by African Manager and Webmanagercenter,
+    Gabriele Schreier by Managers and Gabriel Schreyer in the TAP copy; the
+    record uses the form in two outlets and leaves the variants in the source
+    notes. The SDC project record and the earlier fiche give different
+    periods, and phase 1 budget figures that differ in precision (CHF
+    9,995,975 against CHF 9.8 million); both predate the amendment, and the
+    record does not choose between the periods or infer that the amendment
+    extends the programme. No amount for the amendment appears in any source
+    read.
+  falsifiable_by: >-
+    The signed amendment or its JORT publication; a ministry page carrying
+    the 27 November 2026 communique; a Swiss embassy, EDA or SDC release on
+    the signature; a budget or project document stating an amendment amount,
+    a revised phase period, or the clauses changed; a second independent
+    report that does not derive from the ministry communique. A source giving
+    a date other than 26 November 2026 for the signature, or naming a
+    different signatory, would correct the record.
+  sources:
+    - am-takween-avenant-2026-11-27
+    - tap-takween-avenant-2026-11-27
+    - nessma-tap-takween-avenant-2026-11-27
+    - managers-takween-avenant-2026-11-27
+    - wmc-tap-takween-avenant-2026-11-27
+    - eda-takween-project-7f10597
+    - eda-takween-fiche-2022
+

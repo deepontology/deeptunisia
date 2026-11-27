@@ -10,7 +10,7 @@
     "successionMaxGapYears": 1,
     "nullTrials": 200,
     "seed": 20260911,
-    "cutoff": 1795478400000
+    "cutoff": 1795737600000
   },
   "cohorts": [
     {
@@ -228,9 +228,9 @@
     "randomDates": {
       "trials": 200,
       "min": 0,
-      "median": 2,
+      "median": 1,
       "max": 83,
-      "atLeastReal": 66
+      "atLeastReal": 65
     }
   },
   "review": {

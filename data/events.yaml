@@ -6985,15 +6985,21 @@
     Africa Ltd., Zenith Overseas Assets Ltd. and Compagnie du Désert Ltd.) under the 1989 UK-Tunisia bilateral
     investment treaty. The dispute concerns Zenith's oil investments in the Sidi El Kilani and Ezzaouia
     concessions; hearings on the merits were held in Paris in April 2026, final memorials were filed on
-    30 September 2026, and the award is expected in the first quarter of 2027. Tunisia contests the claim
+    30 September 2026, and the award was expected in the first quarter of 2027 as of October 2026;
+    Zenith said on 24 November 2026 that it had expected the final award by May 2027. Tunisia contests the claim
     and the amount is not an adjudicated debt. The piece says the cumulative claims across the group's
     disputes are about USD 639.7 million and that a separate arbitration awarded Zenith about USD 9.7
     million including interest. The article also involves ETAP in the wider dispute. Zenith, CNQ, ICSID
     and Pompeo have no graph records. On 9 November 2026 Zenith said Tunisia had again failed to pay
     its share of the arbitration costs and that ICSID had asked for payment of the unpaid costs, calling
     Tunisia's conduct deliberate obstruction and an abuse of process; African Manager relayed the
-    company's statement, no ICSID order and no Tunisian response were retrieved, and the amount remains
-    a claim, not an agreed debt.
+    company's statement, no ICSID order on that demand and no Tunisian response were retrieved; the
+    Centre's docket later recorded the suspension on 23 November 2026, and the amount remains a claim,
+    not an agreed debt. On 23 November 2026 ICSID recorded the proceeding as suspended for non-payment
+    of the required advances under its Administrative and Financial Regulation 16(2)(b); Zenith
+    announced the suspension on 24 November, said the award it had expected by May 2027 could be
+    delayed by several months, and said it remained open to a negotiated settlement assisted by CNQ
+    Global Advisors (ev-zenith-icsid-suspension-2026-11-23).
   confidence: C
   verification: needs-primary-source
   attributed_to: Kapitalis (29 October 2026), citing Agenzia Nova; the claim amount and procedural calendar
@@ -9142,3 +9148,658 @@
     - nessma-en-tap-choutrana-20m-2026-11-19
     - alchourouk-germany-75m-2026-11-19
     - diwanfm-germany-75m-2026-11-19
+
+# ---------------------------------------------------------------------------
+# Daily sweep 2026-11-25 to 2026-11-27 (data/contrib/daily-2026-11-25.yaml,
+# daily-2026-11-26.yaml, daily-2026-11-27.yaml)
+# ---------------------------------------------------------------------------
+- id: ev-zenith-icsid-suspension-2026-11-23
+  date: "2026-11-23"
+  title_en: "ICSID suspends the Zenith Energy arbitration against Tunisia for non-payment of costs"
+  title_fr: "Le CIRDI suspend l'arbitrage de Zenith Energy contre la Tunisie pour non-paiement des frais"
+  category: legal
+  subcategory: investment-arbitration
+  location: []
+  actors: []
+  institutions: []
+  causes: []
+  consequences: []
+  summary: >-
+    The International Centre for Settlement of Investment Disputes entered on
+    the docket of case ARB/23/18 that on 23 November 2026 the proceeding "is
+    suspended for non-payment of the required advances pursuant to ICSID
+    Administrative and Financial Regulation 16(2)(b)". Zenith Energy Ltd
+    announced the suspension on 24 November 2026 in a regulatory statement,
+    saying the Republic of Tunisia had "again failed to pay its outstanding
+    share of the advance on costs requested by ICSID within the period
+    prescribed under the ICSID Administrative and Financial Regulations", and
+    that the claimants had therefore decided "on this occasion" not to advance
+    Tunisia's share; the company says the claimants had paid that share on every
+    previous call to keep the case running. Per the company, the suspension "will
+    inevitably delay the conclusion" of the arbitration; the final award had
+    been expected by May 2027; and the suspension "may delay the issuance of
+    the final award by several months". The company said it remained willing to
+    hold good-faith settlement discussions with CNQ Global Advisors assisting,
+    and would advance Tunisia's share again if no settlement followed. The
+    docket still records the proceeding as pending. Procedural Order No. 5 of
+    14 July 2025 had recited that a suspension for non-payment lasting more than
+    90 consecutive days lets the Secretary-General discontinue the proceeding,
+    and the tribunal had reserved the question of unpaid payments to its final
+    allocation of costs. The case was registered on 5 June 2023
+    under the 1989 UK-Tunisia bilateral investment treaty, with three British
+    Zenith subsidiaries as claimants; the sum at issue is about USD 572.7
+    million (the announcement says approximately US$573 million), which is the
+    claimants' claim and not an adjudicated debt. The docket also shows an
+    earlier suspension at the claimants' request in March 2026, so a stay is not
+    new to this case; this is the only entry recorded under the non-payment
+    regulation. No Tunisian government response to the suspension was found.
+  confidence: A
+  basis: documented
+  attributed_to: >-
+    The International Centre for Settlement of Investment Disputes for the fact
+    and date of the suspension; Zenith Energy Ltd for the default it alleges,
+    the amounts and the effect on the award timetable
+  reasoning: >-
+    The fact this record turns on is the suspension, and it is not a report:
+    the Centre's case-detail page for ARB/23/18, the registry entry for the
+    case, lists it as a dated development under the regulation that governs
+    default on advances. That is why the record is graded A rather than B
+    although every account of it in the press derives from one company
+    announcement. The docket establishes that the proceeding is suspended and
+    that the cause is non-payment of the required advances; it does not say
+    which party failed to pay, and the sentence naming Tunisia as the
+    defaulting party is the company's, as is the account of having covered
+    Tunisia's share on earlier calls - Procedural Order No. 5 independently
+    records that a party wishing to avoid suspension must pay the other's
+    share, and that the claimants had done so after the first call. The
+    amounts, the May 2027 expectation and the several-month delay are the
+    company's and are stated as such; the claim figure is a claim, and no
+    tribunal has adjudicated it. Nothing in hand gives the amount of the unpaid
+    advance or the Secretary-General's notification date. The case remains
+    pending rather than discontinued, and the 90-day power recited in
+    Procedural Order No. 5 is recorded as a rule, not as a prediction.
+  falsifiable_by: >-
+    A corrected ICSID docket entry, or a notification or order of the
+    Secretary-General, showing that the proceeding was not suspended on 23
+    November 2026, that the suspension was lifted, or that it rested on
+    something other than non-payment of the required advances. A Tunisian
+    government statement or an ICSID filing showing that Tunisia had paid, or
+    that the unpaid share was the claimants'. A discontinuance order, a final
+    award, or a resumption notice would each supersede the record's statement
+    that the proceeding stands suspended and pending.
+  disputes:
+    - claim: >-
+        The suspension takes effect on 24 November 2026, not 23 November 2026.
+      held_by: >-
+        Zenith Energy's announcement of 24 November 2026 ("the ICSID
+        Arbitration has been suspended with effect from today"), relayed by
+        African Manager, Webdo and Alliance News; Tera Finances reads the two
+        records as a one-day gap.
+      source: zenith-rns-suspension-2026-11-24
+      assessment: >-
+        Kept open. The docket dates the entry 23 November 2026; the company
+        release is timestamped 24 November 2026 at 00:40 CET and says "with
+        effect from today", which is either a text written on the 23rd and
+        published just after midnight or a claim that the suspension began on
+        the 24th. The record follows the registry date because the registry is
+        the primary record of a registry act, and states the announcement date
+        in the summary, so a reader who prefers the 24th is not misled about
+        when the company spoke. Falsifiable by the Secretary-General's
+        notification letter or a corrected docket entry.
+      status: open
+  sources:
+    - icsid-arb23-18-case-record-2026-11-23
+    - icsid-po5-2025-07-14
+    - zenith-rns-suspension-2026-11-24
+    - webdo-zenith-suspension-2026-11-24
+    - am-zenith-suspension-2026-11-25
+    - alliance-news-zenith-suspension-2026-11-25
+    - terafinances-zenith-suspension-2026-11-25
+
+- id: ev-oman-tunisia-court-of-accounts-cooperation-2026-11-23
+  date: "2026-11-23"
+  title_en: "Tunisia's Cour des comptes and Oman's State Financial and Administrative Audit Authority sign a cooperation instrument in Tunis"
+  title_fr: "La Cour des comptes tunisienne et l'Institution nationale de contrôle financier et administratif d'Oman signent un accord de coopération à Tunis"
+  title_ar: "توقيع اتفاقية شراكة وتعاون بين محكمة المحاسبات التونسية وجهاز الرقابة المالية والإدارية للدولة بسلطنة عمان"
+  category: political
+  subcategory: institutional-cooperation
+  location: [gov-tunis]
+  actors: []
+  institutions: [audit-court]
+  causes: []
+  consequences: []
+  summary: >-
+    Tunisia's Court of Accounts (Cour des comptes) and the Sultanate of Oman's
+    State Financial and Administrative Audit Authority (جهاز الرقابة المالية
+    والإدارية للدولة) signed a cooperation instrument in Tunis on Monday 23
+    November 2026, at the close of the Omani delegation's visit to the Court,
+    according to the Court communique that TAP reported at 22:47 that evening
+    and that Tunisien.tn, Djerid FM, African Manager, Le Temps and Managers
+    relayed on 23-24 November. The Court calls it a partnership and cooperation
+    agreement (اتفاقية شراكة وتعاون) establishing an institutional framework for
+    joint cooperation, the exchange of experience and expertise, and the
+    development of joint work; it names no signatory and gives no duration,
+    and no text was published. The Omani authority's own English account, posted on 24
+    November, calls the instrument a Memorandum of Understanding signed by its
+    chairman, Sheikh Ghuson bin Hilal Al Alawi, and Judge Fadhila Gargouri,
+    Vice Prime-President of the Court of Accounts, and lists the fields of
+    cooperation as the development of audit practices, training programmes,
+    scientific events and the exchange of experience and methodologies. The
+    Omani magazine Al Waha, which dates the delegation's visit to 22-27
+    November 2026, describes the Court memorandum as covering the protection of
+    public money and the fight against corruption. Oman News Agency reported on
+    25 November that the authority signed two memoranda of understanding in
+    Tunis, one with the Court of Accounts and one with the Haute instance du
+    contrôle administratif et financier (HICAF), on the sidelines of the 71st
+    Executive Council meeting of ARABOSAI, which Tunisia hosted over three
+    days; the HICAF memorandum was signed separately on Tuesday 24 November at
+    the Ennejma Ezzahra palace in Sidi Bou Saïd by HICAF president Imed Hazgui
+    and the same Omani chairman, per African Manager. No text, duration, entry
+    into force or ratification of the Court instrument was published by either
+    institution.
+  confidence: B
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: "Tunisia's Court of Accounts (communique reported by TAP on 23 November 2026 and relayed by Tunisien.tn, Djerid FM, African Manager, Le Temps and Managers), the Omani State Financial and Administrative Audit Authority (official account, 24 November 2026), Oman News Agency (25 November 2026) and Al Waha (25 November 2026)"
+  reasoning: >-
+    The signature itself is established to grade B: each of the two parties
+    announced it in its own name, the Omani state agency reported it, and the
+    Tunisian press carried the Court's communique in Arabic and French. It is
+    not A because the instrument itself was not retrieved, no official
+    publication or register entry gives it effect, and the two institutional
+    accounts are the parties' own word rather than independent records. The
+    outlets are not independent witnesses either: TAP, Tunisien.tn, Djerid FM,
+    African Manager, Le Temps and Managers all reproduce or paraphrase the same
+    Court communique, which is why their agreement adds little beyond the
+    communique. The Omani account is the only one that names the signatories
+    and the only one that uses the term memorandum of understanding; it is
+    recorded as the Omani party's account, not as neutral confirmation.
+
+    The record is an event, not an agreement record, because what the sources
+    describe is a cooperation framework between two supreme audit institutions,
+    not a treaty binding the state. The Omani authority calls it a memorandum
+    of understanding, the Tunisian Court calls it a partnership and cooperation
+    agreement, and neither published a text, a duration, an entry into force, a
+    termination clause or a ratification. The agreements file is for treaties
+    and accessions binding Tunisia to other states, and its nearest counterpart
+    (the ELMED intergovernmental agreement) is recorded with ratifications and
+    an in-force date, none of which exists here. The German 75 million euro
+    commitment of 18 November is filed as an event for the same reason: it is a
+    commitment, not an instrument. This record does not assert
+    that the memorandum is non-binding: it declines to record it as a binding
+    treaty because nothing in hand shows that it is one. If the signed text
+    turns out to create binding obligations, an agreement record would be the
+    better vehicle, with parties [OM], kind other, signed 2026-11-23 and no
+    in-force date.
+
+    The date is 23 November because TAP's dateline and timestamp (23/11/2026
+    22:47) say "today Monday", Tunisien.tn published the same day, and the three
+    French relays say "lundi". The Omani accounts do not date the signature; the
+    Oman News Agency report of 25 November describes the signing as having
+    happened on the sidelines of a three-day meeting and is not evidence that
+    the signature was on 25 November. African Manager's "à l'issue d'une visite"
+    describes the end of the Court visit, not the end of the delegation's stay:
+    Al Waha dates the stay to 22-27 November and the HICAF memorandum was signed
+    the next day, so the record does not say the delegation left Tunisia on 23
+    November.
+
+    The Tunisian signatory is named only by the Omani side, as Judge Fadhila
+    Gargouri, Vice Prime-President of the Court. The Court's own communique
+    names nobody, and the graph has no person record for her, so the name is
+    attributed in the summary and no actor id is invented. The Court's first
+    presidency has no recorded holder after the retirement of Nejib Ktari in
+    about February 2023; that is consistent with a vice-president signing, but
+    it is context, not evidence about this instrument, and the record does not
+    rely on it.
+  falsifiable_by: >-
+    The signed memorandum or agreement, or a publication of it by either
+    institution, would settle its name, its signatories, its duration, its
+    binding character and the exact date of signature. A JORT act, a decree, an
+    official register entry, a ratification or an entry-into-force notice would
+    justify an agreement record instead of this event. A Court communique or an
+    Omani statement naming a different signatory, or dating the signature to 24
+    or 25 November, would correct those points. Evidence that no instrument was
+    signed with the Court, and that the only memorandum was the one with HICAF,
+    would refute the record.
+  contested:
+    - framing: "A memorandum of understanding between two supreme audit institutions"
+      held_by: "The Omani State Financial and Administrative Audit Authority's official English account (24 November 2026), Oman News Agency and the Omani press, which report two memoranda of understanding"
+      source: isc-oman-x-mou-2026-11-24
+    - framing: "A partnership and cooperation agreement establishing an institutional cooperation framework"
+      held_by: "The Tunisian Court of Accounts' communique (23-24 November 2026) and the outlets relaying it: TAP, Tunisien.tn, Djerid FM, African Manager, Le Temps and Managers"
+      source: courdescomptes-linkedin-oman-2026-11-24
+  sources:
+    - courdescomptes-linkedin-oman-2026-11-24
+    - isc-oman-x-mou-2026-11-24
+    - tap-oman-court-agreement-2026-11-23
+    - tunisien-oman-court-agreement-2026-11-23
+    - djeridfm-oman-court-agreement-2026-11-23
+    - am-oman-court-agreement-2026-11-24
+    - letemps-oman-court-agreement-2026-11-24
+    - managers-oman-court-agreement-2026-11-24
+    - ona-oman-tunisia-mous-2026-11-25
+    - alwaha-oman-tunisia-mous-2026-11-25
+    - shabiba-oman-tunisia-mous-2026-11-25
+    - am-hicaf-oman-mou-2026-11-25
+    - courdescomptes-site-news-index-2026-11-25
+
+- id: ev-arp-cnrd-plf-2027-committee-adoption-2026-11-25
+  date: "2026-11-25"
+  title_en: ARP and CNRD finance committees adopt the amended 2027 finance bill in
+    joint session
+  title_fr: Les commissions des finances de l'ARP et du CNRD adoptent en séance
+    conjointe le projet de loi de finances 2027 amendé
+  category: political
+  subcategory: budget-process
+  location:
+    - gov-tunis
+  actors:
+    - maher-gtari
+    - dhafer-sghiri
+  institutions:
+    - legislature
+    - cnrd
+  causes: []
+  consequences: []
+  summary: >-
+    On Wednesday 25 November 2026 the finance and budget committees of the
+    Assembly of the Representatives of the People (ARP) and of the National
+    Council of Regions and Districts (CNRD) adopted the full 2027 finance bill
+    (PLF 2027) in its amended form, at the end of two joint sittings held on
+    Tuesday 24 and Wednesday 25 November at the Palace of the Bardo. The first
+    sitting, attended by finance ministry representatives, dealt with the
+    additional articles proposed by deputies; the second voted the budget
+    provisions in articles 1 to 12 and then the bill as a whole, according to
+    an ARP communiqué carried by TAP and the national radio. La Presse de
+    Tunisie, publishing on 25 November, gives the vote as five for and two
+    abstentions on the ARP side and unanimous among the CNRD members present.
+    The government's text contained 70 articles; the committees rejected four
+    (24, 49, 50 and 63), on social-fund financing, battery and solar-panel
+    duty relief, and the plastic-bag levy, as Tunisie Numérique lists them,
+    and adopted 14 additional articles, the final count announced by committee
+    president Maher Gtari on the evening of 25 November after vice-president
+    Dhafer Sghiri had put the morning tally at 13. The additional measures
+    include a customs exemption for imported road tractors, estimated to cost
+    the budget about 1 million dinars; an exceptional waiver of late penalties
+    owed to the national business register (RNE) by small and medium firms,
+    artisans, individual project holders and associations; one more year, with
+    penalty relief, for settling farm-land lease arrears; an extension to 31
+    December 2029 of the aid scheme for firms in difficulty; duty-free imports
+    of auto-industry inputs and components with no local equivalent, with
+    reduced VAT and a five-year consumption-tax exemption for cars made or
+    assembled in Tunisia; an amendment to article 55 of the 2026 finance law
+    allowing a car-less family to buy one new locally marketed car of at most
+    1,300 cc petrol or 1,500 cc diesel, with net income capped at ten times
+    the SMIG per person and fourteen times for a couple; a deferral of
+    e-invoicing sanctions to 1 January 2028; a consumption tax of 15 percent
+    on marble and granite and 20 percent on worked building stone, not applied
+    before 1 January 2027 and without refund of sums already paid; permission
+    for Tunisian firms and products to bid on state tenders denominated in
+    foreign currency without prior central-bank authorisation, on condition of
+    payment in dinars; a 20 percent customs duty on imported vegetable oils
+    outside the Office national de l'huile, with the proceeds assigned to the
+    olive-oil system account; an extension to 31 December 2027 of the
+    late-penalty settlement for small public-works contractors; regularisation
+    of some contractual staff of culture-ministry institutions under decrees
+    due within six months; conversion of the unpaid 2022 state profit share in
+    the Compagnie des phosphates de Gafsa into a state capital contribution,
+    without corporate-tax effect; and reduced customs fines for offences
+    committed before 1 December 2026, at 10 percent of the value of goods
+    actually seized or 20 percent of goods fictitiously seized, payable at
+    once or over up to five years. The committees rejected a proposal to cut
+    customs duty on imported tyres, over concern for the state tyre
+    manufacturer STIP and its jobs. The bill remained at committee stage: no
+    plenary vote on the finance bill, promulgation or JORT publication is
+    reported; the ARP's legislative file still listed it as before the
+    committees on 26 November; La Presse and Tunisie Numérique say it must
+    still be debated article by article in plenary, and Tunisie Numérique
+    gives the constitutional deadline as 10 December 2026.
+
+
+    A second African Manager piece on 26 November adds the budget aggregates
+    and article 12: expenditure of 68.895 billion dinars against revenue of
+    54.280 billion, a deficit of 14.615 billion and overall financing needs of
+    28.122 billion, with domestic borrowing of 19.845 billion (about 70
+    percent of the total) and external borrowing of 6.877 billion; article 12
+    authorises the Central Bank of Tunisia, exceptionally and by derogation
+    from its statutes, to grant interest-free treasury facilities of up to 9.8
+    billion dinars, repayable over 15 years including three years of grace;
+    the medium-term orientation is to bring public debt to about 82 percent of
+    GDP by 2029.
+  confidence: B
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: The ARP, through its communiqué of 25 November 2026 as carried by
+    TAP (African Manager, Mosaique FM) and Radio Nationale; the adoption is
+    independently reported by La Presse de Tunisie (25 November 2026) and
+    Tunisie Numérique (26 November 2026). The budget aggregates and article 12
+    are from African Manager's second piece of 26 November.
+  reasoning: "B, not C. The core fact is the ARP's own claim in a communiqué
+    issued after the sittings: African Manager credits an ARP communiqué, the
+    same dispatch on Mosaique FM carries a TAP credit, and Radio Nationale
+    credits an ARP communiqué. La Presse de Tunisie and Tunisie Numérique
+    report the adoption outside that relay, with details the communiqué text
+    does not contain: the vote split, the 70-article starting text, the four
+    rejected articles, the 13-to-14 shift in the additional-article count, and
+    the night sitting. The ARP's legislative file independently records joint
+    committee sittings on 24 and 25 November and, on 26 November, still placed
+    the bill at the committee stage; its meeting notice for 25 November gives
+    the session's purpose as voting the budget provisions. That is enough for
+    B, not for A: the communiqué itself was not retrieved, the ARP blog feed's
+    newest item is 22 November and carries no adoption post, no committee
+    minutes or committee report on the finance bill were found, and no plenary
+    record or JORT text was found. The date is 25 November, a Wednesday: the
+    communiqué relay and La Presse both say 25 November, the ARP notice fixes
+    the session at 09:00 that day, and 26 November is a Thursday. Tunisie
+    Numérique says the sitting ran into the night of 25-26 November, so an
+    adoption after midnight would fall on 26 November; the record keeps 25
+    November because every account read dates the adoption to Wednesday 25
+    November, and it does not assert the post-midnight reading. La Presse's 13
+    additional articles is the earlier tally, not a contradiction: Tunisie
+    Numérique reports 13 announced in the morning and 14 in the evening. The
+    vote split and the budget totals are La Presse's alone. The
+    committee-stage statement rests on the ARP file's stage field, La Presse's
+    statement that the bill will go to the plenary in the coming days, and
+    Tunisie Numérique's statement that the measures still await the plenary
+    and are not applicable; no source read reports a plenary vote on the
+    finance bill. The budget aggregates and the article 12 facility appear
+    only in African Manager's second piece, so they are single-outlet details
+    inside a B event; they are carried because they are part of the adopted
+    text as reported, not because a second outlet confirms them."
+  falsifiable_by: The ARP communiqué itself, the committee's report or minutes,
+    the plenary sitting record, or the JORT publication would confirm or
+    correct the adoption date, the amended text, the vote split, the 13/14
+    count and the four rejected articles. A plenary vote on the finance bill
+    on 25 or 26 November, a promulgated finance law, or an ARP file showing
+    the bill moved to the plenary would make the record's committee-stage
+    statement wrong. A postponement, a different date, or an account placing
+    the final vote after midnight on 26 November would correct the date.
+  sources:
+    - arp-plf-2027-project-4328
+    - arp-reunion-8067-plf-2027-2026-11-25
+    - lapresse-plf-2027-commission-2026-11-25
+    - radionationale-plf-2027-commission-2026-11-25
+    - african-manager-plf-2027-commission-2026-11-26
+    - mosaique-plf-2027-commission-2026-11-26
+    - ar-tunisienumerique-plf-2027-commission-2026-11-26
+    - am-plf-plenary-preview-2026-11-26
+- id: ev-elmed-nabeul-land-session-2026-11-25
+  date: "2026-11-25"
+  title_en: Nabeul working session on the El Mlaabi zone records the ELMED
+    converter-station lot as not yet acquired
+  title_fr: "Séance de travail à Nabeul sur la zone d'El Mlaabi : le lot de la
+    station de conversion ELMED non encore acquis"
+  category: economic
+  subcategory: energy
+  actors:
+    - hana-chouchani
+  institutions:
+    - steg
+    - sonede
+  summary: "On Wednesday 25 November 2026 the governor of Nabeul, Hana Chouchani,
+    chaired a working session on preparations for the El Mlaabi industrial
+    zone at Menzel Temime and the ELMED converter station, with the
+    governorate's secretary-general Wajdi Bergal, the ELMED project director
+    and regional services. African Manager reports that the lot for the
+    converter station was still not acquired and that the zone's subdivision
+    was not yet approved. Tunisie Numérique, citing the governorate's own
+    page, reports the decisions instead: accelerate completion of the lot's
+    acquisition, set a calendar for approving the subdivision, set a calendar
+    for the studies and the zone's development works, and have STEG and SONEDE
+    connect the lot to their networks temporarily. Neither report gives a
+    cost, an area or a completion date. The World Bank had approved USD 268.4
+    million for ELMED on 21 June 2023."
+  confidence: B
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: The Nabeul governorate's communiqué of 25 November 2026,
+    published on its official Facebook page, as reported by African Manager
+    (French, 25 November 2026) and Tunisie Numérique (Arabic, 25 November
+    2026). The World Bank figure is the Bank's own press release of 22 June
+    2023.
+  reasoning: "Grade B, not A: no gazette or administrative record was retrieved,
+    the governorate's own release could not be opened (nabeul.gov.tn returned
+    HTTP 500; the Facebook post is behind a login wall), and no TAP or other
+    wire carried the session. Not C, because two credible outlets report it
+    and the governorate page's indexed text carries the same decisions in
+    near-identical wording. That same wording is the limit of the grade: both
+    reports derive from one origin, the governorate communiqué, so they
+    corroborate that the governorate said this, not the facts independently.
+    The explicit statements that the lot \"is not acquired\" and that the
+    subdivision \"is not approved\" are African Manager's; Tunisie Numérique
+    reports only the decision to accelerate the acquisition and to set an
+    approval calendar, which implies the same status without asserting it. The
+    governor's office is grounded in the graph (position
+    p-gov-nabeul-chouchani, JORT 2024-472). The interval between 21 June 2023
+    and 25 November 2026 is a subtraction from two dated facts, not a
+    statement in either source; African Manager labels it \"calcul dérivé\"."
+  falsifiable_by: An acquisition record or an AFI subdivision approval dated
+    before 25 November 2026 for the Mlaabi converter-station lot; the full
+    text of the governorate's release showing different decisions or
+    attendance; a TAP despatch or another independent report of the session
+    with different decisions.
+  documents:
+    - https://www.facebook.com/gouvernoratnabeul/posts/1597585359062677
+  sources:
+    - am-elmed-terrain-2026-11-25
+    - tn-ar-elmed-terrain-2026-11-25
+    - worldbank-elmed-268m-2023-06-22
+  location:
+    - gov-nabeul
+  causes: []
+  consequences: []
+
+- id: ev-bouanane-bakeries-appeal-verdict-2026-11-26
+  date: "2026-11-26"
+  title_en: "Tunis appeal court confirms 24-year sentence for Mohamed Bouanane in the bakery speculation case"
+  title_fr: "La cour d'appel de Tunis confirme la peine de 24 ans de Mohamed Bouanane dans l'affaire de la spéculation sur la farine subventionnée"
+  title_ar: "تأييد الحكم بسجن محمد بوعنان 24 عامًا في قضية المضاربة على المواد المدعمة"
+  category: legal
+  subcategory: corruption-verdict
+  location: [gov-tunis]
+  actors: [mohamed-bouanane]
+  institutions: [judiciary]
+  causes: []
+  consequences: []
+  summary: >-
+    The criminal chamber specialised in financial-corruption cases at the
+    Tunis Court of Appeal upheld the first-instance judgment against Mohamed
+    Bouanane, former president of the Chambre nationale des propriétaires de
+    boulangeries, in a ruling reported on Friday 27 November 2026. The court
+    confirmed the 24-year prison sentence and the fines imposed on him,
+    confirmed 13-year sentences and fines on three co-defendants with a ban on
+    commercial activity, and, according to TAP, completed the judgment by
+    ordering the confiscation of his holdings in 10 companies and of frozen
+    bank accounts, to be deposited in a special account at the Central Bank in
+    the name of the Tunisian Treasury. Two agro-food companies, through their
+    legal representatives, were fined 1,566,000 and 7,833,000 dinars;
+    African Manager and the French edition of Mosaique FM describe both fines
+    as imposed for concealment of goods from speculation, while the Arabic
+    Mosaique text and the TAP text specify that charge only for the first
+    company. The charges against the defendants were
+    illegal speculation in subsidised products, habitual money laundering
+    exploiting the facilities of their professional and social activity, and
+    illicit enrichment; Business News, Webdo and Al Chourouk also name
+    monopoly. The first-instance judgment was given by the criminal chamber
+    specialised in financial-corruption cases at the Tunis Court of First
+    Instance late in the night of Thursday 26 February 2026, reported on 27
+    February: 24 years for Bouanane, 13 years for the co-defendants, and the
+    same company fines. Business News and Webdo date the appeal ruling to
+    Thursday 26 November 2026, while Mosaique FM and African Manager write
+    "Thursday 27 November 2026", a weekday/date mismatch because 27 November
+    2026 was a Friday. No judgment text, court communique, case number or
+    hearing minute was retrieved, and no source describes the appeal ruling as
+    final or reports a cassation appeal.
+  confidence: B
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: "TAP's judicial source (27 November 2026), Mosaique FM, Business News, Webdo, African Manager, Al Chourouk, Babnet, and the TAP relay on Nessma TV for the first-instance sentence"
+  reasoning: >-
+    The confirmation, the 24-year sentence, the three 13-year sentences, the
+    two company fines and the chamber are carried by TAP, Mosaique FM,
+    Business News, Webdo, African Manager, Al Chourouk and Babnet, and the
+    first-instance sentence is separately carried by Business News and a TAP
+    relay on Nessma TV. That is enough for B. It does not reach A: no judgment
+    text, court communique or case number exists in hand, several accounts
+    share the TAP judicial source or the Mosaique FM item, and the summaries
+    of the fines do not agree. Mosaique FM and African Manager say Bouanane's
+    fines exceeded 6 million dinars; Business News, Webdo and Al Chourouk say
+    around or nearly 10 million; the TAP breakdown lists a 100,000 dinar fine
+    on each defendant, a 2,470,000 dinar fine and a 2,072,000 dinar fine on
+    Bouanane, and company fines of 1,566,000 and 7,833,000 dinars. The record
+    keeps the itemized figures and does not compute a total. The date is taken
+    as 26 November because Business News and Webdo name it explicitly and
+    because 27 November 2026 was a Friday; Mosaique FM's "last night, Thursday"
+    points the same way, and the printed 27 is read as the filing date. That
+    reading is an inference and is filed as an open dispute. The procedural
+    sequence is also left open: Babnet reported on 23 November that the same
+    chamber postponed the case to December and refused release requests, and
+    no retrieved source explains the 26 November verdict three days later. The
+    confiscation of holdings in 10 companies is described by TAP as a
+    completion of the first-instance text, so the record does not call the
+    appeal ruling a pure affirmance. The first-instance reports also disagree
+    on the number of co-defendants: La Presse, Tuniscope and Webdo say two,
+    while TAP's relay on Nessma TV and the appeal reports say three.
+  falsifiable_by: >-
+    The judgment text, the case number, a court communique or a hearing minute
+    from the Tunis Court of Appeal would settle the date of pronouncement, the
+    structure of the fines and confiscation, the number of co-defendants and
+    the procedural sequence after 23 November. A court record placing the
+    ruling on 27 November would move the event date. A cassation appeal or a
+    final ruling would change the record's statement that no source describes
+    the judgment as final.
+  disputes:
+    - claim: >-
+        The appeal ruling was given on Thursday 27 November 2026.
+      held_by: >-
+        Mosaique FM in Arabic ("ليلة أمس الخميس 27 نوفمبر 2026") and French
+        ("jeudi soir 27 novembre 2026"), and African Manager, which credits
+        Mosaique FM and repeats "jeudi soir 27 novembre 2026".
+      source: mosaique-ar-bouanane-appeal-verdict-2026-11-27
+      assessment: >-
+        Kept open but not adopted. 27 November 2026 was a Friday, so "Thursday
+        27 November" cannot be literally right. Mosaique published at 12:02 on
+        Friday 27 November and says "last night, Thursday", which points to
+        Thursday 26 November. Business News and Webdo name 26 November
+        explicitly, and TAP's judicial source spoke to the agency on Friday 27
+        November without naming the ruling day. The record therefore uses 26
+        November, on the reading that the Thursday evening sitting ran late and
+        the outlets filed the next day. Falsifiable by the judgment or a
+        hearing minute.
+      status: open
+    - claim: >-
+        The same chamber postponed the case to December on 23 November 2026,
+        which conflicts with a confirmation verdict on 26 November.
+      held_by: >-
+        Babnet, "تأخير النظر في قضية الرئيس السابق لغرفة أصحاب المخابز محمد
+        بوعنان إلى ديسمبر ورفض الإفراج عن المتهمين", published Monday 23
+        November 2026 at 09:03 and republished by Nabd the same day.
+      source: babnet-bouanane-appeal-postponed-2026-11-23
+      assessment: >-
+        Unresolved. The 23 November item says the criminal chamber at the
+        Tunis Court of Appeal postponed the case of Bouanane and three other
+        defendants to December and refused release requests. Six outlets then
+        report a confirmation verdict, two of them dating it 26 November, with
+        no mention of a December session or of a reversal. The Babnet article
+        slot now carries the 27 November verdict, so the postponement text
+        survives only in the Nabd republication and the Babnet justice index. The record keeps the
+        verdict, which is multiply reported, and flags the sequence as
+        unexplained. A hearing minute, the court's roll or a dated communique
+        would settle it.
+      status: open
+  sources:
+    - tap-ar-bouanane-appeal-verdict-2026-11-27
+    - mosaique-ar-bouanane-appeal-verdict-2026-11-27
+    - mosaique-fr-bouanane-appeal-verdict-2026-11-27
+    - bn-bouanane-appeal-verdict-2026-11-27
+    - webdo-bouanane-appeal-verdict-2026-11-27
+    - am-bouanane-appeal-verdict-2026-11-27
+    - alchourouk-bouanane-appeal-verdict-2026-11-27
+    - babnet-bouanane-appeal-verdict-2026-11-27
+    - bn-bouanane-first-instance-verdict-2026-02-27
+    - nessma-bouanane-first-instance-verdict-2026-02-27
+    - assabah-bouanane-appeal-postponed-2026-10-27
+    - babnet-bouanane-appeal-postponed-2026-11-23
+- id: ev-chaibi-ouaili-districom-verdict-2026-11-27
+  date: "2026-11-27"
+  title_en: "Chaïbi and Ouaïli sentenced in the Tunisie Telecom-Districom corruption case"
+  title_fr: "Chaïbi et Ouaïli condamnés dans l'affaire de corruption Tunisie Telecom-Districom"
+  category: legal
+  subcategory: corruption-verdict
+  location: [gov-tunis]
+  actors: [nabil-chaibi, montasser-ouaili]
+  institutions: [judiciary]
+  causes: []
+  consequences: []
+  summary: >-
+    Reports published on 27 November 2026 say the criminal chamber specialised
+    in financial-corruption cases at the Tunis Court of First Instance
+    sentenced the businessman Nabil Chaïbi to five years' imprisonment and
+    financial fines, and the former minister of communication technologies
+    Montasser Ouaïli to six years with immediate execution, in the file of a
+    distribution contract between Chaïbi's company Districom and the operator
+    Tunisie Telecom. Al Chourouk names both defendants and gives the two
+    prison terms. Babnet, reporting without names, gives the same six and five
+    years, the immediate execution against the former minister and financial
+    fines against the businessman. Mosaique FM and African Manager, also
+    without names, report prison terms and heavy fines and the immediate
+    execution against the former minister. Ouaïli was a fugitive; Chaïbi was
+    at liberty. The file concerns suspected financial and administrative
+    corruption in the award and execution of the contract. Univers News says
+    the contract gave Districom
+    partial exploitation of the mobile network under the Elissa brand.
+    Réalités says it was concluded without tender or prior consultation, was
+    not submitted to the board, and granted exclusive nationwide distribution.
+    Babnet describes the charge as a public official exploiting his position
+    to obtain an undue advantage and harm the administration; Réalités says
+    the indictment chamber retained article 96 of the Penal Code in 2018. This
+    is a first-instance judgment. No judgment text, case number, fine amount
+    or appeal filing was retrieved.
+  confidence: B
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: "Al Chourouk (27 November 2026), Babnet (27 November 2026), Mosaique FM (27 November 2026) and African Manager (27 November 2026)"
+  reasoning: >-
+    The two prison terms, the immediate execution against the former minister,
+    the identity of the case as the Tunisie Telecom-Districom contract and the
+    first-instance character are carried by two accounts that did not copy
+    each other: Al Chourouk's named report and Babnet's anonymous report. That
+    supports B. It does not reach A because no judgment text, court communique
+    or case number was retrieved, and because the Mosaique FM and African
+    Manager texts are the same anonymous relay, so their agreement is one
+    witness repeated. The identification of the two defendants rests on Al
+    Chourouk's verdict report, which names both and describes the contract
+    between Chaïbi's company and Tunisie Telecom, read with the earlier case
+    reporting: Al Chourouk on 24 September 2026 named Ouaïli and Chaïbi in the
+    same Districom file, Univers News and Réalités named Chaïbi as Districom's
+    owner, and both placed the contract during Ouaïli's direction of Tunisie
+    Telecom. Réalités spells the former PDG's name "Moncef Ouaili"; the other
+    reports and the graph's montasser-ouaili record give Montasser Ouaïli, and
+    the difference is treated as a name variant in one account, not as a
+    second person. The graph's montasser-ouaili record documents the 2004-2007
+    communication technologies portfolio; the PDG tenure is reported by Al
+    Chourouk and the earlier case reporting but has no position record in the
+    graph. The date recorded is the publication date of the first
+    reports read; no account states the day or time the chamber pronounced
+    the verdict. The January 2026 Réalités account also described several
+    sons-in-law of the former president among the accused; the verdict
+    reports read name only Chaïbi and Ouaïli, and the disposition of any other
+    defendant is not in hand.
+  falsifiable_by: >-
+    The judgment text, the case number, a court communique or a hearing minute
+    from the Tunis Court of First Instance would settle the date of
+    pronouncement, the sentence lengths, the fines, the charge article and
+    whether any other defendant was sentenced. A published appeal or a
+    cassation ruling would change the statement that this is a first-instance
+    judgment with no appeal reported. A court or lawyers' record naming a
+    different former minister or a different businessman in the Districom file
+    would correct the identification.
+  sources:
+    - alchourouk-districom-verdict-2026-11-27
+    - babnet-districom-verdict-2026-11-27
+    - mosaique-districom-verdict-2026-11-27
+    - am-districom-verdict-2026-11-27
+    - alchourouk-districom-hearing-2026-09-24
+    - universnews-districom-chaibi-2026-04-30
+    - realites-districom-chaibi-2026-01-16
+

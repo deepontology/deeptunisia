@@ -139,15 +139,29 @@ function findGraphChunk(): { path: string; via: string } | null {
 	// No manifest lists the modules inside a shared chunk, so fall back to the
 	// text: the graph chunk is the one that begins with the dataset itself.
 	// The chunk inlines `meta` directly, so the probe starts inside that object.
+	// `generated` is the clock, and any `npm run data` without a rebuild moves
+	// it, so the fallback also accepts the cutoff/floor/license signature: the
+	// chunk still has to be a copy of this dataset's meta, just not a rebuild
+	// from the same second.
 	if (!existsSync(DATASET)) return null;
-	const dataset = JSON.parse(readFileSync(DATASET, 'utf8')) as { meta?: unknown };
-	const prefix = JSON.stringify(dataset.meta ?? {}).slice(0, 64);
+	const dataset = JSON.parse(readFileSync(DATASET, 'utf8')) as {
+		meta?: { cutoff?: unknown; floor?: unknown };
+	};
+	const meta = dataset.meta ?? {};
+	const prefix = JSON.stringify(meta).slice(0, 64);
+	const signature =
+		typeof meta.cutoff === 'number' && typeof meta.floor === 'number'
+			? `"cutoff":${meta.cutoff},"floor":${meta.floor},"license":"CC-BY-4.0"`
+			: null;
 	const dir = join(BUILD, '_app/immutable/chunks');
 	if (!existsSync(dir)) return null;
 	for (const name of readdirSync(dir)) {
 		if (!name.endsWith('.js')) continue;
 		const path = join(dir, name);
-		if (head(path, 4096).includes(prefix)) return { path, via: 'text' };
+		const text = head(path, 4096);
+		if (text.includes(prefix) || (signature !== null && text.includes(signature))) {
+			return { path, via: 'text' };
+		}
 	}
 	return null;
 }
