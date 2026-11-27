@@ -29,7 +29,7 @@ export const FIGURES: Figures = parse(figuresRaw) as Figures;
 /** Human words for each status, shown next to every figure. */
 export const STATUS_WORDS: Record<FigureRow['status'], string> = {
 	'draft-press': 'Reported by the press. Not verified.',
-	'draft-derived': 'Derived as a remainder. Not verified.',
+	'draft-derived': 'Derived from other figures. Not verified.',
 	'draft-plf': 'In the draft law. Not verified.',
 	'adopted-lf': 'In the adopted law, with page reference.'
 };
@@ -92,7 +92,7 @@ export const PROGRAMMES_2026: ProgrammesDoc = parse(programmesRaw) as Programmes
 /** Which 2026 missions sit inside each board line, for the detail panel. */
 export const LINE_MISSIONS: Partial<Record<LineId, string[]>> = {
 	education: ['education'],
-	higher_education: ['higher_education_research'],
+	higher_education: ['higher_education_research', 'higher_council_education'],
 	health: ['health'],
 	social_affairs: ['social_affairs'],
 	family: ['family_women_children_seniors'],
@@ -115,9 +115,12 @@ export const LINE_MISSIONS: Partial<Record<LineId, string[]>> = {
 	presidency: ['presidency'],
 	government_offices: ['head_of_government'],
 	foreign_affairs: ['foreign_affairs'],
-	parliament: ['arp'],
+	parliament: ['arp', 'anrd'],
 	elections: ['isie_elections'],
-	rest: ['religious_affairs', 'communication_technologies', 'state_domains', 'court_of_accounts', 'anrd', 'higher_council_education']
+	religious_affairs: ['religious_affairs'],
+	communication_technologies: ['communication_technologies'],
+	state_domains: ['state_domains'],
+	courts_oversight: ['court_of_accounts', 'judicial_council', 'constitutional_court']
 };
 
 /** The 2026 programme rows for a board line; empty when the law's detail was not read. */

@@ -274,7 +274,7 @@ async function checkBoard(
 		// row, and the chart icon opens the trajectory. The dots are gone.
 		const rowsShown = await page.locator('.board [data-drop]:not([data-drop="purse"])').count();
 		const pastBars = await page.locator('.board .slot .bar.year').count();
-		if (rowsShown !== 27 || pastBars !== 27) fail(`${name} past years`, `${rowsShown} systems, ${pastBars} past bars, expected 27 systems and one compared bar each`);
+		if (rowsShown !== 30 || pastBars !== 30) fail(`${name} past years`, `${rowsShown} systems, ${pastBars} past bars, expected 30 systems and one compared bar each`);
 		if ((await page.locator('.board .slot .past-dot').count()) !== 0) fail(`${name} past years`, 'the old dots are still drawn');
 		const legendKeys = (await page.locator('.board .legend .key').allInnerTexts()).map((s) => s.trim());
 		if (legendKeys.length !== 3) fail(`${name} legend`, `${legendKeys.length} legend keys, expected three: the past year, the 2027 draft, yours`);
@@ -320,15 +320,15 @@ async function checkBoard(
 		if (!educationAria.includes(jortWord)) fail(`${name} audit`, `the row aria carries no JORT page: "${educationAria}"`);
 		const pageMark = locale === 'ar' ? 'ص.' : 'p.';
 		if (!educationAria.includes(pageMark)) fail(`${name} audit`, `the row aria carries no page number: "${educationAria}"`);
-		const restAria = (await page.locator('#sys-rest').getAttribute('aria-label')) ?? '';
-		if (!restAria.includes(derivedWording)) fail(`${name} audit`, `the derived line does not say it is derived: "${restAria}"`);
-		if (!restAria.includes(jortWord)) fail(`${name} audit`, `the derived line carries no JORT page: "${restAria}"`);
+		const courtsAria = (await page.locator('#sys-courts_oversight').getAttribute('aria-label')) ?? '';
+		if (!courtsAria.includes(derivedWording)) fail(`${name} audit`, `the derived line does not say it is derived: "${courtsAria}"`);
+		if (!courtsAria.includes(jortWord)) fail(`${name} audit`, `the derived line carries no JORT page: "${courtsAria}"`);
 		const barTitle = (await page.locator('#sys-education .bars').getAttribute('title')) ?? '';
 		if (!barTitle.includes(jortWord)) fail(`${name} audit`, `the compared bar's hover label carries no JORT page: "${barTitle}"`);
 		// The one single read, named in the detail panel, at desk width where the chips are reachable.
 		if (size.width > 720) {
 			await page.locator('.board .legend .year', { hasText: '2024' }).click();
-			await page.locator('.board [data-drop="rest"]').click();
+			await page.locator('.board [data-drop="courts_oversight"]').click();
 			await page.locator('.board .details-toggle').click();
 			await page.locator('.board .detail-verify').waitFor({ state: 'visible' });
 			const verify = (await page.locator('.board .detail-verify').innerText()).replace(/\s+/g, ' ');
@@ -364,7 +364,7 @@ async function checkBoard(
 		if (nameIssues.length > 0) fail(`${name} names`, nameIssues.join(' | '));
 
 		assertNoPageErrors(errors, name);
-		ok(`${name}: board visible, no page scroll (${m.scrollHeight}/${m.innerHeight}), no h-scroll, purse ${purse} MD${touch}, 27 systems with a compared year bar, a chart of 8 points, names at most 2 lines and no mid-word breaks`);
+		ok(`${name}: board visible, no page scroll (${m.scrollHeight}/${m.innerHeight}), no h-scroll, purse ${purse} MD${touch}, 30 systems with a compared year bar, a chart of 8 points, names at most 2 lines and no mid-word breaks`);
 	} finally {
 		await context.close();
 	}

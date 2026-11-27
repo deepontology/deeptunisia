@@ -168,7 +168,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		},
 		demo: {
 			title: 'Try it with three systems',
-			body: 'Drag one system onto another, or use the buttons. These are the draft figures for three of the twenty-seven systems.',
+			body: 'Drag one system onto another, or use the buttons. These are the draft figures for three of the thirty systems.',
 			purse: 'Purse',
 			reset: 'Put it back',
 			take: (name) => `Take 100 MD from ${name}`,
@@ -409,7 +409,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		},
 		demo: {
 			title: 'Essayez avec trois postes',
-			body: 'Glissez un poste sur un autre, ou utilisez les boutons. Ce sont les chiffres du projet pour trois des vingt-sept postes.',
+			body: 'Glissez un poste sur un autre, ou utilisez les boutons. Ce sont les chiffres du projet pour trois des trente postes.',
 			purse: 'Bourse',
 			reset: 'Remettre',
 			take: (name) => `Retirer 100 MD de ${name}`,
@@ -659,7 +659,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		},
 		demo: {
 			title: 'جرّب بثلاثة قطاعات',
-			body: 'اسحب قطاعًا على آخر، أو استعمل الأزرار. هذه أرقام المشروع لثلاثة من القطاعات السبعة والعشرين.',
+			body: 'اسحب قطاعًا على آخر، أو استعمل الأزرار. هذه أرقام المشروع لثلاثة من القطاعات الثلاثين.',
 			purse: 'المحفظة',
 			reset: 'أعدها كما كانت',
 			take: (name) => `خذ 100 م.د من ${name}`,
