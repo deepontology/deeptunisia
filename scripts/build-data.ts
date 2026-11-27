@@ -4363,6 +4363,7 @@ if (!FIXTURE_MODE) {
 		'/about',
 		'/guide',
 		'/colophon',
+		'/events',
 		'/introduction',
 		'/media',
 		'/media/bot-farm',
