@@ -156,7 +156,7 @@
 			if (e.start) out.push(field(t('record.period'), `${e.start}${e.end ? ' – ' + e.end : ''}`));
 		} else if (event) {
 			const ev = event as EventRec;
-			out.push(field(t('record.category'), ev.category));
+			out.push(field(t('record.category'), t('eventCat.' + ev.category)));
 			if (ev.rupture) out.push(field(t('record.rupture'), t('record.yes')));
 		}
 		return out;
@@ -185,6 +185,9 @@
 
 	const shareUrl = $derived(canonicalShareUrl('entity', id));
 	const shareTitle = $derived(title);
+
+	/* The generated record page exists for events; the other kinds here have none. */
+	const recordPage = $derived(event ? `/e/${encodeURIComponent(id)}` : null);
 </script>
 
 <article class="rpanel" dir="auto">
@@ -209,6 +212,10 @@
 			<span class="span mono">{formatDate(event.interval.startEarliest, 'day')}</span>
 		{/if}
 	</div>
+
+	{#if recordPage}
+		<a class="open-page" href={recordPage}>{t('record.openPage')}</a>
+	{/if}
 
 	{#if event}
 		{@const preds = ds.events.filter((e) => e.id !== id && ((e.consequences ?? []).includes(id) || (event.causes ?? []).includes(e.id)))}
@@ -371,6 +378,19 @@
 	.span {
 		font-size: var(--t-xs);
 		color: var(--text-muted);
+	}
+	/* The way out to the document a reader can cite: quiet, but a full touch target. */
+	.open-page {
+		display: inline-flex;
+		align-items: center;
+		min-height: var(--touch);
+		margin-top: var(--s-2);
+		font-size: var(--t-sm);
+		color: var(--accent);
+		border-bottom: 1px solid var(--accent-border);
+	}
+	.open-page:hover {
+		color: var(--accent-hover);
 	}
 	/* Key facts: a definition grid. Entity references are buttons. */
 	.kf {

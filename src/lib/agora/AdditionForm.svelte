@@ -323,7 +323,7 @@
 			</div>
 			<Field for="add-f9" label={t('agora.add.category')} required>
 				<select id="add-f9" class="pick" bind:value={category}>
-					{#each EVENT_CATEGORIES as v (v)}<option value={v}>{v}</option>{/each}
+					{#each EVENT_CATEGORIES as v (v)}<option value={v}>{t('eventCat.' + v)}</option>{/each}
 				</select>
 			</Field>
 		{:else if kind === 'relationship'}
