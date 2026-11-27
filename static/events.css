@@ -1708,7 +1708,8 @@ html:not([data-js]) .rings-lens {
 }
 
 @media (max-width: 61.99rem) {
-	.rings-feed {
+	.rings-feed,
+	.rings-feedhead {
 		display: none;
 	}
 }

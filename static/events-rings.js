@@ -739,6 +739,8 @@
 	function updateHot() {
 		var hot = groups.hot;
 		while (hot.firstChild) hot.removeChild(hot.firstChild);
+		tag = null;
+		tagSub = null;
 		var id = state.hot || state.sel;
 		if (!id || !byId[id] || !P || !P[byId[id].i] || !live(byId[id], P)) return;
 		var e = byId[id];
