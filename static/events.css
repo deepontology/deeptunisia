@@ -13,6 +13,10 @@
    every size comes from the type, spacing or touch scale. Logical properties
    throughout, so an Arabic reader gets the same page mirrored.
 
+   The four basis strokes are not in this file: scripts/build-events.ts writes
+   them into the page from DASH and BASIS_OPACITY, so the ledger and the
+   instrument cannot disagree about what a claim rests on.
+
    DARK AND LIGHT WITHOUT SCRIPT: record.css already maps the light tokens when
    the reader has no saved theme, so nothing here restates a theme.
    =========================================================================== */
@@ -72,13 +76,29 @@ html[dir='rtl'] .contents-heading {
 	color: var(--text-secondary);
 }
 
-.key-stroke {
-	flex: 0 0 auto;
-}
-
 .key-count {
 	font-family: var(--font-mono);
 	font-size: var(--t-xs);
+	color: var(--text-muted);
+}
+
+/* One basis stroke, the width of a word. The colour and dash come from the
+   generated rules; this only sizes it. */
+.basis-sample {
+	display: inline-block;
+	flex: 0 0 auto;
+	inline-size: var(--s-7);
+	block-size: var(--s-1);
+	vertical-align: middle;
+}
+
+/* A legend, printed only for a language that has one or more untranslated
+   titles, and only once for the whole page. */
+.fallback-note {
+	margin: var(--s-4) 0 0;
+	font-family: var(--font-sans);
+	font-size: var(--t-xs);
+	line-height: var(--lh-snug);
 	color: var(--text-muted);
 }
 
@@ -541,9 +561,10 @@ html[data-js] .nojs {
 }
 
 .ytick {
-	display: flex;
-	align-items: center;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
 	gap: var(--s-3);
+	align-items: center;
 	padding-block: var(--s-3) var(--s-1);
 }
 
@@ -555,18 +576,15 @@ html[data-js] .nojs {
 }
 
 .ytick-rule {
-	flex: 1 1 auto;
 	border-block-start: var(--rule);
 }
 
+/* The row. The rail and the hanging date are placed by this stylesheet so the
+   markup carries one date and one stroke sample, not six of each. */
 .ev {
 	position: relative;
-	display: grid;
-	grid-template-columns: var(--s-1) minmax(0, 1fr);
-	grid-template-areas: 'rail body';
-	gap: var(--s-3);
 	padding-block: var(--s-3);
-	padding-inline-end: var(--s-2);
+	padding-inline: calc(var(--s-1) + var(--s-3)) var(--s-2);
 	border-block-end: var(--rule);
 }
 
@@ -580,35 +598,11 @@ html[data-js] .nojs {
 	background: var(--surface-sunken);
 }
 
-.ev-date-col {
-	display: none;
-}
-
-.ev-phone {
-	margin: 0 0 var(--s-1);
-	font-family: var(--font-sans);
-	font-size: var(--t-xs);
-	line-height: var(--lh-snug);
-	color: var(--text-muted);
-}
-
 .ev-rail {
-	grid-area: rail;
-	position: relative;
-}
-
-.ev-rail svg {
 	position: absolute;
-	inset-block-start: var(--s-1);
+	inset-block: var(--s-3);
 	inset-inline-start: 0;
 	inline-size: var(--s-1);
-	block-size: calc(100% - var(--s-2));
-	overflow: visible;
-}
-
-.ev-body {
-	grid-area: body;
-	min-inline-size: 0;
 }
 
 .ev-date {
@@ -616,6 +610,13 @@ html[data-js] .nojs {
 	font-size: var(--t-xs);
 	font-variant-numeric: tabular-nums;
 	color: var(--text-secondary);
+}
+
+/* Phone: the date is the first run of the metadata line. */
+.ev-date::after {
+	content: ' · ';
+	font-family: var(--font-sans);
+	color: var(--text-faint);
 }
 
 .ev-title {
@@ -658,11 +659,6 @@ html[data-js] .nojs {
 	color: var(--text-secondary);
 }
 
-.ev-stroke,
-.key-stroke {
-	flex: 0 0 auto;
-}
-
 .ev-ver {
 	color: var(--text-secondary);
 }
@@ -677,29 +673,39 @@ html[data-js] .nojs {
 	font-weight: 500;
 }
 
-.sep {
-	color: var(--text-faint);
+/* The English copy standing in for a missing translation: a marker, explained
+   once above the register, never the sentence again. */
+html[lang='fr'] .ev-title b[data-l='en'][data-fallback~='fr'],
+html[lang='ar'] .ev-title b[data-l='en'][data-fallback~='ar'],
+html[lang='fr'] .rupture-title b[data-l='en'][data-fallback~='fr'],
+html[lang='ar'] .rupture-title b[data-l='en'][data-fallback~='ar'] {
+	display: inline;
 }
 
-/* A title printed in English because the reader's language has no translation. */
-.untr {
+html[lang='fr'] .ev-title b[data-l='en'][data-fallback~='fr']::after,
+html[lang='ar'] .ev-title b[data-l='en'][data-fallback~='ar']::after,
+html[lang='fr'] .rupture-title b[data-l='en'][data-fallback~='fr']::after,
+html[lang='ar'] .rupture-title b[data-l='en'][data-fallback~='ar']::after {
+	content: '*';
+	margin-inline-start: var(--s-1);
 	font-family: var(--font-sans);
 	font-size: var(--t-xs);
-	font-weight: 400;
 	color: var(--text-muted);
+	vertical-align: super;
 }
 
 /* ---------------------------------------------------------------------------
    Ruptures: a rule that breaks around its words
    --------------------------------------------------------------------------- */
 
-.ev-rupture {
+.ev.ev-rupture {
 	display: block;
 	padding-block: 0;
+	padding-inline: 0;
 	border-block-end: 0;
 }
 
-.ev-rupture:hover {
+.ev.ev-rupture:hover {
 	background: none;
 }
 
@@ -799,27 +805,32 @@ html[data-js] .nojs {
    --------------------------------------------------------------------------- */
 
 @media (min-width: 48rem) {
-	.ev {
-		grid-template-columns: 11ch var(--s-1) minmax(0, 1fr);
-		grid-template-areas: 'date rail body';
-		gap: var(--s-4);
-	}
-
 	/* A mouse is not a thumb: the desk keeps the contents dense. */
 	.toc-link {
 		min-block-size: 0;
 		padding-block: var(--s-1);
 	}
 
-	.ev-date-col {
-		display: block;
-		grid-area: date;
-		padding-block-start: var(--s-1);
+	.ev {
+		padding-inline-start: calc(11ch + var(--s-4) + var(--s-1) + var(--s-3));
+	}
+
+	.ev-rail {
+		inset-block: var(--s-3);
+		inset-inline-start: calc(11ch + var(--s-4));
+	}
+
+	/* The single date hangs in the margin, out of the metadata line's flow. */
+	.ev-meta .ev-date {
+		position: absolute;
+		inset-block-start: var(--s-3);
+		inset-inline-start: 0;
+		inline-size: 11ch;
 		line-height: var(--lh-snug);
 	}
 
-	.ev-phone {
-		display: none;
+	.ev-date::after {
+		content: '';
 	}
 
 	.silence {
@@ -827,7 +838,6 @@ html[data-js] .nojs {
 	}
 
 	.ytick {
-		display: grid;
 		grid-template-columns: 11ch minmax(0, 1fr);
 		gap: var(--s-4);
 	}

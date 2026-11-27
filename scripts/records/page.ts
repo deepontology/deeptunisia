@@ -375,23 +375,18 @@ function relationshipRow(r: Rec, recId: string, world: World, idx: SourceIndex):
 /**
  * A title in the three languages, one visible at a time.
  *
- * When a translation is missing, the English copy stands in and says so, in the
- * reader's own language: a French reader gets the English title followed by the
- * French note, which is the same admission the prose blocks make.
+ * When a translation is missing the English copy stands in silently: the linked
+ * record says in its own standing block what is and is not translated, and a
+ * list does not need the sentence in every row.
  */
-export function titleTri(rec: Rec, withNote = true): string {
+function titleTri(rec: Rec): string {
 	const en = String(rec.title_en ?? rec.id);
 	const parts = [`<b data-l=en>${esc(en)}</b>`];
 	for (const locale of ['fr', 'ar'] as const) {
 		const translated = rec[`title_${locale}`];
-		if (typeof translated === 'string' && translated.trim()) {
-			const rtl = locale === 'ar' ? ' lang=ar dir=rtl' : '';
-			parts.push(`<b data-l=${locale}${rtl}>${esc(translated)}</b>`);
-		} else {
-			const rtl = locale === 'ar' ? ' lang=ar dir=rtl' : '';
-			const note = withNote ? ` <span class=untr>${esc(loc(locale, 'prose.untranslated'))}</span>` : '';
-			parts.push(`<b data-l=${locale}${rtl}>${esc(en)}${note}</b>`);
-		}
+		const rtl = locale === 'ar' ? ' lang=ar dir=rtl' : '';
+		const text = typeof translated === 'string' && translated.trim() ? translated : en;
+		parts.push(`<b data-l=${locale}${rtl}>${esc(text)}</b>`);
 	}
 	return parts.join('');
 }
@@ -411,7 +406,7 @@ function listDate(rec: Rec): string {
 
 function eventRow(rec: Rec): string {
 	const date = listDate(rec);
-	return `<li class=evrow><a href="${esc(href(rec.id))}">${titleTri(rec, false)}</a>${date ? ` ${date}` : ''}</li>`;
+	return `<li class=evrow><a href="${esc(href(rec.id))}">${titleTri(rec)}</a>${date ? ` ${date}` : ''}</li>`;
 }
 
 function tieList(relationships: Rec[], recId: string, world: World, idx: SourceIndex): string {

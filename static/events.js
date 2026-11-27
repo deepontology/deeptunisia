@@ -8,6 +8,10 @@
  * It contains no words of its own. Every phrase is written into the page at
  * build time in three languages (the #events-words block) and read back here in
  * the reader's language, so a label can never drift from the dictionary.
+ *
+ * It does not carry search text either: the first time a search is used, each
+ * row's own text (all three language copies are already in it) is folded once
+ * and kept on the element.
  */
 (function () {
 	'use strict';
@@ -19,18 +23,30 @@
 	var words = document.getElementById('events-words');
 	if (!ledger || !words) return;
 
+	var names = {};
+	try {
+		names = JSON.parse(document.getElementById('events-names').textContent) || {};
+	} catch (e) {}
+
 	var BASIS = ['documented', 'reported', 'inferred', 'unsubstantiated'];
 	var DEFAULT_BASIS = ledger.getAttribute('data-floor') || 'reported';
 	var TOTAL = Number(ledger.getAttribute('data-total') || 0);
 	var NARROW = ['era', 'period', 'cat', 'actor', 'institution', 'q', 'grade', 'ver', 'ruptures', 'contested'];
+	var ALL_KEY = {
+		'f-era': 'events.filter.allEras',
+		'f-cat': 'events.filter.allCats',
+		'f-period': 'events.filter.allDecades',
+		'f-grade': 'events.filter.allGrades',
+		'f-ver': 'events.filter.allVer'
+	};
 
 	function lang() {
 		var l = root.getAttribute('lang');
 		return l === 'fr' || l === 'ar' ? l : 'en';
 	}
 
-	function read(key, attr) {
-		var el = words.querySelector('[' + attr + '="' + key + '"] b[data-l="' + lang() + '"]');
+	function read(key, attribute) {
+		var el = words.querySelector('[' + attribute + '="' + key + '"] b[data-l="' + lang() + '"]');
 		return el ? el.textContent : '';
 	}
 
@@ -39,7 +55,7 @@
 		return read(key, 'data-key');
 	}
 
-	/* A data word: a basis, an era, a category, a grade, a decade, a name. */
+	/* A data word: a basis, an era, a category, a grade, a decade, a verification state. */
 	function value(key) {
 		return read(key, 'data-word');
 	}
@@ -50,7 +66,7 @@
 		});
 	}
 
-	/* The same fold the build applies to data-q: case, accents, Arabic marks. */
+	/* The fold the search uses: case, Latin accents, Arabic marks, tatweel. */
 	function fold(text) {
 		return String(text)
 			.normalize('NFKD')
@@ -112,21 +128,35 @@
 	   --------------------------------------------------------------------- */
 
 	function listed(list, id) {
-		return (' ' + list + ' ').indexOf(' ' + id + ' ') >= 0;
+		return (' ' + (list || '') + ' ').indexOf(' ' + id + ' ') >= 0;
+	}
+
+	function chapterKey(row) {
+		return row.__chapter || (row.__chapter = row.closest('[data-chapter]').getAttribute('data-chapter'));
+	}
+
+	function decadeKey(row) {
+		return Math.floor(Number(row.dataset.year) / 10) * 10 + 's';
+	}
+
+	/* Folded once, on the first search, from the row's own three language copies
+	   and its entity ids (so a name beyond the three printed names still matches). */
+	function searchText(row) {
+		return row.__q || (row.__q = fold(row.textContent + ' ' + (row.dataset.entities || '')));
 	}
 
 	function pass(row, skip) {
 		var d = row.dataset;
 		if (skip !== 'basis' && rank(d.basis) > rank(state.basis)) return false;
-		if (skip !== 'era' && state.era && d.era !== state.era) return false;
-		if (skip !== 'period' && state.period && d.decade !== state.period) return false;
+		if (skip !== 'era' && state.era && chapterKey(row) !== state.era) return false;
+		if (skip !== 'period' && state.period && decadeKey(row) !== state.period) return false;
 		if (skip !== 'cat' && state.cat && d.cat !== state.cat) return false;
 		if (skip !== 'grade' && state.grade && d.grade !== state.grade) return false;
 		if (skip !== 'ver' && state.ver && d.ver !== state.ver) return false;
-		if (skip !== 'q' && state.qNorm && d.q.indexOf(state.qNorm) < 0) return false;
-		if (skip !== 'actor' && state.actor && !listed(d.actors, state.actor)) return false;
-		if (skip !== 'institution' && state.institution && !listed(d.institutions, state.institution)) return false;
-		if (skip !== 'ruptures' && state.ruptures && d.rupture !== '1') return false;
+		if (skip !== 'q' && state.qNorm && searchText(row).indexOf(state.qNorm) < 0) return false;
+		if (skip !== 'actor' && state.actor && !listed(d.entities, state.actor)) return false;
+		if (skip !== 'institution' && state.institution && !listed(d.entities, state.institution)) return false;
+		if (skip !== 'ruptures' && state.ruptures && !row.classList.contains('ev-rupture')) return false;
 		if (skip !== 'contested' && state.contested && d.contested !== '1') return false;
 		return true;
 	}
@@ -162,33 +192,44 @@
 	var emptyReset = document.getElementById('empty-reset');
 	var contents = document.getElementById('contents');
 
-	function labelOptions() {
-		var options = document.querySelectorAll('#filters option[data-key], #filters option[data-word]');
-		for (var i = 0; i < options.length; i++) {
-			var opt = options[i];
-			var key = opt.getAttribute('data-key');
-			var word = opt.getAttribute('data-word');
-			if (key) opt.textContent = phrase(key);
-			else if (word.indexOf('grade:') === 0) {
-				opt.textContent = fill(phrase('events.grade'), { grade: word.slice(6), word: value(word) });
-			} else if (word.indexOf('cat:') !== 0) {
-				opt.textContent = value(word);
-			}
+	/* Option labels come from the value, not from an attribute on every option. */
+	function optionLabel(select, v) {
+		if (!v) return phrase(ALL_KEY[select.id] || '');
+		switch (select.id) {
+			case 'f-basis':
+				return value('basis:' + v);
+			case 'f-era':
+				return value('era:' + v);
+			case 'f-period':
+				return value('decade:' + v);
+			case 'f-grade':
+				return fill(phrase('events.grade'), { grade: v, word: value('grade:' + v) });
+			case 'f-ver':
+				return value('ver:' + v);
 		}
+		return v;
+	}
+
+	function labelOptions() {
+		var ids = ['f-basis', 'f-era', 'f-period', 'f-grade', 'f-ver'];
+		for (var i = 0; i < ids.length; i++) {
+			var select = document.getElementById(ids[i]);
+			if (!select) continue;
+			for (var o = 0; o < select.options.length; o++) select.options[o].textContent = optionLabel(select, select.options[o].value);
+		}
+		if (catSelect) catSelect.options[0].textContent = phrase(ALL_KEY['f-cat']);
 	}
 
 	function categoryCounts() {
-		var options = catSelect ? catSelect.querySelectorAll('option[data-word]') : [];
+		if (!catSelect) return;
 		var rows = ledger.querySelectorAll('[data-event]');
-		for (var i = 0; i < options.length; i++) {
-			var opt = options[i];
-			var slug = opt.getAttribute('data-word').slice(4);
+		for (var i = 1; i < catSelect.options.length; i++) {
+			var opt = catSelect.options[i];
 			var n = 0;
 			for (var r = 0; r < rows.length; r++) {
-				if (rows[r].dataset.cat === slug && pass(rows[r], 'cat')) n++;
+				if (rows[r].dataset.cat === opt.value && pass(rows[r], 'cat')) n++;
 			}
-			opt.textContent = fill(phrase('events.catOption'), { word: value('cat:' + slug), n: n });
-			opt.setAttribute('data-n', String(n));
+			opt.textContent = fill(phrase('events.catOption'), { word: value('cat:' + opt.value), n: n });
 		}
 	}
 
@@ -230,12 +271,8 @@
 			if (entry.key === 'basis') {
 				if (v === DEFAULT_BASIS) continue;
 			} else if (!v) continue;
-			var name = entry.word ? value(entry.word + v) : v;
-			out.push({
-				key: entry.key,
-				name: name,
-				label: fill(phrase(entry.label), { name: name })
-			});
+			var name = entry.word === 'name:' ? names[v] || v : entry.word ? value(entry.word + v) : v;
+			out.push({ key: entry.key, name: name, label: fill(phrase(entry.label), { name: name }) });
 		}
 		return out;
 	}
@@ -271,7 +308,6 @@
 
 	var shown = 0;
 	var below = 0;
-	var belowBasis = [];
 	var weakestBelow = '';
 	var quiet = false;
 
@@ -337,11 +373,13 @@
 		if (contents) contents.hidden = shown === 0;
 		if (emptyBox) emptyBox.hidden = shown !== 0;
 		if (shown === 0) {
-			var names = [];
-			for (var e = 0; e < entries.length; e++) names.push(entries[e].label);
+			/* The floor is named at the end of the sentence, so its chip is not
+			   repeated in the list of filters. */
+			var labels = [];
+			for (var e = 0; e < entries.length; e++) if (entries[e].key !== 'basis') labels.push(entries[e].label);
 			if (emptyLine) {
-				emptyLine.textContent = names.length
-					? fill(phrase('events.empty.line'), { filters: names.join(', '), basis: value('basis:' + state.basis) })
+				emptyLine.textContent = labels.length
+					? fill(phrase('events.empty.line'), { filters: labels.join(', '), basis: value('basis:' + state.basis) })
 					: fill(phrase('events.empty.lineFloor'), { basis: value('basis:' + state.basis) });
 			}
 			renderActive(entries, emptyChips, null);
@@ -356,6 +394,8 @@
 				emptyNoLower.hidden = below > 0;
 				emptyNoLower.textContent = below ? '' : phrase('events.empty.noLower');
 			}
+		} else if (emptyChips) {
+			emptyChips.textContent = '';
 		}
 
 		categoryCounts();
@@ -374,7 +414,6 @@
 	}
 
 	function reset() {
-		var basis = state.basis;
 		state.basis = DEFAULT_BASIS;
 		state.era = '';
 		state.period = '';
@@ -387,7 +426,6 @@
 		state.institution = '';
 		state.ruptures = '';
 		state.contested = '';
-		void basis;
 		commit();
 	}
 

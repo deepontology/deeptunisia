@@ -12,6 +12,15 @@
  * chronological register in numbered chapters, newest first: contents, chapter
  * heads, rupture rules, two-line docket rows, quiet year ticks, silence lines.
  *
+ * WEIGHT IS A DESIGN CONSTRAINT
+ *
+ * 257 events in three languages is a lot of markup, so the page is written
+ * lean: one date per row placed by the stylesheet, one category word, attributes
+ * only where the filter reads them, no per-row SVG (the basis strokes are four
+ * generated CSS rules), no precomputed search text (events.js reads the row it
+ * already has, on the first search), and a single fallback marker instead of the
+ * untranslated sentence in every row. scripts/test-events.ts holds the ceiling.
+ *
  * WHAT THIS REFUSES TO DO
  *
  *   - write under build/e/ (that space belongs to one page per record)
@@ -29,15 +38,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { PAGES_DIR, SITE_URL } from './records/config.ts';
 import { esc, loc, one, tri, triEach, triRaw } from './records/labels.ts';
-import {
-	basisLine,
-	headShell,
-	nameOf,
-	titleTri,
-	yearOf,
-	type Rec,
-	type World
-} from './records/page.ts';
+import { basisLine, headShell, nameOf, yearOf, type Rec, type World } from './records/page.ts';
 import { BASIS_COLOR, BASIS_OPACITY, BASIS_ORDER, DASH, describeInterval, type Basis } from '../src/lib/model.ts';
 import { EVENT_CATEGORIES } from '../src/lib/taxonomy.ts';
 import { format, type Locale } from '../src/lib/i18n.ts';
@@ -166,9 +167,10 @@ function sortNewestFirst(a: Rec, b: Rec): number {
 	return a.id.localeCompare(b.id);
 }
 
-const UNACCENT = /[\u0300-\u036f\u0640\u064b-\u065f\u0670]/g;
-function searchKey(text: string): string {
-	return text.normalize('NFKD').replace(UNACCENT, '').toLowerCase();
+/** An attribute value left unquoted when it cannot break the tag. */
+function attr(value: unknown): string {
+	const text = String(value);
+	return /^[A-Za-z0-9._:-]+$/.test(text) ? text : `"${esc(text)}"`;
 }
 
 /** Years as a phrase: one year alone, a span through the era, both from data. */
@@ -181,16 +183,17 @@ function countCopies(n: number): string {
 }
 
 function countSpan(key: string, n: number): string {
-	return `<span class=count data-count="${esc(key)}">${countCopies(n)}</span>`;
+	return `<span class=count data-count=${attr(key)}>${countCopies(n)}</span>`;
 }
 
 /**
  * A date in the three languages, at the precision the source supports.
  *
- * This is the app's own register vocabulary (interval.range, rec.event.approx),
+ * This is the app's own register vocabulary (events.years, rec.event.approx),
  * with the day written first in English: the hanging margin is eleven characters
- * wide, and "27 Nov 2026" is the form the register is set in. The app's own
- * renderer is used for the one open interval it has to describe.
+ * wide, and "27 Nov 2026" is the form the register is set in. A span reads
+ * "8 Jul 2026 to 27 Jul 2026", never with an en dash. The app's own renderer
+ * describes the one interval that is still open.
  */
 const LEDGER_DATE_LOCALE: Record<Locale, string> = { en: 'en-GB', fr: 'fr', ar: 'ar' };
 const dayFormatters = new Map<string, Intl.DateTimeFormat>();
@@ -228,7 +231,7 @@ function dateValues(rec: Rec): Tri {
 		let text = start;
 		if (span) {
 			const end = dateIn(endT, precision(interval?.endPrecision, rawEnd), locale);
-			text = end === start ? start : format(locale, 'interval.range', { start, end });
+			text = end === start ? start : format(locale, 'events.years', { start, end });
 		} else if (interval?.status && interval.status !== 'ended') {
 			text = describeInterval(interval as never, locale);
 		}
@@ -237,21 +240,50 @@ function dateValues(rec: Rec): Tri {
 	return values;
 }
 
-function basisStroke(basis: string, cls: string): string {
-	const rank = String(basis) as Basis;
-	const color = BASIS_COLOR[rank] ?? `var(--basis-${String(basis)})`;
-	const opacity = BASIS_OPACITY[rank] ?? 1;
-	const dash = DASH[rank] ?? '';
-	return `<svg class="${cls}" width=20 height=6 viewBox="0 0 20 6" aria-hidden="true"><line x1=1 y1=3 x2=19 y2=3 stroke="${color}" stroke-width=2 stroke-opacity="${opacity}" stroke-dasharray="${dash}"></line></svg>`;
+/* ---------------------------------------------------------------------------
+   Basis strokes, generated from the model's constants
+   --------------------------------------------------------------------------- */
+
+/**
+ * The four strokes as CSS, one rule for the rail and one for the inline sample.
+ *
+ * DASH holds SVG user units and the rows are drawn 1:1, so a dash pattern of
+ * "5 3" becomes a 5px line then a 3px gap. The colours are the basis tokens and
+ * the opacity is BASIS_OPACITY, so the ledger's strokes cannot drift from the
+ * instrument's without this block changing too. test-events.ts checks the block
+ * against the constants.
+ */
+function strokeRules(): string {
+	const rules: string[] = [];
+	const gradient = (dash: string, direction: string): string | null => {
+		const lengths = dash.trim().split(/\s+/).filter(Boolean).map(Number);
+		if (!lengths.length) return null;
+		let at = 0;
+		const stops: string[] = [];
+		lengths.forEach((length, index) => {
+			stops.push(`${index % 2 === 0 ? 'var(--basis)' : 'transparent'} ${at}px ${at + length}px`);
+			at += length;
+		});
+		return `repeating-linear-gradient(${direction}, ${stops.join(', ')})`;
+	};
+	for (const basis of BASIS_ORDER) {
+		const color = BASIS_COLOR[basis];
+		const opacity = BASIS_OPACITY[basis];
+		const dash = DASH[basis] ?? '';
+		const rulesFor = (selector: string, direction: string) => {
+			const image = gradient(dash, direction);
+			return image
+				? `${selector}{--basis:${color};background-image:${image};opacity:${opacity}}`
+				: `${selector}{--basis:${color};background-color:${color};opacity:${opacity}}`;
+		};
+		rules.push(rulesFor(`.ev[data-basis=${basis}] .ev-rail`, 'to bottom'));
+		rules.push(rulesFor(`.basis-sample[data-basis=${basis}]`, 'to right'));
+	}
+	return `<style id="basis-strokes">/* Generated by scripts/build-events.ts from DASH and BASIS_OPACITY. */\n${rules.join('\n')}</style>`;
 }
 
-/** The basis rail down the inline-start edge of a row, full row height. */
-function basisRail(basis: string): string {
-	const rank = String(basis) as Basis;
-	const color = BASIS_COLOR[rank] ?? `var(--basis-${String(basis)})`;
-	const opacity = BASIS_OPACITY[rank] ?? 1;
-	const dash = DASH[rank] ?? '';
-	return `<span class=ev-rail aria-hidden="true"><svg><line x1=1 y1=0 x2=1 y2="100%" stroke="${color}" stroke-width=2 stroke-opacity="${opacity}" stroke-dasharray="${dash}"></line></svg></span>`;
+function sample(basis: string): string {
+	return `<span class=basis-sample data-basis=${attr(basis)} aria-hidden></span>`;
 }
 
 /* ---------------------------------------------------------------------------
@@ -338,7 +370,7 @@ function chapterTocCount(ch: Chapter): number {
 	return ch.events.filter((r) => meetsFloor(r)).length;
 }
 
-/** Decade value shared by the row attributes and the filter's options. */
+/** Decade value shared by the row's year and the filter's options. */
 function decadeOf(year: number): string {
 	return `${Math.floor(year / 10) * 10}s`;
 }
@@ -350,11 +382,11 @@ const decades = [...new Set(allYears.map(decadeOf))].sort((a, b) => Number(a.sli
    --------------------------------------------------------------------------- */
 
 function phrase(key: string): string {
-	return `<span data-key="${esc(key)}">${tri(key)}</span>`;
+	return `<span data-key=${attr(key)}>${tri(key)}</span>`;
 }
 
 function word(key: string, values: Tri): string {
-	return `<span data-word="${esc(key)}">${triRaw(values)}</span>`;
+	return `<span data-word=${attr(key)}>${triRaw(values)}</span>`;
 }
 
 const VER_KEY: Record<string, string> = {
@@ -363,12 +395,22 @@ const VER_KEY: Record<string, string> = {
 	disputed: 'events.ver.disputed'
 };
 
-/* Every entity an event names, so the script can put a person's or an
-   institution's name on a filter chip instead of an id. */
+/* Every entity an event names. The filter bar can only say a person's or an
+   institution's name if it has the name, and ids never reach a reader; the map
+   carries the English form the record pages already use for entity links. */
 const entityIds = new Set<string>();
 for (const rec of data.events) {
 	for (const id of (rec.actors as string[] | undefined) ?? []) entityIds.add(id);
 	for (const id of (rec.institutions as string[] | undefined) ?? []) entityIds.add(id);
+}
+
+function namesIsland(): string {
+	const names: Record<string, string> = {};
+	for (const id of [...entityIds].sort()) {
+		const name = nameOf(world, id);
+		if (name) names[id] = name.en;
+	}
+	return `<script type="application/json" id="events-names">${JSON.stringify(names).replace(/<\//g, '<\\/')}</script>`;
 }
 
 function wordsBlock(): string {
@@ -437,11 +479,6 @@ function wordsBlock(): string {
 		const key = VER_KEY[value];
 		parts.push(word(`ver:${value}`, { en: loc('en', key), fr: loc('fr', key), ar: loc('ar', key) }));
 	}
-	for (const id of entityIds) {
-		const name = nameOf(world, id);
-		if (!name) continue;
-		parts.push(word(`name:${id}`, { en: name.en, fr: name.fr ?? name.en, ar: name.ar ?? name.en }));
-	}
 	return `<div id="events-words" hidden>${parts.join('')}</div>`;
 }
 
@@ -453,49 +490,46 @@ function option(value: string, text: string, attrs = ''): string {
 	return `<option value="${esc(value)}"${attrs}>${text}</option>`;
 }
 
-function select(id: string, labelKey: string, options: string, attrs = ''): string {
-	return `<div class=field><label class=flabel for="${id}">${tri(labelKey)}</label><select class=fcontrol id="${id}"${attrs}>${options}</select></div>`;
+function select(id: string, labelKey: string, options: string): string {
+	return `<div class=field><label class=flabel for=${id}>${tri(labelKey)}</label><select class=fcontrol id=${id}>${options}</select></div>`;
 }
 
 function filterBlock(): string {
 	const basisOptions = BASIS_ORDER.map((basis) => {
 		const text = one('en', `basis.${basis}`);
-		return option(basis, text, ` data-word="basis:${basis}"${basis === FLOOR ? ' selected' : ''}`);
+		return option(basis, text, basis === FLOOR ? ' selected' : '');
 	}).join('');
 
 	const eraOptions = [
-		option('', one('en', 'events.filter.allEras'), ' data-key="events.filter.allEras"'),
-		...eras.map((era) =>
-			option(era.id, esc(era.label_en), ` data-word="era:${era.id}"`)
-		),
-		option('before', one('en', 'events.before'), ' data-word="era:before"'),
-		option('after', one('en', 'events.after'), ' data-word="era:after"')
+		option('', one('en', 'events.filter.allEras')),
+		...eras.map((era) => option(era.id, esc(era.label_en))),
+		option('before', one('en', 'events.before')),
+		option('after', one('en', 'events.after'))
 	].join('');
 
 	const catOptions = [
-		option('', one('en', 'events.filter.allCats'), ' data-key="events.filter.allCats"'),
+		option('', one('en', 'events.filter.allCats')),
 		...EVENT_CATEGORIES.map((slug) => {
 			const n = data.events.filter((r) => r.category === slug && meetsFloor(r)).length;
-			const text = one('en', 'events.catOption', { word: one('en', `eventCat.${slug}`), n });
-			return option(slug, esc(text), ` data-word="cat:${slug}"`);
+			return option(slug, esc(one('en', 'events.catOption', { word: one('en', `eventCat.${slug}`), n })));
 		})
 	].join('');
 
 	const periodOptions = [
-		option('', one('en', 'events.filter.allDecades'), ' data-key="events.filter.allDecades"'),
-		...decades.map((start) => option(start, esc(one('en', 'events.decade', { start: start.slice(0, 4) })), ` data-word="decade:${start}"`))
+		option('', one('en', 'events.filter.allDecades')),
+		...decades.map((start) => option(start, esc(one('en', 'events.decade', { start: start.slice(0, 4) }))))
 	].join('');
 
 	const gradeOptions = [
-		option('', one('en', 'events.filter.allGrades'), ' data-key="events.filter.allGrades"'),
+		option('', one('en', 'events.filter.allGrades')),
 		...['A', 'B', 'C', 'D'].map((grade) =>
-			option(grade, esc(one('en', 'events.grade', { grade, word: one('en', `confidence.${grade}`) })), ` data-word="grade:${grade}"`)
+			option(grade, esc(one('en', 'events.grade', { grade, word: one('en', `confidence.${grade}`) })))
 		)
 	].join('');
 
 	const verOptions = [
-		option('', one('en', 'events.filter.allVer'), ' data-key="events.filter.allVer"'),
-		...Object.keys(VER_KEY).map((value) => option(value, esc(one('en', VER_KEY[value])), ` data-word="ver:${value}"`))
+		option('', one('en', 'events.filter.allVer')),
+		...Object.keys(VER_KEY).map((value) => option(value, esc(one('en', VER_KEY[value]))))
 	].join('');
 
 	return `<p class=nojs>${tri('events.nojs')}</p>
@@ -560,10 +594,10 @@ function contentsBlock(): string {
 		const number = ch.era ? String(eras.indexOf(ch.era) + 1).padStart(2, '0') : '';
 		const num = number
 			? `<span class=toc-num>${number}</span>`
-			: `<span class="toc-num toc-num-empty" aria-hidden="true">·</span>`;
-		const mark = ch.era ? `<span class=era-mark style="--era: ${esc(ch.era.accent)}" aria-hidden="true"></span>` : '';
+			: `<span class="toc-num toc-num-empty" aria-hidden>·</span>`;
+		const mark = ch.era ? `<span class=era-mark style="--era: ${esc(ch.era.accent)}" aria-hidden></span>` : '';
 		const href = ch.era ? `#era-${ch.key}` : `#${ch.key}`;
-		return `<li><a class=toc-link href="${href}" data-toc="${esc(ch.key)}">${num}${mark}<span class=toc-title>${chapterTitleHtml(ch)}</span><span class=toc-leader aria-hidden="true"></span><span class=toc-meta><span class=toc-years>${chapterYearsHtml(ch)}</span> <span class=sep aria-hidden="true">·</span> ${countSpan(ch.key, chapterTocCount(ch))}</span></a></li>`;
+		return `<li><a class=toc-link href="${href}" data-toc=${attr(ch.key)}>${num}${mark}<span class=toc-title>${chapterTitleHtml(ch)}</span><span class=toc-leader aria-hidden></span><span class=toc-meta><span class=toc-years>${chapterYearsHtml(ch)}</span> · ${countSpan(ch.key, chapterTocCount(ch))}</span></a></li>`;
 	});
 	return `<nav class=contents id=contents aria-label="${esc(one('en', 'events.contents'))}">
 <p class=contents-heading>${tri('events.contents')}</p>
@@ -606,13 +640,19 @@ function standingBlock(): string {
 			});
 	const key = BASIS_ORDER.map((basis) => {
 		const n = data.events.filter((r) => r.basis === basis).length;
-		return `<span class=key-item>${basisStroke(basis, 'key-stroke')} <span class=key-word>${tri(`basis.${basis}`)}</span> <span class=key-count>(${n})</span></span>`;
+		return `<span class=key-item>${sample(basis)} <span class=key-word>${tri(`basis.${basis}`)}</span> <span class=key-count>(${n})</span></span>`;
 	}).join('');
+	const missingFr = data.events.some((r) => !r.title_fr);
+	const missingAr = data.events.some((r) => !r.title_ar);
+	const note: string[] = [];
+	if (missingFr) note.push(`<b data-l=fr>${esc(loc('fr', 'events.fallbackNote'))}</b>`);
+	if (missingAr) note.push(`<b data-l=ar lang=ar dir=rtl>${esc(loc('ar', 'events.fallbackNote'))}</b>`);
+	const fallback = note.length ? `\n<p class=fallback-note>${note.join('')}</p>` : '';
 	return `<section class="standing" id=standing>
 <p class=sl id=standing-total>${totalLine}</p>
 <p class=sl id=standing-floor>${floorLine}</p>
 <div class=basis-key><span class=key-label>${tri('events.basisKey')}</span>${key}</div>
-</section>`;
+</section>${fallback}`;
 }
 
 /* ---------------------------------------------------------------------------
@@ -640,63 +680,79 @@ function involvedNames(rec: Rec): Tri[] {
 	return out;
 }
 
-function joinRun(parts: string[]): string {
-	return parts.filter(Boolean).join(' <span class=sep aria-hidden="true">·</span> ');
+/** Three copies only when the three forms differ; proper nouns usually do not. */
+function copies(values: Tri): string {
+	if (values.en === values.fr && values.en === values.ar) return esc(values.en);
+	return triRaw(values);
+}
+
+/**
+ * A title in the three languages, one visible at a time.
+ *
+ * A missing translation does not repeat the English title into a second slot:
+ * the English copy names the languages it covers, the stylesheet shows it for
+ * those readers, and one marker plus one sentence (above the register) explain
+ * it. That keeps a row's cost to its three real titles, not four.
+ */
+function ledgerTitle(rec: Rec): string {
+	const en = String(rec.title_en ?? rec.id);
+	const fr = typeof rec.title_fr === 'string' && rec.title_fr.trim() ? rec.title_fr : '';
+	const ar = typeof rec.title_ar === 'string' && rec.title_ar.trim() ? rec.title_ar : '';
+	const missing = [!fr && 'fr', !ar && 'ar'].filter(Boolean).join(' ');
+	const fallback = missing ? ` data-fallback="${missing}"` : '';
+	const parts = [`<b data-l=en${fallback}>${esc(en)}</b>`];
+	if (fr) parts.push(`<b data-l=fr>${esc(fr)}</b>`);
+	if (ar) parts.push(`<b data-l=ar lang=ar dir=rtl>${esc(ar)}</b>`);
+	return parts.join('');
 }
 
 function metaLineHtml(rec: Rec): string {
-	const runs: string[] = [`<span class=ev-cat>${tri(`eventCat.${String(rec.category)}`)}</span>`];
+	const runs: string[] = [];
+	runs.push(tri(`eventCat.${String(rec.category)}`));
 	const places = placeNames(rec);
-	if (places.length) runs.push(`<span class=ev-place>${places.map((p) => triRaw(p)).join(', ')}</span>`);
+	if (places.length) runs.push(places.map((p) => copies(p)).join(', '));
 	const names = involvedNames(rec);
 	if (names.length) {
-		const shown = names.slice(0, 3).map((n) => triRaw(n)).join(', ');
+		const shown = names.slice(0, 3).map((n) => copies(n)).join(', ');
 		const rest = names.length - 3;
-		const more = rest > 0 ? `, ${tri('events.andMore', { n: rest })}` : '';
-		runs.push(`<span class=ev-names>${shown}${more}</span>`);
+		runs.push(`${shown}${rest > 0 ? `, ${tri('events.andMore', { n: rest })}` : ''}`);
 	}
-	const contested = ((rec.contested as Rec[] | undefined) ?? []).length;
-	runs.push(`<span class=ev-basis>${basisStroke(String(rec.basis), 'ev-stroke')} ${basisLine(rec.basis, rec.confidence)}</span>`);
+	runs.push(`<span class=ev-basis>${sample(String(rec.basis))} ${basisLine(rec.basis, rec.confidence)}</span>`);
 	const ver = String(rec.verification ?? 'unflagged');
 	if (ver !== 'unflagged' && VER_KEY[ver]) {
-		runs.push(`<span class=ev-ver data-ver="${esc(ver)}">${tri(VER_KEY[ver])}</span>`);
+		runs.push(`<span class=ev-ver data-ver=${attr(ver)}>${tri(VER_KEY[ver])}</span>`);
 	}
+	const contested = ((rec.contested as Rec[] | undefined) ?? []).length;
 	if (contested > 1) runs.push(`<span class=ev-framings>${tri('events.framings', { n: contested })}</span>`);
-	return `<p class=ev-meta>${joinRun(runs)}</p>`;
+	/* The date is in the line's flow on a phone and hangs in the margin on a
+	   wide screen; the separator between them is the stylesheet's, so the date
+	   is outside the joined run and is written once. */
+	return `<p class=ev-meta><span class=ev-date>${triRaw(dateValues(rec))}</span>${runs.join(' · ')}</p>`;
 }
 
-function searchText(rec: Rec): string {
-	const bits = [rec.title_en, rec.title_fr, rec.title_ar];
-	for (const name of involvedNames(rec)) bits.push(name.en, name.fr, name.ar);
-	for (const place of placeNames(rec)) bits.push(place.en, place.fr, place.ar);
-	return searchKey(bits.filter((v): v is string => typeof v === 'string' && v.length > 0).join(' '));
-}
-
-function rowAttrs(rec: Rec, eraKey: string, year: number): string {
-	const actors = ((rec.actors as string[] | undefined) ?? []).join(' ');
-	const institutions = ((rec.institutions as string[] | undefined) ?? []).join(' ');
+function rowAttrs(rec: Rec, year: number): string {
+	const entities = [
+		...((rec.actors as string[] | undefined) ?? []),
+		...((rec.institutions as string[] | undefined) ?? [])
+	].join(' ');
 	const contested = ((rec.contested as Rec[] | undefined) ?? []).length > 1 ? '1' : '0';
 	const hidden = meetsFloor(rec) ? '' : ' hidden';
-	return ` class="ev${rec.rupture ? ' ev-rupture' : ''}"${hidden} data-event="${esc(rec.id)}" data-era="${esc(eraKey)}" data-year="${year}" data-decade="${esc(decadeOf(year))}" data-cat="${esc(rec.category)}" data-basis="${esc(rec.basis)}" data-grade="${esc(rec.confidence)}" data-ver="${esc(rec.verification)}" data-rupture="${rec.rupture ? '1' : '0'}" data-contested="${contested}" data-actors="${esc(actors)}" data-institutions="${esc(institutions)}" data-q="${esc(searchText(rec))}"`;
+	return ` class="ev${rec.rupture ? ' ev-rupture' : ''}"${hidden} data-event="${esc(rec.id)}" data-year=${attr(year)} data-cat=${attr(rec.category)} data-basis=${attr(rec.basis)} data-grade=${attr(rec.confidence)} data-ver=${attr(rec.verification)} data-contested=${contested} data-entities="${esc(entities)}"`;
 }
 
-function rowHtml(rec: Rec, eraKey: string): string {
-	const year = yearNumber(rec);
-	const dateHtml = triRaw(dateValues(rec));
-	const title = `<h3 class=ev-title><a class=ev-link href="/e/${encodeURIComponent(rec.id)}">${titleTri(rec)}</a></h3>`;
-	const phone = `<p class=ev-phone><span class=ev-date>${dateHtml}</span> <span class=sep aria-hidden="true">·</span> <span class=ev-cat>${tri(`eventCat.${String(rec.category)}`)}</span></p>`;
-	return `<li${rowAttrs(rec, eraKey, year)}>${basisRail(String(rec.basis))}<span class=ev-date-col>${dateHtml}</span><div class=ev-body>${phone}${title}${metaLineHtml(rec)}</div></li>`;
+function rowHtml(rec: Rec, year: number): string {
+	const title = `<h3 class=ev-title><a class=ev-link href=/e/${encodeURIComponent(rec.id)}>${ledgerTitle(rec)}</a></h3>`;
+	return `<li${rowAttrs(rec, year)}><span class=ev-rail aria-hidden></span>${title}${metaLineHtml(rec)}</li>`;
 }
 
-function ruptureHtml(rec: Rec, eraKey: string, opening: boolean, anchors: Set<string>): string {
+function ruptureHtml(rec: Rec, opening: boolean, anchors: Set<string>): string {
 	const year = yearNumber(rec);
-	const date = triRaw(dateValues(rec));
 	const contested = ((rec.contested as Rec[] | undefined) ?? []).length;
-	const extra = contested > 1 ? ` <span class=sep aria-hidden="true">·</span> ${tri('events.framings', { n: contested })}` : '';
+	const extra = contested > 1 ? ` · ${tri('events.framings', { n: contested })}` : '';
 	const tag = `<span class=rupture-tag>${tri(opening ? 'events.ruptureOpening' : 'events.rupture')}</span>`;
 	const anchor = anchors.has(String(year)) ? '' : ` id="y${year}"`;
 	if (anchor) anchors.add(String(year));
-	return `<li${rowAttrs(rec, eraKey, year)}${anchor}><span class=rupture-rule><span class="rupture-line rupture-lead" aria-hidden="true"></span><a class=rupture-card href="/e/${encodeURIComponent(rec.id)}"><span class=rupture-kicker>${tag} <span class=sep aria-hidden="true">·</span> <span class=rupture-date>${date}</span></span><span class=rupture-title>${titleTri(rec)}</span><span class=rupture-meta>${basisStroke(String(rec.basis), 'ev-stroke')} ${basisLine(rec.basis, rec.confidence)}${extra}</span></a><span class="rupture-line rupture-tail" aria-hidden="true"></span></span></li>`;
+	return `<li${rowAttrs(rec, year)}${anchor}><span class=rupture-rule><span class="rupture-line rupture-lead" aria-hidden></span><a class=rupture-card href=/e/${encodeURIComponent(rec.id)}><span class=rupture-kicker>${tag} · <span class=rupture-date>${triRaw(dateValues(rec))}</span></span><span class=rupture-title>${ledgerTitle(rec)}</span><span class=rupture-meta>${sample(String(rec.basis))} ${basisLine(rec.basis, rec.confidence)}${extra}</span></a><span class="rupture-line rupture-tail" aria-hidden></span></span></li>`;
 }
 
 /* ---------------------------------------------------------------------------
@@ -711,8 +767,8 @@ function chapterHtml(ch: Chapter, anchors: Set<string>): string {
 	const id = era ? `era-${ch.key}` : ch.key;
 	const style = era ? ` style="--era: ${esc(era.accent)}"` : '';
 	const number = era ? `<span class=chapter-num>${String(eras.indexOf(era) + 1).padStart(2, '0')} /</span>` : '';
-	const mark = era ? `<span class=era-mark aria-hidden="true"></span>` : '';
-	const eyebrow = `<p class=chapter-eyebrow>${number}${mark}<span class=chapter-years>${yearsHtml}</span> <span class=sep aria-hidden="true">·</span> ${count}</p>`;
+	const mark = era ? `<span class=era-mark aria-hidden></span>` : '';
+	const eyebrow = `<p class=chapter-eyebrow>${number}${mark}<span class=chapter-years>${yearsHtml}</span> · ${count}</p>`;
 
 	let head = `<header class=chapter-head>${eyebrow}<h2 class=chapter-title>${title}</h2>`;
 	if (era) {
@@ -745,7 +801,7 @@ function chapterHtml(ch: Chapter, anchors: Set<string>): string {
 		(isOpening ? opening : rest).push(rec);
 	}
 
-	const items: string[] = opening.map((rec) => ruptureHtml(rec, ch.key, true, anchors));
+	const items: string[] = opening.map((rec) => ruptureHtml(rec, true, anchors));
 
 	const years: number[] = [];
 	for (const rec of rest) {
@@ -766,13 +822,13 @@ function chapterHtml(ch: Chapter, anchors: Set<string>): string {
 		}
 		const tickId = anchors.has(String(year)) ? `y${year}-${ch.key}` : `y${year}`;
 		anchors.add(String(year));
-		items.push(`<li class=ytick id="${tickId}" data-year-tick="${year}"><span class=ytick-year>${year}</span><span class=ytick-rule aria-hidden="true"></span></li>`);
+		items.push(`<li class=ytick id="${tickId}" data-year-tick="${year}"><span class=ytick-year>${year}</span><span class=ytick-rule aria-hidden></span></li>`);
 		for (const rec of rest.filter((r) => yearNumber(r) === year)) {
-			items.push(rec.rupture ? ruptureHtml(rec, ch.key, false, anchors) : rowHtml(rec, ch.key));
+			items.push(rec.rupture ? ruptureHtml(rec, false, anchors) : rowHtml(rec, year));
 		}
 	}
 
-	return `<section class="chapter" id="${esc(id)}" data-chapter="${esc(ch.key)}"${style}>
+	return `<section class="chapter" id="${esc(id)}" data-chapter=${attr(ch.key)}${style}>
 ${head}
 <ol class=ledger>${items.join('')}</ol>
 </section>`;
@@ -798,7 +854,7 @@ const head = headShell({
 	description: one('en', 'events.desc'),
 	url: `${SITE_URL}/events`,
 	styles: ['/events.css']
-});
+}).replace('</head>', `${strokeRules()}\n</head>`);
 
 const anchors = new Set<string>();
 const ledger = chapters.map((ch) => chapterHtml(ch, anchors)).join('\n');
@@ -822,7 +878,7 @@ ${filterBlock()}
 <div class=af-chips id=empty-chips></div>
 <p class=empty-reset><button class=freset id=empty-reset type=button>${tri('events.filter.reset')}</button></p>
 </section>
-<div id=ledger data-total="${total}" data-floor="${esc(FLOOR)}">
+<div id=ledger data-total=${attr(total)} data-floor=${attr(FLOOR)}>
 ${ledger}
 </div>
 <footer>
@@ -831,6 +887,7 @@ ${ledger}
 </footer>
 </main>
 ${wordsBlock()}
+${namesIsland()}
 <script src=/events.js defer></script>
 </body>
 </html>
