@@ -105,6 +105,8 @@ if (!existsSync(PAGE)) {
 interface Span {
 	startEarliest?: number;
 	startLatest?: number;
+	endEarliest?: number;
+	endLatest?: number;
 	startPrecision?: string;
 	endPrecision?: string;
 	status?: string;
@@ -289,7 +291,10 @@ ok('the generated strokes are DASH and BASIS_OPACITY', strokeCss.length > 0 && s
 
 const eras = data.eras;
 const firstStart = Number(eras[0].interval.startEarliest);
-const lastEnd = Number(eras[eras.length - 1].interval.endEarliest);
+/* An era ends at its latest possible end, as on every other view; an open era
+   (`end: ongoing`) runs to the cutoff. */
+const eraEnd = (span: Span) => Number(span.endLatest ?? data.meta?.cutoff);
+const lastEnd = eraEnd(eras[eras.length - 1].interval);
 
 function chapterOf(event: EventRow): string {
 	const t = Number(event.interval?.startEarliest ?? 0);
@@ -297,12 +302,15 @@ function chapterOf(event: EventRow): string {
 	if (t > lastEnd) return 'after';
 	for (let i = eras.length - 1; i >= 0; i--) {
 		const span = eras[i].interval;
-		if (t >= Number(span.startEarliest) && t <= Number(span.endEarliest)) return eras[i].id;
+		if (t >= Number(span.startEarliest) && t <= eraEnd(span)) return eras[i].id;
 	}
 	return 'unfiled';
 }
 
-const expectedCounts = new Map<string, number>([['after', 0], ['before', 0]]);
+/* A bookend chapter (before the first era, after the last) is printed only when
+   it holds an event; every era chapter is always printed. */
+const bookends = ['after', 'before'].filter((key) => data.events.some((event) => chapterOf(event) === key));
+const expectedCounts = new Map<string, number>(bookends.map((key) => [key, 0]));
 for (const era of eras) expectedCounts.set(era.id, 0);
 for (const event of data.events) {
 	if (!atFloor(event)) continue;
@@ -331,7 +339,11 @@ ok('every chapter count is the computed count at the floor', countProblems.lengt
 
 /* The contents lists the chapters newest first, with an anchor each. */
 const tocKeys = [...html.matchAll(/data-toc=(?:"([^"]+)"|([^\s>]+))/g)].map((m) => m[1] ?? m[2]);
-const expectedOrder = ['after', ...[...eras].reverse().map((e) => e.id), 'before'];
+const expectedOrder = [
+	...bookends.filter((key) => key === 'after'),
+	...[...eras].reverse().map((e) => e.id),
+	...bookends.filter((key) => key === 'before')
+];
 ok('the contents lists every chapter newest first', tocKeys.join(',') === expectedOrder.join(','), tocKeys.join(','));
 ok('every contents line is an anchor', [...html.matchAll(/<a class=toc-link href="#[^"]+"/g)].length === expectedOrder.length);
 ok('every contents anchor is unique', new Set([...html.matchAll(/<a class=toc-link href="#([^"]+)"/g)].map((m) => m[1])).size === expectedOrder.length);

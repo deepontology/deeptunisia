@@ -64,6 +64,7 @@
 			<Tooltip content={t(`nav.${item.key}.hint`)}>
 				<a
 					href={item.href}
+					rel={item.document ? 'external' : undefined}
 					class:on={active(item)}
 					aria-current={active(item) ? 'page' : undefined}
 				>

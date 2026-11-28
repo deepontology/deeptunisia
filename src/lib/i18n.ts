@@ -261,6 +261,7 @@ const en: Dict = {
 	'rel.allegation': 'claim circulates about',
 
 	'nav.chronicle': 'Chronicle',
+	'nav.events': 'Events',
 	'nav.now': 'Now',
 	'nav.feed': 'Feed',
 	'nav.network': 'Network',
@@ -285,6 +286,7 @@ const en: Dict = {
 	'nav.guide.hint': 'How to read DeepTunisia',
 	'nav.feed.hint': 'Headlines from others — not our data',
 	'nav.chronicle.hint': 'Tenures across time',
+	'nav.events.hint': 'What happened, and when',
 	'nav.network.hint': 'Who connects to whom',
 	'nav.world.hint': 'Who Tunisia depends on',
 	'nav.map.hint': 'Tunisia by governorate',
@@ -2226,8 +2228,6 @@ const en: Dict = {
 	'events.contents': 'Contents by era',
 	'events.before': 'Before the eras',
 	'events.after': 'After the last dated era',
-	'events.before.note': 'Events recorded before the recorded start of the first era, on {date}.',
-	'events.after.note': 'Events recorded after the recorded end of the last era, on {date}.',
 	'events.standing.total': '{n} events recorded across {eras} eras, {from} to {to}, including {ruptures} ruptures.',
 	'events.standing.floor': 'Showing {shown} events at the {basis} floor; {below} below it ({split}) not shown.',
 	'events.standing.floorNoBelow': 'Showing {shown} events at the {basis} floor.',
@@ -2530,6 +2530,7 @@ const fr: Dict = {
 	'rel.allegation': 'allégation circulant à propos de',
 
 	'nav.chronicle': 'Chronique',
+	'nav.events': 'Événements',
 	'nav.now': 'Maintenant',
 	'nav.feed': 'Actualité',
 	'nav.network': 'Réseau',
@@ -2657,6 +2658,7 @@ const fr: Dict = {
 	'nav.guide.hint': 'Comment lire DeepTunisia',
 	'nav.feed.hint': 'Titres de la presse — pas nos données',
 	'nav.chronicle.hint': 'Les mandats dans le temps',
+	'nav.events.hint': "Ce qui s'est passé, et quand",
 	'nav.network.hint': 'Qui est lié à qui',
 	'nav.world.hint': 'Ce dont la Tunisie dépend',
 	'nav.map.hint': 'La Tunisie par gouvernorat',
@@ -4453,8 +4455,6 @@ const fr: Dict = {
 	'events.contents': 'Sommaire par période',
 	'events.before': 'Avant les périodes',
 	'events.after': 'Après la dernière période datée',
-	'events.before.note': 'Événements enregistrés avant le début consigné de la première période, le {date}.',
-	'events.after.note': 'Événements enregistrés après la fin consignée de la dernière période, le {date}.',
 	'events.standing.total': '{n} événements enregistrés sur {eras} périodes, de {from} à {to}, dont {ruptures} ruptures.',
 	'events.standing.floor': '{shown} événements affichés au seuil {basis} ; {below} sous ce seuil ({split}) non affichés.',
 	'events.standing.floorNoBelow': '{shown} événements affichés au seuil {basis}.',
@@ -4752,6 +4752,7 @@ const ar: Dict = {
 	'rel.allegation': 'ادّعاء يدور حول',
 
 	'nav.chronicle': 'التسلسل الزمني',
+	'nav.events': 'الأحداث',
 	'nav.now': 'الآن',
 	'nav.feed': 'الأخبار',
 	'nav.network': 'الشبكة',
@@ -4903,6 +4904,7 @@ const ar: Dict = {
 	'nav.guide.hint': 'كيف تقرأ DeepTunisia',
 	'nav.feed.hint': 'عناوين من مصادر أخرى — ليست بياناتنا',
 	'nav.chronicle.hint': 'المناصب عبر الزمن',
+	'nav.events.hint': 'ما الذي حدث، ومتى',
 	'nav.network.hint': 'من يرتبط بمن',
 	'nav.world.hint': 'ما تعتمد عليه تونس',
 	'nav.map.hint': 'تونس حسب الولايات',
@@ -6668,8 +6670,6 @@ const ar: Dict = {
 	'events.contents': 'الفهرس حسب الحقبة',
 	'events.before': 'قبل الحقب',
 	'events.after': 'بعد آخر حقبة مؤرّخة',
-	'events.before.note': 'أحداث مسجّلة قبل البداية المسجّلة للحقبة الأولى، في {date}.',
-	'events.after.note': 'أحداث مسجّلة بعد النهاية المسجّلة للحقبة الأخيرة، في {date}.',
 	'events.standing.total': '{n} حدثاً مسجّلاً عبر {eras} حقب، من {from} إلى {to}، منها {ruptures} قطائع.',
 	'events.standing.floor': '{shown} حدثاً معروضة عند حد {basis}؛ {below} تحت هذا الحد ({split}) غير معروضة.',
 	'events.standing.floorNoBelow': '{shown} حدثاً معروضة عند حد {basis}.',
@@ -6752,12 +6752,15 @@ const ar: Dict = {
 
 
 /**
- * Words the growth-rings figure needs but the app never reads. They live beside
- * the dictionary so the build can print three copies without adding them to the
- * app chunk that every reading page preloads.
+ * Words the events page needs but the app never reads. They live beside the
+ * dictionary so the build can print three copies without adding them to the app
+ * chunk that every reading page preloads.
  */
 export const eventsRings: Record<Locale, Record<string, string>> = {
 	en: {
+		'events.yearsOpen': '{start} to today',
+		'events.before.note': 'Events recorded before the recorded start of the first era, on {date}.',
+		'events.after.note': 'Events recorded after the recorded end of the last era, on {date}.',
 		'events.rings.allShort': 'All',
 		'events.rings.hint': 'Arrows walk, Enter opens, plus and minus move the lens, Escape clears.',
 		'events.key.rupture': 'Rupture ring and scar',
@@ -6765,6 +6768,9 @@ export const eventsRings: Record<Locale, Record<string, string>> = {
 		'events.key.thread': 'Thread: one person or institution through time'
 	},
 	fr: {
+		'events.yearsOpen': 'de {start} à aujourd’hui',
+		'events.before.note': 'Événements enregistrés avant le début consigné de la première période, le {date}.',
+		'events.after.note': 'Événements enregistrés après la fin consignée de la dernière période, le {date}.',
 		'events.rings.allShort': 'Tout',
 		'events.rings.hint': 'Les flèches parcourent, Entrée ouvre, plus et moins bougent la lentille, Échap efface.',
 		'events.key.rupture': 'Anneau de rupture et cicatrice',
@@ -6772,6 +6778,9 @@ export const eventsRings: Record<Locale, Record<string, string>> = {
 		'events.key.thread': 'Fil : une personne ou une institution dans le temps'
 	},
 	ar: {
+		'events.yearsOpen': 'من {start} إلى اليوم',
+		'events.before.note': 'أحداث مسجّلة قبل البداية المسجّلة للحقبة الأولى، في {date}.',
+		'events.after.note': 'أحداث مسجّلة بعد النهاية المسجّلة للحقبة الأخيرة، في {date}.',
 		'events.rings.allShort': 'الكل',
 		'events.rings.hint': 'الأسهم تتنقل، وEnter يفتح، والزائد والناقص يحركان النطاق، وEsc يمسح.',
 		'events.key.rupture': 'حلقة انقطاع وأثر',
