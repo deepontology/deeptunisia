@@ -76,6 +76,34 @@ html[dir='rtl'] .contents-heading {
 	color: var(--text-secondary);
 }
 
+.key-rupture {
+	display: inline-block;
+	flex: 0 0 auto;
+	inline-size: var(--s-3);
+	block-size: var(--s-3);
+	border: var(--s-1) solid var(--rupture);
+	border-radius: var(--r-full);
+}
+
+.key-framings {
+	display: inline-block;
+	flex: 0 0 auto;
+	inline-size: var(--s-4);
+	block-size: var(--s-4);
+	border: var(--s-1) solid var(--text-secondary);
+	border-radius: var(--r-full);
+	box-shadow: inset 0 0 0 var(--s-1) var(--surface-base);
+}
+
+.key-thread {
+	display: inline-block;
+	flex: 0 0 auto;
+	inline-size: var(--s-6);
+	block-size: var(--s-3);
+	border-block-start: var(--s-1) solid var(--accent);
+	border-radius: 50%;
+}
+
 .key-count {
 	font-family: var(--font-mono);
 	font-size: var(--t-xs);
@@ -593,8 +621,8 @@ html[data-js] .nojs {
 }
 
 /* A weaker basis sits on the sunken surface, in both themes. */
-.ev[data-basis='inferred'],
-.ev[data-basis='unsubstantiated'] {
+.ev.b-inferred,
+.ev.b-unsubstantiated {
 	background: var(--surface-sunken);
 }
 
@@ -841,6 +869,874 @@ html[lang='ar'] .rupture-title b[data-l='en'][data-fallback~='ar']::after {
 		grid-template-columns: 11ch minmax(0, 1fr);
 		gap: var(--s-4);
 	}
+}
+
+/* ---------------------------------------------------------------------------
+   Growth rings: the figure above the contents
+   --------------------------------------------------------------------------- */
+
+.rings-fig {
+	--rings-w: min(84rem, calc(100vw - 2 * var(--s-5)));
+	inline-size: var(--rings-w);
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: var(--s-5);
+	margin-block: var(--s-6) var(--s-10);
+	margin-inline: calc((100% - var(--rings-w)) / 2);
+	font-family: var(--font-sans);
+}
+
+.rings-plate {
+	position: relative;
+	min-inline-size: 0;
+	padding: var(--s-4);
+	border-radius: var(--r-sm);
+	background: var(--plate-bg);
+	color: var(--plate-ink);
+}
+
+.rings-side {
+	min-inline-size: 0;
+	font-family: var(--font-sans);
+	font-size: var(--t-sm);
+}
+
+.rings-side .rings-cap {
+	color: var(--text-secondary);
+}
+
+.rings-side .rings-cap b {
+	color: var(--text-primary);
+}
+
+.rings-side .rings-cap a {
+	color: var(--accent);
+}
+
+@media (min-width: 62rem) {
+	.rings-fig {
+		grid-template-columns: minmax(0, 1fr) 24rem;
+		align-items: start;
+	}
+
+	.rings-side {
+		position: sticky;
+		inset-block-start: var(--s-4);
+		max-block-size: calc(100svh - 2 * var(--s-4));
+		overflow: auto;
+	}
+}
+
+.rings-svg {
+	--k: 1;
+	display: block;
+	inline-size: 100%;
+	block-size: auto;
+	max-block-size: calc(100svh - var(--s-11) * 5);
+	touch-action: pan-y;
+	user-select: none;
+	-webkit-user-select: none;
+	outline: none;
+}
+
+.rings-svg:focus-visible {
+	box-shadow: 0 0 0 var(--s-1) var(--accent);
+	border-radius: var(--r-sm);
+}
+
+/* The plate's three-copy words, including SVG text. */
+.rings-plate [data-l] {
+	display: none;
+}
+
+html[lang='en'] .rings-plate [data-l='en'],
+html[lang='fr'] .rings-plate [data-l='fr'],
+html[lang='ar'] .rings-plate [data-l='ar'] {
+	display: inline;
+}
+
+/* Lens: presets, playback, the core sample under the slider */
+
+.rings-lens {
+	margin-block-end: var(--s-2);
+	font-size: var(--t-sm);
+}
+
+.rings-lens-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--s-2) var(--s-3);
+	margin-block-end: var(--s-3);
+}
+
+.rings-lens-label {
+	font-family: var(--font-mono);
+	font-size: var(--t-2xs);
+	letter-spacing: var(--track-caps);
+	text-transform: uppercase;
+	color: var(--plate-muted);
+}
+
+.rings-seg {
+	display: inline-flex;
+	border: var(--s-1) solid var(--plate-muted);
+	border-radius: var(--r-full);
+	overflow: hidden;
+}
+
+.rings-seg button {
+	white-space: nowrap;
+	font: inherit;
+	color: var(--plate-soft);
+	background: transparent;
+	border: 0;
+	padding-inline: var(--s-3);
+	min-block-size: var(--touch);
+	cursor: pointer;
+}
+
+.rings-seg button + button {
+	border-inline-start: var(--s-1) solid var(--plate-muted);
+}
+
+.rings-seg button[aria-pressed='true'] {
+	background: var(--plate-ink);
+	color: var(--plate-bg);
+}
+
+.rings-short {
+	display: none;
+}
+
+.rings-play {
+	font: inherit;
+	color: var(--plate-ink);
+	background: transparent;
+	border: var(--s-1) solid var(--plate-muted);
+	border-radius: var(--r-full);
+	padding-inline: var(--s-4);
+	min-block-size: var(--touch);
+	cursor: pointer;
+	margin-inline-start: auto;
+}
+
+.rings-play[aria-pressed='true'] {
+	border-color: var(--accent);
+	color: var(--accent);
+}
+
+.rings-strip {
+	position: relative;
+	block-size: var(--s-11);
+}
+
+.rings-strip-svg {
+	position: absolute;
+	inset: 0;
+	inline-size: 100%;
+	block-size: 100%;
+}
+
+.rings-strip-bars {
+	fill: none;
+	stroke: var(--plate-muted);
+	stroke-width: calc(var(--s-1) * 4);
+	vector-effect: non-scaling-stroke;
+	opacity: 0.35;
+}
+
+.rings-strip-in {
+	fill: none;
+	stroke: var(--plate-ink);
+	stroke-width: calc(var(--s-1) * 4);
+	vector-effect: non-scaling-stroke;
+	opacity: 0.9;
+}
+
+.rings-strip-ruptures {
+	fill: var(--rupture);
+}
+
+.rings-slider {
+	position: absolute;
+	inset: 0;
+	inline-size: 100%;
+	block-size: 100%;
+	margin: 0;
+	appearance: none;
+	-webkit-appearance: none;
+	background: transparent;
+	cursor: ew-resize;
+}
+
+.rings-slider::-webkit-slider-runnable-track {
+	block-size: 100%;
+	background: transparent;
+}
+
+.rings-slider::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	inline-size: var(--s-2);
+	block-size: var(--s-11);
+	background: var(--accent);
+	border: 0;
+	border-radius: var(--r-xs);
+	box-shadow: 0 0 0 var(--s-1) var(--plate-bg);
+}
+
+.rings-slider::-moz-range-track {
+	background: transparent;
+}
+
+.rings-slider::-moz-range-thumb {
+	inline-size: var(--s-2);
+	block-size: var(--s-11);
+	background: var(--accent);
+	border: 0;
+	border-radius: var(--r-xs);
+	box-shadow: 0 0 0 var(--s-1) var(--plate-bg);
+}
+
+.rings-slider:focus-visible {
+	outline: var(--s-1) solid var(--accent);
+	outline-offset: var(--s-1);
+}
+
+.rings-axis {
+	position: relative;
+	block-size: var(--s-5);
+	font-family: var(--font-mono);
+	font-size: var(--t-2xs);
+	color: var(--plate-muted);
+}
+
+.rings-axis span {
+	position: absolute;
+	inset-block-start: 0;
+	transform: translateX(-50%);
+}
+
+[dir='rtl'] .rings-axis span {
+	transform: translateX(50%);
+}
+
+.rings-axis span:first-child {
+	transform: translateX(0);
+}
+
+.rings-axis span:last-child {
+	transform: translateX(-100%);
+}
+
+[dir='rtl'] .rings-axis span:first-child {
+	transform: translateX(0);
+}
+
+[dir='rtl'] .rings-axis span:last-child {
+	transform: translateX(100%);
+}
+
+[dir='rtl'] .rings-strip-svg {
+	transform: scaleX(-1);
+}
+
+.rings-lensout {
+	margin: var(--s-1) 0 0;
+	min-block-size: 1.2em;
+	font-family: var(--font-mono);
+	font-size: var(--t-xs);
+	color: var(--plate-soft);
+}
+
+.rings-readout {
+	position: absolute;
+	inset-block-start: calc(var(--s-4) + var(--s-11) + var(--s-11) + var(--s-10));
+	inset-inline-start: var(--s-5);
+	font-family: var(--font-mono);
+	pointer-events: none;
+}
+
+.rings-readout-year {
+	display: block;
+	font-size: var(--step-3);
+	line-height: 1;
+	color: var(--plate-ink);
+}
+
+.rings-readout-count {
+	font-size: var(--t-xs);
+	color: var(--plate-soft);
+}
+
+/* The rings themselves */
+
+.rings-line {
+	fill: none;
+	stroke: var(--plate-ink);
+	stroke-opacity: 0.09;
+	stroke-width: 0.6;
+	vector-effect: non-scaling-stroke;
+}
+
+.rings-line.rings-dec {
+	stroke-opacity: 0.22;
+}
+
+.rings-line.rings-era {
+	stroke-opacity: 0.42;
+}
+
+.rings-tint {
+	fill: none;
+	stroke: var(--era);
+	stroke-opacity: 0.08;
+}
+
+.rings-bark {
+	fill: none;
+	stroke: var(--plate-ink);
+	stroke-opacity: 0.75;
+	stroke-width: 1.5;
+	vector-effect: non-scaling-stroke;
+}
+
+.rings-bark.rings-open {
+	stroke-dasharray: 3 4;
+	stroke-opacity: 0.35;
+}
+
+.rings-core-disc {
+	fill: var(--plate-ink);
+	fill-opacity: 0.06;
+	stroke: var(--plate-ink);
+	stroke-opacity: 0.35;
+	vector-effect: non-scaling-stroke;
+}
+
+.rings-core {
+	cursor: zoom-out;
+}
+
+.rings-core:hover .rings-core-disc {
+	fill-opacity: 0.12;
+}
+
+.rings-core text {
+	font-family: var(--font-mono);
+	fill: var(--plate-soft);
+	text-anchor: middle;
+	dominant-baseline: middle;
+	paint-order: stroke;
+	stroke: var(--plate-bg);
+	stroke-width: var(--s-1);
+}
+
+.rings-core-a {
+	font-size: calc(var(--t-xs) * var(--k));
+	fill: var(--plate-ink);
+}
+
+.rings-core-b {
+	font-size: calc(var(--t-2xs) * var(--k));
+}
+
+.rings-month {
+	font-family: var(--font-mono);
+	font-size: calc(var(--t-xs) * var(--k));
+	fill: var(--plate-muted);
+	text-anchor: middle;
+	dominant-baseline: middle;
+}
+
+.rings-month.rings-now {
+	fill: var(--plate-ink);
+}
+
+.rings-ticks {
+	fill: none;
+	stroke: var(--plate-ink);
+	stroke-opacity: 0.4;
+	vector-effect: non-scaling-stroke;
+}
+
+.rings-year {
+	font-family: var(--font-mono);
+	font-size: calc(var(--t-2xs) * var(--k));
+	fill: var(--plate-soft);
+	paint-order: stroke;
+	stroke: var(--plate-bg);
+	stroke-width: var(--s-1);
+	dominant-baseline: middle;
+	cursor: zoom-in;
+}
+
+.rings-year:hover {
+	fill: var(--accent);
+}
+
+.rings-year.rings-big {
+	font-size: calc(var(--t-xs) * var(--k));
+	fill: var(--plate-ink);
+}
+
+.rings-today-text {
+	font-family: var(--font-mono);
+	font-size: calc(var(--t-xs) * var(--k));
+	fill: var(--plate-ink);
+	paint-order: stroke;
+	stroke: var(--plate-bg);
+	stroke-width: var(--s-1);
+}
+
+.rings-sub {
+	font-size: calc(var(--t-2xs) * var(--k));
+	fill: var(--plate-soft);
+}
+
+.rings-fresh {
+	stroke: var(--accent);
+	stroke-width: 1.4;
+	vector-effect: non-scaling-stroke;
+}
+
+.rings-now-line {
+	stroke: var(--plate-ink);
+	stroke-width: 1.2;
+	vector-effect: non-scaling-stroke;
+}
+
+.rings-scar {
+	fill: none;
+	stroke-width: 1.2;
+	vector-effect: non-scaling-stroke;
+}
+
+.rings-chord {
+	fill: none;
+	stroke: var(--plate-ink);
+	stroke-opacity: 0.32;
+	stroke-width: 1;
+	vector-effect: non-scaling-stroke;
+}
+
+.rings-thread {
+	fill: none;
+	stroke: var(--accent);
+	stroke-width: 1.6;
+	stroke-linejoin: round;
+	vector-effect: non-scaling-stroke;
+}
+
+/* Marks: basis by fill and dash, never colour alone */
+
+.rings-mark {
+	transition: opacity var(--dur-fast) linear;
+}
+
+.rings-mark circle {
+	vector-effect: non-scaling-stroke;
+}
+
+.rings-mark .m {
+	stroke-width: 1.3;
+}
+
+.rings-mark.b-documented .m {
+	fill: var(--basis-documented);
+	stroke: var(--basis-documented);
+}
+
+.rings-mark.b-reported .m {
+	fill: none;
+	stroke: var(--basis-reported);
+	stroke-width: 1.8;
+	stroke-dasharray: 3.2 2;
+}
+
+.rings-mark.b-inferred .m {
+	fill: none;
+	stroke: var(--basis-inferred);
+	stroke-dasharray: 1 2;
+	opacity: 0.6;
+}
+
+.rings-mark.b-unsubstantiated .m {
+	fill: none;
+	stroke: var(--basis-unsubstantiated);
+	stroke-dasharray: 0.6 1.6 3 1.6;
+	opacity: 0.45;
+}
+
+.rings-mark .fr {
+	fill: none;
+	stroke: var(--plate-ink);
+	stroke-opacity: 0.55;
+	stroke-width: 0.8;
+}
+
+.rings-mark .rr {
+	fill: none;
+	stroke: var(--rupture);
+	stroke-width: 1.8;
+}
+
+.rings-mark.rings-dim {
+	opacity: 0.12;
+}
+
+.rings-mark.rings-faded {
+	opacity: 0.22;
+}
+
+.rings-mark.rings-below,
+.rings-mark.rings-future {
+	opacity: 0;
+	pointer-events: none;
+}
+
+.rings-mark.rings-cored,
+.rings-marks a.rc {
+	opacity: 0.35;
+}
+
+/* The build frame's marks have no class of their own: the basis is on the
+   group and the circle is the anchor's only child. */
+#rings-marks a > circle {
+	vector-effect: non-scaling-stroke;
+	stroke-width: 1.3;
+}
+
+html:not([data-js]) #rings-marks a > circle {
+	r: 4.6;
+}
+
+#rings-marks .b-documented > a > circle {
+	fill: var(--basis-documented);
+	stroke: var(--basis-documented);
+}
+
+#rings-marks .b-reported > a > circle {
+	fill: none;
+	stroke: var(--basis-reported);
+	stroke-width: 1.8;
+	stroke-dasharray: 3.2 2;
+}
+
+#rings-marks .b-inferred > a > circle {
+	fill: none;
+	stroke: var(--basis-inferred);
+	stroke-dasharray: 1 2;
+	opacity: 0.6;
+}
+
+#rings-marks .b-unsubstantiated > a > circle {
+	fill: none;
+	stroke: var(--basis-unsubstantiated);
+	stroke-dasharray: 0.6 1.6 3 1.6;
+	opacity: 0.45;
+}
+
+.rings-today .fk {
+	stroke: var(--accent);
+	stroke-width: 1.4;
+	vector-effect: non-scaling-stroke;
+}
+
+.rings-scars .sc {
+	fill: none;
+	stroke: url(#rings-scar-grad);
+	stroke-width: 1.2;
+	vector-effect: non-scaling-stroke;
+}
+
+
+.rings-mark.rings-hot .m {
+	stroke-width: 2.6;
+	opacity: 1;
+}
+
+.rings-halo {
+	fill: none;
+	stroke: var(--plate-ink);
+	stroke-width: 1.2;
+	vector-effect: non-scaling-stroke;
+	pointer-events: none;
+}
+
+.rings-tag {
+	font-family: var(--font-sans);
+	font-size: calc(var(--t-sm) * var(--k));
+	fill: var(--plate-ink);
+	paint-order: stroke;
+	stroke: var(--plate-bg);
+	stroke-width: var(--s-1);
+	stroke-linejoin: round;
+	pointer-events: none;
+}
+
+.rings-tag .rings-sub {
+	font-size: calc(var(--t-2xs) * var(--k));
+	fill: var(--plate-soft);
+}
+
+/* Legend, hint and caption */
+
+.rings-cap {
+	max-inline-size: 70ch;
+	margin: var(--s-4) 0 0;
+	font-family: var(--font-sans);
+	font-size: var(--t-xs);
+	line-height: var(--lh-snug);
+	color: var(--plate-soft);
+}
+
+.rings-cap b {
+	margin-inline-end: var(--s-2);
+	font-family: var(--font-mono);
+	font-weight: 400;
+	letter-spacing: var(--track-wide);
+	color: var(--plate-ink);
+}
+
+.rings-cap a {
+	color: var(--plate-ink);
+}
+
+/* The card, under the plate */
+
+.rings-card {
+	margin-block-end: var(--s-3);
+	padding: var(--s-4);
+	border: var(--rule);
+	border-radius: var(--r-sm);
+	background: var(--surface-raised);
+	color: var(--text-primary);
+	font-size: var(--t-sm);
+	line-height: var(--lh-snug);
+}
+
+.rings-card-date {
+	margin: 0 0 var(--s-1);
+	font-family: var(--font-mono);
+	font-size: var(--t-xs);
+	color: var(--text-muted);
+}
+
+.rings-flag {
+	color: var(--rupture);
+}
+
+.rings-card h3 {
+	margin: 0 0 var(--s-2);
+	font-family: var(--font-read);
+	font-size: var(--step-1);
+	font-weight: 700;
+	line-height: var(--lh-tight);
+}
+
+.rings-card-meta {
+	margin: 0 0 var(--s-2);
+	color: var(--text-secondary);
+}
+
+.rings-ar {
+	margin: 0 0 var(--s-2);
+	font-family: 'IBM Plex Sans Arabic', var(--font-read);
+	color: var(--text-secondary);
+}
+
+.rings-who {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--s-1) var(--s-2);
+	margin: 0 0 var(--s-2);
+}
+
+.rings-who button {
+	min-block-size: var(--touch);
+	padding-inline: var(--s-3);
+	border: var(--rule);
+	border-radius: var(--r-full);
+	background: transparent;
+	color: var(--text-primary);
+	font: inherit;
+	cursor: pointer;
+}
+
+.rings-who button:hover {
+	border-color: var(--accent);
+}
+
+.rings-n {
+	margin-inline-start: var(--s-1);
+	font-family: var(--font-mono);
+	font-size: var(--t-2xs);
+	color: var(--text-muted);
+}
+
+.rings-go {
+	display: inline-flex;
+	align-items: center;
+	min-block-size: var(--touch);
+	margin-inline-end: var(--s-4);
+	color: var(--accent);
+	font-weight: 600;
+	text-decoration: underline;
+	text-underline-offset: var(--s-1);
+}
+
+.rings-close {
+	float: inline-end;
+	min-inline-size: var(--touch);
+	min-block-size: var(--touch);
+	margin: calc(-1 * var(--s-3));
+	border: 0;
+	background: none;
+	color: var(--text-muted);
+	font: inherit;
+	font-size: var(--step-1);
+	cursor: pointer;
+}
+
+@media (max-width: 40rem) {
+	.rings-plate {
+		margin-inline: calc(-1 * var(--s-5));
+		padding-inline: var(--s-3);
+		border-radius: 0;
+	}
+
+	.rings-seg button {
+		padding-inline: var(--s-2);
+	}
+
+	.rings-long {
+		display: none;
+	}
+
+	.rings-short {
+		display: inline;
+	}
+
+	.rings-play {
+		margin-inline-start: 0;
+	}
+
+	.rings-readout {
+		inset-block-start: calc(var(--s-4) + var(--s-11) + var(--s-11) + var(--s-8));
+	}
+}
+
+html:not([data-js]) .rings-lens {
+	display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.rings-seg button,
+	.rings-play,
+	.rings-who button {
+		transition:
+			background var(--dur-fast) var(--ease-out),
+			border-color var(--dur-fast) var(--ease-out),
+			color var(--dur-fast) var(--ease-out);
+	}
+}
+
+.rings-feedhead {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: var(--s-2);
+	margin-block: var(--s-4) var(--s-2);
+	padding-block-end: var(--s-2);
+	border-block-end: var(--s-1) solid var(--text-primary);
+}
+
+.rings-feedtitle {
+	font-family: var(--font-mono);
+	font-size: var(--t-2xs);
+	letter-spacing: var(--track-caps);
+	text-transform: uppercase;
+}
+
+.rings-feedcount {
+	font-family: var(--font-mono);
+	font-size: var(--t-xs);
+	color: var(--text-muted);
+}
+
+.rings-feed {
+	margin: var(--s-4) 0 0;
+	padding: 0;
+	list-style: none;
+	overflow: auto;
+	overscroll-behavior: contain;
+}
+
+.rings-feed .ev {
+	padding-inline: var(--s-2);
+}
+
+.rings-feed .ev-rail {
+	display: none;
+}
+
+.rings-feed .ev-meta .ev-date {
+	position: static;
+	inline-size: auto;
+}
+
+.rings-feed .ev-date::after {
+	content: ' · ';
+}
+
+.rings-feed .ev-rupture .rupture-rule {
+	margin-block: var(--s-2);
+}
+
+.rings-feed .ev-rupture .rupture-line {
+	display: none;
+}
+
+.rings-feed .ev-rupture .rupture-title {
+	font-size: var(--step-0);
+}
+
+.rings-feed .rings-sel {
+	background: var(--surface-hover);
+	box-shadow: inset var(--s-1) 0 0 var(--accent);
+}
+
+@media (max-width: 61.99rem) {
+	.rings-feed,
+	.rings-feedhead {
+		display: none;
+	}
+}
+
+@media (max-width: 40rem) {
+	.rings-svg {
+		max-block-size: 80svh;
+	}
+}
+
+/* Without script the side column has nothing to say: the ledger below is the
+   list, and the figure takes the width. */
+@media (min-width: 62rem) {
+	html:not([data-js]) .rings-fig {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	html:not([data-js]) .rings-side {
+		display: none;
+	}
+}
+
+.rings-hint {
+	margin: var(--s-2) 0 0;
+	font-family: var(--font-sans);
+	font-size: var(--t-xs);
+	color: var(--plate-muted);
 }
 
 /* ---------------------------------------------------------------------------

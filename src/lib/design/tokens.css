@@ -529,6 +529,8 @@
 	--plate-bg: oklch(14% 0.01 60);
 	/* Paper-coloured text on a plate (FIG. captions), fixed for the same reason. */
 	--plate-ink: oklch(95% 0.008 85);
+	--plate-soft: oklch(84% 0.008 85);
+	--plate-muted: oklch(70% 0.008 85);
 
 	--lh-tight: 1.25;
 	--lh-snug: 1.45;

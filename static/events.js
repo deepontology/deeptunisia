@@ -114,6 +114,12 @@
 			}
 			if (v) out.push(key + '=' + encodeURIComponent(v));
 		}
+		/* The figure owns these two keys; a filter pass must not drop them. */
+		var current = new URLSearchParams(location.search);
+		var extra = ['since', 'id'];
+		for (var e = 0; e < extra.length; e++) {
+			if (current.has(extra[e])) out.push(extra[e] + '=' + encodeURIComponent(current.get(extra[e])));
+		}
 		return out.length ? '?' + out.join('&') : '';
 	}
 
@@ -129,6 +135,28 @@
 
 	function listed(list, id) {
 		return (' ' + (list || '') + ' ').indexOf(' ' + id + ' ') >= 0;
+	}
+
+	function classValue(row, prefix) {
+		var list = row.classList;
+		for (var i = 0; i < list.length; i++) if (list[i].indexOf(prefix) === 0) return list[i].slice(prefix.length);
+		return '';
+	}
+
+	function basisOf(row) {
+		return row.__basis || (row.__basis = classValue(row, 'b-'));
+	}
+
+	function catOf(row) {
+		return row.__cat || (row.__cat = classValue(row, 'c-'));
+	}
+
+	function gradeOf(row) {
+		return row.__grade || (row.__grade = classValue(row, 'g'));
+	}
+
+	function verOf(row) {
+		return row.__ver || (row.__ver = classValue(row, 'v-') || 'unflagged');
 	}
 
 	function chapterKey(row) {
@@ -147,17 +175,17 @@
 
 	function pass(row, skip) {
 		var d = row.dataset;
-		if (skip !== 'basis' && rank(d.basis) > rank(state.basis)) return false;
+		if (skip !== 'basis' && rank(basisOf(row)) > rank(state.basis)) return false;
 		if (skip !== 'era' && state.era && chapterKey(row) !== state.era) return false;
 		if (skip !== 'period' && state.period && decadeKey(row) !== state.period) return false;
-		if (skip !== 'cat' && state.cat && d.cat !== state.cat) return false;
-		if (skip !== 'grade' && state.grade && d.grade !== state.grade) return false;
-		if (skip !== 'ver' && state.ver && d.ver !== state.ver) return false;
+		if (skip !== 'cat' && state.cat && catOf(row) !== state.cat) return false;
+		if (skip !== 'grade' && state.grade && gradeOf(row) !== state.grade) return false;
+		if (skip !== 'ver' && state.ver && verOf(row) !== state.ver) return false;
 		if (skip !== 'q' && state.qNorm && searchText(row).indexOf(state.qNorm) < 0) return false;
 		if (skip !== 'actor' && state.actor && !listed(d.entities, state.actor)) return false;
 		if (skip !== 'institution' && state.institution && !listed(d.entities, state.institution)) return false;
 		if (skip !== 'ruptures' && state.ruptures && !row.classList.contains('ev-rupture')) return false;
-		if (skip !== 'contested' && state.contested && d.contested !== '1') return false;
+		if (skip !== 'contested' && state.contested && !row.classList.contains('ev-contested')) return false;
 		return true;
 	}
 
@@ -227,7 +255,7 @@
 			var opt = catSelect.options[i];
 			var n = 0;
 			for (var r = 0; r < rows.length; r++) {
-				if (rows[r].dataset.cat === opt.value && pass(rows[r], 'cat')) n++;
+				if (catOf(rows[r]) === opt.value && pass(rows[r], 'cat')) n++;
 			}
 			opt.textContent = fill(phrase('events.catOption'), { word: value('cat:' + opt.value), n: n });
 		}
@@ -314,6 +342,7 @@
 	function apply() {
 		var sections = ledger.querySelectorAll('[data-chapter]');
 		var basisBelow = { documented: 0, reported: 0, inferred: 0, unsubstantiated: 0 };
+		var visibleIds = [];
 		shown = 0;
 		below = 0;
 		weakestBelow = '';
@@ -330,11 +359,13 @@
 				if (ok) {
 					visible++;
 					shown++;
+					visibleIds.push(row.getAttribute('data-event'));
 					years[row.dataset.year] = true;
-				} else if (pass(row, 'basis') && rank(row.dataset.basis) > rank(state.basis)) {
+				} else if (pass(row, 'basis') && rank(basisOf(row)) > rank(state.basis)) {
+					var basis = basisOf(row);
 					below++;
-					basisBelow[row.dataset.basis] = (basisBelow[row.dataset.basis] || 0) + 1;
-					if (!weakestBelow || rank(row.dataset.basis) > rank(weakestBelow)) weakestBelow = row.dataset.basis;
+					basisBelow[basis] = (basisBelow[basis] || 0) + 1;
+					if (!weakestBelow || rank(basis) > rank(weakestBelow)) weakestBelow = basis;
 				}
 			}
 			section.hidden = visible === 0;
@@ -400,6 +431,11 @@
 
 		categoryCounts();
 		syncControls();
+		document.dispatchEvent(
+			new CustomEvent('events:filtered', {
+				detail: { visible: visibleIds, floor: state.basis, actor: state.actor, institution: state.institution }
+			})
+		);
 	}
 
 	function commit() {
