@@ -69,10 +69,10 @@
 	const plotW = $derived(Math.max(200, width - GUTTER));
 
 	/*
-	 * The window. A month and a half is as far in as it goes: at that zoom the
-	 * densest stretch of the record (2026) separates into single days.
+	 * The window. Two weeks is as far in as it goes: at that zoom the densest
+	 * stretch of the record (2026) separates into single days.
 	 */
-	const axis = new AxisCamera({ min: DOMAIN_MIN, max: CUTOFF, minSpan: 45 * DAY });
+	const axis = new AxisCamera({ min: DOMAIN_MIN, max: CUTOFF, minSpan: 14 * DAY });
 	untrack(() => axis.setDomain(lensStart(view.lens), CUTOFF));
 
 	/*
@@ -412,7 +412,42 @@
 	const headLabel = $derived(formatDate(app.t, spanYears > 20 ? 'year' : spanYears > 3 ? 'month' : 'day'));
 	const headX = $derived(Math.min(Math.max(x(app.t), 32), Math.max(32, plotW - 32)));
 	const headIn = $derived(app.t >= domain[0] && app.t <= domain[1]);
+	const scrubbed = $derived(app.t < CUTOFF - DAY);
+	const canZoomIn = $derived(span > axis.minSpan + DAY);
+	const windowLabel = $derived(
+		`${formatDate(domain[0], spanYears > 4 ? 'year' : 'month')} – ${formatDate(domain[1], spanYears > 4 ? 'year' : 'month')}`
+	);
 	const ruptures = $derived(passing.filter((e) => e.rupture && eventInDomain(e, domain[0], domain[1])));
+
+	function zoomBy(factor: number) {
+		axis.stop();
+		axis.zoomAt(factor, plotW / 2, plotW);
+	}
+
+	function jumpToPlayhead() {
+		axis.stop();
+		const half = axis.span / 2;
+		axis.setDomain(app.t - half, app.t + half);
+	}
+
+	function onBgDblClick(me: MouseEvent) {
+		const r = plotEl?.getBoundingClientRect();
+		if (!r) return;
+		axis.stop();
+		axis.zoomAt(0.5, Math.min(plotW, Math.max(0, me.clientX - r.left - GUTTER)), plotW);
+	}
+
+	/* While playing on the bottom timeline, keep the playhead inside the window. */
+	$effect(() => {
+		if (!app.playing) return;
+		const now = app.t;
+		untrack(() => {
+			if (now < axis.d0 || now > axis.d1) {
+				const s = axis.span;
+				axis.setDomain(now - s * 0.15, now + s * 0.85);
+			}
+		});
+	});
 
 	let scrubbing = false;
 	function timeAt(clientX: number): number {
@@ -447,6 +482,39 @@
 	const PDI = String.fromCharCode(0x2069);
 	const isolate = (text: string) => FSI + text + PDI;
 </script>
+
+<div class="timeline-shell">
+	<div class="zoom-bar" data-no-pan role="toolbar" aria-label={ew('events.lens')}>
+		<span class="zoom-range mono">{windowLabel}</span>
+		<div class="zoom-actions">
+			{#if !headIn}
+				<button type="button" class="z-btn" onclick={jumpToPlayhead}>
+					{ew('events.timeline.jumpHead', { date: formatDate(app.t, 'month') })}
+				</button>
+			{/if}
+			<div class="z-pair">
+				<button
+					type="button"
+					class="z-btn mono"
+					aria-label={t('view.zoomout')}
+					title={t('view.zoomout')}
+					disabled={!axis.zoomed}
+					onclick={() => zoomBy(1.6)}>−</button
+				>
+				<button
+					type="button"
+					class="z-btn mono"
+					aria-label={t('view.zoomin')}
+					title={t('view.zoomin')}
+					disabled={!canZoomIn}
+					onclick={() => zoomBy(1 / 1.6)}>+</button
+				>
+			</div>
+			{#if axis.zoomed}
+				<button type="button" class="z-btn" onclick={() => axis.reset()}>{t('chronicle.fullrange')}</button>
+			{/if}
+		</div>
+	</div>
 
 <div class="scroll" bind:this={scrollEl} onfocusin={onFocusIn}>
 	<!-- The gesture surface, offset by the gutter so a pinch or a wheel anchors
@@ -515,7 +583,7 @@
 				{/each}
 
 				<!-- svelte-ignore a11y_click_events_have_key_events -->
-				<rect x="0" y={PAD_T} width={plotW} height={H - PAD_T} class="bg" role="presentation" onclick={() => app.select(null)} />
+				<rect x="0" y={PAD_T} width={plotW} height={H - PAD_T} class="bg" role="presentation" onclick={() => app.select(null)} ondblclick={onBgDblClick} />
 
 				{#each labelsInView as gl (gl.key)}
 					<line x1="0" x2={plotW} y1={gl.y - ROW_H / 2} y2={gl.y - ROW_H / 2} class="row-line" />
@@ -548,6 +616,7 @@
 					<g
 						class="mark"
 						class:dim={dim(e)}
+						class:future={scrubbed && e.interval.startEarliest > app.t}
 						class:hot={hoverId === e.id}
 						role="presentation"
 						onclick={() => app.select(e.id)}
@@ -583,6 +652,7 @@
 						class="mark"
 						data-cluster
 						class:dim={selected !== null && !holdsSel && !c.members.some((m) => linked.has(m.id))}
+						class:future={scrubbed && c.members.every((m) => m.interval.startEarliest > app.t)}
 						role="presentation"
 						onclick={(me) => openCluster(c.members, me.clientX, me.clientY)}
 						onmouseenter={(me) => showTip(me, tf('chronicle.cluster.count', { n: c.members.length }), clusterRange(c.members))}
@@ -608,6 +678,7 @@
 						class:sel
 						class:rupture={gl.event?.rupture ?? false}
 						class:dim={gl.event ? dim(gl.event) : false}
+						class:future={scrubbed && (gl.event ? gl.event.interval.startEarliest > app.t : (gl.members?.every((m) => m.interval.startEarliest > app.t) ?? false))}
 						data-no-pan
 						role="button"
 						tabindex="0"
@@ -687,8 +758,70 @@
 		{/if}
 	</div>
 </div>
+</div>
 
 <style>
+	.timeline-shell {
+		flex: 1;
+		min-height: 0;
+		display: flex;
+		flex-direction: column;
+	}
+	.zoom-bar {
+		flex-shrink: 0;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--s-3);
+		padding: var(--s-1) var(--s-4);
+		border-bottom: 1px solid var(--border-subtle);
+		background: var(--surface-base);
+	}
+	.zoom-range {
+		font-size: var(--t-2xs);
+		color: var(--text-muted);
+	}
+	.zoom-actions {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--s-2);
+	}
+	.z-pair {
+		display: inline-flex;
+		align-items: center;
+	}
+	.z-pair .z-btn:first-child {
+		border-start-end-radius: 0;
+		border-end-end-radius: 0;
+		border-inline-end: 0;
+	}
+	.z-pair .z-btn:last-child {
+		border-start-start-radius: 0;
+		border-end-start-radius: 0;
+	}
+	.z-btn {
+		border: 1px solid var(--border-default);
+		border-radius: var(--r-sm);
+		padding: 2px 8px;
+		font-size: var(--t-2xs);
+		color: var(--text-secondary);
+		background: var(--surface-raised);
+		min-height: 24px;
+		line-height: 1;
+	}
+	.z-btn:hover:not(:disabled) {
+		color: var(--text-primary);
+		border-color: var(--border-strong);
+		background: var(--surface-hover);
+	}
+	.z-btn:disabled {
+		opacity: 0.35;
+		cursor: default;
+	}
+	.z-btn:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: 1px;
+	}
 	.scroll {
 		flex: 1;
 		min-height: 0;
@@ -758,6 +891,12 @@
 	}
 	.mark.dim {
 		opacity: 0.3;
+	}
+	.mark.future {
+		opacity: 0.32;
+	}
+	.gl.future {
+		opacity: 0.42;
 	}
 	.diamond {
 		fill: var(--rupture);
