@@ -597,15 +597,14 @@
 	var eras = [];
 	var eraStarts = {};
 	(function initEras() {
-		var blocks = [].slice.call(document.querySelectorAll('[data-chapter][style*="--era"]'));
+		var blocks = [].slice.call(document.querySelectorAll('[data-chapter][data-y0][style*="--era"]'));
 		for (var i = 0; i < blocks.length; i++) {
 			var style = blocks[i].getAttribute('style') || '';
 			var color = /--era:\s*([^;]+)/.exec(style);
-			var yearsText = (blocks[i].querySelector('.chapter-years') || {}).textContent || '';
-			var yearsIn = yearsText.match(/(\d{4})\D+(\d{4})/);
-			if (!color || !yearsIn) continue;
-			var startYear = Number(yearsIn[1]);
-			var endYear = Number(yearsIn[2]);
+			if (!color) continue;
+			/* The years the era touches; an open era runs to the cutoff year. */
+			var startYear = Number(blocks[i].getAttribute('data-y0'));
+			var endYear = Number(blocks[i].getAttribute('data-y1'));
 			eras.push({ start: startYear, end: endYear, color: color[1].trim() });
 			eraStarts[startYear] = true;
 			if (blocks[i].getAttribute('data-chapter') === 'transition') transition = startYear;

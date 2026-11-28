@@ -333,12 +333,28 @@ const eras = data.eras;
 const first = eras[0].interval;
 const last = eras[eras.length - 1].interval;
 
+/* An era ends at its latest possible end, as on every other view. A closed era
+   has one end day; an open one (`end: ongoing`) runs to the cutoff. */
+function eraEnd(span: Span): number {
+	return Number(span.endLatest ?? data.meta.cutoff);
+}
+
+/** Whether the era is still open: its recorded end is `ongoing`. */
+function isOpen(era: EraRow): boolean {
+	return era.interval.raw?.end === 'ongoing';
+}
+
+/** The calendar years an era touches, first and last (an open era's last is the cutoff year). */
+function eraYears(era: EraRow): [number, number] {
+	return [new Date(Number(era.interval.startEarliest)).getUTCFullYear(), new Date(eraEnd(era.interval)).getUTCFullYear()];
+}
+
 function eraIndexFor(t: number): number {
 	/* Boundaries can be shared (an era can open on the day the previous one
 	   closes), so the later era owns the day. */
 	for (let i = eras.length - 1; i >= 0; i--) {
 		const span = eras[i].interval;
-		if (t >= Number(span.startEarliest) && t <= Number(span.endEarliest)) return i;
+		if (t >= Number(span.startEarliest) && t <= eraEnd(span)) return i;
 	}
 	return -1;
 }
@@ -352,7 +368,7 @@ for (const rec of data.events) {
 	const t = startOf(rec);
 	let key: string;
 	if (t < Number(first.startEarliest)) key = 'before';
-	else if (t > Number(last.endEarliest)) key = 'after';
+	else if (t > eraEnd(last)) key = 'after';
 	else {
 		const index = eraIndexFor(t);
 		if (index < 0) fail(`${rec.id} starts outside every era but is not before or after the spans; the eras have a gap`);
@@ -362,13 +378,18 @@ for (const rec of data.events) {
 }
 
 function endYearOf(era: EraRow): number {
-	const end = String(era.interval.raw?.end ?? era.interval.raw?.start ?? '');
+	/* An open era's tail runs to the cutoff year, which it only partly covers. */
+	const end = isOpen(era)
+		? new Date(eraEnd(era.interval)).toISOString().slice(0, 10)
+		: String(era.interval.raw?.end ?? era.interval.raw?.start ?? '');
 	const year = Number(end.slice(0, 4));
 	/* A silence line claims a whole calendar year holds nothing. A year the era
 	   only partly covers is not claimed, so the tail stops at the last full year. */
 	return /-12-31$/.test(end) ? year : year - 1;
 }
 
+/* The two bookend chapters (before the first era, after the last) are printed
+   only when they hold an event. An open last era leaves nothing after it. */
 const chapters: Chapter[] = [
 	{
 		key: 'after',
@@ -389,7 +410,7 @@ const chapters: Chapter[] = [
 		events: byChapter.get('before')!.sort(sortNewestFirst),
 		tailEnd: 0
 	}
-];
+].filter((ch) => ch.era || ch.events.length > 0);
 
 /* ---------------------------------------------------------------------------
    Counts
@@ -488,8 +509,7 @@ function barkMarkup(): string {
 function tintMarkup(): string {
 	const out: string[] = [];
 	for (const era of eras) {
-		const start = Number(String(era.interval.startEarliest).slice(0, 4)) || new Date(Number(era.interval.startEarliest)).getUTCFullYear();
-		const end = Number(String(era.interval.endEarliest).slice(0, 4)) || new Date(Number(era.interval.endEarliest)).getUTCFullYear();
+		const [start, end] = eraYears(era);
 		const inside = ringYears.filter((y) => y >= start && y <= end);
 		if (!inside.length) continue;
 		const from = Math.max(ringGeometry.rc, ringGeometry.inner[inside[0] - firstYear]);
@@ -885,9 +905,8 @@ function chapterTitleHtml(ch: Chapter): string {
 
 function chapterYearsHtml(ch: Chapter): string {
 	if (ch.era) {
-		const start = Number(String(ch.era.start).slice(0, 4));
-		const end = Number(String(ch.era.end).slice(0, 4));
-		return yearsPhrase(start, end);
+		const [start, end] = eraYears(ch.era);
+		return isOpen(ch.era) ? tri('events.yearsOpen', { start }) : yearsPhrase(start, end);
 	}
 	const years = ch.events.map(yearNumber);
 	if (!years.length) return '';
@@ -1123,7 +1142,7 @@ function chapterHtml(ch: Chapter, anchors: Set<string>): string {
 	} else {
 		const key = ch.key === 'before' ? 'events.before.note' : 'events.after.note';
 		const edge = ch.key === 'before' ? first : last;
-		const at = Number(ch.key === 'before' ? edge.startEarliest : edge.endEarliest);
+		const at = ch.key === 'before' ? Number(edge.startEarliest) : eraEnd(edge);
 		const note = triEach(key, {
 			en: { date: dateIn(at, 'day', 'en') },
 			fr: { date: dateIn(at, 'day', 'fr') },
@@ -1169,7 +1188,8 @@ function chapterHtml(ch: Chapter, anchors: Set<string>): string {
 		}
 	}
 
-	return `<section class="chapter" id="${esc(id)}" data-chapter=${attr(ch.key)}${style}>
+	const span = era ? ` data-y0=${eraYears(era)[0]} data-y1=${eraYears(era)[1]}` : '';
+	return `<section class="chapter" id="${esc(id)}" data-chapter=${attr(ch.key)}${span}${style}>
 ${head}
 <ol class=ledger>${items.join('')}</ol>
 </section>`;
