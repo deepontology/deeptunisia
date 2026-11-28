@@ -150,6 +150,12 @@ ok(
 	/\.rpanel \{[^}]*overflow-y: auto;/.test(RECORD_PANEL) &&
 		/\.inner :global\(\.rpanel\) \{[^}]*overflow: visible;/.test(INSPECTOR)
 );
+ok(
+	'the docked Inspector has a keyboard- and pointer-resizable edge handle',
+	INSPECTOR.includes('class="resize-edge"') &&
+		INSPECTOR.includes('role="separator"') &&
+		INSPECTOR.includes('ondblclick={resetWidth}')
+);
 ok('search opens record cards instead of redirecting to a party', SEARCH.includes("app.selected = r.id") && !SEARCH.includes('no card yet'));
 ok('the record card renders entity references as buttons', RECORD_PANEL.includes('class="ref"'));
 

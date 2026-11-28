@@ -281,6 +281,84 @@
 		e.stopPropagation();
 		tucked = false;
 	}
+
+	/* --------------------------------------------------------- edge resize */
+
+	const WIDTH_KEY = 'dt:inspector-w';
+	const MIN_W = 300;
+	let customW = $state<number | null>(null);
+	let resizing = $state(false);
+	let dragStartX = 0;
+	let dragStartW = 400;
+
+	$effect(() => {
+		try {
+			const saved = Number(localStorage.getItem(WIDTH_KEY));
+			if (Number.isFinite(saved) && saved >= MIN_W) {
+				customW = Math.min(Math.round(window.innerWidth * 0.6), Math.round(saved));
+			}
+		} catch {
+			/* storage unavailable */
+		}
+	});
+
+	function clampW(w: number): number {
+		const maxW = typeof window === 'undefined' ? 760 : Math.max(MIN_W, Math.round(window.innerWidth * 0.6));
+		return Math.round(Math.max(MIN_W, Math.min(maxW, w)));
+	}
+
+	function saveW(w: number | null) {
+		try {
+			if (w === null) localStorage.removeItem(WIDTH_KEY);
+			else localStorage.setItem(WIDTH_KEY, String(w));
+		} catch {
+			/* storage unavailable */
+		}
+	}
+
+	function onResizeDown(e: PointerEvent) {
+		if (e.button !== 0 || !asideEl) return;
+		e.preventDefault();
+		resizing = true;
+		dragStartX = e.clientX;
+		dragStartW = asideEl.getBoundingClientRect().width;
+		(e.currentTarget as Element).setPointerCapture?.(e.pointerId);
+	}
+
+	function onResizeMove(e: PointerEvent) {
+		if (!resizing) return;
+		const rtl = document.documentElement.dir === 'rtl';
+		const delta = rtl ? e.clientX - dragStartX : dragStartX - e.clientX;
+		customW = clampW(dragStartW + delta);
+	}
+
+	function onResizeUp(e: PointerEvent) {
+		if (!resizing) return;
+		resizing = false;
+		const el = e.currentTarget as Element;
+		if (el.hasPointerCapture?.(e.pointerId)) el.releasePointerCapture(e.pointerId);
+		saveW(customW);
+	}
+
+	function resetWidth() {
+		customW = null;
+		saveW(null);
+	}
+
+	function onResizeKey(e: KeyboardEvent) {
+		if (e.key === 'Enter' || e.key === 'Home') {
+			e.preventDefault();
+			resetWidth();
+			return;
+		}
+		if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+		e.preventDefault();
+		const rtl = document.documentElement.dir === 'rtl';
+		const wider = (e.key === 'ArrowLeft') !== rtl;
+		const cur = customW ?? asideEl?.getBoundingClientRect().width ?? 400;
+		customW = clampW(cur + (wider ? 24 : -24));
+		saveW(customW);
+	}
 </script>
 
 {#snippet readingNotes()}
@@ -309,11 +387,30 @@
 		class="inspector d-{detent}"
 		class:closing
 		class:tucked
+		class:resizing
+		style:--inspector-w={!compact.current && customW ? `${customW}px` : undefined}
 		aria-label={t('panel.entityInspector')}
 		bind:this={asideEl}
 		onclickcapture={untuck}
 		use:sheetDrag={dragParams}
 	>
+		{#if !compact.current}
+			<!-- svelte-ignore a11y_no_noninteractive_tabindex, a11y_no_noninteractive_element_interactions -->
+			<div
+				class="resize-edge"
+				role="separator"
+				aria-orientation="vertical"
+				aria-label={t('panel.entityInspector')}
+				tabindex="0"
+				onpointerdown={onResizeDown}
+				onpointermove={onResizeMove}
+				onpointerup={onResizeUp}
+				onpointercancel={onResizeUp}
+				onlostpointercapture={onResizeUp}
+				ondblclick={resetWidth}
+				onkeydown={onResizeKey}
+			></div>
+		{/if}
 		{#if compact.current}
 			<!--
 				The drag handle. A button, not a bare div: expanding and collapsing has to
@@ -348,6 +445,7 @@
 
 <style>
 	.inspector {
+		position: relative;
 		flex-shrink: 0;
 		width: var(--inspector-w);
 		border-inline-start: 1px solid var(--border-default);
@@ -356,6 +454,37 @@
 		display: flex;
 		min-height: 0;
 		animation: dock-in var(--dur-normal) var(--ease-out);
+	}
+	.inspector.resizing {
+		user-select: none;
+		transition: none;
+	}
+	.resize-edge {
+		position: absolute;
+		inset-block: 0;
+		inset-inline-start: 0;
+		width: 7px;
+		cursor: col-resize;
+		z-index: 2;
+		touch-action: none;
+	}
+	.resize-edge::before {
+		content: '';
+		position: absolute;
+		inset-block: 0;
+		inset-inline-start: 0;
+		width: 2px;
+		background: var(--accent);
+		opacity: 0;
+		transition: opacity var(--dur-fast) var(--ease-out);
+	}
+	.resize-edge:hover::before,
+	.resize-edge:focus-visible::before,
+	.inspector.resizing .resize-edge::before {
+		opacity: 1;
+	}
+	.resize-edge:focus-visible {
+		outline: none;
 	}
 	.inner {
 		flex: 1;
