@@ -30,7 +30,21 @@ export const eventWords: Record<Locale, Record<string, string>> = {
 		'events.thread.remove': 'Remove the filter {name}',
 		'events.shown': '{shown} of {total}',
 		'events.empty': 'No event matches these filters in the years shown.',
-		'events.reset': 'Show everything'
+		'events.reset': 'Show everything',
+		'events.face.rings': 'Rings',
+		'events.hint.rings': 'One ring per year, January at the top, the bark is today. A ring is as thick as its year\'s record, and a rupture carries a ring of its own and a scar. Drag the strip above the figure or pick a preset to move the lens; the years before it fold toward the centre. In the figure, the arrow keys walk the events, Enter opens one, plus and minus move the lens, Escape clears.',
+		'events.hint.rings.compact': 'One ring per year, the bark is today. Drag the strip to move the lens, tap a mark to open its record.',
+		'events.rings.label': '{n} events over {years} years, one ring per year, January at the top. The bark is today. A rupture carries a ring and a scar.',
+		'events.rings.side': 'In the lens, newest first',
+		'events.rings.follow': 'Follow',
+		'events.rings.grow': 'Watch it grow',
+		'events.rings.stop': 'Stop',
+		'events.rings.today': 'Today',
+		'events.rings.fresh': '{n} in the last {days} days',
+		'events.rings.lensRange': '{from} to today: {n} events',
+		'events.count': '{n} events',
+		'events.countOne': 'one event',
+		'events.years': '{start} to {end}'
 	},
 	fr: {
 		'events.hint':
@@ -47,7 +61,21 @@ export const eventWords: Record<Locale, Record<string, string>> = {
 		'events.thread.remove': 'Retirer le filtre {name}',
 		'events.shown': '{shown} sur {total}',
 		'events.empty': 'Aucun événement ne correspond à ces filtres pour les années affichées.',
-		'events.reset': 'Tout afficher'
+		'events.reset': 'Tout afficher',
+		'events.face.rings': 'Anneaux',
+		'events.hint.rings': 'Un anneau par an, janvier en haut, l’écorce c’est aujourd’hui. Un anneau est aussi épais que les événements de son année, et une rupture porte son propre anneau et une cicatrice. Faites glisser la bande au-dessus de la figure ou choisissez un préréglage pour déplacer la lentille ; les années d’avant se replient vers le centre. Dans la figure, les flèches parcourent les événements, Entrée en ouvre un, plus et moins bougent la lentille, Échap efface.',
+		'events.hint.rings.compact': 'Un anneau par an, l’écorce c’est aujourd’hui. Faites glisser la bande pour déplacer la lentille, touchez une marque pour ouvrir sa fiche.',
+		'events.rings.label': '{n} événements sur {years} ans, un anneau par an, janvier en haut. L’écorce, c’est aujourd’hui. Une rupture porte un anneau et une cicatrice.',
+		'events.rings.side': 'Dans le champ, du plus récent au plus ancien',
+		'events.rings.follow': 'Suivre',
+		'events.rings.grow': 'Voir la croissance',
+		'events.rings.stop': 'Arrêter',
+		'events.rings.today': 'Aujourd’hui',
+		'events.rings.fresh': '{n} sur les {days} derniers jours',
+		'events.rings.lensRange': 'De {from} à aujourd’hui : {n} événements',
+		'events.count': '{n} événements',
+		'events.countOne': 'un événement',
+		'events.years': 'de {start} à {end}'
 	},
 	ar: {
 		'events.hint':
@@ -64,7 +92,21 @@ export const eventWords: Record<Locale, Record<string, string>> = {
 		'events.thread.remove': 'إزالة المرشّح {name}',
 		'events.shown': '{shown} من {total}',
 		'events.empty': 'لا حدث يطابق هذه المرشّحات في السنوات المعروضة.',
-		'events.reset': 'عرض الكل'
+		'events.reset': 'عرض الكل',
+		'events.face.rings': 'الحلقات',
+		'events.hint.rings': 'حلقة لكل سنة، ويناير في الأعلى، واللحاء هو اليوم. سُمك الحلقة بقدر أحداث سنتها، والانقطاع يحمل حلقة خاصة به وأثرًا. اسحب الشريط فوق الشكل أو اختر أحد الخيارات الجاهزة لتحريك النطاق، فتنطوي السنوات السابقة نحو المركز. داخل الشكل، الأسهم تتنقل بين الأحداث، وEnter يفتح حدثًا، والزائد والناقص يحركان النطاق، وEsc يمسح.',
+		'events.hint.rings.compact': 'حلقة لكل سنة، واللحاء هو اليوم. اسحب الشريط لتحريك النطاق، والمس علامة لفتح سجلها.',
+		'events.rings.label': '{n} حدثًا على مدى {years} سنة، حلقة لكل سنة، ويناير في الأعلى. اللحاء هو اليوم. الانقطاع يحمل حلقة وأثرًا.',
+		'events.rings.side': 'داخل النطاق، الأحدث أولًا',
+		'events.rings.follow': 'تتبّع',
+		'events.rings.grow': 'شاهدها تنمو',
+		'events.rings.stop': 'إيقاف',
+		'events.rings.today': 'اليوم',
+		'events.rings.fresh': '{n} خلال آخر {days} يومًا',
+		'events.rings.lensRange': 'من {from} إلى اليوم: {n} حدثًا',
+		'events.count': '{n} حدثاً',
+		'events.countOne': 'حدث واحد',
+		'events.years': 'من {start} إلى {end}'
 	}
 };
 

@@ -20,9 +20,9 @@ export function ew(key: string, params: Record<string, string | number> = {}): s
 	return eventWord(app.locale, key, params);
 }
 
-export type Face = 'timeline';
+export type Face = 'timeline' | 'rings';
 /** The faces this page offers, in switch order. The first is the default. */
-export const FACES: Face[] = ['timeline'];
+export const FACES: Face[] = ['rings', 'timeline'];
 
 export function parseFace(value: string | null): Face {
 	return FACES.find((f) => f === value) ?? FACES[0];

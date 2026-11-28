@@ -443,7 +443,9 @@
 	 * first-strong isolation, so a trailing "…" stays at the end of the words it
 	 * shortens instead of jumping to their other side.
 	 */
-	const isolate = (text: string) => `\u2068${text}\u2069`;
+	const FSI = String.fromCharCode(0x2068);
+	const PDI = String.fromCharCode(0x2069);
+	const isolate = (text: string) => FSI + text + PDI;
 </script>
 
 <div class="scroll" bind:this={scrollEl} onfocusin={onFocusIn}>
