@@ -638,7 +638,7 @@
 		<svg
 			bind:this={svg}
 			class="figure"
-			viewBox="-60 -30 1120 1060"
+			viewBox="-110 -45 1220 1100"
 			role="application"
 			tabindex="0"
 			aria-label={ew('events.rings.label', { n: ds.events.length, years: years.length })}
@@ -971,7 +971,7 @@
 	.compact .figure {
 		flex: none;
 		height: auto;
-		aspect-ratio: 1120 / 1060;
+		aspect-ratio: 1220 / 1100;
 	}
 	.figure:focus {
 		outline: none;
@@ -1035,7 +1035,8 @@
 		dominant-baseline: middle;
 		paint-order: stroke;
 		stroke: var(--surface-base);
-		stroke-width: 4px;
+		stroke-width: calc(7px * var(--k));
+		stroke-linejoin: round;
 	}
 	.core-a {
 		font-size: calc(var(--t-xs) * var(--k));
@@ -1122,7 +1123,8 @@
 		fill: var(--text-muted);
 		paint-order: stroke;
 		stroke: var(--surface-base);
-		stroke-width: 4px;
+		stroke-width: calc(6px * var(--k));
+		stroke-linejoin: round;
 		dominant-baseline: middle;
 		cursor: zoom-in;
 	}
@@ -1160,7 +1162,8 @@
 		fill: var(--text-primary);
 		paint-order: stroke;
 		stroke: var(--surface-base);
-		stroke-width: 4px;
+		stroke-width: calc(6px * var(--k));
+		stroke-linejoin: round;
 	}
 	.sub {
 		font-size: calc(var(--t-2xs) * var(--k));
@@ -1178,7 +1181,7 @@
 		fill: var(--text-primary);
 		paint-order: stroke;
 		stroke: var(--surface-base);
-		stroke-width: 4px;
+		stroke-width: calc(6px * var(--k));
 		stroke-linejoin: round;
 		pointer-events: none;
 	}

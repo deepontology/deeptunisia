@@ -488,8 +488,8 @@ ok(
 	/* The rings face: the growth rings, ported from the old standalone script into the app. */
 	const ringsStyle = EVENTS_RINGS.slice(EVENTS_RINGS.indexOf('<style>'));
 	ok(
-		'the page offers two faces, timeline and rings, and draws the rings for ?view=rings',
-		/FACES: Face\[\] = \['timeline', 'rings'\]/.test(EVENTS_VIEW) &&
+		'the page offers two faces, rings (default) and timeline, and draws the rings for ?view=rings',
+		/FACES: Face\[\] = \['rings', 'timeline'\]/.test(EVENTS_VIEW) &&
 			EVENTS_PAGE.includes("{#if view.face === 'rings'}") &&
 			EVENTS_PAGE.includes('<EventsRings {view}')
 	);
