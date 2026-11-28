@@ -213,6 +213,16 @@ function attr(value: unknown): string {
 }
 
 /** Years as a phrase: one year alone, a span through the era, both from data. */
+/** A phrase from the page-only words (`eventsRings`), filled per language, in three copies. */
+function pageTri(key: string, params: Partial<Record<Locale, Record<string, string | number>>>): string {
+	const values: Tri = { en: '', fr: '', ar: '' };
+	for (const locale of LOCALES) {
+		const fill = params[locale] ?? {};
+		values[locale] = eventsRing(locale, key).replace(/\{(\w+)\}/g, (whole, name: string) => (name in fill ? String(fill[name]) : whole));
+	}
+	return triRaw(values);
+}
+
 function yearsPhrase(start: number, end: number): string {
 	return start === end ? esc(start) : tri('events.years', { start, end });
 }
@@ -906,7 +916,7 @@ function chapterTitleHtml(ch: Chapter): string {
 function chapterYearsHtml(ch: Chapter): string {
 	if (ch.era) {
 		const [start, end] = eraYears(ch.era);
-		return isOpen(ch.era) ? tri('events.yearsOpen', { start }) : yearsPhrase(start, end);
+		return isOpen(ch.era) ? pageTri('events.yearsOpen', { en: { start }, fr: { start }, ar: { start } }) : yearsPhrase(start, end);
 	}
 	const years = ch.events.map(yearNumber);
 	if (!years.length) return '';
@@ -1143,7 +1153,7 @@ function chapterHtml(ch: Chapter, anchors: Set<string>): string {
 		const key = ch.key === 'before' ? 'events.before.note' : 'events.after.note';
 		const edge = ch.key === 'before' ? first : last;
 		const at = ch.key === 'before' ? Number(edge.startEarliest) : eraEnd(edge);
-		const note = triEach(key, {
+		const note = pageTri(key, {
 			en: { date: dateIn(at, 'day', 'en') },
 			fr: { date: dateIn(at, 'day', 'fr') },
 			ar: { date: dateIn(at, 'day', 'ar') }

@@ -2228,8 +2228,6 @@ const en: Dict = {
 	'events.contents': 'Contents by era',
 	'events.before': 'Before the eras',
 	'events.after': 'After the last dated era',
-	'events.before.note': 'Events recorded before the recorded start of the first era, on {date}.',
-	'events.after.note': 'Events recorded after the recorded end of the last era, on {date}.',
 	'events.standing.total': '{n} events recorded across {eras} eras, {from} to {to}, including {ruptures} ruptures.',
 	'events.standing.floor': 'Showing {shown} events at the {basis} floor; {below} below it ({split}) not shown.',
 	'events.standing.floorNoBelow': 'Showing {shown} events at the {basis} floor.',
@@ -2242,7 +2240,6 @@ const en: Dict = {
 	'events.count': '{n} events',
 	'events.countOne': 'one event',
 	'events.years': '{start} to {end}',
-	'events.yearsOpen': '{start} to today',
 	'events.fallbackNote': '* Title in English: no translation yet.',
 	'events.silence': '{from} to {to}: no events on record',
 	'events.rupture': 'Rupture',
@@ -4458,8 +4455,6 @@ const fr: Dict = {
 	'events.contents': 'Sommaire par période',
 	'events.before': 'Avant les périodes',
 	'events.after': 'Après la dernière période datée',
-	'events.before.note': 'Événements enregistrés avant le début consigné de la première période, le {date}.',
-	'events.after.note': 'Événements enregistrés après la fin consignée de la dernière période, le {date}.',
 	'events.standing.total': '{n} événements enregistrés sur {eras} périodes, de {from} à {to}, dont {ruptures} ruptures.',
 	'events.standing.floor': '{shown} événements affichés au seuil {basis} ; {below} sous ce seuil ({split}) non affichés.',
 	'events.standing.floorNoBelow': '{shown} événements affichés au seuil {basis}.',
@@ -4472,7 +4467,6 @@ const fr: Dict = {
 	'events.count': '{n} événements',
 	'events.countOne': 'un événement',
 	'events.years': 'de {start} à {end}',
-	'events.yearsOpen': 'de {start} à aujourd’hui',
 	'events.fallbackNote': '* Titre en anglais : pas encore traduit.',
 	'events.silence': 'de {from} à {to} : aucun événement enregistré',
 	'events.rupture': 'Rupture',
@@ -6676,8 +6670,6 @@ const ar: Dict = {
 	'events.contents': 'الفهرس حسب الحقبة',
 	'events.before': 'قبل الحقب',
 	'events.after': 'بعد آخر حقبة مؤرّخة',
-	'events.before.note': 'أحداث مسجّلة قبل البداية المسجّلة للحقبة الأولى، في {date}.',
-	'events.after.note': 'أحداث مسجّلة بعد النهاية المسجّلة للحقبة الأخيرة، في {date}.',
 	'events.standing.total': '{n} حدثاً مسجّلاً عبر {eras} حقب، من {from} إلى {to}، منها {ruptures} قطائع.',
 	'events.standing.floor': '{shown} حدثاً معروضة عند حد {basis}؛ {below} تحت هذا الحد ({split}) غير معروضة.',
 	'events.standing.floorNoBelow': '{shown} حدثاً معروضة عند حد {basis}.',
@@ -6690,7 +6682,6 @@ const ar: Dict = {
 	'events.count': '{n} حدثاً',
 	'events.countOne': 'حدث واحد',
 	'events.years': 'من {start} إلى {end}',
-	'events.yearsOpen': 'من {start} إلى اليوم',
 	'events.fallbackNote': '* العنوان بالإنجليزية: لم يُترجم بعد.',
 	'events.silence': 'من {from} إلى {to}: لا توجد أحداث مسجّلة',
 	'events.rupture': 'قطيعة',
@@ -6761,12 +6752,15 @@ const ar: Dict = {
 
 
 /**
- * Words the growth-rings figure needs but the app never reads. They live beside
- * the dictionary so the build can print three copies without adding them to the
- * app chunk that every reading page preloads.
+ * Words the events page needs but the app never reads. They live beside the
+ * dictionary so the build can print three copies without adding them to the app
+ * chunk that every reading page preloads.
  */
 export const eventsRings: Record<Locale, Record<string, string>> = {
 	en: {
+		'events.yearsOpen': '{start} to today',
+		'events.before.note': 'Events recorded before the recorded start of the first era, on {date}.',
+		'events.after.note': 'Events recorded after the recorded end of the last era, on {date}.',
 		'events.rings.allShort': 'All',
 		'events.rings.hint': 'Arrows walk, Enter opens, plus and minus move the lens, Escape clears.',
 		'events.key.rupture': 'Rupture ring and scar',
@@ -6774,6 +6768,9 @@ export const eventsRings: Record<Locale, Record<string, string>> = {
 		'events.key.thread': 'Thread: one person or institution through time'
 	},
 	fr: {
+		'events.yearsOpen': 'de {start} à aujourd’hui',
+		'events.before.note': 'Événements enregistrés avant le début consigné de la première période, le {date}.',
+		'events.after.note': 'Événements enregistrés après la fin consignée de la dernière période, le {date}.',
 		'events.rings.allShort': 'Tout',
 		'events.rings.hint': 'Les flèches parcourent, Entrée ouvre, plus et moins bougent la lentille, Échap efface.',
 		'events.key.rupture': 'Anneau de rupture et cicatrice',
@@ -6781,6 +6778,9 @@ export const eventsRings: Record<Locale, Record<string, string>> = {
 		'events.key.thread': 'Fil : une personne ou une institution dans le temps'
 	},
 	ar: {
+		'events.yearsOpen': 'من {start} إلى اليوم',
+		'events.before.note': 'أحداث مسجّلة قبل البداية المسجّلة للحقبة الأولى، في {date}.',
+		'events.after.note': 'أحداث مسجّلة بعد النهاية المسجّلة للحقبة الأخيرة، في {date}.',
 		'events.rings.allShort': 'الكل',
 		'events.rings.hint': 'الأسهم تتنقل، وEnter يفتح، والزائد والناقص يحركان النطاق، وEsc يمسح.',
 		'events.key.rupture': 'حلقة انقطاع وأثر',
