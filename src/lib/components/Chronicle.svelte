@@ -1807,6 +1807,13 @@
 						{/if}
 					</g>
 				</g>
+				{#if GUTTER >= 200}
+					<!-- The lane's table alternative: the whole register as a document.
+					     One small link, deliberately outside the lane's expand control. -->
+					<a class="lane-head-list" href="/events" rel="external" data-no-pan>
+						<text x={GUTTER - 118} y={LANE_TOP + 23}>{t('events.list')}</text>
+					</a>
+				{/if}
 				{#if expanded}
 					{#each expGutterInView as gl (gl.key)}
 						{@const sel = gl.event !== null && eventSelected?.id === gl.event.id}
@@ -2272,6 +2279,18 @@
 		stroke-width: 2;
 		stroke-linecap: round;
 		stroke-linejoin: round;
+	}
+	.lane-head-list {
+		fill: var(--text-muted);
+		font-family: var(--font-mono);
+		font-size: 9.5px;
+		text-decoration: underline;
+		text-decoration-color: var(--border-default);
+		text-underline-offset: 2px;
+	}
+	.lane-head-list:hover {
+		fill: var(--accent);
+		text-decoration-color: var(--accent);
 	}
 	.ev-mark {
 		/* Picking is owned by the lane background (lanePick), so a wide bar can

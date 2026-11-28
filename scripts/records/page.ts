@@ -32,7 +32,7 @@ export interface Rec {
 	[key: string]: unknown;
 }
 
-interface Name {
+export interface Name {
 	en: string;
 	fr?: string;
 	ar?: string;
@@ -77,7 +77,14 @@ function pageUrl(id: string): string {
 	return `${SITE_URL}/${PAGES_DIR}/${id}`;
 }
 
-function nameOf(world: World, id: string): Name | null {
+/** The year an event belongs to, for the ledger's year anchors. */
+export function yearOf(rec: Rec): string {
+	const interval = rec.interval as { startEarliest?: number } | undefined;
+	if (typeof interval?.startEarliest === 'number') return String(new Date(interval.startEarliest).getUTCFullYear());
+	return String(rec.date ?? '').slice(0, 4);
+}
+
+export function nameOf(world: World, id: string): Name | null {
 	const p = world.people.get(id);
 	if (p) return { en: String(p.name_en ?? id), fr: p.name_fr as string | undefined, ar: p.name_ar as string | undefined, aliases: p.aliases as string[] | undefined };
 	const i = world.institutions.get(id);
@@ -313,19 +320,20 @@ function grouped(list: Rec[]): [string, Rec[]][] {
 
 /* A tie row sits under a heading that already states its basis, so the row does
    not repeat it. An office row has no such heading and carries the basis itself. */
+export function basisLine(basis: unknown, confidence: unknown): string {
+	const label = `basis.${String(basis)}`;
+	if (!confidence) return tri(label);
+	return triEach('rec.meta.line', {
+		en: { basis: loc('en', label), grade: String(confidence) },
+		fr: { basis: loc('fr', label), grade: String(confidence) },
+		ar: { basis: loc('ar', label), grade: String(confidence) }
+	});
+}
+
 function metaLine(basis: unknown, confidence: unknown, sources: string[] | undefined, idx: SourceIndex, withBasis = true): string {
 	const bits: string[] = [];
 	if (withBasis) {
-		const label = `basis.${String(basis)}`;
-		bits.push(
-			confidence
-				? triEach('rec.meta.line', {
-						en: { basis: loc('en', label), grade: String(confidence) },
-						fr: { basis: loc('fr', label), grade: String(confidence) },
-						ar: { basis: loc('ar', label), grade: String(confidence) }
-					})
-				: tri(label)
-		);
+		bits.push(basisLine(basis, confidence));
 	} else if (confidence) {
 		/* The group heading states the basis, so the row gives only the grade. */
 		bits.push(triEach('rec.meta.grade', {
@@ -364,10 +372,41 @@ function relationshipRow(r: Rec, recId: string, world: World, idx: SourceIndex):
 	return `<li class=claim data-basis="${esc(r.basis)}"><p class=line>${entityLink(world, otherId)} ${type}${dates ? `, ${dates}` : ''}</p>${metaLine(r.basis, r.confidence, r.sources as string[] | undefined, idx, false)}${description}</li>`;
 }
 
+/**
+ * A title in the three languages, one visible at a time.
+ *
+ * When a translation is missing the English copy stands in silently: the linked
+ * record says in its own standing block what is and is not translated, and a
+ * list does not need the sentence in every row.
+ */
+function titleTri(rec: Rec): string {
+	const en = String(rec.title_en ?? rec.id);
+	const parts = [`<b data-l=en>${esc(en)}</b>`];
+	for (const locale of ['fr', 'ar'] as const) {
+		const translated = rec[`title_${locale}`];
+		const rtl = locale === 'ar' ? ' lang=ar dir=rtl' : '';
+		const text = typeof translated === 'string' && translated.trim() ? translated : en;
+		parts.push(`<b data-l=${locale}${rtl}>${esc(text)}</b>`);
+	}
+	return parts.join('');
+}
+
+/**
+ * The date in a list row. The raw date already states its precision ("1991-05"
+ * is a month, "1956" a year); only an approximate date needs a word, and the
+ * event's own page carries the full precision note.
+ */
+function listDate(rec: Rec): string {
+	const interval = rec.interval as Interval | undefined;
+	const raw = String(rec.date ?? interval?.raw?.start ?? '');
+	if (!raw) return '';
+	if (/^~/.test(raw)) return `<span class=date>${tri('rec.event.approx', { date: raw.slice(1) })}</span>`;
+	return `<span class=date>${esc(raw)}</span>`;
+}
+
 function eventRow(rec: Rec): string {
-	const name = String(rec.title_en ?? rec.id);
-	const date = String(rec.date ?? '');
-	return `<li class=evrow><a href="${esc(href(rec.id))}">${esc(name)}</a>${date ? ` <span class=date>${esc(date)}</span>` : ''}</li>`;
+	const date = listDate(rec);
+	return `<li class=evrow><a href="${esc(href(rec.id))}">${titleTri(rec)}</a>${date ? ` ${date}` : ''}</li>`;
 }
 
 function tieList(relationships: Rec[], recId: string, world: World, idx: SourceIndex): string {
@@ -443,10 +482,66 @@ function summarySection(rec: Rec): string {
    Head and tail
    --------------------------------------------------------------------------- */
 
+/**
+ * The document head every script-built page shares.
+ *
+ * The record pages and the events ledger are both plain documents: one
+ * stylesheet stack, the record script that restores the reader's language and
+ * theme, no hydration. The options after record.css are what a page adds when it
+ * needs them; `noindex` and JSON-LD stay optional so a page that has no single
+ * record behind it does not claim one.
+ */
+export interface DocumentHead {
+	title: string;
+	description: string;
+	url: string;
+	noindex?: boolean;
+	jsonLd?: unknown;
+	/** Stylesheets after the record pages' three, in order. */
+	styles?: string[];
+}
+
+export function headShell(o: DocumentHead): string {
+	const robots = o.noindex ? '\n<meta name=robots content=noindex>' : '';
+	const ld = o.jsonLd ? `<script type=application/ld+json>${JSON.stringify(o.jsonLd)}</script>\n` : '';
+	const styles = (o.styles ?? []).map((href) => `<link rel=stylesheet href=${esc(href)}>\n`).join('');
+	return `<!doctype html>
+<html lang=en dir=ltr>
+<head>
+<meta charset=utf-8>
+<title>${esc(o.title)}</title>
+<meta name=viewport content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name=color-scheme content="dark light">
+<meta name=theme-color content="#fcfaf7" media="(prefers-color-scheme: light)">
+<meta name=theme-color content="#05080c" media="(prefers-color-scheme: dark)">
+<meta name=description content="${esc(o.description)}">${robots}
+<link rel=canonical href="${esc(o.url)}">
+<meta property=og:type content=article>
+<meta property=og:title content="${esc(o.title)}">
+<meta property=og:description content="${esc(o.description)}">
+<meta property=og:url content="${esc(o.url)}">
+<meta property=og:site_name content="DeepTunisia">
+<meta property=og:image content="${SITE_URL}/og/default.png">
+<meta property=og:image:width content=1200>
+<meta property=og:image:height content=630>
+<meta name=twitter:card content=summary_large_image>
+<meta name=twitter:title content="${esc(o.title)}">
+<meta name=twitter:description content="${esc(o.description)}">
+<meta name=twitter:image content="${SITE_URL}/og/default.png">
+<link rel=icon href=/favicon.svg type=image/svg+xml>
+<link rel=icon href=/favicon.ico sizes=48x48>
+<link rel=icon href=/icon-192.png sizes=192x192 type=image/png>
+<link rel=apple-touch-icon href=/apple-touch-icon.png>
+<link rel=stylesheet href=/fonts/fonts.css>
+<link rel=stylesheet href=/e/tokens.css>
+<link rel=stylesheet href=/e/record.css>
+${styles}${ld}<script src=/e/record.js></script>
+</head>`;
+}
+
 function head(kind: RecordKind, rec: Rec, name: Name, title: string): string {
 	const url = pageUrl(rec.id);
 	const description = one('en', 'rec.desc', { name: name.en, kind: one('en', KIND_KEY[kind]) });
-	const robots = INDEXING[kind] ? '' : '\n<meta name=robots content=noindex>';
 	const alternateName = [name.fr, name.ar, ...(name.aliases ?? [])].filter(
 		(v): v is string => typeof v === 'string' && v.length > 0 && v !== name.en
 	);
@@ -458,39 +553,7 @@ function head(kind: RecordKind, rec: Rec, name: Name, title: string): string {
 		url,
 		identifier: rec.id
 	};
-	return `<!doctype html>
-<html lang=en dir=ltr>
-<head>
-<meta charset=utf-8>
-<title>${esc(title)}</title>
-<meta name=viewport content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name=color-scheme content="dark light">
-<meta name=theme-color content="#fcfaf7" media="(prefers-color-scheme: light)">
-<meta name=theme-color content="#05080c" media="(prefers-color-scheme: dark)">
-<meta name=description content="${esc(description)}">${robots}
-<link rel=canonical href="${esc(url)}">
-<meta property=og:type content=article>
-<meta property=og:title content="${esc(title)}">
-<meta property=og:description content="${esc(description)}">
-<meta property=og:url content="${esc(url)}">
-<meta property=og:site_name content="DeepTunisia">
-<meta property=og:image content="${SITE_URL}/og/default.png">
-<meta property=og:image:width content=1200>
-<meta property=og:image:height content=630>
-<meta name=twitter:card content=summary_large_image>
-<meta name=twitter:title content="${esc(title)}">
-<meta name=twitter:description content="${esc(description)}">
-<meta name=twitter:image content="${SITE_URL}/og/default.png">
-<link rel=icon href=/favicon.svg type=image/svg+xml>
-<link rel=icon href=/favicon.ico sizes=48x48>
-<link rel=icon href=/icon-192.png sizes=192x192 type=image/png>
-<link rel=apple-touch-icon href=/apple-touch-icon.png>
-<link rel=stylesheet href=/fonts/fonts.css>
-<link rel=stylesheet href=/e/tokens.css>
-<link rel=stylesheet href=/e/record.css>
-<script type=application/ld+json>${JSON.stringify(ld)}</script>
-<script src=/e/record.js></script>
-</head>`;
+	return headShell({ title, description, url, noindex: !INDEXING[kind], jsonLd: ld });
 }
 
 function tail(kind: RecordKind, rec: Rec, name: Name, world: World, sources: string, disputes: string): string {
@@ -518,7 +581,7 @@ ${section('disputes', 'rec.section.disputes', disputes)}
 <p><a href="${esc(issue)}" rel="noopener noreferrer">${tri('rec.wrong.link')}</a></p>
 </section>
 <section id=instrument>
-<p>${kind === 'event' ? `<a href="/chronicle?id=${encodeURIComponent(rec.id)}">${tri('rec.chronicle.link')}</a>` : `<a href="/network?id=${encodeURIComponent(rec.id)}">${tri('rec.instrument.link')}</a>`}</p>
+<p>${kind === 'event' ? `<a href="/chronicle?id=${encodeURIComponent(rec.id)}">${tri('rec.chronicle.link')}</a> <a href="/events#y${esc(yearOf(rec))}">${tri('events.all')}</a>` : `<a href="/network?id=${encodeURIComponent(rec.id)}">${tri('rec.instrument.link')}</a>`}</p>
 </section>
 </main>
 <footer>
@@ -537,7 +600,11 @@ function personBody(rec: Rec, world: World, idx: SourceIndex, claims: Claims): s
 	const offices = claims.positions.length ? `<ul class=rows>${claims.positions.map((p) => positionRow(p, 'person', world, idx)).join('')}</ul>` : '';
 	const ties = tieList(claims.relationships, rec.id, world, idx);
 	const events = (world.eventsByActor.get(rec.id) ?? []).sort(byDate);
-	const eventList = events.length ? `<ul class=events>${events.map(eventRow).join('')}</ul>` : '';
+	const items = events.map(eventRow);
+	if (items.length) {
+		items.push(`<li class=evrow><a href="/events?actor=${encodeURIComponent(rec.id)}">${tri('events.seeInLedger')}</a></li>`);
+	}
+	const eventList = items.length ? `<ul class=events>${items.join('')}</ul>` : '';
 	return `${summarySection(rec)}
 ${section('offices', 'rec.section.offices', offices)}
 ${section('ties', 'rec.section.ties', ties)}
@@ -556,7 +623,11 @@ function institutionBody(rec: Rec, world: World, idx: SourceIndex, claims: Claim
 	const holders = claims.positions.length ? `<ul class=rows>${claims.positions.map((p) => positionRow(p, 'institution', world, idx)).join('')}</ul>` : '';
 	const ties = tieList(claims.relationships, rec.id, world, idx);
 	const events = (world.eventsByInstitution.get(rec.id) ?? []).sort(byDate);
-	const eventList = events.length ? `<ul class=events>${events.map(eventRow).join('')}</ul>` : '';
+	const items = events.map(eventRow);
+	if (items.length) {
+		items.push(`<li class=evrow><a href="/events?institution=${encodeURIComponent(rec.id)}">${tri('events.seeInLedger')}</a></li>`);
+	}
+	const eventList = items.length ? `<ul class=events>${items.join('')}</ul>` : '';
 	return `<section id=facts>\n${facts}\n</section>
 ${summarySection(rec)}
 ${section('offices', 'rec.section.holders', holders)}
