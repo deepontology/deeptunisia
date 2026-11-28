@@ -575,6 +575,10 @@
 			overflow: visible;
 			flex: none;
 		}
+		.inner :global(.rpanel) {
+			flex: none;
+			overflow: visible;
+		}
 		.inner :global(.panel header) {
 			position: sticky;
 			top: 0;

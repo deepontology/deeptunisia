@@ -145,6 +145,11 @@ ok(
 );
 ok('every record kind has a lookup map', ['companyById', 'contractById', 'licenceById', 'declarationById', 'educationById', 'eventById'].every((m) => MODEL.includes(m)));
 ok('the Inspector routes records away from the entity panel', INSPECTOR.includes('RecordPanel') && INSPECTOR.includes('personById.has(panelSel)'));
+ok(
+	'the record panel scrolls inside the docked Inspector and yields to the single-scroll phone sheet',
+	/\.rpanel \{[^}]*overflow-y: auto;/.test(RECORD_PANEL) &&
+		/\.inner :global\(\.rpanel\) \{[^}]*overflow: visible;/.test(INSPECTOR)
+);
 ok('search opens record cards instead of redirecting to a party', SEARCH.includes("app.selected = r.id") && !SEARCH.includes('no card yet'));
 ok('the record card renders entity references as buttons', RECORD_PANEL.includes('class="ref"'));
 

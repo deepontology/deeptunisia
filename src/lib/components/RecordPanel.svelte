@@ -190,7 +190,7 @@
 	const recordPage = $derived(event ? `/e/${encodeURIComponent(id)}` : null);
 </script>
 
-<article class="rpanel" dir="auto">
+<article class="rpanel" class:embedded dir="auto">
 	<header>
 		<div class="eyebrow mono">{kindLabel}</div>
 		<div class="h-actions">
@@ -319,7 +319,14 @@
 
 <style>
 	.rpanel {
+		flex: 1;
+		min-height: 0;
+		overflow-y: auto;
 		padding: var(--s-6);
+	}
+	.rpanel.embedded {
+		flex: none;
+		overflow: visible;
 	}
 	header {
 		display: flex;
