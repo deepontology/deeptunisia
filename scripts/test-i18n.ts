@@ -25,6 +25,7 @@
  * about the dataset without touching the dataset.
  */
 import { LOCALES, translate, format, type Locale } from '../src/lib/i18n.ts';
+import { EVENT_CATEGORIES } from '../src/lib/taxonomy.ts';
 import {
 	TRANSLATABLE_FIELDS,
 	TRANSLATED_LOCALES,
@@ -267,6 +268,25 @@ for (const l of locales) {
 	// only counts keys.
 	const raw = dicts.en.filter((k) => translate(l, k) === k && k.includes('.'));
 	ok(`${l} resolves every key to a string`, raw.length === 0, raw.slice(0, 5).join(', '));
+}
+
+console.log('\n  ── event categories are words, not slugs ──\n');
+
+/*
+ * A category is shown to the reader on the Chronicle, in the Inspector and on the
+ * event's record page. `translate` answers the key when nothing matches, and the
+ * key is built from the slug, so a missing entry would put "eventCat.legal" or the
+ * bare slug in front of a reader. Every slug in the taxonomy therefore has a word
+ * in every locale, and the English word is never the slug.
+ */
+for (const slug of EVENT_CATEGORIES) {
+	const key = `eventCat.${slug}`;
+	for (const l of locales) {
+		const word = translate(l, key).trim();
+		ok(`${l} ${key} names the category`, word.length > 0 && word !== key, word || '(empty)');
+		ok(`${l} ${key} is not the slug`, word !== slug, word);
+	}
+	ok(`the English eventCat.${slug} is a word, not the slug`, translate('en', key) !== slug);
 }
 
 console.log('\n  ── data prose: schema and provenance ──\n');

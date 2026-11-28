@@ -7,7 +7,7 @@
 	import { relationshipsByEntity } from '$lib/model';
 	import { app } from '$lib/state.svelte';
 	import { applyEntityLink } from '$lib/deeplink.svelte';
-	import { t, tf, basisLabel, describeInterval, durationLabel, formatDate } from '$lib/t.svelte';
+	import { t, tf, basisLabel, describeInterval, durationLabel, formatDate, eventCategoryLabel } from '$lib/t.svelte';
 	import { englishList, eventTitle, nameOf } from '$lib/names.svelte';
 	import { dateFormatter } from '$lib/i18n';
 	import Button from '$lib/ui/Button.svelte';
@@ -1160,9 +1160,8 @@
 
 	{#if expanded}
 		<!-- The events view's own controls: what is in scope, and where to look.
-		     Category labels are the raw data slugs, matching how RecordPanel
-		     already names an event's category; chrome comes from existing keys,
-		     so this view adds no untranslated strings. -->
+		     Category labels come from the eventCat dictionary family, so a
+		     reader never sees the data slug (DESIGN section 12). -->
 		<div class="events-bar">
 			<button class="eb-chip on" onclick={() => setView('timeline')}>
 				{t('chronicle.events.collapse')}
@@ -1179,7 +1178,7 @@
 					aria-pressed={!hiddenCats.has(cat)}
 					onclick={() => toggleCat(cat)}
 				>
-					{cat} <span class="eb-n mono">{n}</span>
+					{eventCategoryLabel(cat)} <span class="eb-n mono">{n}</span>
 				</button>
 			{/each}
 			<span class="eb-sep"></span>
@@ -1992,7 +1991,7 @@
 					<tr>
 						<td>{formatDate(e.interval.startEarliest, 'day')}</td>
 						<td>{eventTitle(e)}</td>
-						<td>{e.category}</td>
+						<td>{eventCategoryLabel(e.category)}</td>
 						<td>{e.rupture ? t('record.yes') : t('record.no')}</td>
 						<td>{e.confidence}</td>
 						<td>{e.origins ?? e.independence ?? '?'}</td>

@@ -78,6 +78,17 @@ export function layerLabel(l: Layer): string {
 	return translate(app.locale, `layer.${l}`) || LAYER_LABEL[l];
 }
 
+/**
+ * The reader's word for an event category.
+ *
+ * The taxonomy holds the slug; the dictionary holds the word under
+ * `eventCat.<slug>`. A component never writes the key itself, so the literal-key
+ * sweep over the views stays free of a dangling `eventCat.` prefix.
+ */
+export function eventCategoryLabel(category: string): string {
+	return translate(app.locale, `eventCat.${category}`);
+}
+
 /*
  * `basis.*` and `layer.*` have been translated in all three locales since the
  * first i18n pass, and eleven call sites rendered the raw English maps from

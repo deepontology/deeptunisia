@@ -493,7 +493,7 @@ function head(kind: RecordKind, rec: Rec, name: Name, title: string): string {
 </head>`;
 }
 
-function tail(rec: Rec, name: Name, world: World, sources: string, disputes: string): string {
+function tail(kind: RecordKind, rec: Rec, name: Name, world: World, sources: string, disputes: string): string {
 	const line = one('en', 'rec.cite.line', {
 		name: name.en,
 		id: rec.id,
@@ -518,7 +518,7 @@ ${section('disputes', 'rec.section.disputes', disputes)}
 <p><a href="${esc(issue)}" rel="noopener noreferrer">${tri('rec.wrong.link')}</a></p>
 </section>
 <section id=instrument>
-<p><a href="/network?id=${encodeURIComponent(rec.id)}">${tri('rec.instrument.link')}</a></p>
+<p>${kind === 'event' ? `<a href="/chronicle?id=${encodeURIComponent(rec.id)}">${tri('rec.chronicle.link')}</a>` : `<a href="/network?id=${encodeURIComponent(rec.id)}">${tri('rec.instrument.link')}</a>`}</p>
 </section>
 </main>
 <footer>
@@ -590,7 +590,7 @@ function eventBody(rec: Rec, world: World, idx: SourceIndex): string {
 	const consequences = ((rec.consequences as string[] | undefined) ?? []).filter((id) => world.events.has(id));
 	const facts = `<dl class=facts>
 <div><dt>${tri('rec.field.date')}</dt><dd>${eventDatePhrase(rec)}</dd></div>
-<div><dt>${tri('rec.field.category')}</dt><dd>${esc(rec.category ?? '')}</dd></div>
+<div><dt>${tri('rec.field.category')}</dt><dd>${tri('eventCat.' + String(rec.category))}</dd></div>
 ${places ? `<div><dt>${tri('rec.field.place')}</dt><dd><ul class=places>${places}</ul></dd></div>` : ''}
 ${rec.rupture ? `<div><dt>${tri('rec.field.rupture')}</dt><dd><strong>${tri('rec.event.rupture')}</strong></dd></div>` : ''}
 </dl>`;
@@ -669,7 +669,7 @@ ${tagline}
 </header>
 ${standing}
 ${body}
-${tail(rec, name, world, sourcesHtml, disputesHtml)}
+${tail(kind, rec, name, world, sourcesHtml, disputesHtml)}
 `;
 
 	const eventsShown = kind === 'event'

@@ -25,6 +25,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { KINDS, INDEXING } from './records/config.ts';
+import { translate } from '../src/lib/i18n.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -68,7 +69,7 @@ interface Dataset {
 	meta: { datasetHash: string };
 	people: { id: string; sources?: string[] }[];
 	institutions: { id: string }[];
-	events: { id: string; contested?: { framing?: string; held_by?: string }[] }[];
+	events: { id: string; category?: string; contested?: { framing?: string; held_by?: string }[] }[];
 }
 
 const data = JSON.parse(readFileSync(DATASET, 'utf8')) as Dataset;
@@ -208,6 +209,32 @@ for (const [id, html] of pages) {
 	}
 }
 ok('every /e/ link in every page points at a record page, now or at the next job', dangling.length === 0, dangling.length ? sample(dangling) : '');
+
+/* ---------------------------------------------------------------------------
+   An event page says its category in words, and leads back to the Chronicle
+   --------------------------------------------------------------------------- */
+
+const categoryLeaks: string[] = [];
+const chronicleMissing: string[] = [];
+const chronicleStray: string[] = [];
+for (const event of data.events) {
+	const html = pages.get(event.id);
+	if (!html) continue;
+	for (const locale of ['en', 'fr', 'ar'] as const) {
+		const word = escaped(translate(locale, `eventCat.${event.category}`));
+		if (!html.includes(`>${word}</b>`)) categoryLeaks.push(`${event.id}: ${locale} ${word}`);
+	}
+	if (!html.includes(`href="/chronicle?id=${encodeURIComponent(event.id)}"`)) chronicleMissing.push(event.id);
+}
+for (const kind of ['person', 'institution'] as const) {
+	for (const rec of rows[kind]) {
+		const html = pages.get(rec.id);
+		if (html?.includes('/chronicle?id=')) chronicleStray.push(rec.id);
+	}
+}
+ok('every event page names its category in three languages', categoryLeaks.length === 0, categoryLeaks.length ? sample(categoryLeaks) : '');
+ok('every event page leads back to the Chronicle', chronicleMissing.length === 0, chronicleMissing.length ? sample(chronicleMissing) : '');
+ok('no person or institution page sends the reader to the Chronicle', chronicleStray.length === 0, chronicleStray.length ? sample(chronicleStray) : '');
 
 /* ---------------------------------------------------------------------------
    The honesty rules

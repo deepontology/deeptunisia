@@ -179,6 +179,8 @@
 				</li>
 			{/each}
 		</ul>
+
+		<a class="cv-sheet-all" href="/events">{t('chronicle.allEvents')}</a>
 	</div>
 {/if}
 
@@ -289,6 +291,22 @@
 	}
 	.cv-row:hover .cv-row-title {
 		color: var(--text-primary);
+	}
+
+	/* The way out of one cluster to the whole ledger, a full touch target. */
+	.cv-sheet-all {
+		flex: 0 0 auto;
+		display: flex;
+		align-items: center;
+		min-height: var(--touch);
+		padding-inline: var(--s-4);
+		border-top: var(--rule);
+		font-size: var(--t-sm);
+		color: var(--accent);
+	}
+	.cv-sheet-all:hover {
+		background: var(--surface-hover);
+		color: var(--accent-hover);
 	}
 
 	/*

@@ -324,6 +324,7 @@
 	</div>
 
 	<div class="body">
+		<a class="open-page" href={`/e/${encodeURIComponent(id)}`}>{t('record.openPage')}</a>
 		<div class="layerrow">
 			{#each entity?.layers ?? [] as layer (layer)}
 				<span class="lp" style:--c={LAYER_COLOR[layer]}><i></i>{layerLabel(layer)}</span>
@@ -721,6 +722,19 @@
 		gap: 5px;
 		align-items: center;
 		margin-bottom: 8px;
+	}
+	/* The record page is the document a reader can cite; the link is quiet. */
+	.open-page {
+		display: inline-flex;
+		align-items: center;
+		min-height: var(--touch);
+		margin-bottom: var(--s-2);
+		font-size: var(--t-sm);
+		color: var(--accent);
+		border-bottom: 1px solid var(--accent-border);
+	}
+	.open-page:hover {
+		color: var(--accent-hover);
 	}
 	.lp {
 		display: inline-flex;
