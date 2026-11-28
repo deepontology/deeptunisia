@@ -12,8 +12,9 @@
 	import { eventEnd } from '$lib/chronicle/events';
 	import EventsTimeline from './EventsTimeline.svelte';
 	import EventsList from './EventsList.svelte';
+	import EventsRings from './EventsRings.svelte';
 	import FaceSwitch from './FaceSwitch.svelte';
-	import { EventsView, FACES, FIRST_YEAR, LENS_PRESETS, ew, lensStart, parseFace, parseThread, type Face } from './view.svelte';
+	import { EventsView, FACES, FIRST_YEAR, LENS_PRESETS, ew, lensStart, parseFace, parseThread, type Face, type Thread } from './view.svelte';
 
 	/**
 	 * The events page: every recorded event, inside the instrument.
@@ -45,6 +46,14 @@
 		});
 	}
 
+	function follow(th: Thread) {
+		view.thread = th;
+		rewriteUrl((u) => {
+			u.searchParams.delete(th.kind === 'actor' ? 'institution' : 'actor');
+			u.searchParams.set(th.kind, th.id);
+		});
+	}
+
 	function clearThread() {
 		view.thread = null;
 		rewriteUrl((u) => {
@@ -58,7 +67,7 @@
 		view.clear();
 	}
 
-	const faceLabels: Record<Face, string> = $derived({ timeline: ew('events.face.timeline') });
+	const faceLabels: Record<Face, string> = $derived({ timeline: ew('events.face.timeline'), rings: ew('events.face.rings') });
 
 	/*
 	 * Category counts in the years shown, under every filter but the category
@@ -81,6 +90,16 @@
 		return nameOf(personById.get(th.id)) || nameOf(institutionById.get(th.id)) || th.id;
 	});
 
+	const hint = $derived(
+		view.face === 'rings'
+			? compact.current
+				? ew('events.hint.rings.compact')
+				: ew('events.hint.rings')
+			: compact.current
+				? ew('events.hint.compact')
+				: ew('events.hint')
+	);
+
 	const lensLabel = (y: number) => (y <= FIRST_YEAR ? ew('events.lens.all') : ew('events.lens.since', { year: y }));
 </script>
 
@@ -95,7 +114,7 @@
 				onchange={setFace}
 			/>
 		{/if}
-		<AboutView hint={compact.current ? ew('events.hint.compact') : ew('events.hint')} />
+		<AboutView hint={hint} />
 	</div>
 
 	<div class="filters" role="group" aria-label={ew('events.filters')}>
@@ -153,7 +172,9 @@
 		{/if}
 	</div>
 
-	{#if browser && compact.current}
+	{#if view.face === 'rings'}
+		<EventsRings {view} onfollow={follow} onunfollow={clearThread} />
+	{:else if browser && compact.current}
 		<EventsList {view} />
 	{:else}
 		<EventsTimeline {view} />

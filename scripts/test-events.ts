@@ -15,6 +15,11 @@
  *   - the record pages link to it by the event's id, or by the person or
  *     institution whose events it should show, and every such id is real
  *   - the sitemap lists it
+ *   - the growth-rings geometry (`components/events/rings.ts`) keeps its
+ *     promises: ring weight 0.5 + n^0.75, the pith and the bark where they
+ *     belong, the lens squeezing only the years before it, the core fold, marks
+ *     inside their own ring, a mirrored figure for a right-to-left reader, and
+ *     a growth clock that runs from the first year to the cutoff
  *   - the words only the record pages print (`documentWords`) keep the
  *     dictionary's rules and stay out of the app chunks
  *
@@ -26,6 +31,7 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { documentWords, translate as appTranslate } from '../src/lib/i18n.ts';
+import { C, R, R0, angle, baseWeight, geometry, growthClock, layout, point, startOfYear } from '../src/lib/components/events/rings.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -81,6 +87,7 @@ const pkg = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8')) as { sc
 ok('the build no longer runs a ledger script', !/build-events/.test(pkg.scripts.build));
 ok('the ledger build script is gone', !existsSync(join(ROOT, 'scripts', 'build-events.ts')));
 ok('the ledger stylesheet and script are gone', !existsSync(join(ROOT, 'static', 'events.css')) && !existsSync(join(ROOT, 'static', 'events.js')));
+ok('the standalone rings script is gone (the rings are an app component)', !existsSync(join(ROOT, 'static', 'events-rings.js')));
 ok('the route exists in the instrument group', existsSync(join(ROOT, 'src', 'routes', '(instrument)', 'events', '+page.svelte')));
 
 const nav = readFileSync(join(ROOT, 'src', 'lib', 'shell', 'nav.svelte.ts'), 'utf8');
@@ -88,6 +95,73 @@ ok('the menu entry for /events is an app link', /\{\s*href:\s*'\/events',\s*key:
 const shellFiles = walk(join(ROOT, 'src', 'lib', 'shell'), (n) => n.endsWith('.svelte') || n.endsWith('.ts'));
 const external = shellFiles.filter((f) => /item\.document/.test(readFileSync(f, 'utf8')));
 ok('no menu renders a link as an external document', external.length === 0, external.map((f) => f.slice(ROOT.length + 1)).join(', '));
+
+/* ---------------------------------------------------------------------------
+   The rings geometry, checked as numbers (no build needed)
+   --------------------------------------------------------------------------- */
+
+{
+	const years = Array.from({ length: 2026 - 1955 + 1 }, (_, k) => 1955 + k);
+	/* A record shaped like the real one: thin for decades, then busy. */
+	const counts = years.map((y) => (y >= 2025 ? 60 : y >= 2021 ? 12 : y === 2011 ? 9 : y % 7 === 0 ? 1 : 0));
+	ok('a ring weighs 0.5 + n^0.75', baseWeight(0) === 0.5 && baseWeight(16) === 8.5 && Math.abs(baseWeight(60) - (0.5 + 60 ** 0.75)) < 1e-9);
+
+	const G = geometry(years, counts, 2021, null, 4);
+	const steps = G.inner.every((r, i) => r <= G.outer[i] && (i === 0 || Math.abs(r - G.outer[i - 1]) < 1e-9));
+	ok('rings run from the pith to the bark without gaps', Math.abs(G.inner[0] - R0) < 1e-9 && Math.abs(G.bark - R) < 1e-9 && steps);
+	const width = (g: typeof G, y: number) => g.outer[y - 1955] - g.inner[y - 1955];
+	const share = (y: number) => width(G, y) / baseWeight(counts[y - 1955]);
+	ok(
+		'the lens keeps every year from 2021 on at its own weight',
+		[2021, 2022, 2025, 2026].every((y) => Math.abs(share(y) - share(2021)) < 1e-9)
+	);
+	ok('years before the lens are squeezed, the oldest most', share(2020) < share(2021) && share(2000) < share(2020) && share(1960) < share(2000));
+	ok('the run of years too thin to hold a mark folds into the core', G.coreEnd !== null && G.coreEnd < 2021 && Math.abs(G.rc - G.outer[G.coreEnd - 1955]) < 1e-9, `core to ${G.coreEnd}`);
+	const all = geometry(years, counts, 1955, null, 4);
+	ok('with every year in the lens nothing is folded', all.coreEnd === null && all.rc === 0);
+
+	const growDay = Date.UTC(2011, 6, 1) / 86_400_000;
+	const grown = geometry(years, counts, 1955, growDay, 4);
+	ok(
+		'while growing, the years not lived yet have no width and the scale holds',
+		width(grown, 2012) === 0 && width(grown, 2026) === 0 && Math.abs(grown.inner[1960 - 1955] - all.inner[1960 - 1955]) < 1e-9 && width(grown, 2011) < width(all, 2011)
+	);
+
+	const evs = [
+		{ i: 0, day: Date.UTC(2021, 0, 1) / 86_400_000 },
+		{ i: 1, day: Date.UTC(2021, 3, 15) / 86_400_000 },
+		{ i: 2, day: Date.UTC(2025, 6, 1) / 86_400_000 },
+		{ i: 3, day: Date.UTC(2025, 6, 2) / 86_400_000 },
+		{ i: 4, day: Date.UTC(1981, 9, 9) / 86_400_000 }
+	];
+	const P = layout(evs, years, G, 4, 1);
+	const inside = evs.every((e) => {
+		const p = P[e.i]!;
+		const y = new Date(e.day * 86_400_000).getUTCFullYear();
+		return p.y === y && p.r >= G.inner[y - 1955] && p.r <= G.outer[y - 1955];
+	});
+	ok('every mark sits inside its own year\'s ring', inside);
+	ok('January 1 is at the top', Math.abs(P[0]!.a - angle(0, 1)) < 1e-9 && Math.abs(point(100, P[0]!.a)[0] - C) < 1e-6);
+	ok('a mark in a folded year says so', P[4]!.cored === true && P[0]!.cored === false);
+	ok('two marks a day apart take different lanes when the ring has room', P[2]!.r !== P[3]!.r);
+	const mirrored = layout(evs, years, G, 4, -1);
+	ok(
+		'a right-to-left reader gets the mirrored figure',
+		evs.every((e) => {
+			const a = point(P[e.i]!.r, P[e.i]!.a);
+			const b = point(mirrored[e.i]!.r, mirrored[e.i]!.a);
+			return Math.abs(a[0] - C + (b[0] - C)) < 1e-6 && Math.abs(a[1] - b[1]) < 1e-6;
+		})
+	);
+
+	const cutoff = Date.UTC(2026, 10, 27) / 86_400_000;
+	const clock = growthClock(1955, cutoff, evs.map((e) => e.day));
+	const samples = Array.from({ length: 21 }, (_, k) => clock(k / 20));
+	ok(
+		'the growth clock runs from the first January to the cutoff, never backwards',
+		samples[0] === startOfYear(1955) && samples[20] === cutoff && samples.every((t, k) => k === 0 || t >= samples[k - 1])
+	);
+}
 
 if (!existsSync(BUILD)) {
 	console.log('  note  build/ is missing: run `npm run build` to check the built page\n');
@@ -100,7 +174,10 @@ if (!existsSync(PAGE)) {
 	console.log(`\n  ${checks - failures}/${checks} checks passed, ${failures} FAILED\n`);
 	process.exit(1);
 }
-ok('the ledger stylesheet and script are not in the build', !existsSync(join(BUILD, 'events.css')) && !existsSync(join(BUILD, 'events.js')));
+ok(
+	'the ledger stylesheet and scripts are not in the build',
+	!existsSync(join(BUILD, 'events.css')) && !existsSync(join(BUILD, 'events.js')) && !existsSync(join(BUILD, 'events-rings.js'))
+);
 
 const html = readFileSync(PAGE, 'utf8');
 const data = JSON.parse(readFileSync(DATASET, 'utf8')) as { events: { id: string }[]; people: { id: string }[]; institutions: { id: string }[] };
@@ -146,6 +223,19 @@ ok('the prerendered page draws the filters', html.includes(englishOf('events.len
 		for (const c of carrying) if (pre.includes(c)) leaks.push(`${page.slice(BUILD.length + 1)} preloads ${c}`);
 	}
 	ok('no other page preloads the events page code', leaks.length === 0, leaks.length ? sample(leaks) : `${others.length} pages`);
+}
+
+{
+	/* The rings component writes its scar gradients under this id; the chunk that holds it is the rings code. */
+	const chunks = walk(join(BUILD, '_app', 'immutable'), (n) => n.endsWith('.js'));
+	const rings = chunks.filter((path) => readFileSync(path, 'utf8').includes('ev-scar-')).map((path) => path.slice(BUILD.length + 1));
+	ok('the rings face is in the build', rings.length > 0, `${rings.length} chunk(s)`);
+	const pre = new Set(preloads(html));
+	ok('the events page preloads the rings', rings.some((c) => pre.has(c)));
+	const elsewhere = walk(BUILD, (n) => n.endsWith('.html'))
+		.filter((p) => p !== PAGE)
+		.flatMap((p) => (rings.some((c) => preloads(readFileSync(p, 'utf8')).includes(c)) ? [p.slice(BUILD.length + 1)] : []));
+	ok('no other page preloads the rings', elsewhere.length === 0, elsewhere.length ? sample(elsewhere) : 'clean');
 }
 
 /* ---------------------------------------------------------------------------

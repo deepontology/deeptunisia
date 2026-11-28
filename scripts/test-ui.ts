@@ -260,6 +260,8 @@ const EVENTS_LIST = readFileSync(join(EVENTS_DIR, 'EventsList.svelte'), 'utf8');
 const EVENTS_PAGE = readFileSync(join(EVENTS_DIR, 'EventsPage.svelte'), 'utf8');
 const EVENTS_VIEW = readFileSync(join(EVENTS_DIR, 'view.svelte.ts'), 'utf8');
 const FACE_SWITCH = readFileSync(join(EVENTS_DIR, 'FaceSwitch.svelte'), 'utf8');
+const EVENTS_RINGS = readFileSync(join(EVENTS_DIR, 'EventsRings.svelte'), 'utf8');
+const RINGS_GEOMETRY = readFileSync(join(EVENTS_DIR, 'rings.ts'), 'utf8');
 const EVENT_GEOMETRY = readFileSync(join(HERE, '..', 'src', 'lib', 'chronicle', 'events.ts'), 'utf8');
 // The lane's own markup, so the no-raw-colour assertion cannot trip on the
 // tenure rows below it (era accents, layer colours) or the tooltip above.
@@ -482,6 +484,96 @@ ok(
 	'the face switch shows only when there is more than one face (no dead control)',
 	EVENTS_PAGE.includes('{#if FACES.length > 1}') && EVENTS_VIEW.includes('parseFace(')
 );
+{
+	/* The rings face: the growth rings, ported from the old standalone script into the app. */
+	const ringsStyle = EVENTS_RINGS.slice(EVENTS_RINGS.indexOf('<style>'));
+	ok(
+		'the page offers two faces, timeline and rings, and draws the rings for ?view=rings',
+		/FACES: Face\[\] = \['timeline', 'rings'\]/.test(EVENTS_VIEW) &&
+			EVENTS_PAGE.includes("{#if view.face === 'rings'}") &&
+			EVENTS_PAGE.includes('<EventsRings {view}')
+	);
+	ok(
+		'one ring per year, as thick as 0.5 + n^0.75, every year before the lens squeezed',
+		RINGS_GEOMETRY.includes('return 0.5 + Math.pow(n, 0.75);') && RINGS_GEOMETRY.includes('Math.exp(-(fy - y + (F % 1)) / TAU)')
+	);
+	ok(
+		'every colour in the rings comes from the theme tokens (no literal colour, no fixed plate, no era accents)',
+		!/#[0-9a-fA-F]{3,8}\b|rgba?\(|hsla?\(|oklch\(/.test(ringsStyle) &&
+			!EVENTS_RINGS.includes('--plate-') &&
+			!EVENTS_RINGS.includes('era.accent') &&
+			!/fill="(?!none)[^"{]|stroke="(?!url)[^"{]/.test(EVENTS_RINGS)
+	);
+	ok(
+		'ruptures draw in --rupture: their own ring, a scar that fades toward the bark, a tick on the strip',
+		/\.mark \.rr \{[^}]*stroke: var\(--rupture\)/.test(ringsStyle) &&
+			/\.scar-from \{[^}]*stop-color: var\(--rupture\)/.test(ringsStyle) &&
+			/\.scar-to \{[^}]*stop-opacity: 0\.0\d/.test(ringsStyle) &&
+			/\.strip-ruptures \{[^}]*fill: var\(--rupture\)/.test(ringsStyle)
+	);
+	ok(
+		'marks keep the basis by fill and dash, not colour alone',
+		['documented', 'reported', 'inferred', 'unsubstantiated'].every((b) => ringsStyle.includes(`.mark.b-${b} .m`)) &&
+			/\.mark\.b-reported \.m \{[^}]*stroke-dasharray/.test(ringsStyle)
+	);
+	ok(
+		'the lens: the shared presets move it, the core-sample strip and slider move it, and it writes back the first year in view',
+		EVENTS_RINGS.includes('const s = view.lensSeq;') &&
+			EVENTS_RINGS.includes('class="strip"') &&
+			EVENTS_RINGS.includes('type="range"') &&
+			EVENTS_RINGS.includes('if (view.lens !== y) view.lens = y;')
+	);
+	ok(
+		'chords join the selected event to every event sharing a person or institution, and a followed thread draws its path',
+		EVENTS_RINGS.includes('o.entities.some((id) => sel.entities.includes(id))') &&
+			EVENTS_RINGS.includes('class="chord"') &&
+			EVENTS_RINGS.includes('class="thread"') &&
+			EVENTS_RINGS.includes('smooth(')
+	);
+	ok(
+		'the last 30 days tick the bark, and today is marked',
+		EVENTS_RINGS.includes('cutoffDay - r.day <= 30') && EVENTS_RINGS.includes('class="fresh"') && EVENTS_RINGS.includes("ew('events.rings.today')")
+	);
+	ok(
+		'the desktop side list shows the lens newest first and opens records through the app selection',
+		EVENTS_RINGS.includes('const newest = [...ring].sort((a, b) => b.day - a.day') &&
+			EVENTS_RINGS.includes("ew('events.rings.side')") &&
+			EVENTS_RINGS.includes('{#if !compact.current}') &&
+			EVENTS_RINGS.includes('app.select(r.id)')
+	);
+	ok(
+		'the figure is one tab stop: arrows walk, Enter opens, plus and minus move the lens, Escape clears',
+		/class="figure"[\s\S]{0,200}tabindex="0"/.test(EVENTS_RINGS) &&
+			["'ArrowRight'", "'ArrowLeft'", "'ArrowUp'", "'ArrowDown'", "'Enter'", "'+'", "'-'", "'Escape'"].every((k) => EVENTS_RINGS.includes(`key === ${k}`)) &&
+			EVENTS_RINGS.includes('setFocus(lensYear + 1)') &&
+			EVENTS_RINGS.includes('aria-live="polite">{announce}')
+	);
+	ok(
+		'a right-to-left reader walks the other way round the mirrored figure',
+		EVENTS_RINGS.includes("dir > 0 ? key === 'ArrowRight' : key === 'ArrowLeft'") && EVENTS_RINGS.includes('const dir = $derived(rtl ? -1 : 1)')
+	);
+	ok(
+		'"Watch it grow" animates, and steps through the era starts under reduced motion',
+		EVENTS_RINGS.includes("new MediaQuery('(prefers-reduced-motion: reduce)'") &&
+			EVENTS_RINGS.includes('if (reduced.current) {') &&
+			EVENTS_RINGS.includes('eraSteps.map((y) => startOfYear(y) - 1)') &&
+			EVENTS_RINGS.includes('growthClock(')
+	);
+	ok(
+		'selection is the app selection (the Inspector opens it), never a page load',
+		EVENTS_RINGS.includes('app.select(cursor)') && !EVENTS_RINGS.includes('location.href') && !EVENTS_RINGS.includes("'/e/'")
+	);
+	ok(
+		'the rings draw the shared filters: below the evidence floor hidden, failing a filter dimmed',
+		EVENTS_RINGS.includes('meetsBasis(r.e.basis as Basis, app.basisFloor)') &&
+			EVENTS_RINGS.includes('view.passes(r.e, app.basisFloor)') &&
+			EVENTS_RINGS.includes('class:dim={!passing[r.i]}')
+	);
+	ok(
+		'a lens move redraws the figure per frame but the list and the shared state once, when it lands',
+		EVENTS_RINGS.includes('const lensYear = $derived(Math.floor(settled));') && EVENTS_RINGS.includes('const F = settled;')
+	);
+}
 // ZERO new i18n keys were added: every literal key the view calls must already
 // resolve in all three locales (the sweep in test-i18n pins this repo-wide;
 // this pins it for this view).
