@@ -200,11 +200,14 @@ const READING_CEILING = 960_000;
  * flags left the bundled graph (`static/sources-prose.json`, fetched on demand), and by
  * about 1,480,000 more when the long English text of people, institutions, positions,
  * connections and events left it (`static/prose-en.json`, fetched on demand).
+ * /events joined as an instrument route at its first measured weight, when the
+ * events page moved from a built document into the app.
  */
 const INSTRUMENT_BASELINE: Record<string, number> = {
 	agora: 9_394_076,
 	atlas: 9_513_484,
 	chronicle: 9_312_075,
+	events: 9_459_984,
 	evidence: 9_260_454,
 	feed: 9_939_391,
 	investigate: 9_276_296,

@@ -46,7 +46,7 @@ import { personById, institutionById, relationshipById, eventById } from './mode
  * write hook must key on the actual instrument route or it silently no-ops
  * there (caught by the W2 smoke round trip).
  */
-const ENTITY_ROUTES = new Set(['/chronicle', '/now', '/network', '/atlas', '/rankings']);
+const ENTITY_ROUTES = new Set(['/chronicle', '/now', '/network', '/atlas', '/rankings', '/events']);
 
 export function consumesEntityLink(pathname: string): boolean {
 	return ENTITY_ROUTES.has(pathname);

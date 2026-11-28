@@ -581,7 +581,7 @@ ${section('disputes', 'rec.section.disputes', disputes)}
 <p><a href="${esc(issue)}" rel="noopener noreferrer">${tri('rec.wrong.link')}</a></p>
 </section>
 <section id=instrument>
-<p>${kind === 'event' ? `<a href="/chronicle?id=${encodeURIComponent(rec.id)}">${tri('rec.chronicle.link')}</a> <a href="/events#y${esc(yearOf(rec))}">${tri('events.all')}</a>` : `<a href="/network?id=${encodeURIComponent(rec.id)}">${tri('rec.instrument.link')}</a>`}</p>
+<p>${kind === 'event' ? `<a href="/chronicle?id=${encodeURIComponent(rec.id)}">${tri('rec.chronicle.link')}</a> <a href="/events?id=${encodeURIComponent(rec.id)}">${tri('events.all')}</a>` : `<a href="/network?id=${encodeURIComponent(rec.id)}">${tri('rec.instrument.link')}</a>`}</p>
 </section>
 </main>
 <footer>
