@@ -2,7 +2,7 @@
 	import { untrack } from 'svelte';
 	import { MediaQuery } from 'svelte/reactivity';
 	import { app } from '$lib/state.svelte';
-	import { formatDate, eventCategoryLabel } from '$lib/t.svelte';
+	import { t, formatDate, eventCategoryLabel } from '$lib/t.svelte';
 	import { eventTitle, nameOf } from '$lib/names.svelte';
 	import { compact } from '$lib/design/media.svelte';
 	import { CUTOFF, ds, meetsBasis, personById, institutionById, type Basis, type EventRec } from '$lib/model';
@@ -95,19 +95,35 @@
 	const rtl = $derived(app.locale === 'ar');
 	const dir = $derived(rtl ? -1 : 1);
 
-	const geo = $derived(geometry(years, counts, focus, grow, rho));
+	/*
+	 * The bottom timeline playhead (`app.t`) drives the growth front whenever
+	 * it sits earlier than the cutoff. If the active lens starts after the
+	 * playhead's year, pull the effective lens back so the grown rings stay
+	 * open instead of folding into the pith.
+	 */
+	const scrubDay = $derived(dayOf(app.t));
+	const scrubbed = $derived(!growing && scrubDay < cutoffDay);
+	const frontDay = $derived(growing ? grow : scrubbed ? scrubDay : null);
+	const effFocus = $derived(scrubbed ? Math.min(focus, Math.max(FIRST_YEAR, yearOfDay(scrubDay) - 4)) : focus);
+	const effSettled = $derived(scrubbed ? Math.min(settled, Math.max(FIRST_YEAR, yearOfDay(scrubDay) - 4)) : settled);
+
+	const geo = $derived(geometry(years, counts, effFocus, frontDay, rho));
 	const pos = $derived(layout(ring, years, geo, rho, dir));
 	const atFloor = $derived(ring.map((r) => meetsBasis(r.e.basis as Basis, app.basisFloor)));
 	const passing = $derived(ring.map((r) => view.passes(r.e, app.basisFloor)));
-	const growYear = $derived(grow == null ? null : Math.min(LAST_YEAR, yearOfDay(grow)));
+	const growYear = $derived(frontDay == null ? null : Math.min(LAST_YEAR, yearOfDay(frontDay)));
 	const growR = $derived(growYear == null ? R : geo.outer[growYear - FIRST_YEAR]);
+	const activeDay = $derived(frontDay ?? cutoffDay);
+	const activeYear = $derived(Math.min(LAST_YEAR, yearOfDay(activeDay)));
+	const activeR = $derived(frontDay == null ? R : geo.outer[activeYear - FIRST_YEAR]);
 
 	function live(r: Ring): boolean {
 		const p = pos[r.i];
-		return !!p && !p.cored && atFloor[r.i] && passing[r.i] && !(grow != null && r.day > grow);
+		return !!p && !p.cored && atFloor[r.i] && passing[r.i] && !(frontDay != null && r.day > frontDay);
 	}
 
 	const lensYear = $derived(Math.floor(settled));
+	const effLensYear = $derived(Math.floor(effSettled));
 
 	/** Events inside the drawn years; the rest have no ring to sit on. */
 	const placed = ring.filter((r) => r.year >= FIRST_YEAR && r.year <= LAST_YEAR);
@@ -126,7 +142,7 @@
 		const root = marksEl;
 		/* Marks come and go with the basis floor and the growth front; place the new ones too. */
 		void atFloor;
-		void grow;
+		void frontDay;
 		if (!root) return;
 		for (const el of root.children) {
 			const p = P[Number((el as SVGGElement).dataset.i)];
@@ -134,7 +150,9 @@
 			el.setAttribute('transform', `translate(${f1(C + p.r * Math.cos(p.a))} ${f1(C + p.r * Math.sin(p.a))})`);
 		}
 	});
-	const inLens = $derived(newest.filter((r) => r.year >= lensYear && atFloor[r.i] && passing[r.i]));
+	const inLens = $derived(
+		newest.filter((r) => r.year >= effLensYear && atFloor[r.i] && passing[r.i] && (frontDay == null || r.day <= frontDay))
+	);
 
 	/* --------------------------------------------- what the selection lights */
 
@@ -142,7 +160,7 @@
 
 	/** Events sharing a person or institution with the selected one, when no thread is followed. */
 	const related = $derived.by(() => {
-		if (!sel || view.thread || grow != null || !pos[sel.i]) return null;
+		if (!sel || view.thread || growing || !pos[sel.i]) return null;
 		const out: Ring[] = [];
 		for (const o of ring) if (o !== sel && live(o) && o.entities.some((id) => sel.entities.includes(id))) out.push(o);
 		return out;
@@ -172,7 +190,7 @@
 	const scars = $derived.by(() =>
 		ruptures.flatMap((r) => {
 			const p = pos[r.i];
-			if (!p || !atFloor[r.i] || !passing[r.i] || (grow != null && r.day > grow)) return [];
+			if (!p || !atFloor[r.i] || !passing[r.i] || (frontDay != null && r.day > frontDay)) return [];
 			const from = p.cored ? geo.rc : p.r + markRadius(r) + 2.6;
 			const to = Math.min(growR, from + (p.cored ? 70 : 150));
 			if (to <= from) return [];
@@ -201,29 +219,29 @@
 		})
 	);
 
-	const nowAngle = $derived(angle(fracOfDay(cutoffDay), dir));
+	const nowAngle = $derived(angle(fracOfDay(activeDay), dir));
 	const bark = $derived.by(() => {
-		if (grow != null) return null;
+		if (growing) return null;
 		const top = -Math.PI / 2;
 		return {
-			lived: dir > 0 ? arc(R, top, nowAngle) : arc(R, nowAngle, top),
-			open: dir > 0 ? arc(R, nowAngle, 1.5 * Math.PI) : arc(R, -2.5 * Math.PI, nowAngle)
+			lived: dir > 0 ? arc(activeR, top, nowAngle) : arc(activeR, nowAngle, top),
+			open: dir > 0 ? arc(activeR, nowAngle, 1.5 * Math.PI) : arc(activeR, -2.5 * Math.PI, nowAngle)
 		};
 	});
 
 	/* -------------------------------------------- today, and the last 30 days */
 
-	const fresh = $derived(ring.filter((r) => atFloor[r.i] && passing[r.i] && r.day <= cutoffDay && cutoffDay - r.day <= 30));
+	const fresh = $derived(ring.filter((r) => atFloor[r.i] && passing[r.i] && r.day <= activeDay && activeDay - r.day <= 30));
 	const freshTicks = $derived(
 		fresh.map((r) => {
 			const a = angle(fracOfDay(r.day), dir);
-			const p0 = point(R + 2, a);
-			const p1 = point(R + 11, a);
+			const p0 = point(activeR + 2, a);
+			const p1 = point(activeR + 11, a);
 			return { id: r.id, x1: f1(p0[0]), y1: f1(p0[1]), x2: f1(p1[0]), y2: f1(p1[1]) };
 		})
 	);
 	const today = $derived.by(() => {
-		const p0 = point(geo.inner[LAST_YEAR - FIRST_YEAR], nowAngle);
+		const p0 = point(geo.inner[activeYear - FIRST_YEAR], nowAngle);
 		const p1 = point(R + 30, nowAngle);
 		const at = point(R + 38, nowAngle);
 		const left = Math.cos(nowAngle) < 0;
@@ -239,7 +257,7 @@
 
 	const months = $derived.by(() => {
 		const fmt = new Intl.DateTimeFormat(app.locale, { month: 'short', timeZone: 'UTC' });
-		const now = new Date(CUTOFF).getUTCMonth();
+		const now = new Date(scrubbed ? app.t : CUTOFF).getUTCMonth();
 		return Array.from({ length: 12 }, (_, m) => {
 			const t = Date.UTC(LAST_YEAR, m, 1);
 			const at = point(R + 30, angle(fracOfDay(t / DAY) + 1 / 24, dir));
@@ -250,20 +268,21 @@
 	/* Year labels up the January line, where a ring has room for one. */
 	const yearLabels = $derived.by(() => {
 		const out: { y: number; ty: number; big: boolean }[] = [];
-		if (grow != null) return out;
+		if (growing) return out;
 		const rc = geo.rc;
 		let lastR = Infinity;
 		for (let i = years.length - 1; i >= 0; i--) {
 			const y = years[i];
+			if (y > activeYear) continue;
 			const rA = geo.inner[i];
 			const rB = geo.outer[i];
 			const mid = (rA + rB) / 2;
 			const room = rB - rA;
 			if (rA < rc || room < 2.5 || (rc && mid < rc + 16 * k)) continue;
-			const want = y === LAST_YEAR || y % 10 === 0 || eraStarts.has(y) || room > 20;
+			const want = y === activeYear || y % 10 === 0 || eraStarts.has(y) || room > 20;
 			if (!want || lastR - mid < 15 * k) continue;
 			lastR = mid;
-			out.push({ y, ty: f1(C - mid), big: y === LAST_YEAR || room > 40 });
+			out.push({ y, ty: f1(C - mid), big: y === activeYear || room > 40 });
 		}
 		return out;
 	});
@@ -378,9 +397,16 @@
 		at: (((y - FIRST_YEAR + 0.5) / years.length) * 100).toFixed(1)
 	}));
 	const stripClip = $derived.by(() => {
-		if (growYear != null) return `inset(0 ${(100 - ((growYear - FIRST_YEAR + 1) / years.length) * 100).toFixed(1)}% 0 0)`;
-		const pct = Math.max(0, Math.min(100, ((Math.floor(focus) - FIRST_YEAR) / years.length) * 100));
-		return `inset(0 0 0 ${pct.toFixed(1)}%)`;
+		const leftPct = Math.max(0, Math.min(100, ((Math.floor(effFocus) - FIRST_YEAR) / years.length) * 100));
+		if (growing && growYear != null) {
+			const rightPct = Math.max(0, Math.min(100, 100 - ((growYear - FIRST_YEAR + 1) / years.length) * 100));
+			return `inset(0 ${rightPct.toFixed(1)}% 0 0)`;
+		}
+		if (scrubbed && growYear != null) {
+			const rightPct = Math.max(0, Math.min(100, 100 - ((growYear - FIRST_YEAR + 1) / years.length) * 100));
+			return `inset(0 ${rightPct.toFixed(1)}% 0 ${leftPct.toFixed(1)}%)`;
+		}
+		return `inset(0 0 0 ${leftPct.toFixed(1)}%)`;
 	});
 
 	/* ---------------------------------------------------------- watch it grow */
@@ -409,6 +435,11 @@
 		grow = null;
 	}
 
+	/* Starting playback on the bottom timeline yields immediately to the scrubber. */
+	$effect(() => {
+		if (app.playing && growing) stopGrow();
+	});
+
 	/*
 	 * Reduced motion: no animation, the tree in steps instead, one era at a
 	 * time, so the reader still sees how the record grew.
@@ -420,6 +451,7 @@
 			stopGrow();
 			return;
 		}
+		app.playing = false;
 		cancelAnimationFrame(anim);
 		hot = null;
 		cursor = null;
@@ -432,6 +464,7 @@
 			const next = () => {
 				if (!growing) return;
 				grow = steps[n++];
+				app.setDate(Math.round(grow) * DAY);
 				growTimer = setTimeout(n < steps.length ? next : stopGrow, n < steps.length ? 1400 : 1600);
 			};
 			next();
@@ -442,10 +475,19 @@
 			if (!growing) return;
 			const p = Math.min(1, (now - t0) / 7000);
 			grow = clock(p);
+			app.setDate(Math.round(grow) * DAY);
 			if (p < 1) growRaf = requestAnimationFrame(step);
-			else growTimer = setTimeout(stopGrow, 1200);
+			else {
+				app.setDate(CUTOFF);
+				growTimer = setTimeout(stopGrow, 1200);
+			}
 		};
 		growRaf = requestAnimationFrame(step);
+	}
+
+	function stepFocus(delta: number) {
+		stopGrow();
+		setFocus(effLensYear + delta);
 	}
 
 	/* --------------------------------------------------- pointer and keyboard */
@@ -499,10 +541,10 @@
 	}
 
 	function onWheel(ev: WheelEvent) {
-		if (!(ev.ctrlKey || ev.metaKey)) return;
+		if (compact.current && !(ev.ctrlKey || ev.metaKey)) return;
 		ev.preventDefault();
 		stopGrow();
-		setFocus(focus - ev.deltaY * 0.02, false);
+		setFocus(effFocus - ev.deltaY * 0.025, false);
 	}
 
 	/** The events the arrow keys walk: in the lens, passing the filters, oldest first. */
@@ -623,13 +665,45 @@
 				<p class="readout mono" aria-live="polite">
 					{#if growing && grow != null}
 						<b>{yearOfDay(grow)}</b> {countWord(grownCount)}
+					{:else if scrubbed}
+						{ew('events.rings.asOf', { from: effLensYear, to: formatDate(app.t, 'day'), n: inLens.length })}
 					{:else}
 						{ew('events.rings.lensRange', { from: lensYear, n: inLens.length })}
 					{/if}
 				</p>
-				<button type="button" class="grow" aria-pressed={growing} onclick={toggleGrow}>
-					{growing ? ew('events.rings.stop') : ew('events.rings.grow')}
-				</button>
+				<div class="lens-actions">
+					<div class="zoom-pair" role="group" aria-label={ew('events.lens')}>
+						<button
+							type="button"
+							class="lens-btn mono"
+							aria-label={t('view.zoomout')}
+							title={t('view.zoomout')}
+							disabled={effLensYear <= FIRST_YEAR}
+							onclick={() => stepFocus(-5)}>−</button
+						>
+						<button
+							type="button"
+							class="lens-btn mono"
+							aria-label={t('view.zoomin')}
+							title={t('view.zoomin')}
+							disabled={effLensYear >= activeYear}
+							onclick={() => stepFocus(5)}>+</button
+						>
+					</div>
+					{#if scrubbed}
+						<button
+							type="button"
+							class="lens-btn"
+							onclick={() => {
+								app.playing = false;
+								app.setDate(CUTOFF);
+							}}>{ew('events.rings.today')}</button
+						>
+					{/if}
+					<button type="button" class="grow" aria-pressed={growing} onclick={toggleGrow}>
+						{growing ? ew('events.rings.stop') : ew('events.rings.grow')}
+					</button>
+				</div>
 			</div>
 		</div>
 
@@ -690,7 +764,7 @@
 			</g>
 			<g class="marks" bind:this={marksEl}>
 				{#each placed as r (r.id)}
-					{#if atFloor[r.i] && !(grow != null && r.day > grow)}
+					{#if atFloor[r.i] && !(frontDay != null && r.day > frontDay)}
 						{@const mr = markRadius(r)}
 						<g
 							class="mark b-{r.e.basis}"
@@ -734,15 +808,19 @@
 					<text class="month mono" class:now={m.now} x={m.x} y={m.y}>{m.label}</text>
 				{/each}
 			</g>
-			{#if grow == null}
+			{#if !growing}
 				<g class="today">
 					<line class="now-line" {...today.line} stroke-dasharray="2 3" />
 					{#each freshTicks as f (f.id)}
 						<line class="fresh" x1={f.x1} y1={f.y1} x2={f.x2} y2={f.y2} />
 					{/each}
 					<text class="today-text mono" x={today.x} y={today.y} text-anchor={today.anchor} direction={rtl ? 'rtl' : 'ltr'}>
-						<tspan x={today.x}>{ew('events.rings.today')}</tspan>
-						<tspan class="sub" x={today.x} dy="1.25em">{formatDate(CUTOFF, 'day')}</tspan>
+						{#if scrubbed}
+							<tspan x={today.x}>{formatDate(app.t, 'day')}</tspan>
+						{:else}
+							<tspan x={today.x}>{ew('events.rings.today')}</tspan>
+							<tspan class="sub" x={today.x} dy="1.25em">{formatDate(CUTOFF, 'day')}</tspan>
+						{/if}
 						<tspan class="sub" x={today.x} dy="1.25em">{ew('events.rings.fresh', { n: fresh.length, days: 30 })}</tspan>
 					</text>
 				</g>
@@ -937,6 +1015,49 @@
 		font-weight: 500;
 		color: var(--text-primary);
 		margin-inline-end: var(--s-2);
+	}
+	.lens-actions {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--s-2);
+		flex-shrink: 0;
+	}
+	.zoom-pair {
+		display: inline-flex;
+		align-items: center;
+	}
+	.zoom-pair .lens-btn:first-child {
+		border-start-end-radius: 0;
+		border-end-end-radius: 0;
+		border-inline-end: 0;
+	}
+	.zoom-pair .lens-btn:last-child {
+		border-start-start-radius: 0;
+		border-end-start-radius: 0;
+	}
+	.lens-btn {
+		flex-shrink: 0;
+		border: 1px solid var(--border-default);
+		border-radius: var(--r-sm);
+		padding: 2px 8px;
+		font-size: var(--t-2xs);
+		color: var(--text-secondary);
+		background: var(--surface-raised);
+		min-height: 24px;
+		line-height: 1;
+	}
+	.lens-btn:hover:not(:disabled) {
+		color: var(--text-primary);
+		border-color: var(--border-strong);
+		background: var(--surface-hover);
+	}
+	.lens-btn:disabled {
+		opacity: 0.35;
+		cursor: default;
+	}
+	.lens-btn:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: 1px;
 	}
 	.grow {
 		flex-shrink: 0;

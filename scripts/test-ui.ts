@@ -531,8 +531,11 @@ ok(
 			EVENTS_RINGS.includes('smooth(')
 	);
 	ok(
-		'the last 30 days tick the bark, and today is marked',
-		EVENTS_RINGS.includes('cutoffDay - r.day <= 30') && EVENTS_RINGS.includes('class="fresh"') && EVENTS_RINGS.includes("ew('events.rings.today')")
+		'the last 30 days tick the bark, and today (or the scrubbed playhead) is marked',
+		EVENTS_RINGS.includes('activeDay - r.day <= 30') &&
+			EVENTS_RINGS.includes('class="fresh"') &&
+			EVENTS_RINGS.includes("ew('events.rings.today')") &&
+			EVENTS_RINGS.includes('const scrubDay = $derived(dayOf(app.t));')
 	);
 	ok(
 		'the desktop side list shows the lens newest first and opens records through the app selection',

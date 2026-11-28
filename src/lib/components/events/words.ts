@@ -42,6 +42,8 @@ export const eventWords: Record<Locale, Record<string, string>> = {
 		'events.rings.today': 'Today',
 		'events.rings.fresh': '{n} in the last {days} days',
 		'events.rings.lensRange': '{from} to today: {n} events',
+		'events.rings.asOf': '{from} to {to}: {n} events',
+		'events.timeline.jumpHead': 'Playhead: {date}',
 		'events.count': '{n} events',
 		'events.countOne': 'one event',
 		'events.years': '{start} to {end}'
@@ -73,6 +75,8 @@ export const eventWords: Record<Locale, Record<string, string>> = {
 		'events.rings.today': 'Aujourd’hui',
 		'events.rings.fresh': '{n} sur les {days} derniers jours',
 		'events.rings.lensRange': 'De {from} à aujourd’hui : {n} événements',
+		'events.rings.asOf': 'De {from} au {to} : {n} événements',
+		'events.timeline.jumpHead': 'Curseur : {date}',
 		'events.count': '{n} événements',
 		'events.countOne': 'un événement',
 		'events.years': 'de {start} à {end}'
@@ -104,6 +108,8 @@ export const eventWords: Record<Locale, Record<string, string>> = {
 		'events.rings.today': 'اليوم',
 		'events.rings.fresh': '{n} خلال آخر {days} يومًا',
 		'events.rings.lensRange': 'من {from} إلى اليوم: {n} حدثًا',
+		'events.rings.asOf': 'من {from} إلى {to}: {n} حدثًا',
+		'events.timeline.jumpHead': 'المؤشّر: {date}',
 		'events.count': '{n} حدثاً',
 		'events.countOne': 'حدث واحد',
 		'events.years': 'من {start} إلى {end}'
