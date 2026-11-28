@@ -6,10 +6,12 @@
  * that matches the page's lang attribute. That is why the template calls tri()
  * instead of writing a word.
  *
- * The words themselves live in src/lib/i18n.ts under rec.*, the same dictionary
- * the app reads. Nothing here chooses wording.
+ * The words themselves live in src/lib/i18n.ts: under rec.*, the same dictionary
+ * the app reads, and in `documentWords` for the words only the built documents
+ * print (the events ledger's), which every lookup here tries first. Nothing here
+ * chooses wording.
  */
-import { translate, type Locale } from '../../src/lib/i18n.ts';
+import { documentWord as translate, type Locale } from '../../src/lib/i18n.ts';
 
 const LANGS: Locale[] = ['en', 'fr', 'ar'];
 
