@@ -25,11 +25,11 @@
  * built is skipped; a build without the ledger is a failure.
  * Usage: `npx tsx scripts/test-events.ts`
  */
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { gzipSync } from 'node:zlib';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { translate } from '../src/lib/i18n.ts';
+import { documentWord as translate, documentWords, translate as appTranslate } from '../src/lib/i18n.ts';
 import { EVENT_CATEGORIES } from '../src/lib/taxonomy.ts';
 import { BASIS_COLOR, BASIS_OPACITY, BASIS_ORDER, DASH } from '../src/lib/model.ts';
 
@@ -502,6 +502,55 @@ if (existsSync(SITEMAP)) {
 	ok('the sitemap lists /events', /<loc>https:\/\/deeptunisia\.org\/events<\/loc>/.test(sitemap));
 } else {
 	ok('the sitemap lists /events', false, 'build/sitemap.xml is missing');
+}
+
+/* ---------------------------------------------------------------------------
+   The document words: held to the dictionary's rules, and out of the app chunk
+   --------------------------------------------------------------------------- */
+
+{
+	const english = Object.keys(documentWords.en);
+	const placeholdersIn = (s: string) => [...new Set([...s.matchAll(/\{(\w+)\}/g)].map((m) => m[1]))].sort().join(',');
+	const parity: string[] = [];
+	for (const locale of ['fr', 'ar'] as const) {
+		const keys = Object.keys(documentWords[locale]);
+		for (const key of english) if (!(key in documentWords[locale])) parity.push(`${locale} lacks ${key}`);
+		for (const key of keys) if (!(key in documentWords.en)) parity.push(`${locale} adds ${key}`);
+	}
+	ok('every document word exists in all three languages', parity.length === 0, parity.length ? sample(parity) : `${english.length} words`);
+
+	const shape: string[] = [];
+	for (const locale of ['en', 'fr', 'ar'] as const) {
+		for (const [key, value] of Object.entries(documentWords[locale])) {
+			if (!value.trim()) shape.push(`${locale} ${key} is empty`);
+			if (value.includes('—')) shape.push(`${locale} ${key} has an em dash`);
+			if (locale !== 'en' && key in documentWords.en && placeholdersIn(value) !== placeholdersIn(documentWords.en[key])) {
+				shape.push(`${locale} ${key} placeholders {${placeholdersIn(value)}} vs {${placeholdersIn(documentWords.en[key])}}`);
+			}
+		}
+	}
+	ok('every document word is filled, keeps the English placeholders and has no em dash', shape.length === 0, shape.length ? sample(shape) : 'clean');
+
+	/* A key in both places would let two copies drift; the table wins in the build. */
+	const shadowed = english.filter((key) => appTranslate('en', key) !== key);
+	ok('no document word is also an app dictionary key', shadowed.length === 0, sample(shadowed));
+
+	const chunkDir = join(BUILD, '_app', 'immutable');
+	const chunkFiles: string[] = [];
+	const walk = (dir: string) => {
+		for (const entry of readdirSync(dir, { withFileTypes: true })) {
+			const path = join(dir, entry.name);
+			if (entry.isDirectory()) walk(path);
+			else if (entry.name.endsWith('.js')) chunkFiles.push(path);
+		}
+	};
+	if (existsSync(chunkDir)) walk(chunkDir);
+	const leaked = new Set<string>();
+	for (const path of chunkFiles) {
+		const js = readFileSync(path, 'utf8');
+		for (const key of english) if (js.includes(`"${key}"`) || js.includes(`'${key}'`)) leaked.add(key);
+	}
+	ok('the app chunks carry no document word', chunkFiles.length > 0 && leaked.size === 0, chunkFiles.length ? (leaked.size ? sample([...leaked]) : `${chunkFiles.length} chunks`) : 'no app chunks built');
 }
 
 console.log(`

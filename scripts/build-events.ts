@@ -42,7 +42,7 @@ import { esc, loc, one, tri, triEach, triRaw } from './records/labels.ts';
 import { basisLine, headShell, nameOf, yearOf, type Rec, type World } from './records/page.ts';
 import { BASIS_COLOR, BASIS_OPACITY, BASIS_ORDER, DASH, describeInterval, type Basis } from '../src/lib/model.ts';
 import { EVENT_CATEGORIES } from '../src/lib/taxonomy.ts';
-import { eventsRing, format, type Locale } from '../src/lib/i18n.ts';
+import { format, type Locale } from '../src/lib/i18n.ts';
 
 /** The shared geometry, written once for the build and the browser. */
 await import('../static/events-rings.js');
@@ -213,16 +213,6 @@ function attr(value: unknown): string {
 }
 
 /** Years as a phrase: one year alone, a span through the era, both from data. */
-/** A phrase from the page-only words (`eventsRings`), filled per language, in three copies. */
-function pageTri(key: string, params: Partial<Record<Locale, Record<string, string | number>>>): string {
-	const values: Tri = { en: '', fr: '', ar: '' };
-	for (const locale of LOCALES) {
-		const fill = params[locale] ?? {};
-		values[locale] = eventsRing(locale, key).replace(/\{(\w+)\}/g, (whole, name: string) => (name in fill ? String(fill[name]) : whole));
-	}
-	return triRaw(values);
-}
-
 function yearsPhrase(start: number, end: number): string {
 	return start === end ? esc(start) : tri('events.years', { start, end });
 }
@@ -280,7 +270,7 @@ function dateValues(rec: Rec): Tri {
 		let text = start;
 		if (span) {
 			const end = dateIn(endT, precision(interval?.endPrecision, rawEnd), locale);
-			text = end === start ? start : format(locale, 'events.years', { start, end });
+			text = end === start ? start : one(locale, 'events.years', { start, end });
 		} else if (interval?.status && interval.status !== 'ended') {
 			text = describeInterval(interval as never, locale);
 		}
@@ -811,8 +801,7 @@ function wordsBlock(): string {
 		parts.push(word(`ver:${value}`, { en: loc('en', key), fr: loc('fr', key), ar: loc('ar', key) }));
 	}
 	for (const [code, key] of RING_KEYS) {
-		const ringOnly = code === 'as' || code === 'hk';
-		parts.push(`<span data-k=${code}>${ringOnly ? triRaw({ en: eventsRing('en', key), fr: eventsRing('fr', key), ar: eventsRing('ar', key) }) : tri(key)}</span>`);
+		parts.push(`<span data-k=${code}>${tri(key)}</span>`);
 	}
 	return `<div id="events-words" hidden>${parts.join('')}</div>`;
 }
@@ -916,7 +905,7 @@ function chapterTitleHtml(ch: Chapter): string {
 function chapterYearsHtml(ch: Chapter): string {
 	if (ch.era) {
 		const [start, end] = eraYears(ch.era);
-		return isOpen(ch.era) ? pageTri('events.yearsOpen', { en: { start }, fr: { start }, ar: { start } }) : yearsPhrase(start, end);
+		return isOpen(ch.era) ? tri('events.yearsOpen', { start }) : yearsPhrase(start, end);
 	}
 	const years = ch.events.map(yearNumber);
 	if (!years.length) return '';
@@ -981,7 +970,7 @@ function standingBlock(): string {
 		['key-framings', 'events.key.framings'],
 		['key-thread', 'events.key.thread']
 	]
-		.map(([cls, keyName]) => `<span class=key-item><span class="${cls}" aria-hidden></span> <span class=key-word>${triRaw({ en: eventsRing('en', keyName), fr: eventsRing('fr', keyName), ar: eventsRing('ar', keyName) })}</span></span>`)
+		.map(([cls, keyName]) => `<span class=key-item><span class="${cls}" aria-hidden></span> <span class=key-word>${tri(keyName)}</span></span>`)
 		.join('');
 	const missingFr = data.events.some((r) => !r.title_fr);
 	const missingAr = data.events.some((r) => !r.title_ar);
@@ -1153,7 +1142,7 @@ function chapterHtml(ch: Chapter, anchors: Set<string>): string {
 		const key = ch.key === 'before' ? 'events.before.note' : 'events.after.note';
 		const edge = ch.key === 'before' ? first : last;
 		const at = ch.key === 'before' ? Number(edge.startEarliest) : eraEnd(edge);
-		const note = pageTri(key, {
+		const note = triEach(key, {
 			en: { date: dateIn(at, 'day', 'en') },
 			fr: { date: dateIn(at, 'day', 'fr') },
 			ar: { date: dateIn(at, 'day', 'ar') }
