@@ -52,11 +52,6 @@ export interface NavItem {
 	 * bubble's first tab).
 	 */
 	tab?: string;
-	/**
-	 * The page is a built document, not an app route (`/events`), so the link
-	 * carries `rel="external"` and the browser loads it instead of the router.
-	 */
-	document?: boolean;
 }
 
 export interface Bubble {
@@ -84,7 +79,7 @@ export const BUBBLES: Bubble[] = [
 		// abroad, then the comparisons and the query tool.
 		items: [
 			{ href: '/', key: 'chronicle' },
-			{ href: '/events', key: 'events', document: true },
+			{ href: '/events', key: 'events' },
 			{ href: '/network', key: 'network' },
 			{ href: '/now', key: 'now' },
 			{ href: '/atlas', key: 'atlas' },

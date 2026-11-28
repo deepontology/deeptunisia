@@ -643,6 +643,45 @@ console.log('\n  ── content files ──\n');
 // locales and must not be an English copy-paste; the count template must keep
 // its `{n}` placeholder everywhere or it renders without a number.
 
+console.log('\n  ── words that load with one route ──\n');
+
+// The events page keeps the phrases only it prints in its own table
+// (src/lib/components/events/words.ts), so no other page preloads them. The
+// table is held to the dictionary's rules: every key in all three languages,
+// the English placeholders kept, nothing empty or copied, no em dash, no key
+// that a main dictionary also has, and every key a component asks for present.
+{
+	const { eventWords } = await import('../src/lib/components/events/words.ts');
+	const english = Object.keys(eventWords.en);
+	const parity: string[] = [];
+	const shape: string[] = [];
+	for (const l of locales) {
+		for (const key of english) if (!(key in eventWords[l])) parity.push(`${l} lacks ${key}`);
+		for (const key of Object.keys(eventWords[l])) if (!(key in eventWords.en)) parity.push(`${l} adds ${key}`);
+		for (const [key, value] of Object.entries(eventWords[l] as Record<string, string>)) {
+			if (!value.trim()) shape.push(`${l} ${key} is empty`);
+			if (value.includes('—')) shape.push(`${l} ${key} has an em dash`);
+			const want = [...placeholdersIn(eventWords.en[key] ?? '')].sort().join(',');
+			const got = [...placeholdersIn(value)].sort().join(',');
+			if (want !== got) shape.push(`${l} ${key} placeholders {${got}} vs {${want}}`);
+			if (l !== 'en' && value === eventWords.en[key] && /[a-z]{4}/i.test(value.replace(/\{\w+\}/g, ''))) shape.push(`${l} ${key} is the English text`);
+		}
+	}
+	ok('every events page word exists in all three languages', parity.length === 0, parity.length ? parity.slice(0, 6).join(', ') : `${english.length} words`);
+	ok('every events page word is filled, translated, keeps its placeholders and has no em dash', shape.length === 0, shape.slice(0, 6).join(', ') || 'clean');
+	const shadowed = english.filter((key) => translate('en', key) !== key);
+	ok('no events page word is also a main dictionary key', shadowed.length === 0, shadowed.join(', '));
+	const asked = new Set<string>();
+	for (const file of viewFiles) {
+		if (!file.includes(join('components', 'events'))) continue;
+		for (const m of readFileSync(file, 'utf8').matchAll(/\bew\(\s*'([^']+)'/g)) asked.add(m[1]);
+	}
+	const missing = [...asked].filter((key) => !(key in eventWords.en));
+	ok('every events page word a component asks for exists', asked.size > 0 && missing.length === 0, missing.join(', ') || `${asked.size} words in use`);
+	const unused = english.filter((key) => !asked.has(key));
+	ok('every events page word is used', unused.length === 0, unused.join(', ') || 'all used');
+}
+
 console.log('\n  ── origins chip pair ──\n');
 
 {

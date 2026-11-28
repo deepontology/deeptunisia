@@ -167,7 +167,6 @@
 								<a
 									class="vs-row"
 									href={item.href}
-									rel={item.document ? 'external' : undefined}
 									aria-current={current(item) ? 'page' : undefined}
 									onclick={onclose}
 								>

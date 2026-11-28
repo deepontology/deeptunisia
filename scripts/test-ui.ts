@@ -253,6 +253,14 @@ console.log('\n  ── §14.4: the chronicle events timeline ──\n');
 // marks read the basis language. v2 reworked the interaction model, so these
 // assertions pin the two tracks, the cluster overview and the single picker.
 const CHRONICLE = readFileSync(join(HERE, '..', 'src', 'lib', 'components', 'Chronicle.svelte'), 'utf8');
+// The event geometry the Chronicle's lane and the events page share.
+const EVENTS_DIR = join(HERE, '..', 'src', 'lib', 'components', 'events');
+const EVENTS_TIMELINE = readFileSync(join(EVENTS_DIR, 'EventsTimeline.svelte'), 'utf8');
+const EVENTS_LIST = readFileSync(join(EVENTS_DIR, 'EventsList.svelte'), 'utf8');
+const EVENTS_PAGE = readFileSync(join(EVENTS_DIR, 'EventsPage.svelte'), 'utf8');
+const EVENTS_VIEW = readFileSync(join(EVENTS_DIR, 'view.svelte.ts'), 'utf8');
+const FACE_SWITCH = readFileSync(join(EVENTS_DIR, 'FaceSwitch.svelte'), 'utf8');
+const EVENT_GEOMETRY = readFileSync(join(HERE, '..', 'src', 'lib', 'chronicle', 'events.ts'), 'utf8');
 // The lane's own markup, so the no-raw-colour assertion cannot trip on the
 // tenure rows below it (era accents, layer colours) or the tooltip above.
 const LANE = CHRONICLE.slice(
@@ -298,8 +306,9 @@ ok(
 // v2 #4: long spans get their own track, classified by intrinsic duration.
 ok(
 	'long spans sit on their own track by intrinsic duration',
-	CHRONICLE.includes('function intrinsicYears') &&
-		CHRONICLE.includes('function isLongSpan') &&
+	EVENT_GEOMETRY.includes('export function intrinsicYears') &&
+		EVENT_GEOMETRY.includes('export function isLongSpan') &&
+		/import \{[^}]*\bisLongSpan\b[^}]*\} from '\$lib\/chronicle\/events'/.test(CHRONICLE) &&
 		CHRONICLE.includes('SPAN_MID') &&
 		LANE.includes('ev-spanbar')
 );
@@ -369,77 +378,109 @@ ok(
 	['ev-diamond', 'ev-dot', 'ev-pill', 'ev-contested', 'ev-selring', 'ev-cluster', 'ev-spanbar'].every((c) => LANE.includes(c)),
 	'rupture, point, pill, contested, selection, cluster, duration'
 );
-// v2 P2: the expanded investigative view — events stacked into labelled rows
-// with their own filters, reached from the events band's expand header.
+// The expanded events view moved out of the Chronicle to its own route,
+// /events. The Chronicle keeps the slim lane; its header is a plain link there.
 ok(
-	'the events band header is the control that opens the expanded view',
-	CHRONICLE.includes('class="lane-head"') &&
-		CHRONICLE.includes('data-no-pan') &&
-		CHRONICLE.includes("setView(expanded ? 'timeline' : 'events')") &&
-		CHRONICLE.includes("t('chronicle.events.expand')") &&
-		CHRONICLE.includes("t('chronicle.events.collapse')")
+	'the events lane header links to the events page and opens no mode of its own',
+	/<a class="lane-head" href="\/events"[^>]*data-no-pan[^>]*aria-label=\{t\('chronicle\.allEvents'\)\}/.test(CHRONICLE) &&
+		!CHRONICLE.includes('setView(') &&
+		!/\bexpanded\b/.test(CHRONICLE.slice(CHRONICLE.indexOf('</script>'))) &&
+		!CHRONICLE.includes('expandedLayout') &&
+		!CHRONICLE.includes('events-bar')
 );
 ok(
-	'the events header is a keyboard-reachable, labelled control',
-	/class="lane-head"[\s\S]{0,260}role="button"[\s\S]{0,120}tabindex="0"[\s\S]{0,220}aria-label=/.test(CHRONICLE)
+	'the Chronicle no longer carries the events filters or the range presets',
+	!CHRONICLE.includes('hiddenCats') &&
+		!CHRONICLE.includes('rupturesOnly') &&
+		!CHRONICLE.includes('allEventCats') &&
+		!CHRONICLE.includes('function setRange') &&
+		!CHRONICLE.includes("t('chronicle.events.expand')") &&
+		!CHRONICLE.includes("t('chronicle.events.collapse')")
 );
 ok(
-	'expanded mode gives each event or cluster its own row on one linear axis',
-	CHRONICLE.includes('expandedLayout') && !CHRONICLE.includes('function packRows') && CHRONICLE.includes('laneYs')
+	'the lane and the events page share one event geometry',
+	['eventEnd', 'chainOf', 'linkedIds', 'clusterRange', 'axisTicks'].every(
+		(fn) => EVENT_GEOMETRY.includes(`export function ${fn}`) && CHRONICLE.includes(fn) && EVENTS_TIMELINE.includes(fn)
+	)
 );
 ok(
-	'the gutter names every expanded row with its date and title',
-	CHRONICLE.includes('const expGutter') &&
-		CHRONICLE.includes('class="exp-gl"') &&
-		CHRONICLE.includes('exp-gl-date') &&
-		CHRONICLE.includes('function pickGutter') &&
-		!CHRONICLE.slice(
-			CHRONICLE.indexOf('{#each expandedLayout.items'),
-			CHRONICLE.indexOf('{#each expandedLayout.clusters')
-		).includes('ev-label')
+	'the events timeline gives each event or cluster its own row on one linear axis',
+	EVENTS_TIMELINE.includes('const layout = $derived') &&
+		EVENTS_TIMELINE.includes('ROWS_T + row * ROW_H') &&
+		!EVENTS_TIMELINE.includes('function packRows')
 );
 ok(
-	'expanded events aggregate into counted clusters on one axis',
-	CHRONICLE.includes('function clusterEvents') &&
-		CHRONICLE.includes('EXP_CLUSTER_PX') &&
-		CHRONICLE.includes('clusters: ExpCluster[]') &&
-		CHRONICLE.includes('ev-cluster-count')
+	'the gutter names every row with its date and title, and is the keyboard path through the rows',
+	EVENTS_TIMELINE.includes('class="gl"') &&
+		EVENTS_TIMELINE.includes('gl-date') &&
+		/class="gl"[\s\S]{0,400}role="button"[\s\S]{0,40}tabindex="0"[\s\S]{0,40}aria-label=/.test(EVENTS_TIMELINE) &&
+		EVENTS_TIMELINE.includes("ke.key === 'ArrowDown'") &&
+		EVENTS_TIMELINE.includes('ensureDrawn(')
+);
+ok(
+	'events aggregate into counted clusters, with ruptures and long spans kept apart',
+	EVENTS_TIMELINE.includes('const CLUSTER_PX') &&
+		EVENTS_TIMELINE.includes('if (m.event.rupture || isLongSpan(m.event))') &&
+		EVENTS_TIMELINE.includes('cluster-count') &&
+		EVENTS_TIMELINE.includes('function zoomToCluster')
 );
 ok(
 	'the time axis ticks adapt from decades down to months and weeks',
-	CHRONICLE.includes('const axisTicks') && CHRONICLE.includes('stepMonths') && CHRONICLE.includes('dayFmt')
+	EVENT_GEOMETRY.includes('export function axisTicks') &&
+		EVENT_GEOMETRY.includes('stepMonths') &&
+		EVENT_GEOMETRY.includes('dayFmt') &&
+		EVENTS_TIMELINE.includes('ticksFor(domain[0], domain[1], app.locale)')
 );
 ok(
-	'the axis is a scrub surface with a draggable date cursor',
-	CHRONICLE.includes('function axisTimeAt') &&
-		CHRONICLE.includes('onAxisDown') &&
-		CHRONICLE.includes('class="axis-scrub"') &&
-		CHRONICLE.includes('axisDateLabel') &&
-		CHRONICLE.includes('headX')
+	'the events timeline axis is a scrub surface with a date cursor',
+	EVENTS_TIMELINE.includes('function timeAt') &&
+		EVENTS_TIMELINE.includes('onAxisDown') &&
+		EVENTS_TIMELINE.includes('class="axis-scrub"') &&
+		EVENTS_TIMELINE.includes('headX')
 );
 ok(
 	'gutter titles truncate to the gutter with metrics matching the render',
-	CHRONICLE.includes('function fitText') &&
-		CHRONICLE.includes('fitText(full, avail(date), ROW_LABEL_TYPE)') &&
-		CHRONICLE.includes('const EV_LABEL_TYPE')
+	EVENT_GEOMETRY.includes('export function fitText') &&
+		EVENTS_TIMELINE.includes('fitText(full, room(date), TITLE_TYPE)') &&
+		/const TITLE_TYPE = \{ size: 11,/.test(EVENTS_TIMELINE) &&
+		/\.gl-title\s*\{[^}]*font-size:\s*11px/.test(EVENTS_TIMELINE)
 );
 ok(
-	'expanding lands on a readable window rather than full range',
-	CHRONICLE.includes('YEAR_MS * 25') && CHRONICLE.includes('function setRange')
+	'the events page opens on a readable window, not the full range',
+	EVENTS_VIEW.includes('export const DEFAULT_LENS = 2021') &&
+		EVENTS_VIEW.includes('lens = $state(DEFAULT_LENS)') &&
+		EVENTS_TIMELINE.includes('axis.setDomain(lensStart(view.lens), CUTOFF)')
 );
 ok(
-	'filters narrow events by category and rupture',
-	CHRONICLE.includes('function eventPassesFilters') &&
-		CHRONICLE.includes('hiddenCats') &&
-		CHRONICLE.includes('rupturesOnly') &&
-		CHRONICLE.includes('allEventCats')
+	'filters narrow events by category, rupture and thread, and every face reads the same state',
+	EVENTS_VIEW.includes('hiddenCats') &&
+		EVENTS_VIEW.includes('rupturesOnly') &&
+		EVENTS_VIEW.includes('thread') &&
+		EVENTS_TIMELINE.includes('view.passes(e, app.basisFloor)') &&
+		EVENTS_LIST.includes('view.passes(e, app.basisFloor)')
 );
 ok(
-	'the expanded filter bar reuses existing dictionary keys (no new strings)',
-	CHRONICLE.includes("t('feed.all')") &&
-		CHRONICLE.includes("t('record.rupture')") &&
-		CHRONICLE.includes("t('record.category')") &&
-		CHRONICLE.includes("t('chronicle.fullrange')")
+	'the events filter bar reuses existing dictionary keys for words the app already has',
+	EVENTS_PAGE.includes("t('feed.all')") &&
+		EVENTS_PAGE.includes("t('record.rupture')") &&
+		EVENTS_PAGE.includes("t('record.category')") &&
+		EVENTS_PAGE.includes('eventCategoryLabel(cat)')
+);
+ok(
+	'selection on the events page is the app selection, so the Inspector opens the record',
+	EVENTS_TIMELINE.includes('app.select(e.id)') && EVENTS_LIST.includes('app.select(e.id)') && !EVENTS_TIMELINE.includes('selectedEvent = $state')
+);
+ok(
+	'the face switch is one tab stop, walks with the arrows and turns them around in Arabic',
+	FACE_SWITCH.includes('role="radiogroup"') &&
+		FACE_SWITCH.includes('role="radio"') &&
+		FACE_SWITCH.includes('tabindex={o.value === value ? 0 : -1}') &&
+		FACE_SWITCH.includes("app.locale === 'ar'") &&
+		FACE_SWITCH.includes("e.key === 'Home'")
+);
+ok(
+	'the face switch shows only when there is more than one face (no dead control)',
+	EVENTS_PAGE.includes('{#if FACES.length > 1}') && EVENTS_VIEW.includes('parseFace(')
 );
 // ZERO new i18n keys were added: every literal key the view calls must already
 // resolve in all three locales (the sweep in test-i18n pins this repo-wide;
