@@ -1178,13 +1178,16 @@
 		clearTimeout(feedRaf);
 		feedRaf = setTimeout(feed, 0);
 	}
+	/* Newest first by date, not ledger order: a chapter opens with its rupture. */
+	var newest = null;
 	function feed() {
 		if (!wide.matches) return;
+		if (!newest) newest = events.slice().sort(function (a, b) { return b.day - a.day || a.i - b.i; });
 		var F = Math.floor(state.focus);
 		var frag = document.createDocumentFragment();
 		var n = 0;
-		for (var i = 0; i < events.length; i++) {
-			var e = events[i];
+		for (var i = 0; i < newest.length; i++) {
+			var e = newest[i];
 			if (!inLens(e, F) || !visible(e) || !atFloor(e)) continue;
 			if (state.thread && (entityEvents[state.thread] || []).indexOf(e) < 0) continue;
 			var li = e.row.cloneNode(true);
